@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</title>
+    <style>
+        :root {
+            --primary: #1b5e20;
+            --accent: #2e7d32;
+            --dark: #121212;
+            --light: #f4f6f4;
+            --text: #333333;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--text);
+        }
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 25px 15px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+        }
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .truck-header {
+            background: var(--dark);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin: 3px;
+        }
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        select, input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        .rate-display {
+            background: #e8f5e9;
+            border-left: 4px solid var(--primary);
+            padding: 12px;
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .btn-whatsapp {
+            display: block;
+            width: 100%;
+            background-color: #25D366;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</h1>
+    <p>Professional Haulage & Equipment Services Across Jamaica</p>
+</header>
+
+<div class="container">
+    <div class="card">
+        <div class="truck-header">
+            <h2 style="margin:0; font-size:1.3rem;">2013 Isuzu Forward</h2>
+            <p style="margin:5px 0 0 0; color:#ddd;">20ft Enclosed Box Truck</p>
+        </div>
+        <div>
+            <span class="badge">20ft Cargo Space</span>
+            <span class="badge">Weatherproof Box</span>
+            <span class="badge">Commercial Haulage</span>
+            <span class="badge">Equipment Transport</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0; color:var(--primary);">Rate Sheet & Invoice Request</h3>
+        
+        <label for="destination">Select Service Destination:</label>
+        <select id="destination" onchange="calculateRate()">
+            <option value="0">-- Choose Location --</option>
+            <option value="25000">Kingston / St. Andrew</option>
+            <option value="35000">Spanish Town / St. Catherine</option>
+            <option value="55000">Ocho Rios / St. Ann</option>
+            <option value="75000">Montego Bay / St. James</option>
+            <option value="65000">Mandeville / Manchester</option>
+        </select>
+
+        <div class="rate-display" id="rateBox">
+            Estimated Rate: Select a location
+        </div>
+
+        <label for="clientName">Your Name / Business Name:</label>
+        <input type="text" id="clientName" placeholder="e.g. John Brown">
+
+        <label for="cargoDetails">Cargo / Goods Description:</label>
+        <textarea id="cargoDetails" rows="3" placeholder="Describe items to be transported..."></textarea>
+
+        <button class="btn-whatsapp" onclick="sendWhatsApp()">Request Quote / Book via WhatsApp</button>
+    </div>
+</div>
+
+<footer>
+    &copy; D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED. All rights reserved.
+</footer>
+
+<script>
+    function calculateRate() {
+        var select = document.getElementById("destination");
+        var val = select.value;
+        var text = select.options[select.selectedIndex].text;
+        var rateBox = document.getElementById("rateBox");
+        
+        if (val > 0) {
+            rateBox.innerText = "Estimated Rate (" + text + "): $" + parseInt(val).toLocaleString() + " JMD";
+        } else {
+            rateBox.innerText = "Estimated Rate: Select a location";
+        }
+    }
+
+    function sendWhatsApp() {
+        var destSelect = document.getElementById("destination");
+        var destText = destSelect.options[destSelect.selectedIndex].text;
+        var rate = destSelect.value;
+        var name = document.getElementById("clientName").value;
+        var cargo = document.getElementById("cargoDetails").value;
+
+        if (destSelect.value == "0" || !name) {
+            alert("Please select a location and enter your name.");
+            return;
+        }
+
+        var message = "Hello D%26C Refuse Trucking!%0A%0A" +
+                      "*New Booking / Quote Request*%0A" +
+                      "• *Client:* " + encodeURIComponent(name) + "%0A" +
+                      "• *Destination:* " + encodeURIComponent(destText) + "%0A" +
+                      "• *Estimated Rate:* $" + parseInt(rate).toLocaleString() + " JMD%0A" +
+                      "• *Cargo Details:* " + encodeURIComponent(cargo);
+
+        window.open("https://wa.me/?text=" + message, "_blank");
+    }
+</script>
+
+</body>
+</html>
