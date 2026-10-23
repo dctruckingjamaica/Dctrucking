@@ -55,34 +55,36 @@
         }
 
         header h1 {
-            font-size: clamp(1.2rem, 4.2vw, 1.85rem);
+            font-size: clamp(1.1rem, 3.8vw, 1.75rem);
             text-transform: uppercase;
             color: var(--primary-green);
             margin-bottom: 2px;
             letter-spacing: 0.5px;
             font-weight: 900;
             text-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
-            line-height: 1.25;
+            line-height: 1.2;
+            white-space: nowrap;
         }
 
         header h2.sub-title {
-            font-size: clamp(1.05rem, 3.6vw, 1.5rem);
+            font-size: clamp(1rem, 3.5vw, 1.45rem);
             text-transform: uppercase;
             color: var(--primary-green);
             margin-bottom: 8px;
             letter-spacing: 1px;
             font-weight: 800;
             text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+            white-space: nowrap;
         }
 
         header p.tagline {
             color: #ffffff;
-            font-size: clamp(0.98rem, 3.4vw, 1.25rem);
+            font-size: clamp(0.95rem, 3.2vw, 1.2rem);
             font-weight: 700;
             margin-bottom: 18px;
         }
 
-        /* Responsive Contact Bar - Larger Text & Contained */
+        /* Responsive Contact Bar */
         .contact-bar {
             background-color: #141414;
             border: 2px solid var(--primary-green);
@@ -99,7 +101,7 @@
         }
 
         .contact-item {
-            font-size: clamp(1rem, 3.6vw, 1.18rem); /* Slightly larger for clarity */
+            font-size: clamp(0.95rem, 3.5vw, 1.15rem);
             font-weight: 800;
             color: #ffffff;
             display: flex;
@@ -113,7 +115,7 @@
         .contact-item.email-item {
             white-space: normal;
             word-break: break-all;
-            font-size: clamp(0.88rem, 3.1vw, 1.05rem); /* Scaled slightly larger while fitting box */
+            font-size: clamp(0.85rem, 3vw, 1.02rem);
             text-align: center;
         }
 
@@ -130,7 +132,7 @@
             font-weight: 900;
             text-decoration: none;
             display: inline-block;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             width: 100%;
             max-width: 340px;
             text-align: center;
@@ -151,7 +153,7 @@
             box-shadow: var(--card-shadow);
         }
 
-        /* Single-Line Uniform Section Titles */
+        /* Single-Line Section Titles */
         .card h3 {
             color: var(--primary-green);
             font-size: clamp(1.05rem, 3.8vw, 1.55rem);
@@ -203,7 +205,7 @@
             text-overflow: ellipsis;
         }
 
-        /* Plate Blur Overlay */
+        /* Standard Plate Blur Overlay */
         .blur-plate {
             position: absolute;
             bottom: 45px;
@@ -213,6 +215,18 @@
             height: 28px;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
+            border-radius: 4px;
+        }
+
+        /* Custom Plate Blur position for Headlight Truck (1000017381.jpg) */
+        .blur-plate-front {
+            position: absolute;
+            bottom: 50px;
+            left: 20%;
+            width: 105px;
+            height: 42px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
             border-radius: 4px;
         }
 
@@ -284,7 +298,7 @@
             text-align: right;
         }
 
-        /* Invoice Tool Styling */
+        /* Comprehensive Form Grid */
         .invoice-builder {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -423,7 +437,7 @@
                  alt="D&C Refuse Trucking Logo" class="logo">
         </div>
         <h1>D&C REFUSE TRUCKING & EQUIPMENT</h1>
-        <h2 class="sub-title">COMPANY LIMITED</h2>
+        <h2 class="sub-title">CO. LTD.</h2>
         <p class="tagline">Reliable Islandwide Haulage & Refuse Management Services</p>
 
         <!-- Top Contact Details Section -->
@@ -450,7 +464,7 @@
             <div class="fleet-gallery">
                 <div class="fleet-card">
                     <img src="1000017381.jpg" alt="Fleet Unit - Front">
-                    <div class="blur-plate"></div>
+                    <div class="blur-plate-front"></div>
                     <div class="caption">Commercial Fleet - Front View</div>
                 </div>
                 <div class="fleet-card">
@@ -522,27 +536,58 @@
             </div>
         </div>
 
-        <!-- Built-In Invoice & WhatsApp Quote Tool -->
+        <!-- Comprehensive Quote & Customer Record Generator -->
         <div class="card">
             <h3>Invoice Generator & Quote Request</h3>
-            <p style="color: #e0e0e0; font-weight: 600;">Fill out the details below to view an invoice or send job details directly to our WhatsApp:</p>
+            <p style="color: #e0e0e0; font-weight: 600; margin-bottom: 15px;">Fill out the customer details to automatically calculate the rate, generate an invoice, or send the quote directly to WhatsApp:</p>
             
             <div class="invoice-builder">
                 <div class="input-group">
-                    <label>Client / Company Name</label>
-                    <input type="text" id="inv-client" placeholder="e.g. ABC Construction">
+                    <label>Client / Business Name</label>
+                    <input type="text" id="inv-client" placeholder="e.g. John Brown / ABC Ltd">
+                </div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="inv-phone" placeholder="e.g. 876-555-0199">
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="inv-email" placeholder="e.g. client@gmail.com">
                 </div>
                 <div class="input-group">
                     <label>Invoice Number</label>
                     <input type="text" id="inv-num" value="DC-1001">
                 </div>
                 <div class="input-group">
-                    <label>Pickup & Delivery Route</label>
-                    <input type="text" id="inv-route" placeholder="e.g. Spanish Town to Ocho Rios">
+                    <label>Pickup Location</label>
+                    <input type="text" id="inv-pickup" placeholder="e.g. Spanish Town Depot">
                 </div>
                 <div class="input-group">
-                    <label>Amount (JMD)</label>
-                    <input type="number" id="inv-amount" placeholder="53000">
+                    <label>Drop-off Destination (Auto-Rate)</label>
+                    <select id="inv-destination" onchange="autoCalculateRate()">
+                        <option value="0">-- Select Destination Town --</option>
+                        <option value="26000">Downtown ($26,000 JMD)</option>
+                        <option value="25000">Kingston, Half Way Tree, Liguanea, Jacks Hill ($25,000 JMD)</option>
+                        <option value="20000">Spanish Town, Portmore, Ferry ($20,000 JMD)</option>
+                        <option value="27000">Old Harbour, Linstead, Bogwalk, Port Royal, Airport ($27,000 JMD)</option>
+                        <option value="31000">May Pen, Ewarton, Red Hills, Sligoville ($31,000 JMD)</option>
+                        <option value="39000">Tollgate, Clarendon Park, Friendship Gap ($39,000 JMD)</option>
+                        <option value="35000">Lionel Town, Mitchell Town, Rocky Point ($35,000 JMD)</option>
+                        <option value="42000">Chapelton, Frankfield, Mavis Bank ($42,000 JMD)</option>
+                        <option value="47000">Mandeville, Porus, Spaldings, Christiana ($47,000 JMD)</option>
+                        <option value="54000">Santa Cruz, Gutters ($54,000 JMD)</option>
+                        <option value="57000">Junction, Maggotty, Siloah, Lacovia ($57,000 JMD)</option>
+                        <option value="60000">Black River, Treasure Beach ($60,000 JMD)</option>
+                        <option value="71000">Sav-La-Mar, Whitehouse ($71,000 JMD)</option>
+                        <option value="78000">Negril, Little London ($78,000 JMD)</option>
+                        <option value="67000">Montego Bay, Wakefield ($67,000 JMD)</option>
+                        <option value="59000">Falmouth, Port Antonio, Manchioneal ($59,000 JMD)</option>
+                        <option value="53000">Ocho Rios, St. Ann's Bay, Runaway Bay ($53,000 JMD)</option>
+                    </select>
+                </div>
+                <div class="input-group" style="grid-column: 1 / -1;">
+                    <label>Calculated Amount (JMD) - Or Enter Custom Rate</label>
+                    <input type="number" id="inv-amount" placeholder="0">
                 </div>
             </div>
 
@@ -559,20 +604,22 @@
                          alt="Company Logo">
                     <div>
                         <h2 style="color: #1a531f;">INVOICE</h2>
-                        <p><strong>D&C REFUSE TRUCKING & EQUIPMENT CO. LTD</strong></p>
+                        <p><strong>D&C REFUSE TRUCKING & EQUIPMENT CO. LTD.</strong></p>
                         <p>Jamaica | Professional Transport Services</p>
                     </div>
                 </div>
                 <div class="inv-details">
                     <div>
                         <p><strong>Billed To:</strong> <span id="out-client"></span></p>
-                        <p><strong>Route / Service:</strong> <span id="out-route"></span></p>
+                        <p><strong>Phone:</strong> <span id="out-phone"></span></p>
+                        <p><strong>Email:</strong> <span id="out-email"></span></p>
                     </div>
                     <div style="text-align: right;">
                         <p><strong>Invoice #:</strong> <span id="out-num"></span></p>
                         <p><strong>Date:</strong> <span id="out-date"></span></p>
                     </div>
                 </div>
+                <p style="margin-bottom: 12px; color: #111827; font-size: 1.05rem;"><strong>Route Details:</strong> <span id="out-route"></span></p>
                 <table style="margin-bottom: 20px;">
                     <thead>
                         <tr style="background-color: #1a531f; color: #ffffff;">
@@ -602,16 +649,33 @@
     </footer>
 
     <script>
+        function autoCalculateRate() {
+            var destSelect = document.getElementById('inv-destination');
+            var rate = destSelect.value;
+            if (rate > 0) {
+                document.getElementById('inv-amount').value = rate;
+            }
+        }
+
         function generateInvoice() {
             var client = document.getElementById('inv-client').value || 'Valued Client';
+            var phone = document.getElementById('inv-phone').value || 'N/A';
+            var email = document.getElementById('inv-email').value || 'N/A';
             var num = document.getElementById('inv-num').value || 'DC-1001';
-            var route = document.getElementById('inv-route').value || 'Standard Transport Route';
+            var pickup = document.getElementById('inv-pickup').value || 'Standard Pickup';
+            
+            var destSelect = document.getElementById('inv-destination');
+            var destText = destSelect.options[destSelect.selectedIndex].text;
+            if (destSelect.value === "0") { destText = "Standard Destination"; }
+
             var amount = document.getElementById('inv-amount').value || '0';
 
             document.getElementById('out-client').innerText = client;
+            document.getElementById('out-phone').innerText = phone;
+            document.getElementById('out-email').innerText = email;
             document.getElementById('out-num').innerText = num;
-            document.getElementById('out-route').innerText = route;
-            document.getElementById('out-desc').innerText = 'Haulage / Equipment Transport: ' + route;
+            document.getElementById('out-route').innerText = pickup + " ➔ " + destText;
+            document.getElementById('out-desc').innerText = 'Haulage / Refuse Transport: ' + pickup + ' to ' + destText;
             document.getElementById('out-amount').innerText = '$' + parseInt(amount).toLocaleString() + ' JMD';
             document.getElementById('out-date').innerText = new Date().toLocaleDateString();
 
@@ -620,14 +684,26 @@
 
         function sendWhatsAppQuote() {
             var client = document.getElementById('inv-client').value || 'Valued Client';
-            var route = document.getElementById('inv-route').value || 'Standard Transport Route';
+            var phone = document.getElementById('inv-phone').value || 'N/A';
+            var email = document.getElementById('inv-email').value || 'N/A';
+            var num = document.getElementById('inv-num').value || 'DC-1001';
+            var pickup = document.getElementById('inv-pickup').value || 'Standard Pickup Point';
+
+            var destSelect = document.getElementById('inv-destination');
+            var destText = destSelect.options[destSelect.selectedIndex].text;
+            if (destSelect.value === "0") { destText = "Standard Destination"; }
+
             var amount = document.getElementById('inv-amount').value || '0';
 
-            var text = "Hello D%26C Refuse Trucking, I would like to request haulage service:%0A%0A" +
+            var text = "Hello D%26C Refuse Trucking, new haulage order request:%0A%0A" +
+                       "*Invoice #:* " + encodeURIComponent(num) + "%0A" +
                        "*Client Name:* " + encodeURIComponent(client) + "%0A" +
-                       "*Route:* " + encodeURIComponent(route) + "%0A" +
-                       "*Estimated Rate:* $" + encodeURIComponent(amount) + " JMD%0A%0A" +
-                       "Please confirm delivery availability and send payment details.";
+                       "*Phone:* " + encodeURIComponent(phone) + "%0A" +
+                       "*Email:* " + encodeURIComponent(email) + "%0A" +
+                       "*Pickup Point:* " + encodeURIComponent(pickup) + "%0A" +
+                       "*Drop-off Destination:* " + encodeURIComponent(destText) + "%0A" +
+                       "*Total Quote Rate:* $" + encodeURIComponent(amount) + " JMD%0A%0A" +
+                       "Please confirm job availability and provide payment details.";
 
             window.open("https://wa.me/18768628579?text=" + text, "_blank");
         }
