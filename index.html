@@ -205,7 +205,7 @@
             text-overflow: ellipsis;
         }
 
-        /* Standard Plate Blur Overlay */
+        /* Standard Plate Blur Overlay for standard photos */
         .blur-plate {
             position: absolute;
             bottom: 45px;
@@ -218,15 +218,15 @@
             border-radius: 4px;
         }
 
-        /* Guaranteed Front Bumper Blackout Cover for Headlight Truck (1000017381.jpg) */
-        .front-bumper-cover {
+        /* Dedicated Heavy Blur Cover strictly for the Headlight Front-View Truck Photo (1000017381.jpg) */
+        .headlight-front-blur {
             position: absolute;
-            bottom: 38px;
+            bottom: 44px;
             left: 5%;
-            width: 22%;
-            height: 25%;
-            background: #000000;
-            border: 2px solid var(--primary-green);
+            width: 32%;
+            height: 26%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(15px);
             border-radius: 4px;
             z-index: 20;
         }
@@ -464,8 +464,8 @@
 
             <div class="fleet-gallery">
                 <div class="fleet-card">
-                    <img src="1000017381.jpg" alt="Fleet Unit - Front">
-                    <div class="front-bumper-cover"></div>
+                    <img src="1000017381.jpg" alt="Fleet Unit - Headlight Front View">
+                    <div class="headlight-front-blur"></div>
                     <div class="caption">Commercial Fleet - Front View</div>
                 </div>
                 <div class="fleet-card">
