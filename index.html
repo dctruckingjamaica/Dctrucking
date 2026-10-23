@@ -88,7 +88,7 @@
             margin-top: 2px;
         }
 
-        /* Slightly larger operational hub badge text */
+        /* Operational Hub Badge */
         .base-location-badge {
             display: inline-block;
             background: #112616;
@@ -192,6 +192,54 @@
             max-width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        /* Deposit & Cancellation Policy Banner */
+        .deposit-policy-banner {
+            background: linear-gradient(135deg, #0d2b14, #1b4d24);
+            border: 2px solid var(--primary-green);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 16px;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.2);
+        }
+
+        .deposit-policy-banner h4 {
+            color: var(--primary-green);
+            font-size: 1.15rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .deposit-policy-banner p {
+            font-size: 1.02rem;
+            font-weight: 700;
+            line-height: 1.55;
+            color: #f1f5f9;
+            margin-bottom: 8px;
+        }
+
+        .deposit-policy-banner p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* High Visibility Red & Yellow Text Styling */
+        .text-red-alert {
+            color: #ff3333;
+            font-weight: 900;
+        }
+
+        .text-yellow-highlight {
+            color: #ffeb3b;
+            font-weight: 900;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
         /* Fleet Gallery */
@@ -565,6 +613,15 @@
         <!-- Fresh Bold White Destination Rate Sheet -->
         <div class="card">
             <h3>Destination Rate Sheet</h3>
+            
+            <!-- Styled 50% Deposit & Highlighted 72-Hour Policy Banner -->
+            <div class="deposit-policy-banner">
+                <h4>🔒 Booking & Deposit Policy</h4>
+                <p>• <span class="text-red-alert">50% Deposit Required:</span> Payable in advance to confirm and lock in your scheduled job date.</p>
+                <p>• <span class="text-red-alert">50% Remaining Balance:</span> Payable upon pickup of goods/items on the job date.</p>
+                <p>• <strong>Cancellation Policy:</strong> Full deposit refund for cancellations made at least <strong>72 hours (3 days)</strong> prior to the scheduled job. Cancellations made <span class="text-yellow-highlight">under 72 hours</span> are <span class="text-yellow-highlight">strictly non-refundable</span>.</p>
+            </div>
+
             <p style="color: #e0e0e0; font-weight: 700; margin-bottom: 12px;">Scroll down to view standard transport rates in Jamaican Dollars (JMD):</p>
 
             <div class="fresh-rate-card">
@@ -668,7 +725,7 @@
                     </select>
                 </div>
                 <div class="input-group" style="grid-column: 1 / -1;">
-                    <label>Calculated Amount (JMD) - Or Enter Custom Rate</label>
+                    <label>Calculated Total Rate (JMD) - Or Enter Custom Rate</label>
                     <input type="number" id="inv-amount" placeholder="0">
                 </div>
             </div>
@@ -684,7 +741,7 @@
             <div id="invoice-preview">
                 <div class="inv-header">
                     <div>
-                        <h2 style="color: #1a531f;">INVOICE</h2>
+                        <h2 style="color: #1a531f;">INVOICE / BOOKING QUOTE</h2>
                         <p><strong>D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</strong></p>
                         <p>Jamaica | Professional Transport Services (Kingston / Portmore Hub)</p>
                     </div>
@@ -701,22 +758,32 @@
                     </div>
                 </div>
                 <p style="margin-bottom: 12px; color: #111827; font-size: 1.05rem;"><strong>Route Details:</strong> <span id="out-route"></span></p>
-                <table style="margin-bottom: 20px;">
+                <table style="margin-bottom: 15px;">
                     <thead>
                         <tr style="background-color: #1a531f; color: #ffffff;">
                             <th>Description</th>
-                            <th style="text-align: right;">Total (JMD)</th>
+                            <th style="text-align: right;">Amount (JMD)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td id="out-desc" style="color: #111827; font-weight: 700;">Haulage & Refuse Transport Service</td>
-                            <td style="text-align: right; font-weight: bold; color: #1a531f;" id="out-amount">$0 JMD</td>
+                            <td style="text-align: right; font-weight: bold; color: #111827;" id="out-amount">$0 JMD</td>
+                        </tr>
+                        <tr style="background-color: #f0fdf4;">
+                            <td style="color: #166534; font-weight: 800;">🔒 Required 50% Deposit (To Confirm Booking)</td>
+                            <td style="text-align: right; font-weight: 900; color: #166534;" id="out-deposit">$0 JMD</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #334155; font-weight: 700;">🚚 Remaining 50% Balance (Due Upon Pickup)</td>
+                            <td style="text-align: right; font-weight: bold; color: #334155;" id="out-balance">$0 JMD</td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="inv-footer">
-                    <p><strong>Thank you for choosing D&C Refuse Trucking & Equipment Co. Limited. We sincerely appreciate your business and value the opportunity to serve your transport needs. We look forward to working with you again!</strong></p>
+                    <p style="margin-bottom: 6px; font-weight: bold; color: #166534;">* Note: A 50% deposit is required to lock in your date on our booking schedule. Remaining 50% balance is payable upon pickup.</p>
+                    <p style="margin-bottom: 10px; font-weight: bold; color: #b91c1c;">⚠️ Policy Notice: Cancellations must be made at least 72 hours prior to service for a deposit refund. Cancellations made under 72 hours are non-refundable.</p>
+                    <p><strong>Thank you for choosing D&C Refuse Trucking & Equipment Co. Limited. We appreciate your business and look forward to serving your transport needs!</strong></p>
                 </div>
                 <br>
                 <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
@@ -785,7 +852,9 @@
             var destText = destSelect.options[destSelect.selectedIndex].text;
             if (destSelect.value === "0") { destText = "Standard Destination"; }
 
-            var amount = document.getElementById('inv-amount').value || '0';
+            var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
+            var deposit = totalAmount * 0.5;
+            var balance = totalAmount * 0.5;
 
             document.getElementById('out-client').innerText = client;
             document.getElementById('out-phone').innerText = phone;
@@ -793,7 +862,11 @@
             document.getElementById('out-num').innerText = num;
             document.getElementById('out-route').innerText = pickup + " ➔ " + destText;
             document.getElementById('out-desc').innerText = 'Haulage / Refuse Transport: ' + pickup + ' to ' + destText;
-            document.getElementById('out-amount').innerText = '$' + parseInt(amount).toLocaleString() + ' JMD';
+            
+            document.getElementById('out-amount').innerText = '$' + totalAmount.toLocaleString() + ' JMD';
+            document.getElementById('out-deposit').innerText = '$' + deposit.toLocaleString() + ' JMD';
+            document.getElementById('out-balance').innerText = '$' + balance.toLocaleString() + ' JMD';
+            
             document.getElementById('out-date').innerText = new Date().toLocaleDateString();
 
             document.getElementById('invoice-preview').style.display = 'block';
@@ -810,17 +883,22 @@
             var destText = destSelect.options[destSelect.selectedIndex].text;
             if (destSelect.value === "0") { destText = "Standard Destination"; }
 
-            var amount = document.getElementById('inv-amount').value || '0';
+            var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
+            var deposit = totalAmount * 0.5;
+            var balance = totalAmount * 0.5;
 
-            var text = "Hello D%26C Refuse Trucking, new haulage order request:%0A%0A" +
+            var text = "Hello D%26C Refuse Trucking, new haulage booking request:%0A%0A" +
                        "*Invoice #:* " + encodeURIComponent(num) + "%0A" +
                        "*Client Name:* " + encodeURIComponent(client) + "%0A" +
                        "*Phone:* " + encodeURIComponent(phone) + "%0A" +
                        "*Email:* " + encodeURIComponent(email) + "%0A" +
                        "*Pickup Point:* " + encodeURIComponent(pickup) + "%0A" +
-                       "*Drop-off Destination:* " + encodeURIComponent(destText) + "%0A" +
-                       "*Total Quote Rate:* $" + encodeURIComponent(amount) + " JMD%0A%0A" +
-                       "Please confirm job availability and provide payment details.";
+                       "*Drop-off Destination:* " + encodeURIComponent(destText) + "%0A%0A" +
+                       "*Total Rate:* $" + encodeURIComponent(totalAmount.toLocaleString()) + " JMD%0A" +
+                       "*🔒 Required 50% Deposit:* $" + encodeURIComponent(deposit.toLocaleString()) + " JMD%0A" +
+                       "*🚚 Remaining 50% Balance:* $" + encodeURIComponent(balance.toLocaleString()) + " JMD%0A%0A" +
+                       "⚠️ *Policy Acknowledged:* I understand that a 50% deposit confirms my booking date and cancellations must be made at least 72 hours in advance for a deposit refund.%0A%0A" +
+                       "Please send payment details for the 50% deposit.";
 
             window.open("https://wa.me/18768628579?text=" + text, "_blank");
         }
