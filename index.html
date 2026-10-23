@@ -709,16 +709,16 @@
                     <select id="inv-destination" onchange="autoCalculateRate()">
                         <option value="0">-- Select Destination --</option>
                         <option value="26000">Downtown — $26,000 JMD</option>
-                        <option value="25000">Kingston, Half Way Tree, Liguanea — $25,000 JMD</option>
+                        <option value="25000">Kingston, Half Way Tree, Liguanea, Jacks Hill — $25,000 JMD</option>
                         <option value="20000">Spanish Town, Portmore, Ferry — $20,000 JMD</option>
-                        <option value="27000">Old Harbour, Linstead, Bogwalk — $27,000 JMD</option>
-                        <option value="31000">May Pen, Ewarton, Red Hills — $31,000 JMD</option>
-                        <option value="39000">Tollgate, Clarendon Park — $39,000 JMD</option>
-                        <option value="35000">Lionel Town, Rocky Point — $35,000 JMD</option>
+                        <option value="27000">Old Harbour, Linstead, Bogwalk, Port Royal, Airport — $27,000 JMD</option>
+                        <option value="31000">May Pen, Ewarton, Red Hills, Sligoville — $31,000 JMD</option>
+                        <option value="39000">Tollgate, Clarendon Park, Friendship Gap — $39,000 JMD</option>
+                        <option value="35000">Lionel Town, Mitchell Town, Rocky Point — $35,000 JMD</option>
                         <option value="42000">Chapelton, Frankfield, Mavis Bank — $42,000 JMD</option>
-                        <option value="47000">Mandeville, Porus, Spaldings — $47,000 JMD</option>
+                        <option value="47000">Mandeville, Porus, Spaldings, Christiana — $47,000 JMD</option>
                         <option value="54000">Santa Cruz, Gutters — $54,000 JMD</option>
-                        <option value="57000">Junction, Maggotty, Siloah — $57,000 JMD</option>
+                        <option value="57000">Junction, Maggotty, Siloah, Lacovia — $57,000 JMD</option>
                         <option value="60000">Black River, Treasure Beach — $60,000 JMD</option>
                         <option value="71000">Sav-La-Mar, Whitehouse — $71,000 JMD</option>
                         <option value="78000">Negril, Little London — $78,000 JMD</option>
@@ -726,7 +726,7 @@
                         <option value="67000">Montego Bay, Wakefield — $67,000 JMD</option>
                         <option value="70000">Cambridge, Anchovy — $70,000 JMD</option>
                         <option value="59000">Falmouth, Port Antonio, Manchioneal — $59,000 JMD</option>
-                        <option value="53000">Ocho Rios, St. Ann's Bay — $53,000 JMD</option>
+                        <option value="53000">Ocho Rios, St. Ann's Bay, Runaway Bay — $53,000 JMD</option>
                         <option value="56000">Discovery Bay, Duncans — $56,000 JMD</option>
                         <option value="32000">Guys Hill, Glengoffe — $32,000 JMD</option>
                         <option value="42000">Port Maria, Highgate — $42,000 JMD</option>
@@ -897,20 +897,21 @@
             var deposit = totalAmount * 0.5;
             var balance = totalAmount * 0.5;
 
-            var text = "Hello D&C Refuse Trucking, new haulage booking request:%0A%0A" +
-                       "*Invoice #:* " + encodeURIComponent(num) + "%0A" +
-                       "*Client Name:* " + encodeURIComponent(client) + "%0A" +
-                       "*Phone:* " + encodeURIComponent(phone) + "%0A" +
-                       "*Email:* " + encodeURIComponent(email) + "%0A" +
-                       "*Pickup Point:* " + encodeURIComponent(pickup) + "%0A" +
-                       "*Drop-off Destination:* " + encodeURIComponent(destText) + "%0A%0A" +
-                       "*Total Rate:* $" + encodeURIComponent(totalAmount.toLocaleString()) + " JMD%0A" +
-                       "*🔒 Required 50% Deposit:* $" + encodeURIComponent(deposit.toLocaleString()) + " JMD%0A" +
-                       "*🚚 Remaining 50% Balance:* $" + encodeURIComponent(balance.toLocaleString()) + " JMD%0A%0A" +
-                       "⚠️ *Policy Acknowledged:* I understand that a 50% deposit confirms my booking date and cancellations must be made at least 72 hours in advance for a deposit refund.%0A%0A" +
-                       "Please send payment details for the 50% deposit.";
+            var message = "Hello D&C Refuse Trucking, new haulage booking request:\n\n" +
+                          "Invoice #: " + num + "\n" +
+                          "Client Name: " + client + "\n" +
+                          "Phone: " + phone + "\n" +
+                          "Email: " + email + "\n" +
+                          "Pickup Point: " + pickup + "\n" +
+                          "Drop-off Destination: " + destText + "\n\n" +
+                          "Total Rate: $" + totalAmount.toLocaleString() + " JMD\n" +
+                          "🔒 Required 50% Deposit: $" + deposit.toLocaleString() + " JMD\n" +
+                          "🚚 Remaining 50% Balance: $" + balance.toLocaleString() + " JMD\n\n" +
+                          "⚠️ Policy Acknowledged: I understand that a 50% deposit confirms my booking date and cancellations must be made at least 72 hours in advance for a deposit refund.\n\n" +
+                          "Please send payment details for the 50% deposit.";
 
-            window.open("https://wa.me/18768628579?text=" + text, "_blank");
+            var whatsappUrl = "https://wa.me/18768628579?text=" + encodeURIComponent(message);
+            window.open(whatsappUrl, "_blank");
         }
     </script>
 </body>
