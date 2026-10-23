@@ -55,24 +55,35 @@
         }
 
         header h1 {
-            font-size: clamp(1rem, 3.2vw, 1.6rem);
+            font-size: clamp(1.05rem, 3.6vw, 1.65rem);
             text-transform: uppercase;
             color: var(--primary-green);
-            margin-bottom: 12px;
+            margin-bottom: 3px;
             letter-spacing: 0.5px;
             font-weight: 900;
             text-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
             white-space: nowrap;
         }
 
-        /* Tagline Two-Line Layout (Larger & Clear) */
+        header h2.sub-title {
+            font-size: clamp(1rem, 3.4vw, 1.4rem);
+            text-transform: uppercase;
+            color: var(--primary-green);
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+            white-space: nowrap;
+        }
+
+        /* Tagline Two-Line Layout */
         .tagline-box {
             margin-bottom: 18px;
         }
 
         header p.tagline-line1 {
             color: #ffffff;
-            font-size: clamp(1.05rem, 3.6vw, 1.35rem);
+            font-size: clamp(0.9rem, 3vw, 1.15rem);
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -80,7 +91,7 @@
 
         header p.tagline-line2 {
             color: var(--primary-green);
-            font-size: clamp(1.1rem, 3.8vw, 1.45rem);
+            font-size: clamp(1.05rem, 3.6vw, 1.35rem);
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -209,7 +220,7 @@
             text-overflow: ellipsis;
         }
 
-        /* Standard Plate Blur Overlay */
+        /* Standard Plate Blur Overlay for cards 2, 3 */
         .blur-plate {
             position: absolute;
             bottom: 45px;
@@ -219,6 +230,19 @@
             height: 28px;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
+            border-radius: 4px;
+        }
+
+        /* Adjusted Higher Blur Position specifically for the Headlight/Box Truck photo */
+        .blur-plate-raised {
+            position: absolute;
+            bottom: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
             border-radius: 4px;
         }
 
@@ -428,7 +452,8 @@
                  onerror="this.onerror=null; this.src='Screenshot_20260218-024843.jpg';" 
                  alt="D&C Refuse Trucking Logo" class="logo">
         </div>
-        <h1>D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</h1>
+        <h1>D&C REFUSE TRUCKING & EQUIPMENT</h1>
+        <h2 class="sub-title">COMPANY LIMITED</h2>
         <div class="tagline-box">
             <p class="tagline-line1">RELIABLE ISLANDWIDE HAULAGE & REFUSE</p>
             <p class="tagline-line2">MANAGEMENT SERVICES</p>
@@ -472,7 +497,7 @@
                 </div>
                 <div class="fleet-card">
                     <img src="1000018424.jpg" alt="Fleet Unit - Side Profile">
-                    <div class="blur-plate"></div>
+                    <div class="blur-plate-raised"></div>
                     <div class="caption">Enclosed Transport Box Truck</div>
                 </div>
             </div>
@@ -598,7 +623,7 @@
                          alt="Company Logo">
                     <div>
                         <h2 style="color: #1a531f;">INVOICE</h2>
-                        <p><strong>D&C REFUSE TRUCKING & EQUIPMENT CO. LTD.</strong></p>
+                        <p><strong>D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</strong></p>
                         <p>Jamaica | Professional Transport Services</p>
                     </div>
                 </div>
