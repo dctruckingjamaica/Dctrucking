@@ -447,8 +447,8 @@
             border: 2px solid var(--primary-green);
             border-radius: 8px;
             font-size: 1.05rem;
-            background-color: #ffffff; /* Clean white background matching the rate card */
-            color: #0f172a; /* Dark professional text */
+            background-color: #ffffff; /* Clean white background */
+            color: #0f172a; /* Dark readable text */
             font-weight: 700;
             width: 100%;
         }
@@ -458,14 +458,6 @@
             color: #0f172a;
             padding: 10px;
             font-weight: 700;
-        }
-
-        .input-group select optgroup {
-            background-color: #f1f5f9;
-            color: #059669; /* Green header matching rate card pricing */
-            font-weight: 900;
-            font-style: normal;
-            padding: 8px;
         }
 
         .btn-action-group {
@@ -724,111 +716,39 @@
                     <label>Drop-off Destination (Select Town)</label>
                     <select id="inv-destination" onchange="autoCalculateRate()">
                         <option value="0">--- SELECT DESTINATION TOWN ---</option>
-                        
-                        <optgroup label="--- $20,000 JMD TIER ---">
-                            <option value="20000">Spanish Town, Portmore, Ferry — [ $20,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $25,000 JMD TIER ---">
-                            <option value="25000">Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill — [ $25,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $26,000 JMD TIER ---">
-                            <option value="26000">Downtown — [ $26,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $27,000 JMD TIER ---">
-                            <option value="27000">Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town — [ $27,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $31,000 JMD TIER ---">
-                            <option value="31000">May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville — [ $31,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $32,000 JMD TIER ---">
-                            <option value="32000">Guys Hill, Glengoffe, Polly Ground — [ $32,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $35,000 JMD TIER ---">
-                            <option value="35000">Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill — [ $35,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $39,000 JMD TIER ---">
-                            <option value="39000">Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap — [ $39,000 JMD ]</option>
-                            <option value="39000">Annotto Bay, Windsor Castle, Buff Bay, Skibo — [ $39,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $42,000 JMD TIER ---">
-                            <option value="42000">Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank — [ $42,000 JMD ]</option>
-                            <option value="42000">Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall — [ $42,000 JMD ]</option>
-                            <option value="42000">Easington, Seaforth, Morant Bay, Lyssons, Airy Castle — [ $42,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $47,000 JMD TIER ---">
-                            <option value="47000">Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits — [ $47,000 JMD ]</option>
-                            <option value="47000">Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town — [ $47,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $51,000 JMD TIER ---">
-                            <option value="51000">Wait-A-Bit, Albert Town — [ $51,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $53,000 JMD TIER ---">
-                            <option value="53000">Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel — [ $53,000 JMD ]</option>
-                            <option value="53000">St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River — [ $53,000 JMD ]</option>
-                            <option value="53000">Stokes Hall, Trinityville, Bath, Bowden, Golden Grove — [ $53,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $54,000 JMD TIER ---">
-                            <option value="54000">Santa Cruz, Gutters — [ $54,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $56,000 JMD TIER ---">
-                            <option value="56000">Discovery Bay, Braco, Duncans — [ $56,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $57,000 JMD TIER ---">
-                            <option value="57000">Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond — [ $57,000 JMD ]</option>
-                            <option value="57000">Maggotty, Siloah, Balaclava, Lacovia, Newton — [ $57,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $59,000 JMD TIER ---">
-                            <option value="59000">Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria — [ $59,000 JMD ]</option>
-                            <option value="59000">Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay — [ $59,000 JMD ]</option>
-                            <option value="59000">Manchioneal, Hectors River — [ $59,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $60,000 JMD TIER ---">
-                            <option value="60000">Black River, New Market, Springfield, Treasure Beach, Southfield — [ $60,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $64,000 JMD TIER ---">
-                            <option value="64000">Boston, Long Bay — [ $64,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $67,000 JMD TIER ---">
-                            <option value="67000">Montego Bay, Wakefield — [ $67,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $70,000 JMD TIER ---">
-                            <option value="70000">Cambridge, Lambs River, Anchovy — [ $70,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $71,000 JMD TIER ---">
-                            <option value="71000">Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town — [ $71,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $76,000 JMD TIER ---">
-                            <option value="76000">Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill — [ $76,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $78,000 JMD TIER ---">
-                            <option value="78000">Negril, Little London, Darliston, Delveland — [ $78,000 JMD ]</option>
-                        </optgroup>
-
-                        <optgroup label="--- $82,000 JMD TIER ---">
-                            <option value="82000">Green Island, Orange Bay — [ $82,000 JMD ]</option>
-                        </optgroup>
+                        <option value="26000">Downtown — $26,000 JMD</option>
+                        <option value="25000">Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill — $25,000 JMD</option>
+                        <option value="20000">Spanish Town, Portmore, Ferry — $20,000 JMD</option>
+                        <option value="27000">Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town — $27,000 JMD</option>
+                        <option value="31000">May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville — $31,000 JMD</option>
+                        <option value="39000">Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap — $39,000 JMD</option>
+                        <option value="35000">Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill — $35,000 JMD</option>
+                        <option value="42000">Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank — $42,000 JMD</option>
+                        <option value="47000">Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits — $47,000 JMD</option>
+                        <option value="51000">Wait-A-Bit, Albert Town — $51,000 JMD</option>
+                        <option value="47000">Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town — $47,000 JMD</option>
+                        <option value="57000">Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond — $57,000 JMD</option>
+                        <option value="57000">Maggotty, Siloah, Balaclava, Lacovia, Newton — $57,000 JMD</option>
+                        <option value="54000">Santa Cruz, Gutters — $54,000 JMD</option>
+                        <option value="60000">Black River, New Market, Springfield, Treasure Beach, Southfield — $60,000 JMD</option>
+                        <option value="71000">Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town — $71,000 JMD</option>
+                        <option value="76000">Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill — $76,000 JMD</option>
+                        <option value="78000">Negril, Little London, Darliston, Delveland — $78,000 JMD</option>
+                        <option value="82000">Green Island, Orange Bay — $82,000 JMD</option>
+                        <option value="67000">Montego Bay, Wakefield — $67,000 JMD</option>
+                        <option value="70000">Cambridge, Lambs River, Anchovy — $70,000 JMD</option>
+                        <option value="59000">Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria — $59,000 JMD</option>
+                        <option value="53000">Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel — $53,000 JMD</option>
+                        <option value="53000">St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River — $53,000 JMD</option>
+                        <option value="56000">Discovery Bay, Braco, Duncans — $56,000 JMD</option>
+                        <option value="32000">Guys Hill, Glengoffe, Polly Ground — $32,000 JMD</option>
+                        <option value="42000">Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall — $42,000 JMD</option>
+                        <option value="39000">Annotto Bay, Windsor Castle, Buff Bay, Skibo — $39,000 JMD</option>
+                        <option value="59000">Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay — $59,000 JMD</option>
+                        <option value="64000">Boston, Long Bay — $64,000 JMD</option>
+                        <option value="42000">Easington, Seaforth, Morant Bay, Lyssons, Airy Castle — $42,000 JMD</option>
+                        <option value="53000">Stokes Hall, Trinityville, Bath, Bowden, Golden Grove — $53,000 JMD</option>
+                        <option value="59000">Manchioneal, Hectors River — $59,000 JMD</option>
                     </select>
                 </div>
                 <div class="input-group" style="grid-column: 1 / -1;">
