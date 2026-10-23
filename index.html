@@ -36,37 +36,39 @@
             border-bottom: 5px solid var(--primary-green);
         }
 
-        /* Responsive Logo Container */
+        /* Seamless Transparent Logo Container (White Box Completely Removed) */
         .logo-container {
             display: inline-block;
-            margin-bottom: 15px;
-            background: #ffffff;
-            padding: 10px 18px;
-            border-radius: 14px;
-            box-shadow: 0 0 20px rgba(0, 230, 118, 0.5);
+            margin-bottom: 12px;
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
         }
 
         header img.logo {
-            max-height: 140px;
-            max-width: 90vw;
+            max-height: 135px;
+            max-width: 85vw;
             width: auto;
             display: block;
             margin: 0 auto;
+            filter: drop-shadow(0 0 14px rgba(0, 230, 118, 0.45));
         }
 
+        /* Larger, Bold Header Title Layout */
         header h1 {
-            font-size: clamp(1.05rem, 3.6vw, 1.65rem);
+            font-size: clamp(1.15rem, 4.1vw, 1.85rem);
             text-transform: uppercase;
             color: var(--primary-green);
             margin-bottom: 3px;
             letter-spacing: 0.5px;
             font-weight: 900;
-            text-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
+            text-shadow: 0 0 14px rgba(0, 230, 118, 0.4);
             white-space: nowrap;
         }
 
         header h2.sub-title {
-            font-size: clamp(1rem, 3.4vw, 1.4rem);
+            font-size: clamp(1.05rem, 3.8vw, 1.55rem);
             text-transform: uppercase;
             color: var(--primary-green);
             margin-bottom: 14px;
@@ -76,14 +78,14 @@
             white-space: nowrap;
         }
 
-        /* Tagline Two-Line Layout */
+        /* Tagline Layout */
         .tagline-box {
             margin-bottom: 18px;
         }
 
         header p.tagline-line1 {
             color: #ffffff;
-            font-size: clamp(0.9rem, 3vw, 1.15rem);
+            font-size: clamp(0.88rem, 2.9vw, 1.1rem);
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -91,7 +93,7 @@
 
         header p.tagline-line2 {
             color: var(--primary-green);
-            font-size: clamp(1.05rem, 3.6vw, 1.35rem);
+            font-size: clamp(1rem, 3.4vw, 1.3rem);
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -99,7 +101,7 @@
             margin-top: 2px;
         }
 
-        /* Responsive Contact Bar */
+        /* High-Visibility Contact Bar with Popping Email */
         .contact-bar {
             background-color: #141414;
             border: 2px solid var(--primary-green);
@@ -109,14 +111,14 @@
             max-width: 850px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
             width: 100%;
             overflow: hidden;
         }
 
         .contact-item {
-            font-size: clamp(0.95rem, 3.5vw, 1.15rem);
+            font-size: clamp(1rem, 3.8vw, 1.25rem);
             font-weight: 800;
             color: #ffffff;
             display: flex;
@@ -130,13 +132,19 @@
         .contact-item.email-item {
             white-space: normal;
             word-break: break-all;
-            font-size: clamp(0.85rem, 3vw, 1.02rem);
+            font-size: clamp(0.95rem, 3.5vw, 1.18rem);
             text-align: center;
+            background: #0d2312;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--primary-green);
+            color: #ffffff;
         }
 
         .contact-item a {
             color: var(--primary-green);
             text-decoration: none;
+            font-weight: 900;
         }
 
         .contact-btn {
@@ -168,7 +176,6 @@
             box-shadow: var(--card-shadow);
         }
 
-        /* Single-Line Section Titles */
         .card h3 {
             color: var(--primary-green);
             font-size: clamp(1.05rem, 3.8vw, 1.55rem);
@@ -220,7 +227,7 @@
             text-overflow: ellipsis;
         }
 
-        /* Standard Plate Blur Overlay for cards 2, 3 */
+        /* Standard Plate Blur Overlay */
         .blur-plate {
             position: absolute;
             bottom: 45px;
@@ -233,17 +240,18 @@
             border-radius: 4px;
         }
 
-        /* Adjusted Higher Blur Position specifically for the Headlight/Box Truck photo */
-        .blur-plate-raised {
+        /* Raised Blur Cover directly over Bumper License Plate on Enclosed Box Truck */
+        .blur-plate-bumper {
             position: absolute;
-            bottom: 65px;
+            bottom: 82px;
             left: 50%;
             transform: translateX(-50%);
-            width: 95px;
-            height: 35px;
+            width: 105px;
+            height: 38px;
             background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
             border-radius: 4px;
+            z-index: 25;
         }
 
         /* Features List */
@@ -265,53 +273,96 @@
             color: var(--primary-green);
         }
 
-        /* High-Contrast Rate Table */
-        .table-responsive {
-            max-height: 520px;
-            overflow-y: auto;
-            border: 3px solid var(--primary-green);
-            border-radius: 10px;
+        /* Fresh White Destination Rate Card */
+        .fresh-rate-card {
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 14px;
+            padding: 20px 16px;
             margin-top: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            border: 3px solid var(--primary-green);
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
+        .fresh-rate-scroll {
+            max-height: 550px;
+            overflow-y: auto;
+            padding-right: 6px;
         }
 
-        th, td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #282828;
+        .rate-row {
+            padding: 14px 10px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        th {
-            background-color: var(--dark-green);
-            color: var(--primary-green);
-            font-size: 1.15rem;
-            font-weight: 900;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            border-bottom: 3px solid var(--primary-green);
-            text-transform: uppercase;
+        .rate-row:last-child {
+            border-bottom: none;
         }
 
-        /* Bold Bright White Destinations */
-        td.destination-name {
+        .rate-loc {
             font-weight: 800;
-            color: #ffffff;
-            font-size: 1.15rem;
+            font-size: 1.12rem;
+            color: #0f172a;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            line-height: 1.35;
         }
 
-        tr:nth-child(even) { background-color: #222222; }
-        tr:nth-child(odd) { background-color: #141414; }
-        
-        .price-tag { 
-            font-weight: 900; 
-            color: var(--primary-green); 
-            font-size: 1.2rem; 
-            text-align: right;
+        .rate-price {
+            font-weight: 900;
+            font-size: 1.25rem;
+            color: #059669;
+            padding-left: 28px;
+        }
+
+        /* Quick Profile / Returning Client Switcher */
+        .client-account-bar {
+            background: #112616;
+            border: 2px solid var(--primary-green);
+            padding: 14px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .client-account-bar h4 {
+            color: var(--primary-green);
+            font-size: 1.1rem;
+            font-weight: 900;
+        }
+
+        .quick-lookup-grid {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quick-lookup-grid input {
+            flex: 2;
+            min-width: 200px;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background: #000;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .btn-lookup {
+            background: var(--primary-green);
+            color: #000;
+            font-weight: 900;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
         }
 
         /* Comprehensive Form Grid */
@@ -384,7 +435,19 @@
             min-width: 220px;
         }
 
-        /* Printable Invoice Document Styling */
+        .btn-save-profile {
+            background-color: #0284c7;
+            color: #ffffff;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        /* Printable Invoice Output */
         #invoice-preview {
             display: none;
             border: 4px solid #1a531f;
@@ -425,7 +488,6 @@
             font-size: 0.98rem;
         }
 
-        /* Print Specific CSS */
         @media print {
             body * { visibility: hidden; }
             #invoice-preview, #invoice-preview * { visibility: visible; }
@@ -497,68 +559,72 @@
                 </div>
                 <div class="fleet-card">
                     <img src="1000018424.jpg" alt="Fleet Unit - Side Profile">
-                    <div class="blur-plate-raised"></div>
+                    <div class="blur-plate-bumper"></div>
                     <div class="caption">Enclosed Transport Box Truck</div>
                 </div>
             </div>
         </div>
 
-        <!-- Full Destination Rate Sheet -->
+        <!-- Fresh Bold White Destination Rate Sheet -->
         <div class="card">
             <h3>Destination Rate Sheet</h3>
             <p style="color: #e0e0e0; font-weight: 700; margin-bottom: 12px;">Scroll down to view standard transport rates in Jamaican Dollars (JMD):</p>
 
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Destination / Towns Covered</th>
-                            <th style="text-align: right;">Rate (JMD)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td class="destination-name">Downtown</td><td class="price-tag">$26,000 JMD</td></tr>
-                        <tr><td class="destination-name">Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill</td><td class="price-tag">$25,000 JMD</td></tr>
-                        <tr><td class="destination-name">Spanish Town, Portmore, Ferry</td><td class="price-tag">$20,000 JMD</td></tr>
-                        <tr><td class="destination-name">Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town</td><td class="price-tag">$27,000 JMD</td></tr>
-                        <tr><td class="destination-name">May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville</td><td class="price-tag">$31,000 JMD</td></tr>
-                        <tr><td class="destination-name">Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap</td><td class="price-tag">$39,000 JMD</td></tr>
-                        <tr><td class="destination-name">Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill</td><td class="price-tag">$35,000 JMD</td></tr>
-                        <tr><td class="destination-name">Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank</td><td class="price-tag">$42,000 JMD</td></tr>
-                        <tr><td class="destination-name">Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits</td><td class="price-tag">$47,000 JMD</td></tr>
-                        <tr><td class="destination-name">Wait-A-Bit, Albert Town</td><td class="price-tag">$51,000 JMD</td></tr>
-                        <tr><td class="destination-name">Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town</td><td class="price-tag">$47,000 JMD</td></tr>
-                        <tr><td class="destination-name">Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond</td><td class="price-tag">$57,000 JMD</td></tr>
-                        <tr><td class="destination-name">Maggotty, Siloah, Balaclava, Lacovia, Newton</td><td class="price-tag">$57,000 JMD</td></tr>
-                        <tr><td class="destination-name">Santa Cruz, Gutters</td><td class="price-tag">$54,000 JMD</td></tr>
-                        <tr><td class="destination-name">Black River, New Market, Springfield, Treasure Beach, Southfield</td><td class="price-tag">$60,000 JMD</td></tr>
-                        <tr><td class="destination-name">Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town</td><td class="price-tag">$71,000 JMD</td></tr>
-                        <tr><td class="destination-name">Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill</td><td class="price-tag">$76,000 JMD</td></tr>
-                        <tr><td class="destination-name">Negril, Little London, Darliston, Delveland</td><td class="price-tag">$78,000 JMD</td></tr>
-                        <tr><td class="destination-name">Green Island, Orange Bay</td><td class="price-tag">$82,000 JMD</td></tr>
-                        <tr><td class="destination-name">Montego Bay, Wakefield</td><td class="price-tag">$67,000 JMD</td></tr>
-                        <tr><td class="destination-name">Cambridge, Lambs River, Anchovy</td><td class="price-tag">$70,000 JMD</td></tr>
-                        <tr><td class="destination-name">Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria</td><td class="price-tag">$59,000 JMD</td></tr>
-                        <tr><td class="destination-name">Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel</td><td class="price-tag">$53,000 JMD</td></tr>
-                        <tr><td class="destination-name">St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River</td><td class="price-tag">$53,000 JMD</td></tr>
-                        <tr><td class="destination-name">Discovery Bay, Braco, Duncans</td><td class="price-tag">$56,000 JMD</td></tr>
-                        <tr><td class="destination-name">Guys Hill, Glengoffe, Polly Ground</td><td class="price-tag">$32,000 JMD</td></tr>
-                        <tr><td class="destination-name">Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall</td><td class="price-tag">$42,000 JMD</td></tr>
-                        <tr><td class="destination-name">Annotto Bay, Windsor Castle, Buff Bay, Skibo</td><td class="price-tag">$39,000 JMD</td></tr>
-                        <tr><td class="destination-name">Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay</td><td class="price-tag">$59,000 JMD</td></tr>
-                        <tr><td class="destination-name">Boston, Long Bay</td><td class="price-tag">$64,000 JMD</td></tr>
-                        <tr><td class="destination-name">Easington, Seaforth, Morant Bay, Lyssons, Airy Castle</td><td class="price-tag">$42,000 JMD</td></tr>
-                        <tr><td class="destination-name">Stokes Hall, Trinityville, Bath, Bowden, Golden Grove</td><td class="price-tag">$53,000 JMD</td></tr>
-                        <tr><td class="destination-name">Manchioneal, Hectors River</td><td class="price-tag">$59,000 JMD</td></tr>
-                    </tbody>
-                </table>
+            <div class="fresh-rate-card">
+                <div class="fresh-rate-scroll">
+                    
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Downtown</div><div class="rate-price">💰 $26,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill</div><div class="rate-price">💰 $25,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Spanish Town, Portmore, Ferry</div><div class="rate-price">💰 $20,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town</div><div class="rate-price">💰 $27,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville</div><div class="rate-price">💰 $31,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap</div><div class="rate-price">💰 $39,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill</div><div class="rate-price">💰 $35,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank</div><div class="rate-price">💰 $42,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits</div><div class="rate-price">💰 $47,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Wait-A-Bit, Albert Town</div><div class="rate-price">💰 $51,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town</div><div class="rate-price">💰 $47,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond</div><div class="rate-price">💰 $57,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Maggotty, Siloah, Balaclava, Lacovia, Newton</div><div class="rate-price">💰 $57,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Santa Cruz, Gutters</div><div class="rate-price">💰 $54,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Black River, New Market, Springfield, Treasure Beach, Southfield</div><div class="rate-price">💰 $60,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town</div><div class="rate-price">💰 $71,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill</div><div class="rate-price">💰 $76,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Negril, Little London, Darliston, Delveland</div><div class="rate-price">💰 $78,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Green Island, Orange Bay</div><div class="rate-price">💰 $82,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Montego Bay, Wakefield</div><div class="rate-price">💰 $67,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Cambridge, Lambs River, Anchovy</div><div class="rate-price">💰 $70,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria</div><div class="rate-price">💰 $59,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel</div><div class="rate-price">💰 $53,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River</div><div class="rate-price">💰 $53,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Discovery Bay, Braco, Duncans</div><div class="rate-price">💰 $56,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Guys Hill, Glengoffe, Polly Ground</div><div class="rate-price">💰 $32,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall</div><div class="rate-price">💰 $42,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Annotto Bay, Windsor Castle, Buff Bay, Skibo</div><div class="rate-price">💰 $39,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay</div><div class="rate-price">💰 $59,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Boston, Long Bay</div><div class="rate-price">💰 $64,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Easington, Seaforth, Morant Bay, Lyssons, Airy Castle</div><div class="rate-price">💰 $42,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Stokes Hall, Trinityville, Bath, Bowden, Golden Grove</div><div class="rate-price">💰 $53,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Manchioneal, Hectors River</div><div class="rate-price">💰 $59,000 JMD</div></div>
+
+                </div>
             </div>
         </div>
 
         <!-- Comprehensive Quote & Customer Record Generator -->
         <div class="card">
             <h3>Invoice Generator & Quote Request</h3>
-            <p style="color: #e0e0e0; font-weight: 600; margin-bottom: 15px;">Fill out the customer details to automatically calculate the rate, generate an invoice, or send the quote directly to WhatsApp:</p>
+            
+            <!-- Returning Client Lookup Section -->
+            <div class="client-account-bar">
+                <h4>👤 Returning Client Auto-Fill (No Password Needed)</h4>
+                <div class="quick-lookup-grid">
+                    <input type="email" id="lookup-email" placeholder="Enter your registered email address...">
+                    <button class="btn-lookup" onclick="lookupClientProfile()">🔍 Load Saved Profile</button>
+                </div>
+            </div>
+
+            <p style="color: #e0e0e0; font-weight: 600; margin-bottom: 15px;">Fill out the customer details below or load a saved profile to generate an instant quote:</p>
             
             <div class="invoice-builder">
                 <div class="input-group">
@@ -609,6 +675,8 @@
                     <input type="number" id="inv-amount" placeholder="0">
                 </div>
             </div>
+
+            <button class="btn-save-profile" onclick="saveClientProfile()">💾 Save My Info for Future Bookings</button>
 
             <div class="btn-action-group">
                 <button class="btn-gen" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
@@ -673,6 +741,42 @@
             var rate = destSelect.value;
             if (rate > 0) {
                 document.getElementById('inv-amount').value = rate;
+            }
+        }
+
+        function saveClientProfile() {
+            var email = document.getElementById('inv-email').value;
+            var client = document.getElementById('inv-client').value;
+            var phone = document.getElementById('inv-phone').value;
+            var pickup = document.getElementById('inv-pickup').value;
+
+            if (!email) {
+                alert("Please enter an Email Address first so we can link your saved profile!");
+                return;
+            }
+
+            var profile = { client: client, phone: phone, pickup: pickup };
+            localStorage.setItem("dc_profile_" + email.toLowerCase().trim(), JSON.stringify(profile));
+            alert("Profile saved for " + email + "! Next time you visit, simply enter your email above to auto-fill your details.");
+        }
+
+        function lookupClientProfile() {
+            var email = document.getElementById('lookup-email').value.toLowerCase().trim();
+            if (!email) {
+                alert("Please enter your registered email address.");
+                return;
+            }
+
+            var saved = localStorage.getItem("dc_profile_" + email);
+            if (saved) {
+                var profile = JSON.parse(saved);
+                document.getElementById('inv-email').value = email;
+                document.getElementById('inv-client').value = profile.client || '';
+                document.getElementById('inv-phone').value = profile.phone || '';
+                document.getElementById('inv-pickup').value = profile.pickup || '';
+                alert("Welcome back! Your profile details have been loaded into the form.");
+            } else {
+                alert("No saved profile found for that email address. You can fill in the form and click 'Save My Info' to create one!");
             }
         }
 
