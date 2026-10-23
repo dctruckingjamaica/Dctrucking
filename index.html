@@ -11,7 +11,7 @@
             --bg-dark: #000000;
             --card-dark: #181818;
             --text-light: #ffffff;
-            --card-shadow: 0 4px 25px rgba(0, 230, 118, 0.2);
+            --card-shadow: 0 4px 25px rgba(0, 230, 118, 0.25);
         }
 
         * {
@@ -25,28 +25,29 @@
             line-height: 1.6;
             color: var(--text-light);
             background-color: var(--bg-dark);
+            font-size: 1.15rem; /* Increased base font size */
         }
 
         header {
             background-color: #0a0a0a;
             color: var(--text-light);
-            padding: 25px 15px 15px 15px;
+            padding: 30px 15px 20px 15px;
             text-align: center;
-            border-bottom: 4px solid var(--primary-green);
+            border-bottom: 5px solid var(--primary-green);
         }
 
-        /* Responsive Logo with Fallback */
+        /* Responsive Logo Container */
         .logo-container {
             display: inline-block;
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             background: #ffffff;
-            padding: 10px 18px;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0, 230, 118, 0.4);
+            padding: 12px 22px;
+            border-radius: 14px;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.5);
         }
 
         header img.logo {
-            max-height: 140px;
+            max-height: 160px;
             max-width: 90vw;
             width: auto;
             display: block;
@@ -54,39 +55,40 @@
         }
 
         header h1 {
-            font-size: 1.8rem;
+            font-size: 2.2rem; /* Larger, bolder heading */
             text-transform: uppercase;
             color: var(--primary-green);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+            font-weight: 900;
+            text-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
         }
 
         header p.tagline {
             color: #ffffff;
-            font-size: 1.1rem;
+            font-size: 1.3rem; /* Larger subtext */
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         /* Contact Details Header Bar */
         .contact-bar {
             background-color: #141414;
             border: 2px solid var(--primary-green);
-            border-radius: 10px;
-            padding: 15px;
+            border-radius: 12px;
+            padding: 18px;
             margin: 15px auto 5px auto;
-            max-width: 800px;
+            max-width: 850px;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
+            gap: 18px;
             align-items: center;
         }
 
         .contact-item {
-            font-size: 1.05rem;
-            font-weight: 700;
+            font-size: 1.2rem; /* Larger contact text */
+            font-weight: 800;
             color: #ffffff;
             display: flex;
             align-items: center;
@@ -101,49 +103,51 @@
         .contact-btn {
             background-color: var(--primary-green);
             color: #000000;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 800;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 900;
             text-decoration: none;
             display: inline-block;
+            font-size: 1.15rem;
         }
 
         .container {
             max-width: 1100px;
-            margin: 30px auto;
+            margin: 35px auto;
             padding: 0 15px;
         }
 
         .card {
             background: var(--card-dark);
-            padding: 25px;
-            margin-bottom: 30px;
-            border-radius: 12px;
-            border: 2px solid #222222;
+            padding: 28px;
+            margin-bottom: 35px;
+            border-radius: 14px;
+            border: 2px solid #282828;
             box-shadow: var(--card-shadow);
         }
 
         .card h3 {
             color: var(--primary-green);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            border-bottom: 3px solid var(--primary-green);
+            font-size: 1.8rem; /* Larger section titles */
+            margin-bottom: 18px;
+            border-bottom: 4px solid var(--primary-green);
             padding-bottom: 8px;
             display: inline-block;
             text-transform: uppercase;
+            font-weight: 900;
         }
 
         /* Fleet Gallery */
         .fleet-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 18px;
+            margin-top: 22px;
         }
 
         .fleet-card {
             position: relative;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 2px solid #333333;
             overflow: hidden;
             background: #111;
@@ -151,16 +155,16 @@
 
         .fleet-card img {
             width: 100%;
-            height: 220px;
+            height: 240px;
             object-fit: cover;
             display: block;
         }
 
         .fleet-card .caption {
-            padding: 10px;
+            padding: 12px;
             background: #111111;
-            font-size: 0.95rem;
-            font-weight: 700;
+            font-size: 1.1rem; /* Larger captions */
+            font-weight: 800;
             color: var(--primary-green);
             text-align: center;
             border-top: 1px solid #222;
@@ -169,11 +173,11 @@
         /* Plate Blur Overlay */
         .blur-plate {
             position: absolute;
-            bottom: 45px;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
-            width: 85px;
-            height: 28px;
+            width: 90px;
+            height: 30px;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
             border-radius: 4px;
@@ -182,29 +186,29 @@
         /* Features List */
         .features-list {
             list-style: none;
-            margin-top: 15px;
-            margin-bottom: 20px;
+            margin-top: 18px;
+            margin-bottom: 22px;
         }
 
         .features-list li {
-            padding: 10px 0;
-            font-size: 1.05rem;
+            padding: 12px 0;
+            font-size: 1.2rem; /* Larger feature bullet text */
             border-bottom: 1px dashed #333333;
             color: #ffffff;
         }
 
         .features-list li span {
-            font-weight: 700;
+            font-weight: 800;
             color: var(--primary-green);
         }
 
         /* High-Contrast Rate Table */
         .table-responsive {
-            max-height: 500px;
+            max-height: 550px;
             overflow-y: auto;
-            border: 2px solid var(--primary-green);
-            border-radius: 8px;
-            margin-top: 15px;
+            border: 3px solid var(--primary-green);
+            border-radius: 10px;
+            margin-top: 18px;
         }
 
         table {
@@ -214,36 +218,36 @@
         }
 
         th, td {
-            padding: 14px 18px;
+            padding: 16px 20px;
             border-bottom: 1px solid #282828;
         }
 
         th {
             background-color: var(--dark-green);
             color: var(--primary-green);
-            font-size: 1.15rem;
-            font-weight: 800;
+            font-size: 1.3rem; /* Larger table headers */
+            font-weight: 900;
             position: sticky;
             top: 0;
             z-index: 10;
-            border-bottom: 2px solid var(--primary-green);
+            border-bottom: 3px solid var(--primary-green);
             text-transform: uppercase;
         }
 
         /* Bold Bright White Destinations */
         td.destination-name {
-            font-weight: 700;
+            font-weight: 800;
             color: #ffffff;
-            font-size: 1.05rem;
+            font-size: 1.25rem; /* Larger, clearer town names */
         }
 
         tr:nth-child(even) { background-color: #222222; }
         tr:nth-child(odd) { background-color: #141414; }
         
         .price-tag { 
-            font-weight: 800; 
+            font-weight: 900; 
             color: var(--primary-green); 
-            font-size: 1.1rem; 
+            font-size: 1.3rem; /* Larger price text */
             text-align: right;
         }
 
@@ -251,8 +255,8 @@
         .invoice-builder {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 18px;
+            margin-bottom: 22px;
         }
 
         @media (max-width: 768px) {
@@ -265,16 +269,17 @@
         }
 
         .input-group label {
-            font-weight: 700;
-            margin-bottom: 5px;
+            font-weight: 800;
+            margin-bottom: 6px;
             color: var(--primary-green);
+            font-size: 1.15rem;
         }
 
         .input-group input, .input-group select {
-            padding: 12px;
+            padding: 14px;
             border: 1px solid #444444;
-            border-radius: 6px;
-            font-size: 1rem;
+            border-radius: 8px;
+            font-size: 1.15rem;
             background-color: #0d0d0d;
             color: #ffffff;
         }
@@ -282,54 +287,55 @@
         .btn-gen {
             background-color: var(--primary-green);
             color: #000000;
-            padding: 14px 24px;
+            padding: 16px 28px;
             border: none;
-            border-radius: 6px;
-            font-weight: 800;
+            border-radius: 8px;
+            font-weight: 900;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 12px;
             text-transform: uppercase;
-            font-size: 1rem;
+            font-size: 1.2rem;
         }
 
         /* Printable Invoice Document Styling */
         #invoice-preview {
             display: none;
-            border: 3px solid #1a531f;
-            padding: 30px;
+            border: 4px solid #1a531f;
+            padding: 35px;
             background: #ffffff;
             color: #111111;
-            margin-top: 25px;
-            border-radius: 8px;
+            margin-top: 30px;
+            border-radius: 10px;
         }
 
         .inv-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #1a531f;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            border-bottom: 3px solid #1a531f;
+            padding-bottom: 18px;
+            margin-bottom: 22px;
         }
 
-        .inv-header img { max-height: 90px; }
+        .inv-header img { max-height: 110px; }
 
         .inv-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             color: #111827;
+            font-size: 1.1rem;
         }
 
         .inv-footer {
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #ddd;
+            margin-top: 35px;
+            padding-top: 18px;
+            border-top: 2px solid #ddd;
             text-align: center;
             font-style: italic;
             color: #111827;
-            font-size: 0.95rem;
+            font-size: 1.05rem;
         }
 
         /* Print Specific CSS */
@@ -342,11 +348,12 @@
 
         footer {
             background-color: #050505;
-            color: #888888;
+            color: #aaaaaa;
             text-align: center;
-            padding: 20px;
-            margin-top: 40px;
+            padding: 22px;
+            margin-top: 45px;
             border-top: 2px solid #1a1a1a;
+            font-size: 1.05rem;
         }
     </style>
 </head>
@@ -354,6 +361,7 @@
 
     <header>
         <div class="logo-container">
+            <!-- Smart logo load checking both PNG and JPG screenshot filenames -->
             <img src="Screenshot_20260218-024843.png" 
                  onerror="this.onerror=null; this.src='Screenshot_20260218-024843.jpg';" 
                  alt="D&C Refuse Trucking Logo" class="logo">
@@ -374,7 +382,7 @@
         <!-- Fleet Overview Section -->
         <div class="card">
             <h3>Our Fleet & Service Features</h3>
-            <p style="color: #e0e0e0; font-weight: 500;">Commercial box and refuse trucks outfitted with heavy-duty hydraulic tail-lifts for effortless loading across Jamaica.</p>
+            <p style="color: #e0e0e0; font-weight: 600;">Commercial box and refuse trucks outfitted with heavy-duty hydraulic tail-lifts for effortless loading across Jamaica.</p>
             
             <ul class="features-list">
                 <li>🚚 <span>Hydraulic Tail Lift Equipped:</span> Safe and simple loading for heavy equipment, machinery, and commercial pallets.</li>
@@ -408,7 +416,7 @@
         <!-- Full Destination Rate Sheet -->
         <div class="card">
             <h3>Destination Rate Sheet</h3>
-            <p style="color: #e0e0e0; font-weight: 600; margin-bottom: 10px;">Scroll down to view standard transport rates in Jamaican Dollars (JMD):</p>
+            <p style="color: #e0e0e0; font-weight: 700; margin-bottom: 12px;">Scroll down to view standard transport rates in Jamaican Dollars (JMD):</p>
 
             <div class="table-responsive">
                 <table>
@@ -460,7 +468,7 @@
         <!-- Built-In Invoice Generator Tool -->
         <div class="card">
             <h3>Invoice Generator Tool</h3>
-            <p style="color: #e0e0e0; font-weight: 500;">Generate a professional customer invoice directly on the site:</p>
+            <p style="color: #e0e0e0; font-weight: 600;">Generate a professional customer invoice directly on the site:</p>
             
             <div class="invoice-builder">
                 <div class="input-group">
@@ -513,7 +521,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td id="out-desc" style="color: #111827; font-weight: 600;">Haulage & Refuse Transport Service</td>
+                            <td id="out-desc" style="color: #111827; font-weight: 700;">Haulage & Refuse Transport Service</td>
                             <td style="text-align: right; font-weight: bold; color: #1a531f;" id="out-amount">$0 JMD</td>
                         </tr>
                     </tbody>
