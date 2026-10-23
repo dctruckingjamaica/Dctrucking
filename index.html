@@ -449,7 +449,7 @@
             font-size: 1.05rem;
             background-color: #0d0d0d;
             color: #ffffff;
-            width: 100%; /* Ensures input boxes stay inside boundaries */
+            width: 100%;
         }
 
         .btn-action-group {
@@ -707,24 +707,31 @@
                 <div class="input-group">
                     <label>Drop-off Destination (Auto-Rate)</label>
                     <select id="inv-destination" onchange="autoCalculateRate()">
-                        <option value="0">-- Select Destination Town --</option>
-                        <option value="26000">Downtown ($26,000 JMD)</option>
-                        <option value="25000">Kingston, Half Way Tree, Liguanea, Jacks Hill ($25,000 JMD)</option>
-                        <option value="20000">Spanish Town, Portmore, Ferry ($20,000 JMD)</option>
-                        <option value="27000">Old Harbour, Linstead, Bogwalk, Port Royal, Airport ($27,000 JMD)</option>
-                        <option value="31000">May Pen, Ewarton, Red Hills, Sligoville ($31,000 JMD)</option>
-                        <option value="39000">Tollgate, Clarendon Park, Friendship Gap ($39,000 JMD)</option>
-                        <option value="35000">Lionel Town, Mitchell Town, Rocky Point ($35,000 JMD)</option>
-                        <option value="42000">Chapelton, Frankfield, Mavis Bank ($42,000 JMD)</option>
-                        <option value="47000">Mandeville, Porus, Spaldings, Christiana ($47,000 JMD)</option>
-                        <option value="54000">Santa Cruz, Gutters ($54,000 JMD)</option>
-                        <option value="57000">Junction, Maggotty, Siloah, Lacovia ($57,000 JMD)</option>
-                        <option value="60000">Black River, Treasure Beach ($60,000 JMD)</option>
-                        <option value="71000">Sav-La-Mar, Whitehouse ($71,000 JMD)</option>
-                        <option value="78000">Negril, Little London ($78,000 JMD)</option>
-                        <option value="67000">Montego Bay, Wakefield ($67,000 JMD)</option>
-                        <option value="59000">Falmouth, Port Antonio, Manchioneal ($59,000 JMD)</option>
-                        <option value="53000">Ocho Rios, St. Ann's Bay, Runaway Bay ($53,000 JMD)</option>
+                        <option value="0">-- Select Destination --</option>
+                        <option value="26000">Downtown — $26,000 JMD</option>
+                        <option value="25000">Kingston, Half Way Tree, Liguanea — $25,000 JMD</option>
+                        <option value="20000">Spanish Town, Portmore, Ferry — $20,000 JMD</option>
+                        <option value="27000">Old Harbour, Linstead, Bogwalk — $27,000 JMD</option>
+                        <option value="31000">May Pen, Ewarton, Red Hills — $31,000 JMD</option>
+                        <option value="39000">Tollgate, Clarendon Park — $39,000 JMD</option>
+                        <option value="35000">Lionel Town, Rocky Point — $35,000 JMD</option>
+                        <option value="42000">Chapelton, Frankfield, Mavis Bank — $42,000 JMD</option>
+                        <option value="47000">Mandeville, Porus, Spaldings — $47,000 JMD</option>
+                        <option value="54000">Santa Cruz, Gutters — $54,000 JMD</option>
+                        <option value="57000">Junction, Maggotty, Siloah — $57,000 JMD</option>
+                        <option value="60000">Black River, Treasure Beach — $60,000 JMD</option>
+                        <option value="71000">Sav-La-Mar, Whitehouse — $71,000 JMD</option>
+                        <option value="78000">Negril, Little London — $78,000 JMD</option>
+                        <option value="82000">Green Island, Orange Bay — $82,000 JMD</option>
+                        <option value="67000">Montego Bay, Wakefield — $67,000 JMD</option>
+                        <option value="70000">Cambridge, Anchovy — $70,000 JMD</option>
+                        <option value="59000">Falmouth, Port Antonio, Manchioneal — $59,000 JMD</option>
+                        <option value="53000">Ocho Rios, St. Ann's Bay — $53,000 JMD</option>
+                        <option value="56000">Discovery Bay, Duncans — $56,000 JMD</option>
+                        <option value="32000">Guys Hill, Glengoffe — $32,000 JMD</option>
+                        <option value="42000">Port Maria, Highgate — $42,000 JMD</option>
+                        <option value="39000">Annotto Bay, Buff Bay — $39,000 JMD</option>
+                        <option value="64000">Boston, Long Bay — $64,000 JMD</option>
                     </select>
                 </div>
                 <div class="input-group" style="grid-column: 1 / -1;">
@@ -890,7 +897,7 @@
             var deposit = totalAmount * 0.5;
             var balance = totalAmount * 0.5;
 
-            var text = "Hello D%26C Refuse Trucking, new haulage booking request:%0A%0A" +
+            var text = "Hello D&C Refuse Trucking, new haulage booking request:%0A%0A" +
                        "*Invoice #:* " + encodeURIComponent(num) + "%0A" +
                        "*Client Name:* " + encodeURIComponent(client) + "%0A" +
                        "*Phone:* " + encodeURIComponent(phone) + "%0A" +
