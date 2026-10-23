@@ -25,7 +25,7 @@
             line-height: 1.6;
             color: var(--text-light);
             background-color: var(--bg-dark);
-            font-size: 1.15rem; /* Increased base font size */
+            font-size: 1.15rem;
         }
 
         header {
@@ -55,7 +55,7 @@
         }
 
         header h1 {
-            font-size: 2.2rem; /* Larger, bolder heading */
+            font-size: 2.2rem;
             text-transform: uppercase;
             color: var(--primary-green);
             margin-bottom: 8px;
@@ -66,7 +66,7 @@
 
         header p.tagline {
             color: #ffffff;
-            font-size: 1.3rem; /* Larger subtext */
+            font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 20px;
         }
@@ -87,7 +87,7 @@
         }
 
         .contact-item {
-            font-size: 1.2rem; /* Larger contact text */
+            font-size: 1.15rem;
             font-weight: 800;
             color: #ffffff;
             display: flex;
@@ -128,7 +128,7 @@
 
         .card h3 {
             color: var(--primary-green);
-            font-size: 1.8rem; /* Larger section titles */
+            font-size: 1.8rem;
             margin-bottom: 18px;
             border-bottom: 4px solid var(--primary-green);
             padding-bottom: 8px;
@@ -163,7 +163,7 @@
         .fleet-card .caption {
             padding: 12px;
             background: #111111;
-            font-size: 1.1rem; /* Larger captions */
+            font-size: 1.1rem;
             font-weight: 800;
             color: var(--primary-green);
             text-align: center;
@@ -192,7 +192,7 @@
 
         .features-list li {
             padding: 12px 0;
-            font-size: 1.2rem; /* Larger feature bullet text */
+            font-size: 1.2rem;
             border-bottom: 1px dashed #333333;
             color: #ffffff;
         }
@@ -225,7 +225,7 @@
         th {
             background-color: var(--dark-green);
             color: var(--primary-green);
-            font-size: 1.3rem; /* Larger table headers */
+            font-size: 1.3rem;
             font-weight: 900;
             position: sticky;
             top: 0;
@@ -238,7 +238,7 @@
         td.destination-name {
             font-weight: 800;
             color: #ffffff;
-            font-size: 1.25rem; /* Larger, clearer town names */
+            font-size: 1.25rem;
         }
 
         tr:nth-child(even) { background-color: #222222; }
@@ -247,7 +247,7 @@
         .price-tag { 
             font-weight: 900; 
             color: var(--primary-green); 
-            font-size: 1.3rem; /* Larger price text */
+            font-size: 1.3rem; 
             text-align: right;
         }
 
@@ -284,17 +284,41 @@
             color: #ffffff;
         }
 
+        .btn-action-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
         .btn-gen {
             background-color: var(--primary-green);
             color: #000000;
-            padding: 16px 28px;
+            padding: 16px 24px;
             border: none;
             border-radius: 8px;
             font-weight: 900;
             cursor: pointer;
-            margin-top: 12px;
             text-transform: uppercase;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: #ffffff;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 1.15rem;
+            text-decoration: none;
+            text-align: center;
+            flex: 1;
+            min-width: 240px;
         }
 
         /* Printable Invoice Document Styling */
@@ -361,7 +385,6 @@
 
     <header>
         <div class="logo-container">
-            <!-- Smart logo load checking both PNG and JPG screenshot filenames -->
             <img src="Screenshot_20260218-024843.png" 
                  onerror="this.onerror=null; this.src='Screenshot_20260218-024843.jpg';" 
                  alt="D&C Refuse Trucking Logo" class="logo">
@@ -371,9 +394,9 @@
 
         <!-- Top Contact Details Section -->
         <div class="contact-bar">
-            <div class="contact-item">📞 <span>Phone / WhatsApp:</span> <a href="tel:8768761234">Click to Call</a></div>
-            <div class="contact-item">✉️ <span>Email:</span> <a href="mailto:dcrefusetrucking@gmail.com">dcrefusetrucking@gmail.com</a></div>
-            <a href="tel:8768761234" class="contact-btn">📱 Contact Us Today</a>
+            <div class="contact-item">📞 <span>Call/WhatsApp:</span> <a href="https://wa.me/18768628579">+1 (876) 862-8579</a></div>
+            <div class="contact-item">✉️ <span>Email:</span> <a href="mailto:d.crefusetruckingequipment@gmail.com">d.crefusetruckingequipment@gmail.com</a></div>
+            <a href="https://wa.me/18768628579" class="contact-btn">📱 Contact Us via WhatsApp</a>
         </div>
     </header>
 
@@ -465,10 +488,10 @@
             </div>
         </div>
 
-        <!-- Built-In Invoice Generator Tool -->
+        <!-- Built-In Invoice & WhatsApp Quote Tool -->
         <div class="card">
-            <h3>Invoice Generator Tool</h3>
-            <p style="color: #e0e0e0; font-weight: 600;">Generate a professional customer invoice directly on the site:</p>
+            <h3>Invoice Generator & Quote Request</h3>
+            <p style="color: #e0e0e0; font-weight: 600;">Fill out the details below to view an invoice or send job details directly to our WhatsApp:</p>
             
             <div class="invoice-builder">
                 <div class="input-group">
@@ -488,7 +511,11 @@
                     <input type="number" id="inv-amount" placeholder="53000">
                 </div>
             </div>
-            <button class="btn-gen" onclick="generateInvoice()">Generate Printable Invoice</button>
+
+            <div class="btn-action-group">
+                <button class="btn-gen" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
+                <button class="btn-whatsapp" onclick="sendWhatsAppQuote()">📱 Send Request via WhatsApp</button>
+            </div>
 
             <!-- Printable Invoice Output Container -->
             <div id="invoice-preview">
@@ -555,6 +582,20 @@
             document.getElementById('out-date').innerText = new Date().toLocaleDateString();
 
             document.getElementById('invoice-preview').style.display = 'block';
+        }
+
+        function sendWhatsAppQuote() {
+            var client = document.getElementById('inv-client').value || 'Valued Client';
+            var route = document.getElementById('inv-route').value || 'Standard Transport Route';
+            var amount = document.getElementById('inv-amount').value || '0';
+
+            var text = "Hello D%26C Refuse Trucking, I would like to request haulage service:%0A%0A" +
+                       "*Client Name:* " + encodeURIComponent(client) + "%0A" +
+                       "*Route:* " + encodeURIComponent(route) + "%0A" +
+                       "*Estimated Rate:* $" + encodeURIComponent(amount) + " JMD%0A%0A" +
+                       "Please confirm delivery availability and send payment details.";
+
+            window.open("https://wa.me/18768628579?text=" + text, "_blank");
         }
     </script>
 </body>
