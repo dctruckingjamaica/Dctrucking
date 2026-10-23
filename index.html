@@ -55,33 +55,37 @@
         }
 
         header h1 {
-            font-size: clamp(1.1rem, 3.8vw, 1.75rem);
+            font-size: clamp(1rem, 3.2vw, 1.6rem);
             text-transform: uppercase;
             color: var(--primary-green);
-            margin-bottom: 2px;
+            margin-bottom: 12px;
             letter-spacing: 0.5px;
             font-weight: 900;
             text-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
-            line-height: 1.2;
             white-space: nowrap;
         }
 
-        header h2.sub-title {
-            font-size: clamp(1rem, 3.5vw, 1.45rem);
-            text-transform: uppercase;
-            color: var(--primary-green);
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-            font-weight: 800;
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
-            white-space: nowrap;
-        }
-
-        header p.tagline {
-            color: #ffffff;
-            font-size: clamp(0.95rem, 3.2vw, 1.2rem);
-            font-weight: 700;
+        /* Tagline Two-Line Layout (Larger & Clear) */
+        .tagline-box {
             margin-bottom: 18px;
+        }
+
+        header p.tagline-line1 {
+            color: #ffffff;
+            font-size: clamp(1.05rem, 3.6vw, 1.35rem);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        header p.tagline-line2 {
+            color: var(--primary-green);
+            font-size: clamp(1.1rem, 3.8vw, 1.45rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+            margin-top: 2px;
         }
 
         /* Responsive Contact Bar */
@@ -205,7 +209,7 @@
             text-overflow: ellipsis;
         }
 
-        /* Standard Plate Blur Overlay for standard photos */
+        /* Standard Plate Blur Overlay */
         .blur-plate {
             position: absolute;
             bottom: 45px;
@@ -216,19 +220,6 @@
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
             border-radius: 4px;
-        }
-
-        /* Dedicated Heavy Blur Cover strictly for the Headlight Front-View Truck Photo (1000017381.jpg) */
-        .headlight-front-blur {
-            position: absolute;
-            bottom: 44px;
-            left: 5%;
-            width: 32%;
-            height: 26%;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(15px);
-            border-radius: 4px;
-            z-index: 20;
         }
 
         /* Features List */
@@ -437,9 +428,11 @@
                  onerror="this.onerror=null; this.src='Screenshot_20260218-024843.jpg';" 
                  alt="D&C Refuse Trucking Logo" class="logo">
         </div>
-        <h1>D&C REFUSE TRUCKING & EQUIPMENT</h1>
-        <h2 class="sub-title">CO. LTD.</h2>
-        <p class="tagline">Reliable Islandwide Haulage & Refuse Management Services</p>
+        <h1>D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</h1>
+        <div class="tagline-box">
+            <p class="tagline-line1">RELIABLE ISLANDWIDE HAULAGE & REFUSE</p>
+            <p class="tagline-line2">MANAGEMENT SERVICES</p>
+        </div>
 
         <!-- Top Contact Details Section -->
         <div class="contact-bar">
@@ -464,8 +457,7 @@
 
             <div class="fleet-gallery">
                 <div class="fleet-card">
-                    <img src="1000017381.jpg" alt="Fleet Unit - Headlight Front View">
-                    <div class="headlight-front-blur"></div>
+                    <img src="1000017381.jpg" alt="Fleet Unit - Front View">
                     <div class="caption">Commercial Fleet - Front View</div>
                 </div>
                 <div class="fleet-card">
@@ -480,6 +472,7 @@
                 </div>
                 <div class="fleet-card">
                     <img src="1000018424.jpg" alt="Fleet Unit - Side Profile">
+                    <div class="blur-plate"></div>
                     <div class="caption">Enclosed Transport Box Truck</div>
                 </div>
             </div>
