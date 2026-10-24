@@ -1,935 +1,322 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED | Kingston & Portmore Jamaica</title>
+    <title>D&C Refuse Trucking & Equipment Co. Limited | Jamaica Haulage & Waste Management</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- GOOGLE SEARCH (SEO) META TAGS -->
-    <meta name="description" content="D&C Refuse Trucking & Equipment Co. Limited provides reliable box truck haulage, private truck hire, cargo removal, and commercial refuse management based in Kingston / Portmore, serving all Jamaica islandwide.">
-    <meta name="keywords" content="removal, haulage, private truck hire, box truck services, refuse management, trucking company Kingston, haulage Portmore, truck rental Jamaica, tail lift truck Jamaica, D&C Refuse Trucking">
-    <meta name="author" content="D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED">
-
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',      // Slate 900
+                            card: '#1e293b',      // Slate 800
+                            amber: '#f59e0b',     // Amber 500
+                            amberHover: '#d97706',// Amber 600
+                            accent: '#fbbf24',    // Amber 400
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary-green: #00e676; /* Vibrant popping neon emerald */
-            --dark-green: #0a2e12;
-            --bg-dark: #000000;
-            --card-dark: #181818;
-            --text-light: #ffffff;
-            --card-shadow: 0 4px 25px rgba(0, 230, 118, 0.25);
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.85) 100%);
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.5;
-            color: var(--text-light);
-            background-color: var(--bg-dark);
-            font-size: 1.1rem;
-        }
-
-        header {
-            background-color: #0a0a0a;
-            color: var(--text-light);
-            padding: 30px 12px 20px 12px;
-            text-align: center;
-            border-bottom: 5px solid var(--primary-green);
-        }
-
-        /* Bold Header Title Layout */
-        header h1 {
-            font-size: clamp(1.15rem, 4.1vw, 1.85rem);
-            text-transform: uppercase;
-            color: var(--primary-green);
-            margin-bottom: 3px;
-            letter-spacing: 0.5px;
-            font-weight: 900;
-            text-shadow: 0 0 14px rgba(0, 230, 118, 0.4);
-            white-space: nowrap;
-        }
-
-        header h2.sub-title {
-            font-size: clamp(1.05rem, 3.8vw, 1.55rem);
-            text-transform: uppercase;
-            color: var(--primary-green);
-            margin-bottom: 14px;
-            letter-spacing: 1px;
-            font-weight: 800;
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
-            white-space: nowrap;
-        }
-
-        /* Tagline & Operational Base Layout */
-        .tagline-box {
-            margin-bottom: 12px;
-        }
-
-        header p.tagline-line1 {
-            color: #ffffff;
-            font-size: clamp(0.88rem, 2.9vw, 1.1rem);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        header p.tagline-line2 {
-            color: var(--primary-green);
-            font-size: clamp(1rem, 3.4vw, 1.3rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
-            margin-top: 2px;
-        }
-
-        /* Operational Hub Badge */
-        .base-location-badge {
-            display: inline-block;
-            background: #112616;
-            color: #ffffff;
-            border: 2px solid var(--primary-green);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: clamp(0.95rem, 3.2vw, 1.15rem);
-            font-weight: 900;
-            margin-bottom: 14px;
-            box-shadow: 0 0 12px rgba(0, 230, 118, 0.2);
-        }
-
-        /* High-Visibility Contact Bar */
-        .contact-bar {
-            background-color: #141414;
-            border: 2px solid var(--primary-green);
-            border-radius: 12px;
-            padding: 14px 12px;
-            margin: 15px auto 5px auto;
-            max-width: 850px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: center;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .contact-item {
-            font-size: clamp(0.95rem, 3.5vw, 1.2rem);
-            font-weight: 800;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            white-space: nowrap;
-            width: 100%;
-        }
-
-        .contact-item.email-item {
-            white-space: nowrap;
-            font-size: clamp(0.72rem, 2.7vw, 1.02rem);
-            text-align: center;
-            background: #0d2312;
-            padding: 8px 10px;
-            border-radius: 8px;
-            border: 1px solid var(--primary-green);
-            color: #ffffff;
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .contact-item a {
-            color: var(--primary-green);
-            text-decoration: none;
-            font-weight: 900;
-        }
-
-        .contact-btn {
-            background-color: var(--primary-green);
-            color: #000000;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 900;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 1.05rem;
-            width: 100%;
-            max-width: 340px;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 25px auto;
-            padding: 0 12px;
-        }
-
-        .card {
-            background: var(--card-dark);
-            padding: 22px 16px;
-            margin-bottom: 28px;
-            border-radius: 14px;
-            border: 2px solid #282828;
-            box-shadow: var(--card-shadow);
-        }
-
-        .card h3 {
-            color: var(--primary-green);
-            font-size: clamp(1.05rem, 3.8vw, 1.55rem);
-            margin-bottom: 15px;
-            border-bottom: 3px solid var(--primary-green);
-            padding-bottom: 6px;
-            display: inline-block;
-            text-transform: uppercase;
-            font-weight: 900;
-            white-space: nowrap;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Deposit & Cancellation Policy Banner */
-        .deposit-policy-banner {
-            background: linear-gradient(135deg, #0d2b14, #1b4d24);
-            border: 2px solid var(--primary-green);
-            border-radius: 10px;
-            padding: 16px;
-            margin-bottom: 16px;
-            color: #ffffff;
-            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.2);
-        }
-
-        .deposit-policy-banner h4 {
-            color: var(--primary-green);
-            font-size: 1.15rem;
-            font-weight: 900;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .deposit-policy-banner p {
-            font-size: 1.02rem;
-            font-weight: 700;
-            line-height: 1.55;
-            color: #f1f5f9;
-            margin-bottom: 8px;
-        }
-
-        .deposit-policy-banner p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* High Visibility Red & Yellow Text Styling */
-        .text-red-alert {
-            color: #ff3333;
-            font-weight: 900;
-        }
-
-        .text-yellow-highlight {
-            color: #ffeb3b;
-            font-weight: 900;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        /* Fleet Gallery */
-        .fleet-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
-            margin-top: 18px;
-        }
-
-        .fleet-card {
-            position: relative;
-            border-radius: 10px;
-            border: 2px solid #333333;
-            overflow: hidden;
-            background: #111;
-        }
-
-        .fleet-card img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .fleet-card .caption {
-            padding: 10px;
-            background: #111111;
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--primary-green);
-            text-align: center;
-            border-top: 1px solid #222;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Standard Plate Blur Overlay */
-        .blur-plate {
-            position: absolute;
-            bottom: 45px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85px;
-            height: 28px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 4px;
-        }
-
-        /* Raised Blur Cover directly over Bumper License Plate */
-        .blur-plate-bumper-high {
-            position: absolute;
-            bottom: 110px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 110px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(16px);
-            border-radius: 5px;
-            z-index: 30;
-        }
-
-        /* Features List */
-        .features-list {
-            list-style: none;
-            margin-top: 15px;
-            margin-bottom: 18px;
-        }
-
-        .features-list li {
-            padding: 10px 0;
-            font-size: 1.1rem;
-            border-bottom: 1px dashed #333333;
-            color: #ffffff;
-        }
-
-        .features-list li span {
-            font-weight: 800;
-            color: var(--primary-green);
-        }
-
-        /* Fresh White Destination Rate Card */
-        .fresh-rate-card {
-            background-color: #ffffff;
-            color: #000000;
-            border-radius: 14px;
-            padding: 20px 16px;
-            margin-top: 15px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-            border: 3px solid var(--primary-green);
-        }
-
-        .fresh-rate-scroll {
-            max-height: 550px;
-            overflow-y: auto;
-            padding-right: 6px;
-        }
-
-        .rate-row {
-            padding: 14px 10px;
-            border-bottom: 2px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .rate-row:last-child {
-            border-bottom: none;
-        }
-
-        .rate-loc {
-            font-weight: 800;
-            font-size: 1.12rem;
-            color: #0f172a;
-            display: flex;
-            align-items: flex-start;
-            gap: 6px;
-            line-height: 1.35;
-        }
-
-        .rate-price {
-            font-weight: 900;
-            font-size: 1.25rem;
-            color: #059669;
-            padding-left: 28px;
-        }
-
-        /* Quick Profile / Returning Client Switcher */
-        .client-account-bar {
-            background: #112616;
-            border: 2px solid var(--primary-green);
-            padding: 14px;
-            border-radius: 10px;
-            margin-bottom: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .client-account-bar h4 {
-            color: var(--primary-green);
-            font-size: 1.1rem;
-            font-weight: 900;
-        }
-
-        .quick-lookup-grid {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .quick-lookup-grid input {
-            flex: 2;
-            min-width: 200px;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #444;
-            background: #000;
-            color: #fff;
-            font-size: 1rem;
-            width: 100%;
-        }
-
-        .btn-lookup {
-            background: var(--primary-green);
-            color: #000;
-            font-weight: 900;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        /* Comprehensive Form Grid */
-        .invoice-builder {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 18px;
-        }
-
-        @media (max-width: 768px) {
-            .invoice-builder { grid-template-columns: 1fr; }
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-
-        .input-group label {
-            font-weight: 800;
-            margin-bottom: 5px;
-            color: var(--primary-green);
-            font-size: 1.05rem;
-        }
-
-        .input-group input, .input-group select {
-            padding: 12px;
-            border: 2px solid var(--primary-green);
-            border-radius: 8px;
-            font-size: 1.05rem;
-            background-color: #ffffff; /* Clean white background */
-            color: #0f172a; /* Dark readable text */
-            font-weight: 700;
-            width: 100%;
-        }
-
-        .input-group select option {
-            background-color: #ffffff;
-            color: #0f172a;
-            padding: 10px;
-            font-weight: 700;
-        }
-
-        .btn-action-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        .btn-gen {
-            background-color: var(--primary-green);
-            color: #000000;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 900;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 1.05rem;
-            flex: 1;
-            min-width: 220px;
-        }
-
-        .btn-whatsapp {
-            background-color: #25d366;
-            color: #ffffff;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 900;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 1.05rem;
-            text-decoration: none;
-            text-align: center;
-            flex: 1;
-            min-width: 220px;
-        }
-
-        .btn-save-profile {
-            background-color: #0284c7;
-            color: #ffffff;
-            padding: 12px 18px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 800;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 8px;
-        }
-
-        /* Printable Invoice Output */
-        #invoice-preview {
-            display: none;
-            border: 4px solid #1a531f;
-            padding: 25px;
-            background: #ffffff;
-            color: #111111;
-            margin-top: 25px;
-            border-radius: 10px;
-        }
-
-        .inv-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid #1a531f;
-            padding-bottom: 15px;
-            margin-bottom: 18px;
-        }
-
-        .inv-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 18px;
-            color: #111827;
-            font-size: 1rem;
-        }
-
-        .inv-footer {
-            margin-top: 28px;
-            padding-top: 15px;
-            border-top: 2px solid #ddd;
-            text-align: center;
-            font-style: italic;
-            color: #111827;
-            font-size: 0.98rem;
-        }
-
-        @media print {
-            body * { visibility: hidden; }
-            #invoice-preview, #invoice-preview * { visibility: visible; }
-            #invoice-preview { position: absolute; left: 0; top: 0; width: 100%; border: none; padding: 0; }
-            .btn-print { display: none; }
-        }
-
-        footer {
-            background-color: #050505;
-            color: #aaaaaa;
-            text-align: center;
-            padding: 20px;
-            margin-top: 35px;
-            border-top: 2px solid #1a1a1a;
-            font-size: 1rem;
+        .gold-glow {
+            box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.3);
         }
     </style>
 </head>
-<body>
+<body class="bg-brand-dark text-slate-100 font-sans antialiased selection:bg-brand-amber selection:text-brand-dark min-h-screen flex flex-col justify-between">
 
-    <header>
-        <h1>D&C REFUSE TRUCKING & EQUIPMENT</h1>
-        <h2 class="sub-title">COMPANY LIMITED</h2>
-        <div class="tagline-box">
-            <p class="tagline-line1">RELIABLE ISLANDWIDE HAULAGE & REFUSE</p>
-            <p class="tagline-line2">MANAGEMENT SERVICES</p>
+    <!-- Top Announcement Bar -->
+    <div class="bg-brand-amber text-slate-950 px-4 py-2 text-xs md:text-sm font-semibold flex justify-between items-center text-center">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-1">
+            <span><i class="fa-solid fa-truck-fast mr-1"></i> Family-Run & Trusted Across Jamaica &bull; 24/7 Emergency Haulage Available</span>
+            <a href="https://wa.me/18768628579" target="_blank" rel="noopener noreferrer" class="underline hover:text-slate-800 transition-colors">
+                <i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp: (876) 862-8579
+            </a>
         </div>
-        <div class="base-location-badge">📍 Operational Hub: Kingston & Portmore • Dispatching Islandwide</div>
+    </div>
 
-        <!-- Top Contact Details Section -->
-        <div class="contact-bar">
-            <div class="contact-item">📞 Call/WhatsApp: <a href="https://wa.me/18768628579">+1 (876) 862-8579</a></div>
-            <div class="contact-item email-item">✉️ Email: <a href="mailto:d.crefusetruckingequipment@gmail.com">d.crefusetruckingequipment@gmail.com</a></div>
-            <a href="https://wa.me/18768628579" class="contact-btn">📱 Contact via WhatsApp</a>
+    <!-- Main Navigation Header -->
+    <header class="sticky top-0 z-50 bg-brand-dark/90 backdrop-blur-md border-b border-slate-800">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Brand Logo / Name -->
+            <a href="#" class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-brand-amber text-slate-950 flex items-center justify-center font-black text-xl shadow-lg">
+                    D&C
+                </div>
+                <div>
+                    <span class="text-lg md:text-xl font-bold tracking-tight block text-white leading-tight">D&C Refuse Trucking</span>
+                    <span class="text-xs text-brand-amber font-medium block">& Equipment Co. Limited</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#vehicle-spec" class="text-slate-300 hover:text-brand-amber transition-colors">Fleet Specs</a>
+                <a href="#services" class="text-slate-300 hover:text-brand-amber transition-colors">Services</a>
+                <a href="#hours" class="text-slate-300 hover:text-brand-amber transition-colors">Hours & Contact</a>
+                <a href="https://wa.me/18768628579" target="_blank" rel="noopener noreferrer" class="bg-brand-amber hover:bg-brand-amberHover text-slate-950 px-4 py-2 rounded-lg font-bold text-sm transition-all transform hover:scale-105 shadow-md flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Quick Chat
+                </a>
+            </nav>
+
+            <!-- Mobile WhatsApp Callout -->
+            <a href="https://wa.me/18768628579" target="_blank" rel="noopener noreferrer" class="md:hidden bg-brand-amber text-slate-950 px-3 py-1.5 rounded-md font-bold text-xs flex items-center gap-1">
+                <i class="fa-brands fa-whatsapp text-sm"></i> Chat Now
+            </a>
         </div>
     </header>
 
-    <div class="container">
+    <!-- HERO SECTION -->
+    <section class="relative bg-brand-dark py-16 md:py-24 border-b border-slate-800 overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
-        <!-- Fleet Overview Section -->
-        <div class="card">
-            <h3>Our Fleet & Service Features</h3>
-            <p style="color: #e0e0e0; font-weight: 600;">Commercial box and refuse trucks outfitted with heavy-duty hydraulic tail-lifts for effortless cargo removal, haulage, and waste management across Jamaica.</p>
-            
-            <ul class="features-list">
-                <li>🚚 <span>Hydraulic Tail Lift Equipped:</span> Safe and simple loading for heavy equipment, machinery, and commercial pallets.</li>
-                <li>📦 <span>Enclosed & Secure Haulage:</span> Weatherproof private truck hire to protect cargo during long-distance delivery.</li>
-                <li>🛠️ <span>Commercial Waste Management:</span> Scheduled refuse collection and site removal for businesses and developments.</li>
-            </ul>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Content -->
+                <div class="lg:col-span-7 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-slate-700 text-brand-amber text-xs md:text-sm font-semibold mb-6">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Family-Run Commercial Trucking & Waste Management
+                    </div>
 
-            <div class="fleet-gallery">
-                <div class="fleet-card">
-                    <img src="1000017381.jpg" alt="Fleet Unit - Front View">
-                    <div class="caption">Commercial Fleet - Front View</div>
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+                        Reliable Haulage & Transport <span class="text-brand-amber">Across Jamaica</span>
+                    </h1>
+
+                    <p class="text-slate-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        D&C Refuse Trucking & Equipment Co. Limited is a trusted family-run business providing professional commercial trucking, equipment transport, waste management, and house removals. Safe, efficient, and dependable service every time.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="https://wa.me/18768628579" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-3 text-lg gold-glow">
+                            <i class="fa-brands fa-whatsapp text-2xl"></i> WhatsApp Us Now
+                        </a>
+                        <a href="#vehicle-spec" class="w-full sm:w-auto border border-slate-700 bg-brand-card hover:bg-slate-800 text-slate-200 font-semibold px-6 py-4 rounded-xl transition-colors text-center text-base">
+                            View Truck Specs & Capacity
+                        </a>
+                    </div>
                 </div>
-                <div class="fleet-card">
-                    <img src="1000017756.jpg" alt="Fleet Unit - Perspective">
-                    <div class="blur-plate"></div>
-                    <div class="caption">Isuzu Forward Easy Shift</div>
+
+                <!-- Hero Right Feature: PROMINENT TRUCK SPEC HIGHLIGHT CARD -->
+                <div id="vehicle-spec" class="lg:col-span-5">
+                    <div class="bg-gradient-to-br from-slate-800 to-brand-card p-6 sm:p-8 rounded-2xl border-2 border-brand-amber/60 shadow-2xl relative gold-glow">
+                        <div class="absolute -top-4 right-6 bg-brand-amber text-slate-950 text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider shadow">
+                            Primary Workhorse Vehicle
+                        </div>
+
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-3 bg-brand-amber/10 text-brand-amber rounded-lg">
+                                <i class="fa-solid fa-truck-box text-3xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Heavy-Duty Fleet Specs</h3>
+                                <p class="text-xs text-slate-400">Available for Commercial & Private Hire</p>
+                            </div>
+                        </div>
+
+                        <!-- Big Badge -->
+                        <div class="bg-slate-900/90 rounded-xl p-4 mb-6 border border-slate-700 text-center">
+                            <span class="text-slate-400 text-xs uppercase tracking-widest font-semibold block mb-1">Standard Vehicle Setup</span>
+                            <div class="text-2xl sm:text-3xl font-black text-brand-amber">
+                                7.5 Ton Truck <span class="text-slate-400 text-lg font-normal">w/</span> 20 Foot Box
+                            </div>
+                        </div>
+
+                        <!-- Key Specs List -->
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex items-center justify-between border-b border-slate-700/50 pb-2">
+                                <span class="text-slate-400"><i class="fa-solid fa-ruler-combined text-brand-amber mr-2"></i> Box Length:</span>
+                                <span class="font-bold text-white">20 Feet (Enclosed Cargo)</span>
+                            </li>
+                            <li class="flex items-center justify-between border-b border-slate-700/50 pb-2">
+                                <span class="text-slate-400"><i class="fa-solid fa-weight-hanging text-brand-amber mr-2"></i> Gross Capacity:</span>
+                                <span class="font-bold text-white">7.5 Tons</span>
+                            </li>
+                            <li class="flex items-center justify-between border-b border-slate-700/50 pb-2">
+                                <span class="text-slate-400"><i class="fa-solid fa-shield-halved text-brand-amber mr-2"></i> Cargo Protection:</span>
+                                <span class="font-bold text-white">Fully Weatherproof & Secure</span>
+                            </li>
+                            <li class="flex items-center justify-between">
+                                <span class="text-slate-400"><i class="fa-solid fa-clock text-brand-amber mr-2"></i> Dispatch:</span>
+                                <span class="font-bold text-emerald-400">24/7 Service Capability</span>
+                            </li>
+                        </ul>
+
+                        <div class="mt-6 pt-4 border-t border-slate-700">
+                            <a href="https://wa.me/18768628579?text=Hi%2C%20I%20would%20like%20to%20inquire%20about%20hiring%20the%207.5%20Ton%2020ft%20box%20truck." target="_blank" rel="noopener noreferrer" class="block w-full bg-slate-900 hover:bg-slate-950 text-brand-amber border border-brand-amber/40 text-center font-bold py-3 rounded-lg text-sm transition-colors">
+                                Book This Truck via WhatsApp
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="fleet-card">
-                    <img src="1000018141.jpg" alt="Fleet Unit - Rear Tail Lift">
-                    <div class="blur-plate"></div>
-                    <div class="caption">Heavy-Duty Tail Lift Unit</div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CORE SERVICES SECTION -->
+    <section id="services" class="py-16 bg-slate-900 border-b border-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-brand-amber mb-2">What We Do</h2>
+                <p class="text-3xl font-extrabold text-white sm:text-4xl">Comprehensive Trucking & Waste Solutions</p>
+                <p class="text-slate-400 mt-3 text-base">Whether you need large-scale commercial haulage, equipment delivery, or residential waste clearance, our family business handles it with precision.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-brand-card p-6 rounded-xl border border-slate-700 hover:border-brand-amber/50 transition-all group">
+                    <div class="w-12 h-12 rounded-lg bg-brand-amber/10 text-brand-amber flex items-center justify-center text-2xl mb-4 group-hover:bg-brand-amber group-hover:text-slate-950 transition-colors">
+                        <i class="fa-solid fa-truck-moving"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Commercial Trucking & Haulage</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Full-scale commercial freight haulage across parish lines. Reliable scheduling and safe delivery guaranteed for your cargo.</p>
                 </div>
-                <div class="fleet-card">
-                    <img src="1000018424.jpg" alt="Fleet Unit - Side Profile">
-                    <div class="blur-plate-bumper-high"></div>
-                    <div class="caption">Enclosed Transport Box Truck</div>
+
+                <!-- Service 2 -->
+                <div class="bg-brand-card p-6 rounded-xl border border-slate-700 hover:border-brand-amber/50 transition-all group">
+                    <div class="w-12 h-12 rounded-lg bg-brand-amber/10 text-brand-amber flex items-center justify-center text-2xl mb-4 group-hover:bg-brand-amber group-hover:text-slate-950 transition-colors">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Waste Management & Refuse</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Commercial waste removal, industrial refuse collection, construction debris hauling, and private site cleanup services.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-brand-card p-6 rounded-xl border border-slate-700 hover:border-brand-amber/50 transition-all group">
+                    <div class="w-12 h-12 rounded-lg bg-brand-amber/10 text-brand-amber flex items-center justify-center text-2xl mb-4 group-hover:bg-brand-amber group-hover:text-slate-950 transition-colors">
+                        <i class="fa-solid fa-couch"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">House & Furniture Removals</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Convenient house relocations and bulk furniture transport using our spacious 20-foot enclosed box truck to keep items safe.</p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="bg-brand-card p-6 rounded-xl border border-slate-700 hover:border-brand-amber/50 transition-all group">
+                    <div class="w-12 h-12 rounded-lg bg-brand-amber/10 text-brand-amber flex items-center justify-center text-2xl mb-4 group-hover:bg-brand-amber group-hover:text-slate-950 transition-colors">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Equipment Transport</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Safe relocation of machinery, site equipment, supplies, and tools for construction projects or business operations.</p>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="bg-brand-card p-6 rounded-xl border border-slate-700 hover:border-brand-amber/50 transition-all group">
+                    <div class="w-12 h-12 rounded-lg bg-brand-amber/10 text-brand-amber flex items-center justify-center text-2xl mb-4 group-hover:bg-brand-amber group-hover:text-slate-950 transition-colors">
+                        <i class="fa-solid fa-truck-front"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Private Truck Hire</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Dedicated 7.5 ton truck hire with driver for tailored routes, custom haulage projects, or scheduled recurring contracts.</p>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="bg-brand-card p-6 rounded-xl border border-slate-700 hover:border-brand-amber/50 transition-all group">
+                    <div class="w-12 h-12 rounded-lg bg-brand-amber/10 text-brand-amber flex items-center justify-center text-2xl mb-4 group-hover:bg-brand-amber group-hover:text-slate-950 transition-colors">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">24/7 Emergency Haulage</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Urgent cleanup or rapid-response transport needed off-hours? Our family team offers round-the-clock emergency support.</p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Fresh Bold White Destination Rate Sheet -->
-        <div class="card">
-            <h3>Destination Rate Sheet</h3>
-            
-            <!-- Styled 50% Deposit & Highlighted 72-Hour Policy Banner -->
-            <div class="deposit-policy-banner">
-                <h4>🔒 Booking & Deposit Policy</h4>
-                <p>• <span class="text-red-alert">50% Deposit Required:</span> Payable in advance to confirm and lock in your scheduled job date.</p>
-                <p>• <span class="text-red-alert">50% Remaining Balance:</span> Payable upon pickup of goods/items on the job date.</p>
-                <p>• <strong>Cancellation Policy:</strong> Full deposit refund for cancellations made at least <strong>72 hours (3 days)</strong> prior to the scheduled job. Cancellations made <span class="text-yellow-highlight">under 72 hours</span> are <span class="text-yellow-highlight">strictly non-refundable</span>.</p>
-            </div>
+    <!-- OPERATIONAL HOURS & DETAILS SECTION -->
+    <section id="hours" class="py-16 bg-brand-dark border-b border-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <!-- Hours Table -->
+                <div class="bg-brand-card p-6 sm:p-8 rounded-2xl border border-slate-700">
+                    <h3 class="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+                        <i class="fa-regular fa-clock text-brand-amber"></i> Standard Hours of Operation
+                    </h3>
+                    <p class="text-slate-400 text-sm mb-6">Our standard service hours for bookings, transport, and customer care across Jamaica.</p>
 
-            <p style="color: #e0e0e0; font-weight: 700; margin-bottom: 12px;">Scroll down to view standard transport rates in Jamaican Dollars (JMD):</p>
-
-            <div class="fresh-rate-card">
-                <div class="fresh-rate-scroll">
-                    
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Downtown</div><div class="rate-price">💰 $26,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill</div><div class="rate-price">💰 $25,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Spanish Town, Portmore, Ferry</div><div class="rate-price">💰 $20,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town</div><div class="rate-price">💰 $27,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville</div><div class="rate-price">💰 $31,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap</div><div class="rate-price">💰 $39,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill</div><div class="rate-price">💰 $35,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank</div><div class="rate-price">💰 $42,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits</div><div class="rate-price">💰 $47,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Wait-A-Bit, Albert Town</div><div class="rate-price">💰 $51,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town</div><div class="rate-price">💰 $47,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond</div><div class="rate-price">💰 $57,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Maggotty, Siloah, Balaclava, Lacovia, Newton</div><div class="rate-price">💰 $57,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Santa Cruz, Gutters</div><div class="rate-price">💰 $54,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Black River, New Market, Springfield, Treasure Beach, Southfield</div><div class="rate-price">💰 $60,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town</div><div class="rate-price">💰 $71,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill</div><div class="rate-price">💰 $76,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Negril, Little London, Darliston, Delveland</div><div class="rate-price">💰 $78,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Green Island, Orange Bay</div><div class="rate-price">💰 $82,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Montego Bay, Wakefield</div><div class="rate-price">💰 $67,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Cambridge, Lambs River, Anchovy</div><div class="rate-price">💰 $70,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria</div><div class="rate-price">💰 $59,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel</div><div class="rate-price">💰 $53,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River</div><div class="rate-price">💰 $53,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Discovery Bay, Braco, Duncans</div><div class="rate-price">💰 $56,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Guys Hill, Glengoffe, Polly Ground</div><div class="rate-price">💰 $32,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall</div><div class="rate-price">💰 $42,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Annotto Bay, Windsor Castle, Buff Bay, Skibo</div><div class="rate-price">💰 $39,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay</div><div class="rate-price">💰 $59,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Boston, Long Bay</div><div class="rate-price">💰 $64,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Easington, Seaforth, Morant Bay, Lyssons, Airy Castle</div><div class="rate-price">💰 $42,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Stokes Hall, Trinityville, Bath, Bowden, Golden Grove</div><div class="rate-price">💰 $53,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Manchioneal, Hectors River</div><div class="rate-price">💰 $59,000 JMD</div></div>
-
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between items-center py-2 border-b border-slate-700">
+                            <span class="text-slate-300 font-medium">Monday &ndash; Friday</span>
+                            <span class="text-brand-amber font-bold">7:00 AM &ndash; 5:00 PM</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-slate-700">
+                            <span class="text-slate-300 font-medium">Saturday</span>
+                            <span class="text-brand-amber font-bold">7:30 AM &ndash; 4:00 PM</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-slate-700">
+                            <span class="text-slate-300 font-medium">Sunday</span>
+                            <span class="text-brand-amber font-bold">8:00 AM &ndash; 2:00 PM</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-3 bg-slate-900/80 p-3 rounded-lg border border-emerald-500/30">
+                            <span class="text-emerald-400 font-bold flex items-center gap-2">
+                                <i class="fa-solid fa-phone-volume"></i> Emergency Haulage
+                            </span>
+                            <span class="text-emerald-400 font-bold">24 Hours / 7 Days</span>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Family Business Guarantee & WhatsApp Callout -->
+                <div class="space-y-6">
+                    <div class="inline-block px-3 py-1 rounded-md bg-brand-amber/10 text-brand-amber font-semibold text-xs uppercase tracking-wider">
+                        Why Choose Us
+                    </div>
+                    <h3 class="text-3xl font-extrabold text-white">Family-Run Values. Enterprise-Grade Transport.</h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        At D&C Refuse Trucking & Equipment Co. Limited, we treat every job with personal care. As a local Jamaican family business, we take pride in punctuality, transparent communication, and ensuring your items or refuse are transported safely with our 7.5 ton 20ft box truck.
+                    </p>
+
+                    <div class="p-6 rounded-xl bg-slate-900 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <div class="font-bold text-white text-lg">Have a load ready to haul?</div>
+                            <div class="text-xs text-slate-400">Get an instant quote via WhatsApp message or call.</div>
+                        </div>
+                        <a href="https://wa.me/18768628579" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-3 rounded-lg text-sm transition-colors whitespace-nowrap flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </section>
 
-        <!-- Comprehensive Quote & Customer Record Generator -->
-        <div class="card">
-            <h3>Invoice Generator & Quote Request</h3>
-            
-            <!-- Returning Client Lookup Section -->
-            <div class="client-account-bar">
-                <h4>👤 Returning Client Auto-Fill (No Password Needed)</h4>
-                <div class="quick-lookup-grid">
-                    <input type="email" id="lookup-email" placeholder="Enter your registered email address...">
-                    <button class="btn-lookup" onclick="lookupClientProfile()">🔍 Load Saved Profile</button>
-                </div>
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 py-10 text-slate-400 text-sm">
+        <div class="container mx-auto px-4 text-center space-y-4">
+            <div class="flex justify-center items-center gap-2 text-white font-bold text-lg">
+                <span class="w-7 h-7 rounded bg-brand-amber text-slate-950 text-sm flex items-center justify-center font-black">D&C</span>
+                D&C Refuse Trucking & Equipment Co. Limited
             </div>
-
-            <p style="color: #e0e0e0; font-weight: 600; margin-bottom: 15px;">Fill out the customer details below or load a saved profile to generate an instant quote:</p>
-            
-            <div class="invoice-builder">
-                <div class="input-group">
-                    <label>Client / Business Name</label>
-                    <input type="text" id="inv-client" placeholder="e.g. John Brown / ABC Ltd">
-                </div>
-                <div class="input-group">
-                    <label>Phone Number</label>
-                    <input type="tel" id="inv-phone" placeholder="e.g. 876-555-0199">
-                </div>
-                <div class="input-group">
-                    <label>Email Address</label>
-                    <input type="email" id="inv-email" placeholder="e.g. client@gmail.com">
-                </div>
-                <div class="input-group">
-                    <label>Invoice Number</label>
-                    <input type="text" id="inv-num" value="DC-1001">
-                </div>
-                <div class="input-group">
-                    <label>Pickup Location</label>
-                    <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
-                </div>
-                <div class="input-group">
-                    <label>Drop-off Destination (Select Town)</label>
-                    <select id="inv-destination" onchange="autoCalculateRate()">
-                        <option value="0">--- SELECT DESTINATION TOWN ---</option>
-                        <option value="26000">Downtown — $26,000 JMD</option>
-                        <option value="25000">Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill — $25,000 JMD</option>
-                        <option value="20000">Spanish Town, Portmore, Ferry — $20,000 JMD</option>
-                        <option value="27000">Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town — $27,000 JMD</option>
-                        <option value="31000">May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville — $31,000 JMD</option>
-                        <option value="39000">Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap — $39,000 JMD</option>
-                        <option value="35000">Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill — $35,000 JMD</option>
-                        <option value="42000">Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank — $42,000 JMD</option>
-                        <option value="47000">Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits — $47,000 JMD</option>
-                        <option value="51000">Wait-A-Bit, Albert Town — $51,000 JMD</option>
-                        <option value="47000">Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town — $47,000 JMD</option>
-                        <option value="57000">Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond — $57,000 JMD</option>
-                        <option value="57000">Maggotty, Siloah, Balaclava, Lacovia, Newton — $57,000 JMD</option>
-                        <option value="54000">Santa Cruz, Gutters — $54,000 JMD</option>
-                        <option value="60000">Black River, New Market, Springfield, Treasure Beach, Southfield — $60,000 JMD</option>
-                        <option value="71000">Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town — $71,000 JMD</option>
-                        <option value="76000">Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill — $76,000 JMD</option>
-                        <option value="78000">Negril, Little London, Darliston, Delveland — $78,000 JMD</option>
-                        <option value="82000">Green Island, Orange Bay — $82,000 JMD</option>
-                        <option value="67000">Montego Bay, Wakefield — $67,000 JMD</option>
-                        <option value="70000">Cambridge, Lambs River, Anchovy — $70,000 JMD</option>
-                        <option value="59000">Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria — $59,000 JMD</option>
-                        <option value="53000">Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel — $53,000 JMD</option>
-                        <option value="53000">St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River — $53,000 JMD</option>
-                        <option value="56000">Discovery Bay, Braco, Duncans — $56,000 JMD</option>
-                        <option value="32000">Guys Hill, Glengoffe, Polly Ground — $32,000 JMD</option>
-                        <option value="42000">Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall — $42,000 JMD</option>
-                        <option value="39000">Annotto Bay, Windsor Castle, Buff Bay, Skibo — $39,000 JMD</option>
-                        <option value="59000">Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay — $59,000 JMD</option>
-                        <option value="64000">Boston, Long Bay — $64,000 JMD</option>
-                        <option value="42000">Easington, Seaforth, Morant Bay, Lyssons, Airy Castle — $42,000 JMD</option>
-                        <option value="53000">Stokes Hall, Trinityville, Bath, Bowden, Golden Grove — $53,000 JMD</option>
-                        <option value="59000">Manchioneal, Hectors River — $59,000 JMD</option>
-                    </select>
-                </div>
-                <div class="input-group" style="grid-column: 1 / -1;">
-                    <label>Calculated Total Rate (JMD) - Or Enter Custom Rate</label>
-                    <input type="number" id="inv-amount" placeholder="0">
-                </div>
-            </div>
-
-            <button class="btn-save-profile" onclick="saveClientProfile()">💾 Save My Info for Future Bookings</button>
-
-            <div class="btn-action-group">
-                <button class="btn-gen" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
-                <button class="btn-whatsapp" onclick="sendWhatsAppQuote()">📱 Send Request via WhatsApp</button>
-            </div>
-
-            <!-- Printable Invoice Output Container -->
-            <div id="invoice-preview">
-                <div class="inv-header">
-                    <div>
-                        <h2 style="color: #1a531f;">INVOICE / BOOKING QUOTE</h2>
-                        <p><strong>D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</strong></p>
-                        <p>Jamaica | Professional Transport Services (Kingston / Portmore Hub)</p>
-                    </div>
-                </div>
-                <div class="inv-details">
-                    <div>
-                        <p><strong>Billed To:</strong> <span id="out-client"></span></p>
-                        <p><strong>Phone:</strong> <span id="out-phone"></span></p>
-                        <p><strong>Email:</strong> <span id="out-email"></span></p>
-                    </div>
-                    <div style="text-align: right;">
-                        <p><strong>Invoice #:</strong> <span id="out-num"></span></p>
-                        <p><strong>Date:</strong> <span id="out-date"></span></p>
-                    </div>
-                </div>
-                <p style="margin-bottom: 12px; color: #111827; font-size: 1.05rem;"><strong>Route Details:</strong> <span id="out-route"></span></p>
-                <table style="margin-bottom: 15px;">
-                    <thead>
-                        <tr style="background-color: #1a531f; color: #ffffff;">
-                            <th>Description</th>
-                            <th style="text-align: right;">Amount (JMD)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td id="out-desc" style="color: #111827; font-weight: 700;">Haulage & Refuse Transport Service</td>
-                            <td style="text-align: right; font-weight: bold; color: #111827;" id="out-amount">$0 JMD</td>
-                        </tr>
-                        <tr style="background-color: #f0fdf4;">
-                            <td style="color: #166534; font-weight: 800;">🔒 Required 50% Deposit (To Confirm Booking)</td>
-                            <td style="text-align: right; font-weight: 900; color: #166534;" id="out-deposit">$0 JMD</td>
-                        </tr>
-                        <tr>
-                            <td style="color: #334155; font-weight: 700;">🚚 Remaining 50% Balance (Due Upon Pickup)</td>
-                            <td style="text-align: right; font-weight: bold; color: #334155;" id="out-balance">$0 JMD</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="inv-footer">
-                    <p style="margin-bottom: 6px; font-weight: bold; color: #166534;">* Note: A 50% deposit is required to lock in your date on our booking schedule. Remaining 50% balance is payable upon pickup.</p>
-                    <p style="margin-bottom: 10px; font-weight: bold; color: #b91c1c;">⚠️ Policy Notice: Cancellations must be made at least 72 hours prior to service for a deposit refund. Cancellations made under 72 hours are non-refundable.</p>
-                    <p><strong>Thank you for choosing D&C Refuse Trucking & Equipment Co. Limited. We appreciate your business and look forward to serving your transport needs!</strong></p>
-                </div>
-                <br>
-                <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
+            <p class="max-w-md mx-auto text-xs text-slate-500">
+                Commercial Trucking &bull; Equipment Transport &bull; Waste Removal &bull; House & Furniture Removals &bull; Jamaica
+            </p>
+            <div class="pt-4 border-t border-slate-900 text-xs text-slate-600">
+                &copy; <script>document.write(new Date().getFullYear())</script> D&C Refuse Trucking & Equipment Co. Limited. All Rights Reserved.
             </div>
         </div>
-
-    </div>
-
-    <footer>
-        <p>&copy; D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED. Kingston & Portmore, Jamaica. All rights reserved.</p>
     </footer>
 
-    <script>
-        function autoCalculateRate() {
-            var destSelect = document.getElementById('inv-destination');
-            var rate = destSelect.value;
-            if (rate > 0) {
-                document.getElementById('inv-amount').value = rate;
-            }
-        }
-
-        function saveClientProfile() {
-            var email = document.getElementById('inv-email').value;
-            var client = document.getElementById('inv-client').value;
-            var phone = document.getElementById('inv-phone').value;
-            var pickup = document.getElementById('inv-pickup').value;
-
-            if (!email) {
-                alert("Please enter an Email Address first so we can link your saved profile!");
-                return;
-            }
-
-            var profile = { client: client, phone: phone, pickup: pickup };
-            localStorage.setItem("dc_profile_" + email.toLowerCase().trim(), JSON.stringify(profile));
-            alert("Profile saved for " + email + "! Next time you visit, simply enter your email above to auto-fill your details.");
-        }
-
-        function lookupClientProfile() {
-            var email = document.getElementById('lookup-email').value.toLowerCase().trim();
-            if (!email) {
-                alert("Please enter your registered email address.");
-                return;
-            }
-
-            var saved = localStorage.getItem("dc_profile_" + email);
-            if (saved) {
-                var profile = JSON.parse(saved);
-                document.getElementById('inv-email').value = email;
-                document.getElementById('inv-client').value = profile.client || '';
-                document.getElementById('inv-phone').value = profile.phone || '';
-                document.getElementById('inv-pickup').value = profile.pickup || '';
-                alert("Welcome back! Your profile details have been loaded into the form.");
-            } else {
-                alert("No saved profile found for that email address. You can fill in the form and click 'Save My Info' to create one!");
-            }
-        }
-
-        function generateInvoice() {
-            var client = document.getElementById('inv-client').value || 'Valued Client';
-            var phone = document.getElementById('inv-phone').value || 'N/A';
-            var email = document.getElementById('inv-email').value || 'N/A';
-            var num = document.getElementById('inv-num').value || 'DC-1001';
-            var pickup = document.getElementById('inv-pickup').value || 'Standard Pickup';
-            
-            var destSelect = document.getElementById('inv-destination');
-            var destText = destSelect.options[destSelect.selectedIndex].text;
-            if (destSelect.value === "0") { destText = "Standard Destination"; }
-
-            var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
-            var deposit = totalAmount * 0.5;
-            var balance = totalAmount * 0.5;
-
-            document.getElementById('out-client').innerText = client;
-            document.getElementById('out-phone').innerText = phone;
-            document.getElementById('out-email').innerText = email;
-            document.getElementById('out-num').innerText = num;
-            document.getElementById('out-route').innerText = pickup + " ➔ " + destText;
-            document.getElementById('out-desc').innerText = 'Haulage / Refuse Transport: ' + pickup + ' to ' + destText;
-            
-            document.getElementById('out-amount').innerText = '$' + totalAmount.toLocaleString() + ' JMD';
-            document.getElementById('out-deposit').innerText = '$' + deposit.toLocaleString() + ' JMD';
-            document.getElementById('out-balance').innerText = '$' + balance.toLocaleString() + ' JMD';
-            
-            document.getElementById('out-date').innerText = new Date().toLocaleDateString();
-
-            document.getElementById('invoice-preview').style.display = 'block';
-        }
-
-        function sendWhatsAppQuote() {
-            var client = document.getElementById('inv-client').value || 'Valued Client';
-            var phone = document.getElementById('inv-phone').value || 'N/A';
-            var email = document.getElementById('inv-email').value || 'N/A';
-            var num = document.getElementById('inv-num').value || 'DC-1001';
-            var pickup = document.getElementById('inv-pickup').value || 'Standard Pickup Point';
-
-            var destSelect = document.getElementById('inv-destination');
-            var destText = destSelect.options[destSelect.selectedIndex].text;
-            if (destSelect.value === "0") { destText = "Standard Destination"; }
-
-            var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
-            var deposit = totalAmount * 0.5;
-            var balance = totalAmount * 0.5;
-
-            var message = "Hello D&C Refuse Trucking, new haulage booking request:\n\n" +
-                          "Invoice #: " + num + "\n" +
-                          "Client Name: " + client + "\n" +
-                          "Phone: " + phone + "\n" +
-                          "Email: " + email + "\n" +
-                          "Pickup Point: " + pickup + "\n" +
-                          "Drop-off Destination: " + destText + "\n\n" +
-                          "Total Rate: $" + totalAmount.toLocaleString() + " JMD\n" +
-                          "🔴 REQUIRED 50% DEPOSIT: $" + deposit.toLocaleString() + " JMD (Payable in advance to confirm booking)\n" +
-                          "🔴 REMAINING 50% BALANCE: $" + balance.toLocaleString() + " JMD (Payable upon pickup on job date)\n\n" +
-                          "⚠️ Policy Acknowledged: I understand that a 50% deposit confirms my booking date and cancellations must be made at least 72 hours in advance for a deposit refund.\n\n" +
-                          "Please send payment details for the 50% deposit.";
-
-            var whatsappUrl = "https://wa.me/18768628579?text=" + encodeURIComponent(message);
-            window.open(whatsappUrl, "_blank");
-        }
-    </script>
 </body>
 </html>
