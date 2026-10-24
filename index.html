@@ -476,6 +476,46 @@
             cursor: pointer;
         }
 
+        .payment-status-box {
+            grid-column: 1 / -1;
+            background: #0f2413;
+            border: 2px solid var(--primary-green);
+            padding: 14px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .payment-status-box h5 {
+            color: var(--primary-green);
+            font-size: 1.05rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--primary-green);
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+
         .btn-action-group {
             display: flex;
             flex-wrap: wrap;
@@ -525,7 +565,7 @@
             margin-top: 8px;
         }
 
-        /* PRINTABLE INVOICE: Restored large header title fonts while maintaining 1-page fit */
+        /* PRINTABLE INVOICE */
         #invoice-preview {
             display: none;
             border: 3px solid #1a531f;
@@ -575,7 +615,7 @@
 
         .inv-title-main {
             color: #1a531f; 
-            font-size: 1.6rem; /* Restored back to large bold title size */
+            font-size: 1.6rem; 
             font-weight: 900;
             text-transform: uppercase;
             line-height: 1.1;
@@ -584,7 +624,7 @@
         }
 
         .inv-title-sub {
-            font-size: 1.18rem; /* Restored back to large bold subtitle size */
+            font-size: 1.18rem; 
             font-weight: 900; 
             color: #111111;
             text-transform: uppercase;
@@ -594,7 +634,7 @@
         }
 
         .inv-title-loc {
-            font-size: 1rem; /* Restored back to clear comfortable size */
+            font-size: 1rem; 
             font-weight: 800;
             color: #334155;
         }
@@ -814,49 +854,63 @@
                     <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
                 </div>
 
+                <!-- Typeable Destination Input with Dropdown Suggestions & Auto-Pricing -->
                 <div class="input-group">
-                    <label>Drop-off Destination (Select Town/Area)</label>
-                    <select id="inv-destination" onchange="autoCalculateRate()">
-                        <option value="" data-price="0">-- Click to Select Destination --</option>
-                        <option value="Downtown" data-price="26000">📍 Downtown — $26,000 JMD</option>
-                        <option value="Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill" data-price="25000">📍 Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill — $25,000 JMD</option>
-                        <option value="Spanish Town, Portmore, Ferry" data-price="20000">📍 Spanish Town, Portmore, Ferry — $20,000 JMD</option>
-                        <option value="Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town" data-price="27000">📍 Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town — $27,000 JMD</option>
-                        <option value="May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville" data-price="31000">📍 May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville — $31,000 JMD</option>
-                        <option value="Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap" data-price="39000">📍 Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap — $39,000 JMD</option>
-                        <option value="Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill" data-price="35000">📍 Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill — $35,000 JMD</option>
-                        <option value="Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank" data-price="42000">📍 Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank — $42,000 JMD</option>
-                        <option value="Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits" data-price="47000">📍 Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits — $47,000 JMD</option>
-                        <option value="Wait-A-Bit, Albert Town" data-price="51000">📍 Wait-A-Bit, Albert Town — $51,000 JMD</option>
-                        <option value="Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town" data-price="47000">📍 Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town — $47,000 JMD</option>
-                        <option value="Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond" data-price="57000">📍 Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond — $57,000 JMD</option>
-                        <option value="Maggotty, Siloah, Balaclava, Lacovia, Newton" data-price="57000">📍 Maggotty, Siloah, Balaclava, Lacovia, Newton — $57,000 JMD</option>
-                        <option value="Santa Cruz, Gutters" data-price="54000">📍 Santa Cruz, Gutters — $54,000 JMD</option>
-                        <option value="Black River, New Market, Springfield, Treasure Beach, Southfield" data-price="60000">📍 Black River, New Market, Springfield, Treasure Beach, Southfield — $60,000 JMD</option>
-                        <option value="Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town" data-price="71000">📍 Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town — $71,000 JMD</option>
-                        <option value="Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill" data-price="76000">📍 Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill — $76,000 JMD</option>
-                        <option value="Negril, Little London, Darliston, Delveland" data-price="78000">📍 Negril, Little London, Darliston, Delveland — $78,000 JMD</option>
-                        <option value="Green Island, Orange Bay" data-price="82000">📍 Green Island, Orange Bay — $82,000 JMD</option>
-                        <option value="Montego Bay, Wakefield" data-price="67000">📍 Montego Bay, Wakefield — $67,000 JMD</option>
-                        <option value="Cambridge, Lambs River, Anchovy" data-price="70000">📍 Cambridge, Lambs River, Anchovy — $70,000 JMD</option>
-                        <option value="Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria" data-price="59000">📍 Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria — $59,000 JMD</option>
-                        <option value="Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel" data-price="53000">📍 Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel — $53,000 JMD</option>
-                        <option value="St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River" data-price="53000">📍 St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River — $53,000 JMD</option>
-                        <option value="Discovery Bay, Braco, Duncans" data-price="56000">📍 Discovery Bay, Braco, Duncans — $56,000 JMD</option>
-                        <option value="Guys Hill, Glengoffe, Polly Ground" data-price="32000">📍 Guys Hill, Glengoffe, Polly Ground — $32,000 JMD</option>
-                        <option value="Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall" data-price="42000">📍 Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall — $42,000 JMD</option>
-                        <option value="Annotto Bay, Windsor Castle, Buff Bay, Skibo" data-price="39000">📍 Annotto Bay, Windsor Castle, Buff Bay, Skibo — $39,000 JMD</option>
-                        <option value="Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay" data-price="59000">📍 Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay — $59,000 JMD</option>
-                        <option value="Boston, Long Bay" data-price="64000">📍 Boston, Long Bay — $64,000 JMD</option>
-                        <option value="Easington, Seaforth, Morant Bay, Lyssons, Airy Castle" data-price="42000">📍 Easington, Seaforth, Morant Bay, Lyssons, Airy Castle — $42,000 JMD</option>
-                        <option value="Stokes Hall, Trinityville, Bath, Bowden, Golden Grove" data-price="53000">📍 Stokes Hall, Trinityville, Bath, Bowden, Golden Grove — $53,000 JMD</option>
-                        <option value="Manchioneal, Hectors River" data-price="59000">📍 Manchioneal, Hectors River — $59,000 JMD</option>
-                    </select>
+                    <label>Drop-off Destination (Type or Click Arrow for Zones)</label>
+                    <input type="text" id="inv-destination" list="destination-list" placeholder="Type destination or click arrow..." oninput="checkDestinationPrice()">
+                    <datalist id="destination-list">
+                        <option value="Downtown" data-price="26000">Downtown ($26,000 JMD)</option>
+                        <option value="Kingston" data-price="25000">Kingston / St. Andrew ($25,000 JMD)</option>
+                        <option value="Spanish Town" data-price="20000">Portmore / Spanish Town ($20,000 JMD)</option>
+                        <option value="Old Harbour" data-price="27000">St. Catherine / Old Harbour ($27,000 JMD)</option>
+                        <option value="May Pen" data-price="31000">May Pen / Clarendon ($31,000 JMD)</option>
+                        <option value="Tollgate" data-price="39000">Tollgate / Mid-Island ($39,000 JMD)</option>
+                        <option value="Lionel Town" data-price="35000">South Clarendon ($35,000 JMD)</option>
+                        <option value="Chapelton" data-price="42000">Chapelton ($42,000 JMD)</option>
+                        <option value="Mandeville" data-price="47000">Mandeville / Manchester ($47,000 JMD)</option>
+                        <option value="Wait-A-Bit" data-price="51000">Wait-A-Bit ($51,000 JMD)</option>
+                        <option value="Spaldings" data-price="47000">Christiana / Spaldings ($47,000 JMD)</option>
+                        <option value="Junction" data-price="57000">Junction / St. Elizabeth ($57,000 JMD)</option>
+                        <option value="Maggotty" data-price="57000">Maggotty ($57,000 JMD)</option>
+                        <option value="Santa Cruz" data-price="54000">Santa Cruz ($54,000 JMD)</option>
+                        <option value="Black River" data-price="60000">Black River / Treasure Beach ($60,000 JMD)</option>
+                        <option value="Sav-La-Mar" data-price="71000">Sav-La-Mar / Westmoreland ($71,000 JMD)</option>
+                        <option value="Lucea" data-price="76000">Lucea / Hanover ($76,000 JMD)</option>
+                        <option value="Negril" data-price="78000">Negril ($78,000 JMD)</option>
+                        <option value="Green Island" data-price="82000">Green Island ($82,000 JMD)</option>
+                        <option value="Montego Bay" data-price="67000">Montego Bay / St. James ($67,000 JMD)</option>
+                        <option value="Cambridge" data-price="70000">Cambridge ($70,000 JMD)</option>
+                        <option value="Falmouth" data-price="59000">Falmouth / Trelawny ($59,000 JMD)</option>
+                        <option value="Claremont" data-price="53000">Browns Town / Runaway Bay ($53,000 JMD)</option>
+                        <option value="Ocho Rios" data-price="53000">Ocho Rios / St. Ann ($53,000 JMD)</option>
+                        <option value="Discovery Bay" data-price="56000">Discovery Bay ($56,000 JMD)</option>
+                        <option value="Guys Hill" data-price="32000">Guys Hill ($32,000 JMD)</option>
+                        <option value="Port Maria" data-price="42000">Port Maria / St. Mary ($42,000 JMD)</option>
+                        <option value="Annotto Bay" data-price="39000">Annotto Bay ($39,000 JMD)</option>
+                        <option value="Port Antonio" data-price="59000">Port Antonio / Portland ($59,000 JMD)</option>
+                        <option value="Boston" data-price="64000">Boston ($64,000 JMD)</option>
+                        <option value="Morant Bay" data-price="42000">Morant Bay / St. Thomas ($42,000 JMD)</option>
+                        <option value="Bath" data-price="53000">Bath ($53,000 JMD)</option>
+                        <option value="Manchioneal" data-price="59000">Manchioneal ($59,000 JMD)</option>
+                    </datalist>
                 </div>
 
                 <div class="input-group" style="grid-column: 1 / -1;">
                     <label>Calculated Total Rate (JMD) - Or Enter Custom Rate</label>
                     <input type="number" id="inv-amount" placeholder="0">
+                </div>
+
+                <!-- Payment Status Options -->
+                <div class="payment-status-box">
+                    <h5>💳 Payment & Booking Status</h5>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="inv-deposit-paid" onchange="togglePaymentBoxes('deposit')">
+                        <label for="inv-deposit-paid">🔒 Mark 50% Deposit as PAID (Send to client to confirm booking)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="inv-full-paid" onchange="togglePaymentBoxes('full')">
+                        <label for="inv-full-paid">🎉 Mark Job as FULLY PAID (Balance Settled on Job Date)</label>
+                    </div>
                 </div>
             </div>
 
@@ -874,7 +928,7 @@
                         <img src="IMG-20250804-WA0004.jpg" alt="D&C Logo">
                     </div>
                     <div class="inv-title-box">
-                        <div class="inv-title-main">INVOICE / BOOKING QUOTE</div>
+                        <div class="inv-title-main" id="out-invoice-header-title">INVOICE / BOOKING QUOTE</div>
                         <div class="inv-title-sub">D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</div>
                         <div class="inv-title-loc">Jamaica | Kingston & Portmore Hub</div>
                     </div>
@@ -892,7 +946,8 @@
                     </div>
                 </div>
 
-                <p style="margin-bottom: 8px; color: #111827; font-size: 1.02rem;"><strong>Route Details:</strong> <span id="out-route"></span></p>
+                <!-- Clean route display -->
+                <p style="margin-bottom: 8px; color: #111827; font-size: 1.02rem;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800;"></span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800;"></span></p>
                 
                 <table style="margin-bottom: 8px; width: 100%; border-collapse: collapse; font-size: 1rem;">
                     <thead>
@@ -907,11 +962,11 @@
                             <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #111827;" id="out-amount">$0 JMD</td>
                         </tr>
                         <tr style="background-color: #f0fdf4;">
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; color: #166534; font-weight: 800;">🔒 Required 50% Deposit (To Confirm Booking)</td>
+                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; color: #166534; font-weight: 800;" id="out-deposit-label">🔒 Required 50% Deposit (To Confirm Booking)</td>
                             <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #166534;" id="out-deposit">$0 JMD</td>
                         </tr>
                         <tr>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; color: #334155; font-weight: 700;">🚚 Remaining 50% Balance (Due Upon Pickup)</td>
+                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; color: #334155; font-weight: 700;" id="out-balance-label">🚚 Remaining 50% Balance (Due Upon Pickup)</td>
                             <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #334155;" id="out-balance">$0 JMD</td>
                         </tr>
                     </tbody>
@@ -926,7 +981,7 @@
                 </div>
 
                 <div class="inv-footer">
-                    <p style="margin-bottom: 2px; font-weight: bold; color: #b91c1c;">* 50% deposit required to lock in your booking date. Balance due upon pickup.</p>
+                    <p style="margin-bottom: 2px; font-weight: bold; color: #b91c1c;" id="out-footer-notice">* 50% deposit required to lock in your booking date. Balance due upon pickup.</p>
                     <p style="margin-bottom: 3px; font-weight: bold; color: #b91c1c;">⚠️ Cancellations under 72 hours are non-refundable.</p>
                     <p><strong>Thank you for choosing D&C Refuse Trucking & Equipment Co. Limited!</strong></p>
                 </div>
@@ -942,11 +997,25 @@
     </footer>
 
     <script>
-        function autoCalculateRate() {
-            var select = document.getElementById('inv-destination');
-            var selectedOption = select.options[select.selectedIndex];
-            var price = selectedOption.getAttribute('data-price');
-            document.getElementById('inv-amount').value = price || 0;
+        function togglePaymentBoxes(type) {
+            var dep = document.getElementById('inv-deposit-paid');
+            var full = document.getElementById('inv-full-paid');
+            if (type === 'full' && full.checked) {
+                dep.checked = true; // If full is checked, deposit is automatically paid
+            }
+        }
+
+        function checkDestinationPrice() {
+            var typedVal = document.getElementById('inv-destination').value.trim().toLowerCase();
+            var options = document.getElementById('destination-list').options;
+            var amountInput = document.getElementById('inv-amount');
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].value.toLowerCase() === typedVal) {
+                    amountInput.value = options[i].getAttribute('data-price');
+                    return;
+                }
+            }
         }
 
         function saveClientProfile() {
@@ -990,25 +1059,48 @@
             var phone = document.getElementById('inv-phone').value || 'N/A';
             var email = document.getElementById('inv-email').value || 'N/A';
             var num = document.getElementById('inv-num').value || 'DC-1001';
-            var pickup = document.getElementById('inv-pickup').value || 'Standard Pickup';
+            var pickup = document.getElementById('inv-pickup').value || 'Kingston / Portmore Hub';
             
-            var destSelect = document.getElementById('inv-destination');
-            var destText = destSelect.options[destSelect.selectedIndex].text || 'Standard Destination';
+            var destInput = document.getElementById('inv-destination').value.trim() || 'Destination Hub';
 
             var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
             var deposit = totalAmount * 0.5;
             var balance = totalAmount * 0.5;
 
+            var depositPaid = document.getElementById('inv-deposit-paid').checked;
+            var fullPaid = document.getElementById('inv-full-paid').checked;
+
             document.getElementById('out-client').innerText = client;
             document.getElementById('out-phone').innerText = phone;
             document.getElementById('out-email').innerText = email;
             document.getElementById('out-num').innerText = num;
-            document.getElementById('out-route').innerText = pickup + " ➔ " + destText;
-            document.getElementById('out-desc').innerText = 'Haulage / Refuse Transport: ' + pickup + ' to ' + destText;
+            
+            // Clean route display
+            document.getElementById('out-pickup-text').innerText = pickup;
+            document.getElementById('out-dest-text').innerText = destInput;
+            document.getElementById('out-desc').innerText = 'Haulage / Refuse Transport: ' + pickup + ' to ' + destInput;
             
             document.getElementById('out-amount').innerText = '$' + totalAmount.toLocaleString() + ' JMD';
             document.getElementById('out-deposit').innerText = '$' + deposit.toLocaleString() + ' JMD';
             document.getElementById('out-balance').innerText = '$' + balance.toLocaleString() + ' JMD';
+
+            // Dynamic Payment Status Logic
+            if (fullPaid) {
+                document.getElementById('out-invoice-header-title').innerText = 'OFFICIAL RECEIPT / PAID IN FULL';
+                document.getElementById('out-deposit-label').innerHTML = '✅ 50% Deposit PAID ($' + deposit.toLocaleString() + ' JMD)';
+                document.getElementById('out-balance-label').innerHTML = '✅ Remaining 50% Balance PAID IN FULL ($' + balance.toLocaleString() + ' JMD)';
+                document.getElementById('out-footer-notice').innerText = '🎉 JOB FULLY PAID IN FULL. Thank you for your business!';
+            } else if (depositPaid) {
+                document.getElementById('out-invoice-header-title').innerText = 'DEPOSIT RECEIPT / BOOKING CONFIRMED';
+                document.getElementById('out-deposit-label').innerHTML = '✅ 50% Deposit PAID ($' + deposit.toLocaleString() + ' JMD)';
+                document.getElementById('out-balance-label').innerHTML = '🚚 Remaining 50% Balance Due Upon Pickup ($' + balance.toLocaleString() + ' JMD)';
+                document.getElementById('out-footer-notice').innerText = '* 50% deposit received. Booking locked in! Balance due upon pickup.';
+            } else {
+                document.getElementById('out-invoice-header-title').innerText = 'INVOICE / BOOKING QUOTE';
+                document.getElementById('out-deposit-label').innerHTML = '🔒 Required 50% Deposit (To Confirm Booking)';
+                document.getElementById('out-balance-label').innerHTML = '🚚 Remaining 50% Balance (Due Upon Pickup)';
+                document.getElementById('out-footer-notice').innerText = '* 50% deposit required to lock in your booking date. Balance due upon pickup.';
+            }
             
             document.getElementById('out-date').innerText = new Date().toLocaleDateString();
 
@@ -1020,27 +1112,35 @@
             var phone = document.getElementById('inv-phone').value || 'N/A';
             var email = document.getElementById('inv-email').value || 'N/A';
             var num = document.getElementById('inv-num').value || 'DC-1001';
-            var pickup = document.getElementById('inv-pickup').value || 'Standard Pickup Point';
-
-            var destSelect = document.getElementById('inv-destination');
-            var destText = destSelect.options[destSelect.selectedIndex].text || 'Standard Destination';
+            var pickup = document.getElementById('inv-pickup').value || 'Kingston Hub';
+            var destInput = document.getElementById('inv-destination').value.trim() || 'Destination Hub';
 
             var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
             var deposit = totalAmount * 0.5;
             var balance = totalAmount * 0.5;
 
-            var message = "Hello D&C Refuse Trucking, new haulage booking request:\n\n" +
+            var depositPaid = document.getElementById('inv-deposit-paid').checked;
+            var fullPaid = document.getElementById('inv-full-paid').checked;
+
+            var statusText = "";
+            if (fullPaid) {
+                statusText = "🎉 FULLY PAID IN FULL ($" + totalAmount.toLocaleString() + " JMD)";
+            } else if (depositPaid) {
+                statusText = "✅ 50% DEPOSIT PAID ($" + deposit.toLocaleString() + " JMD)\n🚚 BALANCE DUE UPON PICKUP: $" + balance.toLocaleString() + " JMD";
+            } else {
+                statusText = "🔴 REQUIRED 50% DEPOSIT: $" + deposit.toLocaleString() + " JMD (Payable to confirm booking)\n🚚 BALANCE DUE UPON PICKUP: $" + balance.toLocaleString() + " JMD";
+            }
+
+            var message = "Hello D&C Refuse Trucking, haulage booking details:\n\n" +
                           "Invoice #: " + num + "\n" +
                           "Client Name: " + client + "\n" +
                           "Phone: " + phone + "\n" +
                           "Email: " + email + "\n" +
                           "Pickup Point: " + pickup + "\n" +
-                          "Drop-off Destination: " + destText + "\n\n" +
+                          "Drop-off Destination: " + destInput + "\n\n" +
                           "Total Rate: $" + totalAmount.toLocaleString() + " JMD\n" +
-                          "🔴 REQUIRED 50% DEPOSIT: $" + deposit.toLocaleString() + " JMD (Payable in advance to confirm booking)\n" +
-                          "🔴 REMAINING 50% BALANCE: $" + balance.toLocaleString() + " JMD (Payable upon pickup on job date)\n\n" +
-                          "⚠️ Policy Acknowledged: I understand that a 50% deposit confirms my booking date and cancellations must be made at least 72 hours in advance for a deposit refund.\n\n" +
-                          "Please confirm availability and share payment instructions for the deposit.";
+                          statusText + "\n\n" +
+                          "Thank you!";
 
             var whatsappUrl = "https://wa.me/18768628579?text=" + encodeURIComponent(message);
             window.open(whatsappUrl, "_blank");
