@@ -551,13 +551,30 @@
             border-radius: 10px;
         }
 
+        /* Side-by-side Invoice Header with Logo on Left & Title on Right */
         .inv-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
             border-bottom: 3px solid #1a531f;
             padding-bottom: 15px;
             margin-bottom: 18px;
+            gap: 20px;
+        }
+
+        .inv-logo-box {
+            flex-shrink: 0;
+            width: 110px;
+        }
+
+        .inv-logo-box img {
+            width: 100%;
+            max-height: 80px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .inv-title-box {
+            flex-grow: 1;
         }
 
         .inv-details {
@@ -712,7 +729,7 @@
                 </div>
             </div>
 
-            <!-- Styled 50% Deposit & Highlighted 72-Hour Policy Banner (Positioned Below Rate Sheet) -->
+            <!-- Styled 50% Deposit & Highlighted 72-Hour Policy Banner -->
             <div class="deposit-policy-banner">
                 <h4>🔒 Booking & Deposit Policy</h4>
                 <p>• <span class="text-red-alert">50% Deposit Required:</span> Payable in advance to confirm and lock in your scheduled job date.</p>
@@ -815,10 +832,13 @@
             <!-- Printable Invoice Output Container -->
             <div id="invoice-preview">
                 <div class="inv-header">
-                    <div>
-                        <h2 style="color: #1a531f;">INVOICE / BOOKING QUOTE</h2>
-                        <p><strong>D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</strong></p>
-                        <p>Jamaica | Professional Transport Services (Kingston / Portmore Hub)</p>
+                    <div class="inv-logo-box">
+                        <img src="000.png" alt="D&C Logo" onerror="this.onerror=null; this.src='000.jpg';">
+                    </div>
+                    <div class="inv-title-box">
+                        <h2 style="color: #1a531f; font-size: 1.35rem; margin-bottom: 2px;">INVOICE / BOOKING QUOTE</h2>
+                        <p style="font-weight: bold;">D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</p>
+                        <p style="font-size: 0.95rem; color: #475569;">Jamaica | Kingston & Portmore Hub</p>
                     </div>
                 </div>
                 <div class="inv-details">
@@ -842,7 +862,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="padding: 10px; border-bottom: 1px solid #ddd;" id="out-desc" style="color: #111827; font-weight: 700;">Haulage & Refuse Transport Service</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;" id="out-desc">Haulage & Refuse Transport Service</td>
                             <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #111827;" id="out-amount">$0 JMD</td>
                         </tr>
                         <tr style="background-color: #f0fdf4;">
@@ -855,6 +875,7 @@
                         </tr>
                     </tbody>
                 </table>
+
                 <div class="inv-footer">
                     <p style="margin-bottom: 6px; font-weight: bold; color: #166534;">* Note: A 50% deposit is required to lock in your date on our booking schedule. Remaining 50% balance is payable upon pickup.</p>
                     <p style="margin-bottom: 10px; font-weight: bold; color: #b91c1c;">⚠️ Policy Notice: Cancellations must be made at least 72 hours prior to service for a deposit refund. Cancellations made under 72 hours are non-refundable.</p>
@@ -970,7 +991,7 @@
                           "🔴 REQUIRED 50% DEPOSIT: $" + deposit.toLocaleString() + " JMD (Payable in advance to confirm booking)\n" +
                           "🔴 REMAINING 50% BALANCE: $" + balance.toLocaleString() + " JMD (Payable upon pickup on job date)\n\n" +
                           "⚠️ Policy Acknowledged: I understand that a 50% deposit confirms my booking date and cancellations must be made at least 72 hours in advance for a deposit refund.\n\n" +
-                          "Please send payment details for the 50% deposit.";
+                          "Please confirm availability and share payment instructions for the deposit.";
 
             var whatsappUrl = "https://wa.me/18768628579?text=" + encodeURIComponent(message);
             window.open(whatsappUrl, "_blank");
