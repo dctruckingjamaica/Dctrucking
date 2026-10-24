@@ -551,37 +551,41 @@
             border-radius: 10px;
         }
 
-        /* Locked Side-by-Side Floating Header (Never wraps, transparent, no boxes) */
+        /* Locked Side-by-Side Floating Header (Large & Box-Free) */
         .inv-header {
             display: flex;
-            flex-wrap: nowrap; /* Forces elements to stay side-by-side and never stack on top */
+            flex-wrap: nowrap; /* Forces side-by-side without ever stacking */
             align-items: center;
             border-bottom: 3px solid #1a531f;
             padding-bottom: 15px;
             margin-bottom: 18px;
-            gap: 20px;
+            gap: 25px;
         }
 
         .inv-logo-box {
-            flex: 0 0 170px;   /* Fixed clean width for side-by-side display */
-            background: transparent; 
-            border: none;             
-            box-shadow: none;         
+            flex: 0 0 250px;   /* Large prominent width matching the box scale */
+            background: transparent !important; 
+            border: none !important;             
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
         }
 
         .inv-logo-box img {
             width: 100%;
-            max-height: 110px;
+            max-height: 150px; /* Large scale matching your target dimension */
             object-fit: contain;
             display: block;
-            background: transparent;
-            border: none;
-            filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.15));
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            mix-blend-mode: multiply; /* Eliminates any background box lines */
         }
 
         .inv-title-box {
             flex: 1;
-            min-width: 0; /* Prevents text overflow */
+            min-width: 0;
         }
 
         .inv-details {
