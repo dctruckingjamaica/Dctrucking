@@ -549,10 +549,10 @@
             color: #111111;
             margin-top: 25px;
             border-radius: 10px;
-            font-size: 1.15rem; /* Normal comfortable reading text size */
+            font-size: 1.15rem;
         }
 
-        /* Compact, Tight, Bold Header Layout */
+        /* Tight, Joined Header Layout with Zero Gap */
         .inv-header {
             display: flex;
             flex-wrap: nowrap;
@@ -560,11 +560,11 @@
             border-bottom: 3px solid #1a531f;
             padding-bottom: 15px;
             margin-bottom: 20px;
-            gap: 16px;
+            gap: 4px; /* Pulled completely together */
         }
 
         .inv-logo-box {
-            flex: 0 0 240px;   
+            flex: 0 0 220px;   
             background: transparent !important; 
             border: none !important;             
             box-shadow: none !important;
@@ -574,7 +574,7 @@
 
         .inv-logo-box img {
             width: 100%;
-            max-height: 145px; 
+            max-height: 140px; 
             object-fit: contain;
             display: block;
             background: transparent !important;
@@ -588,19 +588,22 @@
             flex: 1;
             min-width: 0;
             text-align: left;
+            padding-left: 0;
         }
 
+        /* Bold, Stand-Out Typography */
         .inv-title-main {
             color: #1a531f; 
-            font-size: 1.6rem; 
+            font-size: 1.65rem; 
             font-weight: 900;
             text-transform: uppercase;
             line-height: 1.15;
             margin-bottom: 4px;
+            letter-spacing: -0.5px;
         }
 
         .inv-title-sub {
-            font-size: 1.2rem; 
+            font-size: 1.22rem; 
             font-weight: 900; 
             color: #111111;
             text-transform: uppercase;
@@ -621,7 +624,7 @@
             gap: 20px;
             margin-bottom: 20px;
             color: #111827;
-            font-size: 1.12rem; /* Normal readable text */
+            font-size: 1.12rem;
         }
 
         .inv-footer {
@@ -631,7 +634,7 @@
             text-align: center;
             font-style: italic;
             color: #111827;
-            font-size: 1.05rem; /* Normal readable text */
+            font-size: 1.05rem;
         }
 
         @media print {
