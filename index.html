@@ -525,7 +525,7 @@
             margin-top: 8px;
         }
 
-        /* PRINTABLE INVOICE: Crisp, readable font size, -18px tight text pull, single-page fit */
+        /* PRINTABLE INVOICE: Crisp comfortable reading size, single-page fit, company name on one line */
         #invoice-preview {
             display: none;
             border: 3px solid #1a531f;
@@ -534,20 +534,20 @@
             color: #111111;
             margin-top: 25px;
             border-radius: 8px;
-            font-size: 1.05rem; /* Full, comfortable readable size - no pinching needed! */
+            font-size: 1.05rem; /* Full comfortable readable size - no squinting! */
         }
 
         .inv-header {
             display: grid;
-            grid-template-columns: 310px 1fr; /* Large locked grid logo */
+            grid-template-columns: 240px 1fr; /* Balanced grid for logo + wider text area */
             align-items: center;
             border-bottom: 2.5px solid #1a531f;
             padding-bottom: 10px;
-            margin-bottom: 10px; /* Brought closer to the billing details */
+            margin-bottom: 10px;
         }
 
         .inv-logo-box {
-            width: 310px;
+            width: 240px;
             background: transparent !important; 
             border: none !important;             
             box-shadow: none !important;
@@ -557,7 +557,7 @@
 
         .inv-logo-box img {
             width: 100%;
-            max-height: 200px; /* Big, bright, beautiful logo */
+            max-height: 180px; /* Big, bright, beautiful locked logo */
             object-fit: contain;
             display: block;
             background: transparent !important;
@@ -570,12 +570,12 @@
         .inv-title-box {
             min-width: 0;
             text-align: left;
-            margin-left: -18px; /* Pulled tight right next to the logo */
+            margin-left: -28px; /* Pulled much closer and tighter right next to the logo */
         }
 
         .inv-title-main {
             color: #1a531f; 
-            font-size: 1.6rem; 
+            font-size: 1.45rem; 
             font-weight: 900;
             text-transform: uppercase;
             line-height: 1.15;
@@ -584,16 +584,17 @@
         }
 
         .inv-title-sub {
-            font-size: 1.15rem; 
+            font-size: 1.08rem; 
             font-weight: 900; 
             color: #111111;
             text-transform: uppercase;
             line-height: 1.2;
             margin-bottom: 3px;
+            white-space: nowrap; /* GUARANTEES company name stays on one single line */
         }
 
         .inv-title-loc {
-            font-size: 1rem; 
+            font-size: 0.95rem; 
             font-weight: 800;
             color: #334155;
         }
@@ -607,7 +608,7 @@
             font-size: 1.02rem;
         }
 
-        /* Bank Details Box (Ready for you to fill in) */
+        /* Bank Details Box */
         .inv-bank-box {
             background: #f8fafc;
             border: 1px solid #cbd5e1;
@@ -866,7 +867,7 @@
                 <button class="btn-whatsapp" onclick="sendWhatsAppQuote()">📱 Send Request via WhatsApp</button>
             </div>
 
-            <!-- Printable Invoice Output Container (Full readable size, single-page fit) -->
+            <!-- Printable Invoice Output Container (Comfortable font size, single-page fit) -->
             <div id="invoice-preview">
                 <div class="inv-header">
                     <div class="inv-logo-box">
@@ -916,7 +917,7 @@
                     </tbody>
                 </table>
 
-                <!-- Bank Details Section (Ready for your bank info) -->
+                <!-- Bank Details Section -->
                 <div class="inv-bank-box">
                     <h5>🏦 Payment / Bank Transfer Details</h5>
                     <p><strong>Bank Name:</strong> [Enter Bank Name] | <strong>Branch:</strong> [Branch]</p>
