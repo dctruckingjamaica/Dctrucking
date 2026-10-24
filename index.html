@@ -537,18 +537,19 @@
             font-size: 1.15rem;
         }
 
-        /* LOCKED JOINED HEADER (Set to -18px for that final tight fit) */
+        /* LOCKED GRID HEADER: Substantially Larger, Prominent Logo Locked In Place */
         .inv-header {
-            display: flex;
-            flex-wrap: nowrap;
+            display: grid;
+            grid-template-columns: 310px 1fr; /* Larger fixed column width for the logo */
             align-items: center;
+            gap: 15px; /* Clean proportional gap */
             border-bottom: 3px solid #1a531f;
             padding-bottom: 15px;
             margin-bottom: 20px;
         }
 
         .inv-logo-box {
-            flex: 0 0 210px;   
+            width: 310px; /* Locked larger width */
             background: transparent !important; 
             border: none !important;             
             box-shadow: none !important;
@@ -558,7 +559,7 @@
 
         .inv-logo-box img {
             width: 100%;
-            max-height: 140px; 
+            max-height: 220px; /* Substantially larger, commanding logo size */
             object-fit: contain;
             display: block;
             background: transparent !important;
@@ -569,10 +570,8 @@
         }
 
         .inv-title-box {
-            flex: 1;
             min-width: 0;
             text-align: left;
-            margin-left: -18px; /* <-- Set to -18px as requested */
         }
 
         .inv-title-main {
