@@ -42,7 +42,6 @@
             border-bottom: 5px solid var(--primary-green);
         }
 
-        /* Clean Balanced Header Title Layout */
         header h1 {
             font-size: clamp(1.15rem, 3.8vw, 1.7rem);
             text-transform: uppercase;
@@ -65,7 +64,6 @@
             white-space: nowrap;
         }
 
-        /* Tagline & Operational Base Layout */
         .tagline-box {
             margin-bottom: 12px;
         }
@@ -88,7 +86,6 @@
             margin-top: 2px;
         }
 
-        /* Operational Hub Badge */
         .base-location-badge {
             display: inline-block;
             background: #112616;
@@ -102,7 +99,6 @@
             box-shadow: 0 0 12px rgba(0, 230, 118, 0.2);
         }
 
-        /* Operating Hours Bar */
         .hours-badge-bar {
             display: flex;
             justify-content: center;
@@ -126,7 +122,6 @@
             font-weight: 900;
         }
 
-        /* High-Visibility Contact Bar */
         .contact-bar {
             background-color: #141414;
             border: 2px solid var(--primary-green);
@@ -218,7 +213,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Overview Text Styling */
         .about-text {
             color: #e0e0e0;
             font-size: 1.08rem;
@@ -230,7 +224,6 @@
             color: #ffffff;
         }
 
-        /* Deposit & Cancellation Policy Banner */
         .deposit-policy-banner {
             background: linear-gradient(135deg, #0d2b14, #1b4d24);
             border: 2px solid var(--primary-green);
@@ -265,7 +258,6 @@
             margin-bottom: 0;
         }
 
-        /* High Visibility Red & Yellow Text Styling */
         .text-red-alert {
             color: #ff3333;
             font-weight: 900;
@@ -279,7 +271,6 @@
             border-radius: 4px;
         }
 
-        /* Fleet Gallery */
         .fleet-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -315,7 +306,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Standard Plate Blur Overlay */
         .blur-plate {
             position: absolute;
             bottom: 45px;
@@ -328,7 +318,6 @@
             border-radius: 4px;
         }
 
-        /* Raised Blur Cover directly over Bumper License Plate */
         .blur-plate-bumper-high {
             position: absolute;
             bottom: 110px;
@@ -342,7 +331,6 @@
             z-index: 30;
         }
 
-        /* Features List */
         .features-list {
             list-style: none;
             margin-top: 15px;
@@ -361,7 +349,6 @@
             color: var(--primary-green);
         }
 
-        /* Fresh White Destination Rate Card */
         .fresh-rate-card {
             background-color: #ffffff;
             color: #000000;
@@ -407,7 +394,6 @@
             padding-left: 28px;
         }
 
-        /* Quick Profile / Returning Client Switcher */
         .client-account-bar {
             background: #112616;
             border: 2px solid var(--primary-green);
@@ -454,7 +440,6 @@
             font-size: 1rem;
         }
 
-        /* Comprehensive Form Grid */
         .invoice-builder {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -552,7 +537,7 @@
             font-size: 1.15rem;
         }
 
-        /* Tight, Joined Header Layout with Zero Gap */
+        /* LOCKED JOINED HEADER (Negative margin pulls text right into the logo) */
         .inv-header {
             display: flex;
             flex-wrap: nowrap;
@@ -560,11 +545,10 @@
             border-bottom: 3px solid #1a531f;
             padding-bottom: 15px;
             margin-bottom: 20px;
-            gap: 4px; /* Pulled completely together */
         }
 
         .inv-logo-box {
-            flex: 0 0 220px;   
+            flex: 0 0 210px;   
             background: transparent !important; 
             border: none !important;             
             box-shadow: none !important;
@@ -588,10 +572,9 @@
             flex: 1;
             min-width: 0;
             text-align: left;
-            padding-left: 0;
+            margin-left: -12px; /* Physically pulls text right against the logo */
         }
 
-        /* Bold, Stand-Out Typography */
         .inv-title-main {
             color: #1a531f; 
             font-size: 1.65rem; 
@@ -666,7 +649,6 @@
         </div>
         <div class="base-location-badge">📍 Operational Hub: Kingston & Portmore • Dispatching Islandwide</div>
 
-        <!-- Operational Hours Bar -->
         <div class="hours-badge-bar">
             <div class="hours-item">M-F: <span>7:00 AM – 8:00 PM</span></div>
             <div class="hours-item">Sat: <span>7:30 AM – 6:30 PM</span></div>
@@ -674,7 +656,6 @@
             <div class="hours-item" style="border-color: #ffeb3b; color: #ffeb3b;">🚨 <span>24/7 Emergency Dispatch Available</span></div>
         </div>
 
-        <!-- Top Contact Details Section -->
         <div class="contact-bar">
             <div class="contact-item">📞 Call/WhatsApp: <a href="https://wa.me/18768628579">+1 (876) 862-8579</a></div>
             <div class="contact-item email-item">✉️ Email: <a href="mailto:d.crefusetruckingequipment@gmail.com">d.crefusetruckingequipment@gmail.com</a></div>
@@ -684,7 +665,6 @@
 
     <div class="container">
 
-        <!-- Family-Run Story & Fleet Overview Section -->
         <div class="card">
             <h3>Why Choose Us & Fleet Overview</h3>
             
@@ -724,7 +704,6 @@
             </div>
         </div>
 
-        <!-- Destination Rate Sheet -->
         <div class="card">
             <h3>Destination Rate Sheet</h3>
             
@@ -732,7 +711,6 @@
 
             <div class="fresh-rate-card">
                 <div class="fresh-rate-scroll">
-                    
                     <div class="rate-row"><div class="rate-loc"><span>📍</span> Downtown</div><div class="rate-price">💰 $26,000 JMD</div></div>
                     <div class="rate-row"><div class="rate-loc"><span>📍</span> Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill</div><div class="rate-price">💰 $25,000 JMD</div></div>
                     <div class="rate-row"><div class="rate-loc"><span>📍</span> Spanish Town, Portmore, Ferry</div><div class="rate-price">💰 $20,000 JMD</div></div>
@@ -766,11 +744,9 @@
                     <div class="rate-row"><div class="rate-loc"><span>📍</span> Easington, Seaforth, Morant Bay, Lyssons, Airy Castle</div><div class="rate-price">💰 $42,000 JMD</div></div>
                     <div class="rate-row"><div class="rate-loc"><span>📍</span> Stokes Hall, Trinityville, Bath, Bowden, Golden Grove</div><div class="rate-price">💰 $53,000 JMD</div></div>
                     <div class="rate-row"><div class="rate-loc"><span>📍</span> Manchioneal, Hectors River</div><div class="rate-price">💰 $59,000 JMD</div></div>
-
                 </div>
             </div>
 
-            <!-- Styled 50% Deposit & Highlighted 72-Hour Policy Banner -->
             <div class="deposit-policy-banner">
                 <h4>🔒 Booking & Deposit Policy</h4>
                 <p>• <span class="text-red-alert">50% Deposit Required:</span> Payable in advance to confirm and lock in your scheduled job date.</p>
@@ -779,11 +755,9 @@
             </div>
         </div>
 
-        <!-- Comprehensive Quote & Customer Record Generator -->
         <div class="card">
             <h3>Invoice Generator & Quote Request</h3>
             
-            <!-- Returning Client Lookup Section -->
             <div class="client-account-bar">
                 <h4>👤 Returning Client Auto-Fill (No Password Needed)</h4>
                 <div class="quick-lookup-grid">
@@ -816,7 +790,6 @@
                     <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
                 </div>
 
-                <!-- True HTML Select Dropdown Menu -->
                 <div class="input-group">
                     <label>Drop-off Destination (Select Town/Area)</label>
                     <select id="inv-destination" onchange="autoCalculateRate()">
