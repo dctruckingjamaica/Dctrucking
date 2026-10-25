@@ -854,9 +854,9 @@
                     <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
                 </div>
 
-                <!-- Original Full Destination Rate Sheet Dropdown -->
+                <!-- Destination Zone Dropdown (Selecting a zone auto-populates all towns in that zone) -->
                 <div class="input-group">
-                    <label>Select Destination Zone (For Auto-Pricing)</label>
+                    <label>Select Destination Zone (Auto-Fills All Towns)</label>
                     <select id="inv-destination" onchange="selectDestinationZone()">
                         <option value="" data-price="0">-- Click Arrow to Select Destination --</option>
                         <option value="Downtown" data-price="26000">📍 Downtown — $26,000 JMD</option>
@@ -895,10 +895,10 @@
                     </select>
                 </div>
 
-                <!-- Specific Typeable Town Field with Live Auto-Pricing -->
+                <!-- Specific Town Field (Type a single town or let dropdown fill all zone towns) -->
                 <div class="input-group">
-                    <label>Specific Drop-off Town / Address (Type for Auto-Pricing)</label>
-                    <input type="text" id="inv-specific-dest" placeholder="e.g. Montego Bay" oninput="liveTypeAutoPrice()">
+                    <label>Specific Drop-off Town / Zone List</label>
+                    <input type="text" id="inv-specific-dest" placeholder="e.g. Little London or Select Zone above" oninput="liveTypeAutoPrice()">
                 </div>
 
                 <div class="input-group" style="grid-column: 1 / -1;">
@@ -964,7 +964,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; font-weight: 700; color: #111827;" id="out-desc">Haulage Transport: Kingston to Montego Bay</td>
+                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; font-weight: 700; color: #111827;" id="out-desc">Haulage Transport: Kingston to Zone</td>
                             <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #111827;" id="out-amount">$0 JMD</td>
                         </tr>
                         <tr style="background-color: #f0fdf4;">
@@ -1011,20 +1011,19 @@
             }
         }
 
+        // When selecting from dropdown, auto-populates all towns in that zone into the specific dest box
         function selectDestinationZone() {
             var select = document.getElementById('inv-destination');
             var selectedOption = select.options[select.selectedIndex];
             var price = selectedOption.getAttribute('data-price');
             document.getElementById('inv-amount').value = price || 0;
             
-            // Auto-fill the specific town field with the first main town name
             if (select.value) {
-                var cleanTown = select.value.split(',')[0].trim();
-                document.getElementById('inv-specific-dest').value = cleanTown;
+                document.getElementById('inv-specific-dest').value = select.value;
             }
         }
 
-        // Live Auto-Pricing when typing directly into the Specific Town box
+        // Smart Auto-Pricing when typing directly into the Specific Town box
         function liveTypeAutoPrice() {
             var typedVal = document.getElementById('inv-specific-dest').value.trim().toLowerCase();
             if (!typedVal) return;
@@ -1042,7 +1041,7 @@
                     var townName = towns[j].trim();
                     if (townName.length >= 3 && (typedVal === townName || typedVal.includes(townName) || townName.includes(typedVal))) {
                         document.getElementById('inv-amount').value = price;
-                        select.selectedIndex = i; // Sync dropdown
+                        select.selectedIndex = i; // Sync dropdown in background
                         return;
                     }
                 }
@@ -1092,10 +1091,10 @@
             var num = document.getElementById('inv-num').value || 'DC-1001';
             var pickup = document.getElementById('inv-pickup').value || 'Kingston / Portmore Hub';
             
+            // Uses whatever text is in the specific destination box (either the full zone list from dropdown or a manually typed single town)
             var destInput = document.getElementById('inv-specific-dest').value.trim();
             if (!destInput) {
-                var select = document.getElementById('inv-destination');
-                destInput = select.value ? select.value.split(',')[0].trim() : 'Destination Hub';
+                destInput = 'Destination Hub';
             }
 
             var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
@@ -1110,7 +1109,7 @@
             document.getElementById('out-email').innerText = email;
             document.getElementById('out-num').innerText = num;
             
-            // Clean route and dynamic description in crisp black text
+            // Prints the exact destination route (full zone list or single typed town)
             document.getElementById('out-pickup-text').innerText = pickup;
             document.getElementById('out-dest-text').innerText = destInput;
             document.getElementById('out-desc').innerText = 'Haulage Transport: ' + pickup + ' to ' + destInput;
@@ -1157,8 +1156,7 @@
             
             var destInput = document.getElementById('inv-specific-dest').value.trim();
             if (!destInput) {
-                var select = document.getElementById('inv-destination');
-                destInput = select.value ? select.value.split(',')[0].trim() : 'Destination Hub';
+                destInput = 'Destination Hub';
             }
 
             var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
