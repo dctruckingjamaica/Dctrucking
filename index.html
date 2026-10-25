@@ -578,6 +578,36 @@
             margin-bottom: 0;
         }
 
+        /* WEEKLY TOTALS SUMMARY DASHBOARD */
+        .weekly-summary-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .summary-box {
+            background: #042410;
+            border: 1px solid #1c4d28;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .summary-box h6 {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .summary-box span {
+            color: var(--primary-green);
+            font-size: 1.25rem;
+            font-weight: 900;
+        }
+
         /* CORPORATE TRACKER SPREADSHEET TABLE & LABELED INPUTS */
         .tracker-form-container {
             background: #0d2614;
@@ -616,6 +646,31 @@
             font-weight: 700;
         }
 
+        .live-profit-preview-box {
+            grid-column: 1 / -1;
+            background: #042410;
+            border: 2px dashed #38bdf8;
+            padding: 12px 16px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .live-profit-preview-box label {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #38bdf8;
+            text-transform: uppercase;
+        }
+
+        .live-profit-preview-box span {
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: #38bdf8;
+        }
+
         .btn-add-job {
             background: var(--primary-green);
             color: #000;
@@ -638,7 +693,7 @@
             border-collapse: collapse;
             font-size: 0.9rem;
             color: #ffffff;
-            min-width: 900px;
+            min-width: 950px;
         }
 
         .tracker-table th, .tracker-table td {
@@ -652,6 +707,36 @@
             color: var(--primary-green);
             font-weight: 900;
             text-transform: uppercase;
+        }
+
+        /* SLEEK MULTI-INVOICE BADGE SYSTEM */
+        .inv-tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            max-width: 160px;
+        }
+
+        .inv-badge-pill {
+            background: #0f381b;
+            color: #4ade80;
+            border: 1px solid #22c55e;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .inv-badge-count {
+            background: #0284c7;
+            color: #ffffff;
+            border: 1px solid #38bdf8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 900;
+            cursor: pointer;
         }
 
         .status-badge-paid {
@@ -1084,9 +1169,29 @@
                     </div>
                 </div>
 
-                <!-- Corporate Multi-Drop Daily Job Tracker with Labeled Fields & AUTO-PRICING -->
+                <!-- WEEKLY TOTALS SUMMARY DASHBOARD -->
+                <div class="weekly-summary-bar">
+                    <div class="summary-box">
+                        <h6>Total Revenue</h6>
+                        <span id="sum-revenue">$0 JMD</span>
+                    </div>
+                    <div class="summary-box">
+                        <h6>Total Expenses (Petrol + Crew)</h6>
+                        <span id="sum-expenses" style="color: #f87171;">$0 JMD</span>
+                    </div>
+                    <div class="summary-box">
+                        <h6>Total Net Profit</h6>
+                        <span id="sum-profit" style="color: #38bdf8;">$0 JMD</span>
+                    </div>
+                    <div class="summary-box">
+                        <h6>Logged Runs</h6>
+                        <span id="sum-count" style="color: #fbbf24;">0 Jobs</span>
+                    </div>
+                </div>
+
+                <!-- Corporate Multi-Drop Daily Job Tracker with Manual Date & Live Profit Preview -->
                 <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log weekly runs, enter crew names and costs. Typing a town name below auto-calculates the rate from your rate sheet!</p>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log weekly runs, manually pick dates, type multi-invoices (separated by commas), and check live net profit!</p>
 
                 <div class="tracker-form-container">
                     <div class="tracker-form-grid">
@@ -1103,8 +1208,12 @@
                             </select>
                         </div>
                         <div class="tracker-field-group">
-                            <label>Invoice Number</label>
-                            <input type="text" id="tr-inv" placeholder="e.g. DC-901">
+                            <label>Exact Date (Manual)</label>
+                            <input type="date" id="tr-date">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label>Invoice Number(s) — (Separate with commas for multi-drop)</label>
+                            <input type="text" id="tr-inv" placeholder="e.g. DC-901, DC-902, DC-903">
                         </div>
                         <div class="tracker-field-group">
                             <label>Pickup Town</label>
@@ -1120,7 +1229,7 @@
                         </div>
                         <div class="tracker-field-group">
                             <label>Driver Payout (JMD)</label>
-                            <input type="number" id="tr-driver-pay" placeholder="0">
+                            <input type="number" id="tr-driver-pay" placeholder="0" oninput="updateLiveProfit()">
                         </div>
                         <div class="tracker-field-group">
                             <label>Assistant Name</label>
@@ -1128,16 +1237,23 @@
                         </div>
                         <div class="tracker-field-group">
                             <label>Assistant Payout (JMD)</label>
-                            <input type="number" id="tr-asst-pay" placeholder="0">
+                            <input type="number" id="tr-asst-pay" placeholder="0" oninput="updateLiveProfit()">
                         </div>
                         <div class="tracker-field-group">
                             <label>Petrol Cost (JMD)</label>
-                            <input type="number" id="tr-petrol" placeholder="0">
+                            <input type="number" id="tr-petrol" placeholder="0" oninput="updateLiveProfit()">
                         </div>
                         <div class="tracker-field-group">
                             <label>Total Rate (JMD) - Auto Filled</label>
-                            <input type="number" id="tr-rate" placeholder="0">
+                            <input type="number" id="tr-rate" placeholder="0" oninput="updateLiveProfit()">
                         </div>
+
+                        <!-- LIVE NET PROFIT PREVIEW BOX JUST BEFORE PAYMENT STATUS -->
+                        <div class="live-profit-preview-box">
+                            <label>Live Net Profit Preview:</label>
+                            <span id="live-net-profit-display">$0 JMD</span>
+                        </div>
+
                         <div class="tracker-field-group" style="grid-column: 1 / -1; max-width: 300px;">
                             <label>Payment Status</label>
                             <select id="tr-status">
@@ -1153,8 +1269,8 @@
                     <table class="tracker-table" id="tracker-table">
                         <thead>
                             <tr>
-                                <th>Day</th>
-                                <th>Inv #</th>
+                                <th>Day & Date</th>
+                                <th>Invoice #(s)</th>
                                 <th>Route</th>
                                 <th>Driver & Payout</th>
                                 <th>Assistant & Payout</th>
@@ -1325,10 +1441,22 @@
                     var townName = towns[j].trim();
                     if (townName.length >= 3 && (typedVal === townName || typedVal.includes(townName) || townName.includes(typedVal))) {
                         document.getElementById('tr-rate').value = price;
+                        updateLiveProfit();
                         return;
                     }
                 }
             }
+        }
+
+        /* LIVE NET PROFIT CALCULATOR PREVIEW */
+        function updateLiveProfit() {
+            var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
+            var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
+            var driverPay = parseFloat(document.getElementById('tr-driver-pay').value) || 0;
+            var asstPay = parseFloat(document.getElementById('tr-asst-pay').value) || 0;
+            
+            var net = rate - (petrol + driverPay + asstPay);
+            document.getElementById('live-net-profit-display').innerText = '$' + net.toLocaleString() + ' JMD';
         }
 
         function saveClientProfile() {
@@ -1482,6 +1610,7 @@
 
         function addTrackerJob() {
             var day = document.getElementById('tr-day').value;
+            var date = document.getElementById('tr-date').value || 'N/A';
             var inv = document.getElementById('tr-inv').value;
             var pickup = document.getElementById('tr-pickup').value;
             var drop = document.getElementById('tr-drop').value;
@@ -1502,6 +1631,7 @@
             jobs.push({ 
                 id: Date.now(), 
                 day: day, 
+                date: date,
                 inv: inv, 
                 pickup: pickup, 
                 drop: drop, 
@@ -1516,6 +1646,7 @@
             saveStoredJobs(jobs);
 
             // Reset Form Inputs
+            document.getElementById('tr-date').value = '';
             document.getElementById('tr-inv').value = '';
             document.getElementById('tr-pickup').value = '';
             document.getElementById('tr-drop').value = '';
@@ -1525,6 +1656,7 @@
             document.getElementById('tr-asst-pay').value = '';
             document.getElementById('tr-petrol').value = '';
             document.getElementById('tr-rate').value = '';
+            updateLiveProfit();
             
             loadTrackerJobs();
         }
@@ -1549,29 +1681,62 @@
             loadTrackerJobs();
         }
 
+        function toggleExpandInvoices(el) {
+            var fullList = el.getAttribute('data-full');
+            alert("All Invoices for this Multi-Drop Run:\n\n" + fullList.split(',').join('\n'));
+        }
+
         function loadTrackerJobs() {
             var jobs = getStoredJobs();
             var tbody = document.getElementById('tracker-table-body');
             tbody.innerHTML = '';
 
+            var totalRev = 0;
+            var totalExp = 0;
+            var totalProf = 0;
+
             if (jobs.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:#94a3b8;">No corporate jobs logged yet. Fill out the form above to add your first run!</td></tr>';
+                document.getElementById('sum-revenue').innerText = '$0 JMD';
+                document.getElementById('sum-expenses').innerText = '$0 JMD';
+                document.getElementById('sum-profit').innerText = '$0 JMD';
+                document.getElementById('sum-count').innerText = '0 Jobs';
                 return;
             }
 
             for (var i = 0; i < jobs.length; i++) {
                 var j = jobs[i];
-                // Net Profit = Total Rate minus (Driver Pay + Assistant Pay + Petrol Cost)
-                var totalExpenses = j.driverPay + j.asstPay + j.petrol;
-                var netProfit = j.rate - totalExpenses;
+                var expenses = j.driverPay + j.asstPay + j.petrol;
+                var netProfit = j.rate - expenses;
+
+                totalRev += j.rate;
+                totalExp += expenses;
+                totalProf += netProfit;
+
+                // Format Invoice Numbers into Clean Pill Badges
+                var invArray = j.inv.split(',').map(function(item) { return item.trim(); }).filter(Boolean);
+                var invHTML = '';
+                
+                if (invArray.length <= 2) {
+                    invHTML = '<div class="inv-tag-container">';
+                    for (var k = 0; k < invArray.length; k++) {
+                        invHTML += '<span class="inv-badge-pill">' + invArray[k] + '</span>';
+                    }
+                    invHTML += '</div>';
+                } else {
+                    invHTML = '<div class="inv-tag-container">' +
+                                '<span class="inv-badge-pill">' + invArray[0] + '</span>' +
+                                '<span class="inv-badge-count" data-full="' + j.inv.replace(/"/g, '&quot;') + '" onclick="toggleExpandInvoices(this)">+' + (invArray.length - 1) + ' drops</span>' +
+                              '</div>';
+                }
 
                 var statusHTML = j.status === 'PAID' 
                     ? '<span class="status-badge-paid" onclick="toggleJobStatus(' + j.id + ')">✅ PAID</span>' 
                     : '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
 
                 var tr = document.createElement('tr');
-                tr.innerHTML = '<td><strong>' + j.day + '</strong></td>' +
-                               '<td>' + j.inv + '</td>' +
+                tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.82rem;">' + j.date + '</span></td>' +
+                               '<td>' + invHTML + '</td>' +
                                '<td>' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
                                '<td>' + j.driver + '<br><span style="color:#4ade80;">$' + j.driverPay.toLocaleString() + ' JMD</span></td>' +
                                '<td>' + j.assistant + '<br><span style="color:#4ade80;">$' + j.asstPay.toLocaleString() + ' JMD</span></td>' +
@@ -1582,6 +1747,12 @@
                                '<td><button style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteJob(' + j.id + ')">🗑️</button></td>';
                 tbody.appendChild(tr);
             }
+
+            // Update Weekly Totals Summary Dashboard
+            document.getElementById('sum-revenue').innerText = '$' + totalRev.toLocaleString() + ' JMD';
+            document.getElementById('sum-expenses').innerText = '$' + totalExp.toLocaleString() + ' JMD';
+            document.getElementById('sum-profit').innerText = '$' + totalProf.toLocaleString() + ' JMD';
+            document.getElementById('sum-count').innerText = jobs.length + (jobs.length === 1 ? ' Job' : ' Jobs');
         }
     </script>
 </body>
