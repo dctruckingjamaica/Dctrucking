@@ -578,34 +578,55 @@
             margin-bottom: 0;
         }
 
-        /* CORPORATE TRACKER SPREADSHEET TABLE */
+        /* CORPORATE TRACKER SPREADSHEET TABLE & LABELED INPUTS */
+        .tracker-form-container {
+            background: #0d2614;
+            border: 1px solid #1e4626;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
         .tracker-form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
             margin-bottom: 12px;
         }
 
-        .tracker-form-grid input, .tracker-form-grid select {
-            padding: 8px;
+        .tracker-field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tracker-field-group label {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--primary-green);
+        }
+
+        .tracker-field-group input, .tracker-field-group select {
+            padding: 10px;
             border-radius: 6px;
             border: 1px solid #333;
             background: #000;
             color: #fff;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            font-weight: 700;
         }
 
         .btn-add-job {
             background: var(--primary-green);
             color: #000;
             font-weight: 900;
-            padding: 10px 16px;
+            padding: 12px 16px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.05rem;
             width: 100%;
-            margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
         .table-scroll {
@@ -615,9 +636,9 @@
         .tracker-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             color: #ffffff;
-            min-width: 780px;
+            min-width: 900px;
         }
 
         .tracker-table th, .tracker-table td {
@@ -1063,33 +1084,70 @@
                     </div>
                 </div>
 
-                <!-- Corporate Multi-Drop Daily Job Tracker -->
-                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Crew Tracker</h5>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 12px;">Log weekly runs, assign Driver & Assistant, track petrol costs, and manage invoice payments:</p>
+                <!-- Corporate Multi-Drop Daily Job Tracker with Labeled Fields & AUTO-PRICING -->
+                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log weekly runs, enter crew names and costs. Typing a town name below auto-calculates the rate from your rate sheet!</p>
 
-                <div class="tracker-form-grid">
-                    <select id="tr-day">
-                        <option value="Monday">Monday</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="Thursday">Thursday</option>
-                        <option value="Friday">Friday</option>
-                        <option value="Saturday">Saturday</option>
-                        <option value="Sunday">Sunday</option>
-                    </select>
-                    <input type="text" id="tr-inv" placeholder="Invoice # (e.g. DC-901)">
-                    <input type="text" id="tr-pickup" placeholder="Pickup Town">
-                    <input type="text" id="tr-drop" placeholder="Drop-off Town">
-                    <input type="text" id="tr-driver" placeholder="Driver Name">
-                    <input type="text" id="tr-assistant" placeholder="Assistant Name">
-                    <input type="number" id="tr-petrol" placeholder="Petrol (JMD)">
-                    <input type="number" id="tr-rate" placeholder="Rate (JMD)">
-                    <select id="tr-status">
-                        <option value="UNPAID">🔴 UNPAID</option>
-                        <option value="PAID">✅ PAID</option>
-                    </select>
+                <div class="tracker-form-container">
+                    <div class="tracker-form-grid">
+                        <div class="tracker-field-group">
+                            <label>Day of Week</label>
+                            <select id="tr-day">
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+                        </div>
+                        <div class="tracker-field-group">
+                            <label>Invoice Number</label>
+                            <input type="text" id="tr-inv" placeholder="e.g. DC-901">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label>Pickup Town</label>
+                            <input type="text" id="tr-pickup" placeholder="Pickup location">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label>Drop-off Destination (Auto-Prices Rate)</label>
+                            <input type="text" id="tr-drop" placeholder="e.g. Montego Bay, Negril" oninput="trackerLiveAutoPrice()">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label>Driver Name</label>
+                            <input type="text" id="tr-driver" placeholder="Driver name">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label>Driver Payout (JMD)</label>
+                            <input type="number" id="tr-driver-pay" placeholder="0">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label>Assistant Name</label>
+                            <input type="text" id="tr-assistant" placeholder="Assistant name">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label>Assistant Payout (JMD)</label>
+                            <input type="number" id="tr-asst-pay" placeholder="0">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label>Petrol Cost (JMD)</label>
+                            <input type="number" id="tr-petrol" placeholder="0">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label>Total Rate (JMD) - Auto Filled</label>
+                            <input type="number" id="tr-rate" placeholder="0">
+                        </div>
+                        <div class="tracker-field-group" style="grid-column: 1 / -1; max-width: 300px;">
+                            <label>Payment Status</label>
+                            <select id="tr-status">
+                                <option value="UNPAID">🔴 UNPAID</option>
+                                <option value="PAID">✅ PAID</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn-add-job" onclick="addTrackerJob()">➕ Log Corporate Job</button>
                 </div>
-                <button class="btn-add-job" onclick="addTrackerJob()">➕ Log Weekly Corporate Job</button>
 
                 <div class="table-scroll">
                     <table class="tracker-table" id="tracker-table">
@@ -1098,9 +1156,10 @@
                                 <th>Day</th>
                                 <th>Inv #</th>
                                 <th>Route</th>
-                                <th>Crew (Driver / Asst)</th>
-                                <th>Petrol</th>
-                                <th>Rate</th>
+                                <th>Driver & Payout</th>
+                                <th>Assistant & Payout</th>
+                                <th>Petrol Cost</th>
+                                <th>Total Rate</th>
                                 <th>Net Profit</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -1249,6 +1308,29 @@
             }
         }
 
+        /* AUTO PRICING FOR CORPORATE TRACKER DROP-OFF FIELD */
+        function trackerLiveAutoPrice() {
+            var typedVal = document.getElementById('tr-drop').value.trim().toLowerCase();
+            if (!typedVal) return;
+
+            var select = document.getElementById('inv-destination');
+            var options = select.options;
+
+            for (var i = 1; i < options.length; i++) {
+                var zoneText = options[i].value.toLowerCase();
+                var price = options[i].getAttribute('data-price');
+
+                var towns = zoneText.split(',');
+                for (var j = 0; j < towns.length; j++) {
+                    var townName = towns[j].trim();
+                    if (townName.length >= 3 && (typedVal === townName || typedVal.includes(townName) || townName.includes(typedVal))) {
+                        document.getElementById('tr-rate').value = price;
+                        return;
+                    }
+                }
+            }
+        }
+
         function saveClientProfile() {
             var email = document.getElementById('inv-email').value;
             var client = document.getElementById('inv-client').value;
@@ -1388,7 +1470,7 @@
             window.open(whatsappUrl, "_blank");
         }
 
-        /* CORPORATE MULTI-DROP & CREW TRACKER LOGIC */
+        /* CORPORATE MULTI-DROP & COST TRACKER LOGIC */
         function getStoredJobs() {
             var stored = localStorage.getItem("dc_corporate_jobs");
             return stored ? JSON.parse(stored) : [];
@@ -1403,8 +1485,10 @@
             var inv = document.getElementById('tr-inv').value;
             var pickup = document.getElementById('tr-pickup').value;
             var drop = document.getElementById('tr-drop').value;
-            var driver = document.getElementById('tr-driver').value;
-            var assistant = document.getElementById('tr-assistant').value;
+            var driver = document.getElementById('tr-driver').value || 'N/A';
+            var driverPay = parseFloat(document.getElementById('tr-driver-pay').value) || 0;
+            var assistant = document.getElementById('tr-assistant').value || 'N/A';
+            var asstPay = parseFloat(document.getElementById('tr-asst-pay').value) || 0;
             var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
             var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
             var status = document.getElementById('tr-status').value;
@@ -1421,8 +1505,10 @@
                 inv: inv, 
                 pickup: pickup, 
                 drop: drop, 
-                driver: driver || 'N/A', 
-                assistant: assistant || 'N/A', 
+                driver: driver, 
+                driverPay: driverPay,
+                assistant: assistant, 
+                asstPay: asstPay,
                 petrol: petrol, 
                 rate: rate, 
                 status: status 
@@ -1434,7 +1520,9 @@
             document.getElementById('tr-pickup').value = '';
             document.getElementById('tr-drop').value = '';
             document.getElementById('tr-driver').value = '';
+            document.getElementById('tr-driver-pay').value = '';
             document.getElementById('tr-assistant').value = '';
+            document.getElementById('tr-asst-pay').value = '';
             document.getElementById('tr-petrol').value = '';
             document.getElementById('tr-rate').value = '';
             
@@ -1467,13 +1555,16 @@
             tbody.innerHTML = '';
 
             if (jobs.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:#94a3b8;">No corporate jobs logged yet. Fill out the form above to add your first run!</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:#94a3b8;">No corporate jobs logged yet. Fill out the form above to add your first run!</td></tr>';
                 return;
             }
 
             for (var i = 0; i < jobs.length; i++) {
                 var j = jobs[i];
-                var net = j.rate - j.petrol;
+                // Net Profit = Total Rate minus (Driver Pay + Assistant Pay + Petrol Cost)
+                var totalExpenses = j.driverPay + j.asstPay + j.petrol;
+                var netProfit = j.rate - totalExpenses;
+
                 var statusHTML = j.status === 'PAID' 
                     ? '<span class="status-badge-paid" onclick="toggleJobStatus(' + j.id + ')">✅ PAID</span>' 
                     : '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
@@ -1482,10 +1573,11 @@
                 tr.innerHTML = '<td><strong>' + j.day + '</strong></td>' +
                                '<td>' + j.inv + '</td>' +
                                '<td>' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
-                               '<td>👤 ' + j.driver + '<br><span style="color:#94a3b8; font-size:0.85rem;">Asst: ' + j.assistant + '</span></td>' +
+                               '<td>' + j.driver + '<br><span style="color:#4ade80;">$' + j.driverPay.toLocaleString() + ' JMD</span></td>' +
+                               '<td>' + j.assistant + '<br><span style="color:#4ade80;">$' + j.asstPay.toLocaleString() + ' JMD</span></td>' +
                                '<td style="color:#f87171;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
-                               '<td style="color:#4ade80;">$' + j.rate.toLocaleString() + ' JMD</td>' +
-                               '<td style="font-weight:900; color:#38bdf8;">$' + net.toLocaleString() + ' JMD</td>' +
+                               '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
+                               '<td style="font-weight:900; color:#38bdf8;">$' + netProfit.toLocaleString() + ' JMD</td>' +
                                '<td>' + statusHTML + '</td>' +
                                '<td><button style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteJob(' + j.id + ')">🗑️</button></td>';
                 tbody.appendChild(tr);
