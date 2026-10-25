@@ -709,34 +709,24 @@
             text-transform: uppercase;
         }
 
-        /* SLEEK MULTI-INVOICE BADGE SYSTEM */
-        .inv-tag-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            max-width: 160px;
+        /* 2-PER-ROW STACKED MULTI-INVOICE GRID */
+        .inv-stacked-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(75px, 1fr));
+            gap: 3px;
+            max-width: 165px;
         }
 
         .inv-badge-pill {
             background: #0f381b;
             color: #4ade80;
             border: 1px solid #22c55e;
-            padding: 2px 6px;
+            padding: 2px 4px;
             border-radius: 4px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 800;
+            text-align: center;
             white-space: nowrap;
-        }
-
-        .inv-badge-count {
-            background: #0284c7;
-            color: #ffffff;
-            border: 1px solid #38bdf8;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 900;
-            cursor: pointer;
         }
 
         .status-badge-paid {
@@ -1191,7 +1181,7 @@
 
                 <!-- Corporate Multi-Drop Daily Job Tracker with Manual Date & Live Profit Preview -->
                 <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log weekly runs, manually pick dates, type multi-invoices (separated by commas), and check live net profit!</p>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log weekly runs, type towns with auto-prompting, and tap any logged row below to instantly edit it!</p>
 
                 <div class="tracker-form-container">
                     <div class="tracker-form-grid">
@@ -1212,16 +1202,47 @@
                             <input type="date" id="tr-date">
                         </div>
                         <div class="tracker-field-group">
-                            <label>Invoice Number(s) — (Separate with commas for multi-drop)</label>
-                            <input type="text" id="tr-inv" placeholder="e.g. DC-901, DC-902, DC-903">
+                            <label>Invoice Number(s) — (Separate with commas)</label>
+                            <input type="text" id="tr-inv" placeholder="e.g. DC-901, DC-902">
                         </div>
                         <div class="tracker-field-group">
                             <label>Pickup Town</label>
                             <input type="text" id="tr-pickup" placeholder="Pickup location">
                         </div>
                         <div class="tracker-field-group">
-                            <label>Drop-off Destination (Auto-Prices Rate)</label>
-                            <input type="text" id="tr-drop" placeholder="e.g. Montego Bay, Negril" oninput="trackerLiveAutoPrice()">
+                            <label>Drop-off Destination (Auto-Prompts & Prices)</label>
+                            <input type="text" id="tr-drop" list="jamaica-towns-list" placeholder="Type town (e.g. Negril)" oninput="trackerLiveAutoPrice()">
+                            <datalist id="jamaica-towns-list">
+                                <option value="Downtown">
+                                    <option value="Kingston">
+                                        <option value="Half Way Tree">
+                                            <option value="Liguanea">
+                                                <option value="Spanish Town">
+                                                    <option value="Portmore">
+                                                        <option value="Old Harbour">
+                                                            <option value="Stony Hill">
+                                                                <option value="May Pen">
+                                                                    <option value="Mandeville">
+                                                                        <option value="Montego Bay">
+                                                                            <option value="Negril">
+                                                                                <option value="Sav-La-Mar">
+                                                                                    <option value="Ocho Rios">
+                                                                                        <option value="Port Antonio">
+                                                                                            <option value="Morant Bay">
+                                                                                                <option value="Falmouth">
+                                                                                                    <option value="Santa Cruz">
+                                                                                                        <option value="Black River">
+                                                                                                            <option value="Lucea">
+                                                                                                                <option value="Spaldings">
+                                                                                                                    <option value="Linstead">
+                                                                                                                        <option value="Bogwalk">
+                                                                                                                            <option value="Papine">
+                                                                                                                                <option value="Red Hills">
+                                                                                                                                    <option value="Claremont">
+                                                                                                                                        <option value="Annotto Bay">
+                                                                                                                                            <option value="Bath">
+                                                                                                                                                <option value="Junction">
+                            </datalist>
                         </div>
                         <div class="tracker-field-group">
                             <label>Driver Name</label>
@@ -1278,7 +1299,7 @@
                                 <th>Total Rate</th>
                                 <th>Net Profit</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="tracker-table-body">
@@ -1681,9 +1702,37 @@
             loadTrackerJobs();
         }
 
-        function toggleExpandInvoices(el) {
-            var fullList = el.getAttribute('data-full');
-            alert("All Invoices for this Multi-Drop Run:\n\n" + fullList.split(',').join('\n'));
+        /* EDIT LOGGED JOB FUNCTIONALITY */
+        function editJob(id) {
+            var jobs = getStoredJobs();
+            var job = null;
+            for (var i = 0; i < jobs.length; i++) {
+                if (jobs[i].id === id) {
+                    job = jobs[i];
+                    break;
+                }
+            }
+            if (!job) return;
+
+            var newDay = prompt("Edit Day of Week:", job.day);
+            if (newDay === null) return;
+            var newDate = prompt("Edit Exact Date (YYYY-MM-DD):", job.date);
+            if (newDate === null) return;
+            var newInv = prompt("Edit Invoice Number(s):", job.inv);
+            if (newInv === null) return;
+            var newDrop = prompt("Edit Drop-off Destination:", job.drop);
+            if (newDrop === null) return;
+            var newRate = prompt("Edit Total Rate (JMD):", job.rate);
+            if (newRate === null) return;
+
+            job.day = newDay.trim() || job.day;
+            job.date = newDate.trim() || job.date;
+            job.inv = newInv.trim() || job.inv;
+            job.drop = newDrop.trim() || job.drop;
+            job.rate = parseFloat(newRate) || job.rate;
+
+            saveStoredJobs(jobs);
+            loadTrackerJobs();
         }
 
         function loadTrackerJobs() {
@@ -1713,22 +1762,13 @@
                 totalExp += expenses;
                 totalProf += netProfit;
 
-                // Format Invoice Numbers into Clean Pill Badges
+                // Format Invoice Numbers into Clean 2-Per-Row Stacked Grid
                 var invArray = j.inv.split(',').map(function(item) { return item.trim(); }).filter(Boolean);
-                var invHTML = '';
-                
-                if (invArray.length <= 2) {
-                    invHTML = '<div class="inv-tag-container">';
-                    for (var k = 0; k < invArray.length; k++) {
-                        invHTML += '<span class="inv-badge-pill">' + invArray[k] + '</span>';
-                    }
-                    invHTML += '</div>';
-                } else {
-                    invHTML = '<div class="inv-tag-container">' +
-                                '<span class="inv-badge-pill">' + invArray[0] + '</span>' +
-                                '<span class="inv-badge-count" data-full="' + j.inv.replace(/"/g, '&quot;') + '" onclick="toggleExpandInvoices(this)">+' + (invArray.length - 1) + ' drops</span>' +
-                              '</div>';
+                var invHTML = '<div class="inv-stacked-grid">';
+                for (var k = 0; k < invArray.length; k++) {
+                    invHTML += '<span class="inv-badge-pill">' + invArray[k] + '</span>';
                 }
+                invHTML += '</div>';
 
                 var statusHTML = j.status === 'PAID' 
                     ? '<span class="status-badge-paid" onclick="toggleJobStatus(' + j.id + ')">✅ PAID</span>' 
@@ -1744,7 +1784,10 @@
                                '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
                                '<td style="font-weight:900; color:#38bdf8;">$' + netProfit.toLocaleString() + ' JMD</td>' +
                                '<td>' + statusHTML + '</td>' +
-                               '<td><button style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteJob(' + j.id + ')">🗑️</button></td>';
+                               '<td>' +
+                                  '<button style="background:#0284c7; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px;" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
+                                  '<button style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
+                               '</td>';
                 tbody.appendChild(tr);
             }
 
