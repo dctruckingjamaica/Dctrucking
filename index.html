@@ -229,8 +229,8 @@
             border: 2px solid var(--primary-green);
             border-radius: 10px;
             padding: 16px;
-            margin-top: 18px;
-            margin-bottom: 10px;
+            margin-top: 10px;
+            margin-bottom: 18px;
             color: #ffffff;
             box-shadow: 0 4px 15px rgba(0, 230, 118, 0.2);
         }
@@ -553,16 +553,30 @@
             min-width: 220px;
         }
 
+        /* PROMINENT & POPPING SAVE PROFILE BUTTON */
         .btn-save-profile {
-            background-color: #0284c7;
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: #ffffff;
-            padding: 12px 18px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 800;
+            padding: 16px 24px;
+            border: 2px solid #38bdf8;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
             cursor: pointer;
             width: 100%;
-            margin-top: 8px;
+            margin-top: 6px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 18px rgba(2, 132, 199, 0.45);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-save-profile:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 10px rgba(2, 132, 199, 0.3);
         }
 
         /* PRINTABLE INVOICE */
@@ -810,13 +824,6 @@
                     <div class="rate-row"><div class="rate-loc"><span>📍</span> Manchioneal, Hectors River</div><div class="rate-price">💰 $59,000 JMD</div></div>
                 </div>
             </div>
-
-            <div class="deposit-policy-banner">
-                <h4>🔒 Booking & Deposit Policy</h4>
-                <p>• <span class="text-red-alert">50% Deposit Required:</span> Payable in advance to confirm and lock in your scheduled job date.</p>
-                <p>• <span class="text-red-alert">50% Remaining Balance:</span> Payable upon pickup of goods/items on the job date.</p>
-                <p>• <strong>Cancellation Policy:</strong> Full deposit refund for cancellations made at least <strong>72 hours (3 days)</strong> prior to the scheduled job. Cancellations made <span class="text-yellow-highlight">under 72 hours</span> are <span class="text-yellow-highlight">strictly non-refundable</span>.</p>
-            </div>
         </div>
 
         <div class="card">
@@ -854,7 +861,7 @@
                     <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
                 </div>
 
-                <!-- Destination Zone Dropdown (Selecting a zone auto-populates all towns in that zone) -->
+                <!-- Destination Zone Dropdown (Auto-fills all towns in that zone) -->
                 <div class="input-group">
                     <label>Select Destination Zone (Auto-Fills All Towns)</label>
                     <select id="inv-destination" onchange="selectDestinationZone()">
@@ -895,7 +902,7 @@
                     </select>
                 </div>
 
-                <!-- Specific Town Field (Type a single town or let dropdown fill all zone towns) -->
+                <!-- Specific Town Field -->
                 <div class="input-group">
                     <label>Specific Drop-off Town / Zone List</label>
                     <input type="text" id="inv-specific-dest" placeholder="e.g. Little London or Select Zone above" oninput="liveTypeAutoPrice()">
@@ -904,6 +911,17 @@
                 <div class="input-group" style="grid-column: 1 / -1;">
                     <label>Calculated Total Rate (JMD) - Or Enter Custom Rate</label>
                     <input type="number" id="inv-amount" placeholder="0">
+                </div>
+
+                <!-- PROMINENT SAVE PROFILE BUTTON LOCATED RIGHT AFTER RATES -->
+                <button class="btn-save-profile" onclick="saveClientProfile()">💾 Save My Info for Future Bookings</button>
+
+                <!-- BOOKING & DEPOSIT POLICY MOVED RIGHT ABOVE PAYMENT STATUS -->
+                <div class="deposit-policy-banner" style="grid-column: 1 / -1;">
+                    <h4>🔒 Booking & Deposit Policy</h4>
+                    <p>• <span class="text-red-alert">50% Deposit Required:</span> Payable in advance to confirm and lock in your scheduled job date.</p>
+                    <p>• <span class="text-red-alert">50% Remaining Balance:</span> Payable upon pickup of goods/items on the job date.</p>
+                    <p>• <strong>Cancellation Policy:</strong> Full deposit refund for cancellations made at least <strong>72 hours (3 days)</strong> prior to the scheduled job. Cancellations made <span class="text-yellow-highlight">under 72 hours</span> are <span class="text-yellow-highlight">strictly non-refundable</span>.</p>
                 </div>
 
                 <!-- Payment Status Options -->
@@ -919,8 +937,6 @@
                     </div>
                 </div>
             </div>
-
-            <button class="btn-save-profile" onclick="saveClientProfile()">💾 Save My Info for Future Bookings</button>
 
             <div class="btn-action-group">
                 <button class="btn-gen" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
@@ -1007,11 +1023,10 @@
             var dep = document.getElementById('inv-deposit-paid');
             var full = document.getElementById('inv-full-paid');
             if (type === 'full' && full.checked) {
-                dep.checked = true; // If full is checked, deposit is automatically paid
+                dep.checked = true; 
             }
         }
 
-        // When selecting from dropdown, auto-populates all towns in that zone into the specific dest box
         function selectDestinationZone() {
             var select = document.getElementById('inv-destination');
             var selectedOption = select.options[select.selectedIndex];
@@ -1023,7 +1038,6 @@
             }
         }
 
-        // Smart Auto-Pricing when typing directly into the Specific Town box
         function liveTypeAutoPrice() {
             var typedVal = document.getElementById('inv-specific-dest').value.trim().toLowerCase();
             if (!typedVal) return;
@@ -1035,13 +1049,12 @@
                 var zoneText = options[i].value.toLowerCase();
                 var price = options[i].getAttribute('data-price');
 
-                // Split zone towns and check if typed town matches any of them
                 var towns = zoneText.split(',');
                 for (var j = 0; j < towns.length; j++) {
                     var townName = towns[j].trim();
                     if (townName.length >= 3 && (typedVal === townName || typedVal.includes(townName) || townName.includes(typedVal))) {
                         document.getElementById('inv-amount').value = price;
-                        select.selectedIndex = i; // Sync dropdown in background
+                        select.selectedIndex = i; 
                         return;
                     }
                 }
@@ -1091,7 +1104,6 @@
             var num = document.getElementById('inv-num').value || 'DC-1001';
             var pickup = document.getElementById('inv-pickup').value || 'Kingston / Portmore Hub';
             
-            // Uses whatever text is in the specific destination box (either the full zone list from dropdown or a manually typed single town)
             var destInput = document.getElementById('inv-specific-dest').value.trim();
             if (!destInput) {
                 destInput = 'Destination Hub';
@@ -1109,7 +1121,6 @@
             document.getElementById('out-email').innerText = email;
             document.getElementById('out-num').innerText = num;
             
-            // Prints the exact destination route (full zone list or single typed town)
             document.getElementById('out-pickup-text').innerText = pickup;
             document.getElementById('out-dest-text').innerText = destInput;
             document.getElementById('out-desc').innerText = 'Haulage Transport: ' + pickup + ' to ' + destInput;
@@ -1118,7 +1129,6 @@
             document.getElementById('out-deposit').innerText = '$' + deposit.toLocaleString() + ' JMD';
             document.getElementById('out-balance').innerText = '$' + balance.toLocaleString() + ' JMD';
 
-            // Dynamic Payment Status Logic with Red Balance Highlighting
             if (fullPaid) {
                 document.getElementById('out-invoice-header-title').innerText = 'OFFICIAL RECEIPT / PAID IN FULL';
                 document.getElementById('out-deposit-label').innerHTML = '✅ 50% Deposit PAID ($' + deposit.toLocaleString() + ' JMD)';
