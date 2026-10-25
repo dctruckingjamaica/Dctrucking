@@ -476,15 +476,77 @@
             cursor: pointer;
         }
 
-        .payment-status-box {
+        /* REFINED PROMINENT SAVE PROFILE BUTTON */
+        .btn-save-profile {
             grid-column: 1 / -1;
-            background: #0f2413;
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #ffffff;
+            padding: 12px 20px;
+            border: 2px solid #38bdf8;
+            border-radius: 10px;
+            font-weight: 900;
+            font-size: 1.08rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-save-profile:active {
+            transform: scale(0.98);
+        }
+
+        /* SECURE MANAGER LOCK PANEL & MULTI-DROP TRACKER */
+        .admin-toggle-bar {
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        .btn-admin-login {
+            background: #1e293b;
+            color: #38bdf8;
+            border: 1px solid #38bdf8;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .manager-panel {
+            display: none;
+            background: #091a10;
             border: 2px solid var(--primary-green);
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .manager-panel h4 {
+            color: var(--primary-green);
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            border-bottom: 1px solid #1c4d28;
+            padding-bottom: 6px;
+        }
+
+        .payment-status-box {
+            background: #0a2412;
+            border: 1.5px solid var(--primary-green);
             padding: 14px;
             border-radius: 10px;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            margin-bottom: 20px;
         }
 
         .payment-status-box h5 {
@@ -514,6 +576,81 @@
             font-size: 1rem;
             cursor: pointer;
             margin-bottom: 0;
+        }
+
+        /* CORPORATE TRACKER SPREADSHEET TABLE */
+        .tracker-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .tracker-form-grid input, .tracker-form-grid select {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background: #000;
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        .btn-add-job {
+            background: var(--primary-green);
+            color: #000;
+            font-weight: 900;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+        }
+
+        .tracker-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92rem;
+            color: #ffffff;
+            min-width: 780px;
+        }
+
+        .tracker-table th, .tracker-table td {
+            border: 1px solid #224d2d;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        .tracker-table th {
+            background: #14381e;
+            color: var(--primary-green);
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .status-badge-paid {
+            background: #166534;
+            color: #ffffff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .status-badge-unpaid {
+            background: #991b1b;
+            color: #ffffff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
         }
 
         .btn-action-group {
@@ -551,32 +688,6 @@
             text-align: center;
             flex: 1;
             min-width: 220px;
-        }
-
-        /* PROMINENT & POPPING SAVE PROFILE BUTTON */
-        .btn-save-profile {
-            grid-column: 1 / -1;
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            color: #ffffff;
-            padding: 16px 24px;
-            border: 2px solid #38bdf8;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 1.25rem;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 6px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 18px rgba(2, 132, 199, 0.45);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-            transition: all 0.2s ease-in-out;
-        }
-
-        .btn-save-profile:active {
-            transform: scale(0.98);
-            box-shadow: 0 2px 10px rgba(2, 132, 199, 0.3);
         }
 
         /* PRINTABLE INVOICE */
@@ -861,7 +972,7 @@
                     <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
                 </div>
 
-                <!-- Destination Zone Dropdown (Auto-fills all towns in that zone) -->
+                <!-- Destination Zone Dropdown -->
                 <div class="input-group">
                     <label>Select Destination Zone (Auto-Fills All Towns)</label>
                     <select id="inv-destination" onchange="selectDestinationZone()">
@@ -913,18 +1024,33 @@
                     <input type="number" id="inv-amount" placeholder="0">
                 </div>
 
-                <!-- PROMINENT SAVE PROFILE BUTTON LOCATED RIGHT AFTER RATES -->
+                <!-- PROMINENT SAVE PROFILE BUTTON DIRECTLY AFTER RATES -->
                 <button class="btn-save-profile" onclick="saveClientProfile()">💾 Save My Info for Future Bookings</button>
 
-                <!-- BOOKING & DEPOSIT POLICY MOVED RIGHT ABOVE PAYMENT STATUS -->
+                <!-- BOOKING & DEPOSIT POLICY -->
                 <div class="deposit-policy-banner" style="grid-column: 1 / -1;">
                     <h4>🔒 Booking & Deposit Policy</h4>
                     <p>• <span class="text-red-alert">50% Deposit Required:</span> Payable in advance to confirm and lock in your scheduled job date.</p>
                     <p>• <span class="text-red-alert">50% Remaining Balance:</span> Payable upon pickup of goods/items on the job date.</p>
                     <p>• <strong>Cancellation Policy:</strong> Full deposit refund for cancellations made at least <strong>72 hours (3 days)</strong> prior to the scheduled job. Cancellations made <span class="text-yellow-highlight">under 72 hours</span> are <span class="text-yellow-highlight">strictly non-refundable</span>.</p>
                 </div>
+            </div>
 
-                <!-- Payment Status Options -->
+            <div class="btn-action-group">
+                <button class="btn-gen" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
+                <button class="btn-whatsapp" onclick="sendWhatsAppQuote()">📱 Send Request via WhatsApp</button>
+            </div>
+
+            <!-- PIN-LOCKED MANAGER ACCESS BUTTON -->
+            <div class="admin-toggle-bar">
+                <button class="btn-admin-login" onclick="toggleManagerPanel()">🔐 Dispatcher / Manager Login</button>
+            </div>
+
+            <!-- PRIVATE PIN-PROTECTED MANAGER PANEL -->
+            <div id="manager-panel" class="manager-panel">
+                <h4>🔐 Dispatcher Control Panel (Private)</h4>
+                
+                <!-- Payment Status Box (Hidden from customers) -->
                 <div class="payment-status-box">
                     <h5>💳 Payment & Booking Status</h5>
                     <div class="checkbox-item">
@@ -936,11 +1062,55 @@
                         <label for="inv-full-paid">🎉 Mark Job as FULLY PAID (Balance Settled on Job Date)</label>
                     </div>
                 </div>
-            </div>
 
-            <div class="btn-action-group">
-                <button class="btn-gen" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
-                <button class="btn-whatsapp" onclick="sendWhatsAppQuote()">📱 Send Request via WhatsApp</button>
+                <!-- Corporate Multi-Drop Daily Job Tracker -->
+                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Crew Tracker</h5>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 12px;">Log weekly runs, assign Driver & Assistant, track petrol costs, and manage invoice payments:</p>
+
+                <div class="tracker-form-grid">
+                    <select id="tr-day">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+                    <input type="text" id="tr-inv" placeholder="Invoice # (e.g. DC-901)">
+                    <input type="text" id="tr-pickup" placeholder="Pickup Town">
+                    <input type="text" id="tr-drop" placeholder="Drop-off Town">
+                    <input type="text" id="tr-driver" placeholder="Driver Name">
+                    <input type="text" id="tr-assistant" placeholder="Assistant Name">
+                    <input type="number" id="tr-petrol" placeholder="Petrol (JMD)">
+                    <input type="number" id="tr-rate" placeholder="Rate (JMD)">
+                    <select id="tr-status">
+                        <option value="UNPAID">🔴 UNPAID</option>
+                        <option value="PAID">✅ PAID</option>
+                    </select>
+                </div>
+                <button class="btn-add-job" onclick="addTrackerJob()">➕ Log Weekly Corporate Job</button>
+
+                <div class="table-scroll">
+                    <table class="tracker-table" id="tracker-table">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Inv #</th>
+                                <th>Route</th>
+                                <th>Crew (Driver / Asst)</th>
+                                <th>Petrol</th>
+                                <th>Rate</th>
+                                <th>Net Profit</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tracker-table-body">
+                            <!-- Dynamic Corporate Job Entries Render Here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Printable Invoice Output Container -->
@@ -1019,6 +1189,24 @@
     </footer>
 
     <script>
+        // DEFAULT MANAGER PIN IS 1234
+        var managerPin = "1234";
+
+        function toggleManagerPanel() {
+            var panel = document.getElementById('manager-panel');
+            if (panel.style.display === 'block') {
+                panel.style.display = 'none';
+            } else {
+                var entered = prompt("Enter Manager PIN to access payment controls & corporate tracker:");
+                if (entered === managerPin) {
+                    panel.style.display = 'block';
+                    loadTrackerJobs();
+                } else if (entered !== null) {
+                    alert("Incorrect PIN. Access denied.");
+                }
+            }
+        }
+
         function togglePaymentBoxes(type) {
             var dep = document.getElementById('inv-deposit-paid');
             var full = document.getElementById('inv-full-paid');
@@ -1198,6 +1386,110 @@
 
             var whatsappUrl = "https://wa.me/18768628579?text=" + encodeURIComponent(message);
             window.open(whatsappUrl, "_blank");
+        }
+
+        /* CORPORATE MULTI-DROP & CREW TRACKER LOGIC */
+        function getStoredJobs() {
+            var stored = localStorage.getItem("dc_corporate_jobs");
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function saveStoredJobs(jobs) {
+            localStorage.setItem("dc_corporate_jobs", JSON.stringify(jobs));
+        }
+
+        function addTrackerJob() {
+            var day = document.getElementById('tr-day').value;
+            var inv = document.getElementById('tr-inv').value;
+            var pickup = document.getElementById('tr-pickup').value;
+            var drop = document.getElementById('tr-drop').value;
+            var driver = document.getElementById('tr-driver').value;
+            var assistant = document.getElementById('tr-assistant').value;
+            var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
+            var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
+            var status = document.getElementById('tr-status').value;
+
+            if (!inv) {
+                alert("Please enter an Invoice Number.");
+                return;
+            }
+
+            var jobs = getStoredJobs();
+            jobs.push({ 
+                id: Date.now(), 
+                day: day, 
+                inv: inv, 
+                pickup: pickup, 
+                drop: drop, 
+                driver: driver || 'N/A', 
+                assistant: assistant || 'N/A', 
+                petrol: petrol, 
+                rate: rate, 
+                status: status 
+            });
+            saveStoredJobs(jobs);
+
+            // Reset Form Inputs
+            document.getElementById('tr-inv').value = '';
+            document.getElementById('tr-pickup').value = '';
+            document.getElementById('tr-drop').value = '';
+            document.getElementById('tr-driver').value = '';
+            document.getElementById('tr-assistant').value = '';
+            document.getElementById('tr-petrol').value = '';
+            document.getElementById('tr-rate').value = '';
+            
+            loadTrackerJobs();
+        }
+
+        function toggleJobStatus(id) {
+            var jobs = getStoredJobs();
+            for (var i = 0; i < jobs.length; i++) {
+                if (jobs[i].id === id) {
+                    jobs[i].status = jobs[i].status === 'PAID' ? 'UNPAID' : 'PAID';
+                    break;
+                }
+            }
+            saveStoredJobs(jobs);
+            loadTrackerJobs();
+        }
+
+        function deleteJob(id) {
+            if (!confirm("Are you sure you want to delete this job log?")) return;
+            var jobs = getStoredJobs();
+            var filtered = jobs.filter(function(j) { return j.id !== id; });
+            saveStoredJobs(filtered);
+            loadTrackerJobs();
+        }
+
+        function loadTrackerJobs() {
+            var jobs = getStoredJobs();
+            var tbody = document.getElementById('tracker-table-body');
+            tbody.innerHTML = '';
+
+            if (jobs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:#94a3b8;">No corporate jobs logged yet. Fill out the form above to add your first run!</td></tr>';
+                return;
+            }
+
+            for (var i = 0; i < jobs.length; i++) {
+                var j = jobs[i];
+                var net = j.rate - j.petrol;
+                var statusHTML = j.status === 'PAID' 
+                    ? '<span class="status-badge-paid" onclick="toggleJobStatus(' + j.id + ')">✅ PAID</span>' 
+                    : '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
+
+                var tr = document.createElement('tr');
+                tr.innerHTML = '<td><strong>' + j.day + '</strong></td>' +
+                               '<td>' + j.inv + '</td>' +
+                               '<td>' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
+                               '<td>👤 ' + j.driver + '<br><span style="color:#94a3b8; font-size:0.85rem;">Asst: ' + j.assistant + '</span></td>' +
+                               '<td style="color:#f87171;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
+                               '<td style="color:#4ade80;">$' + j.rate.toLocaleString() + ' JMD</td>' +
+                               '<td style="font-weight:900; color:#38bdf8;">$' + net.toLocaleString() + ' JMD</td>' +
+                               '<td>' + statusHTML + '</td>' +
+                               '<td><button style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteJob(' + j.id + ')">🗑️</button></td>';
+                tbody.appendChild(tr);
+            }
         }
     </script>
 </body>
