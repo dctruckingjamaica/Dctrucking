@@ -854,50 +854,51 @@
                     <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
                 </div>
 
-                <!-- Reliable Dropdown Zone Selector (Auto-calculates price & fills town) -->
+                <!-- Original Full Destination Rate Sheet Dropdown -->
                 <div class="input-group">
                     <label>Select Destination Zone (For Auto-Pricing)</label>
                     <select id="inv-destination" onchange="selectDestinationZone()">
-                        <option value="" data-price="0">-- Click Arrow to Select Zone --</option>
-                        <option value="Downtown" data-price="26000">Downtown Zone — $26,000 JMD</option>
-                        <option value="Kingston" data-price="25000">Kingston / St. Andrew Zone — $25,000 JMD</option>
-                        <option value="Spanish Town" data-price="20000">Portmore / Spanish Town Zone — $20,000 JMD</option>
-                        <option value="Old Harbour" data-price="27000">St. Catherine / Old Harbour Zone — $27,000 JMD</option>
-                        <option value="May Pen" data-price="31000">May Pen / Clarendon Zone — $31,000 JMD</option>
-                        <option value="Tollgate" data-price="39000">Tollgate / Mid-Island Zone — $39,000 JMD</option>
-                        <option value="Lionel Town" data-price="35000">South Clarendon Zone — $35,000 JMD</option>
-                        <option value="Chapelton" data-price="42000">Chapelton Zone — $42,000 JMD</option>
-                        <option value="Mandeville" data-price="47000">Mandeville / Manchester Zone — $47,000 JMD</option>
-                        <option value="Wait-A-Bit" data-price="51000">Wait-A-Bit Zone — $51,000 JMD</option>
-                        <option value="Spaldings" data-price="47000">Christiana / Spaldings Zone — $47,000 JMD</option>
-                        <option value="Junction" data-price="57000">Junction / St. Elizabeth Zone — $57,000 JMD</option>
-                        <option value="Maggotty" data-price="57000">Maggotty Zone — $57,000 JMD</option>
-                        <option value="Santa Cruz" data-price="54000">Santa Cruz Zone — $54,000 JMD</option>
-                        <option value="Black River" data-price="60000">Black River / Treasure Beach Zone — $60,000 JMD</option>
-                        <option value="Sav-La-Mar" data-price="71000">Sav-La-Mar / Westmoreland Zone — $71,000 JMD</option>
-                        <option value="Lucea" data-price="76000">Lucea / Hanover Zone — $76,000 JMD</option>
-                        <option value="Negril" data-price="78000">Negril Zone — $78,000 JMD</option>
-                        <option value="Green Island" data-price="82000">Green Island Zone — $82,000 JMD</option>
-                        <option value="Montego Bay" data-price="67000">Montego Bay / St. James Zone — $67,000 JMD</option>
-                        <option value="Cambridge" data-price="70000">Cambridge Zone — $70,000 JMD</option>
-                        <option value="Falmouth" data-price="59000">Falmouth / Trelawny Zone — $59,000 JMD</option>
-                        <option value="Claremont" data-price="53000">Browns Town / Runaway Bay Zone — $53,000 JMD</option>
-                        <option value="Ocho Rios" data-price="53000">Ocho Rios / St. Ann Zone — $53,000 JMD</option>
-                        <option value="Discovery Bay" data-price="56000">Discovery Bay Zone — $56,000 JMD</option>
-                        <option value="Guys Hill" data-price="32000">Guys Hill Zone — $32,000 JMD</option>
-                        <option value="Port Maria" data-price="42000">Port Maria / St. Mary Zone — $42,000 JMD</option>
-                        <option value="Annotto Bay" data-price="39000">Annotto Bay Zone — $39,000 JMD</option>
-                        <option value="Port Antonio" data-price="59000">Port Antonio / Portland Zone — $59,000 JMD</option>
-                        <option value="Boston" data-price="64000">Boston Zone — $64,000 JMD</option>
-                        <option value="Morant Bay" data-price="42000">Morant Bay / St. Thomas Zone — $42,000 JMD</option>
-                        <option value="Bath" data-price="53000">Bath Zone — $53,000 JMD</option>
-                        <option value="Manchioneal" data-price="59000">Manchioneal Zone — $59,000 JMD</option>
+                        <option value="" data-price="0">-- Click Arrow to Select Destination --</option>
+                        <option value="Downtown" data-price="26000">📍 Downtown — $26,000 JMD</option>
+                        <option value="Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill" data-price="25000">📍 Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill — $25,000 JMD</option>
+                        <option value="Spanish Town, Portmore, Ferry" data-price="20000">📍 Spanish Town, Portmore, Ferry — $20,000 JMD</option>
+                        <option value="Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town" data-price="27000">📍 Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town — $27,000 JMD</option>
+                        <option value="May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville" data-price="31000">📍 May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville — $31,000 JMD</option>
+                        <option value="Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap" data-price="39000">📍 Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap — $39,000 JMD</option>
+                        <option value="Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill" data-price="35000">📍 Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill — $35,000 JMD</option>
+                        <option value="Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank" data-price="42000">📍 Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank — $42,000 JMD</option>
+                        <option value="Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits" data-price="47000">📍 Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits — $47,000 JMD</option>
+                        <option value="Wait-A-Bit, Albert Town" data-price="51000">📍 Wait-A-Bit, Albert Town — $51,000 JMD</option>
+                        <option value="Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town" data-price="47000">📍 Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town — $47,000 JMD</option>
+                        <option value="Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond" data-price="57000">📍 Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond — $57,000 JMD</option>
+                        <option value="Maggotty, Siloah, Balaclava, Lacovia, Newton" data-price="57000">📍 Maggotty, Siloah, Balaclava, Lacovia, Newton — $57,000 JMD</option>
+                        <option value="Santa Cruz, Gutters" data-price="54000">📍 Santa Cruz, Gutters — $54,000 JMD</option>
+                        <option value="Black River, New Market, Springfield, Treasure Beach, Southfield" data-price="60000">📍 Black River, New Market, Springfield, Treasure Beach, Southfield — $60,000 JMD</option>
+                        <option value="Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town" data-price="71000">📍 Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town — $71,000 JMD</option>
+                        <option value="Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill" data-price="76000">📍 Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill — $76,000 JMD</option>
+                        <option value="Negril, Little London, Darliston, Delveland" data-price="78000">📍 Negril, Little London, Darliston, Delveland — $78,000 JMD</option>
+                        <option value="Green Island, Orange Bay" data-price="82000">📍 Green Island, Orange Bay — $82,000 JMD</option>
+                        <option value="Montego Bay, Wakefield" data-price="67000">📍 Montego Bay, Wakefield — $67,000 JMD</option>
+                        <option value="Cambridge, Lambs River, Anchovy" data-price="70000">📍 Cambridge, Lambs River, Anchovy — $70,000 JMD</option>
+                        <option value="Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria" data-price="59000">📍 Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria — $59,000 JMD</option>
+                        <option value="Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel" data-price="53000">📍 Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel — $53,000 JMD</option>
+                        <option value="St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River" data-price="53000">📍 St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River — $53,000 JMD</option>
+                        <option value="Discovery Bay, Braco, Duncans" data-price="56000">📍 Discovery Bay, Braco, Duncans — $56,000 JMD</option>
+                        <option value="Guys Hill, Glengoffe, Polly Ground" data-price="32000">📍 Guys Hill, Glengoffe, Polly Ground — $32,000 JMD</option>
+                        <option value="Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall" data-price="42000">📍 Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall — $42,000 JMD</option>
+                        <option value="Annotto Bay, Windsor Castle, Buff Bay, Skibo" data-price="39000">📍 Annotto Bay, Windsor Castle, Buff Bay, Skibo — $39,000 JMD</option>
+                        <option value="Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay" data-price="59000">📍 Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay — $59,000 JMD</option>
+                        <option value="Boston, Long Bay" data-price="64000">📍 Boston, Long Bay — $64,000 JMD</option>
+                        <option value="Easington, Seaforth, Morant Bay, Lyssons, Airy Castle" data-price="42000">📍 Easington, Seaforth, Morant Bay, Lyssons, Airy Castle — $42,000 JMD</option>
+                        <option value="Stokes Hall, Trinityville, Bath, Bowden, Golden Grove" data-price="53000">📍 Stokes Hall, Trinityville, Bath, Bowden, Golden Grove — $53,000 JMD</option>
+                        <option value="Manchioneal, Hectors River" data-price="59000">📍 Manchioneal, Hectors River — $59,000 JMD</option>
                     </select>
                 </div>
 
+                <!-- Specific Typeable Town Field with Live Auto-Pricing -->
                 <div class="input-group">
-                    <label>Specific Drop-off Town / Address (Editable)</label>
-                    <input type="text" id="inv-specific-dest" placeholder="e.g. Montego Bay">
+                    <label>Specific Drop-off Town / Address (Type for Auto-Pricing)</label>
+                    <input type="text" id="inv-specific-dest" placeholder="e.g. Montego Bay" oninput="liveTypeAutoPrice()">
                 </div>
 
                 <div class="input-group" style="grid-column: 1 / -1;">
@@ -1016,9 +1017,35 @@
             var price = selectedOption.getAttribute('data-price');
             document.getElementById('inv-amount').value = price || 0;
             
-            // Automatically pre-fill the specific town text box with the zone name
+            // Auto-fill the specific town field with the first main town name
             if (select.value) {
-                document.getElementById('inv-specific-dest').value = select.value;
+                var cleanTown = select.value.split(',')[0].trim();
+                document.getElementById('inv-specific-dest').value = cleanTown;
+            }
+        }
+
+        // Live Auto-Pricing when typing directly into the Specific Town box
+        function liveTypeAutoPrice() {
+            var typedVal = document.getElementById('inv-specific-dest').value.trim().toLowerCase();
+            if (!typedVal) return;
+
+            var select = document.getElementById('inv-destination');
+            var options = select.options;
+
+            for (var i = 1; i < options.length; i++) {
+                var zoneText = options[i].value.toLowerCase();
+                var price = options[i].getAttribute('data-price');
+
+                // Split zone towns and check if typed town matches any of them
+                var towns = zoneText.split(',');
+                for (var j = 0; j < towns.length; j++) {
+                    var townName = towns[j].trim();
+                    if (townName.length >= 3 && (typedVal === townName || typedVal.includes(townName) || townName.includes(typedVal))) {
+                        document.getElementById('inv-amount').value = price;
+                        select.selectedIndex = i; // Sync dropdown
+                        return;
+                    }
+                }
             }
         }
 
@@ -1065,7 +1092,11 @@
             var num = document.getElementById('inv-num').value || 'DC-1001';
             var pickup = document.getElementById('inv-pickup').value || 'Kingston / Portmore Hub';
             
-            var destInput = document.getElementById('inv-specific-dest').value.trim() || 'Destination Hub';
+            var destInput = document.getElementById('inv-specific-dest').value.trim();
+            if (!destInput) {
+                var select = document.getElementById('inv-destination');
+                destInput = select.value ? select.value.split(',')[0].trim() : 'Destination Hub';
+            }
 
             var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
             var deposit = totalAmount * 0.5;
@@ -1117,7 +1148,12 @@
             var email = document.getElementById('inv-email').value || 'N/A';
             var num = document.getElementById('inv-num').value || 'DC-1001';
             var pickup = document.getElementById('inv-pickup').value || 'Kingston Hub';
-            var destInput = document.getElementById('inv-specific-dest').value.trim() || 'Destination Hub';
+            
+            var destInput = document.getElementById('inv-specific-dest').value.trim();
+            if (!destInput) {
+                var select = document.getElementById('inv-destination');
+                destInput = select.value ? select.value.split(',')[0].trim() : 'Destination Hub';
+            }
 
             var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
             var deposit = totalAmount * 0.5;
