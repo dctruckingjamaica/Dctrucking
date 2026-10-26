@@ -510,15 +510,15 @@
             background: #1e293b;
             color: #38bdf8;
             border: 1px solid #38bdf8;
-            padding: 10px 18px;
+            padding: 8px 14px;
             border-radius: 6px;
-            font-weight: 900;
-            font-size: 1rem;
+            font-weight: 800;
+            font-size: 0.95rem;
             cursor: pointer;
         }
 
         .manager-panel {
-            display: block; /* Open by default so buttons are always accessible */
+            display: none;
             background: #091a10;
             border: 2px solid var(--primary-green);
             border-radius: 12px;
@@ -1328,14 +1328,14 @@
                 <button class="btn-whatsapp" onclick="sendWhatsAppQuote()">📱 Send Request via WhatsApp</button>
             </div>
 
-            <!-- OPEN MANAGER PANEL (DEFAULT VISIBLE) -->
+            <!-- PIN-LOCKED MANAGER ACCESS BUTTON -->
             <div class="admin-toggle-bar">
-                <button class="btn-admin-login" onclick="toggleManagerPanel()">🔐 Toggle Dispatcher Panel</button>
+                <button class="btn-admin-login" onclick="toggleManagerPanel()">🔐 Dispatcher / Manager Login</button>
             </div>
 
-            <!-- PRIVATE MANAGER PANEL -->
+            <!-- PRIVATE PIN-PROTECTED MANAGER PANEL -->
             <div id="manager-panel" class="manager-panel">
-                <h4>🔐 Dispatcher Control Panel (Active)</h4>
+                <h4>🔐 Dispatcher Control Panel (Private)</h4>
                 
                 <div class="payment-status-box">
                     <h5>💳 Payment & Booking Status</h5>
@@ -1462,7 +1462,7 @@
                             </div>
 
                             <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('driver')">💾 Save Driver Profile</button>
-                            <button type="button" class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver Weekly Payslip</button>
+                            <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver Weekly Payslip</button>
                         </div>
 
                         <!-- ASSISTANT PAYROLL CARD -->
@@ -1524,7 +1524,7 @@
                             </div>
 
                             <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('assistant')">💾 Save Assistant Profile</button>
-                            <button type="button" class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant Weekly Payslip</button>
+                            <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant Weekly Payslip</button>
                         </div>
                     </div>
                 </div>
@@ -1636,7 +1636,7 @@
                             </select>
                         </div>
                     </div>
-                    <button type="button" class="btn-add-job" onclick="addTrackerJob()">➕ Log Corporate Job</button>
+                    <button class="btn-add-job" onclick="addTrackerJob()">➕ Log Corporate Job</button>
                 </div>
 
                 <div class="table-scroll">
@@ -1696,7 +1696,7 @@
                                 <input type="text" id="maint-vendor" placeholder="e.g. Kingston Tire Shop">
                             </div>
                         </div>
-                        <button type="button" class="btn-add-job" style="background: #fb7185; color: #000;" onclick="addMaintenanceLog()">🔧 Log Maintenance Expense</button>
+                        <button class="btn-add-job" style="background: #fb7185; color: #000;" onclick="addMaintenanceLog()">🔧 Log Maintenance Expense</button>
                     </div>
 
                     <div class="table-scroll">
@@ -1783,10 +1783,10 @@
                     <p><strong>Thank you for choosing D&C Refuse Trucking & Equipment Co. Limited!</strong></p>
                 </div>
                 <br>
-                <button type="button" class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
+                <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
             </div>
 
-            <!-- Printable Weekly Payslip Output Container -->
+            <!-- Printable Weekly Payslip Output Container (Formal Reference Layout & Editable) -->
             <div id="payslip-preview">
                 <div class="inv-header">
                     <div class="inv-logo-box">
@@ -1864,6 +1864,7 @@
                     </div>
                 </div>
 
+                <!-- AMOUNT PAYABLE / NET PAYOUT HIGHLIGHT BAR AT THE BOTTOM -->
                 <div style="background: #f0fdf4; border: 2px solid #166534; padding: 10px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <span style="font-weight: 900; color: #166534; font-size: 1.05rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
                     <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.25rem;">$0 JMD</span>
@@ -1875,8 +1876,8 @@
                 </div>
                 <br>
                 <div style="display: flex; gap: 10px;">
-                    <button type="button" class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
-                    <button type="button" class="btn-whatsapp btn-print" onclick="sendWhatsAppWeeklyPayslip()">📱 Send via WhatsApp</button>
+                    <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
+                    <button class="btn-whatsapp btn-print" onclick="sendWhatsAppWeeklyPayslip()">📱 Send via WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -1888,25 +1889,24 @@
     </footer>
 
     <script>
+        var managerPin = "1234";
         var showAllHistory = false;
-
-        // Automatically load data on page startup
-        window.onload = function() {
-            try {
-                loadTrackerJobs();
-                loadMaintenanceLogs();
-                loadCrewPreferences();
-            } catch (e) {
-                console.error("Initialization error:", e);
-            }
-        };
+        var activeWeeklyPayslipData = null;
 
         function toggleManagerPanel() {
             var panel = document.getElementById('manager-panel');
-            if (panel.style.display === 'none') {
-                panel.style.display = 'block';
-            } else {
+            if (panel.style.display === 'block') {
                 panel.style.display = 'none';
+            } else {
+                var entered = prompt("Enter Manager PIN to access payment controls & corporate tracker:");
+                if (entered === managerPin) {
+                    panel.style.display = 'block';
+                    loadTrackerJobs();
+                    loadMaintenanceLogs();
+                    loadCrewPreferences();
+                } else if (entered !== null) {
+                    alert("Incorrect PIN. Access denied.");
+                }
             }
         }
 
@@ -1955,75 +1955,67 @@
 
         /* STAFF PROFILE SAVE & LOAD LOGIC */
         function saveStaffProfile(role) {
-            try {
-                var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
-                var name = document.getElementById(prefix + 'name').value.trim();
-                if (!name) {
-                    alert("Please enter the staff member's name first.");
-                    return;
-                }
-
-                var profile = {
-                    name: name,
-                    paynum: document.getElementById(prefix + 'paynum').value,
-                    id: document.getElementById(prefix + 'id').value,
-                    natid: document.getElementById(prefix + 'natid').value,
-                    bankname: document.getElementById(prefix + 'bankname').value,
-                    bankbranch: document.getElementById(prefix + 'bankbranch').value,
-                    accnum: document.getElementById(prefix + 'accnum').value,
-                    sortcode: document.getElementById(prefix + 'sortcode').value,
-                    pos: document.getElementById(prefix + 'pos').value,
-                    dept: document.getElementById(prefix + 'dept').value,
-                    branch: document.getElementById(prefix + 'branch').value,
-                    joined: document.getElementById(prefix + 'joined').value,
-                    deduct: document.getElementById(prefix + 'deduct').value,
-                    deductnote: document.getElementById(prefix + 'deductnote').value,
-                    totalcharges: document.getElementById(prefix + 'totalcharges').value,
-                    method: document.getElementById(prefix + 'method').value
-                };
-
-                localStorage.setItem("dc_staff_profile_" + name.toLowerCase(), JSON.stringify(profile));
-                alert("Staff profile saved successfully for " + name + "!");
-            } catch (err) {
-                alert("Error saving profile: " + err.message);
+            var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
+            var name = document.getElementById(prefix + 'name').value.trim();
+            if (!name) {
+                alert("Please enter the staff member's name first.");
+                return;
             }
+
+            var profile = {
+                name: name,
+                paynum: document.getElementById(prefix + 'paynum').value,
+                id: document.getElementById(prefix + 'id').value,
+                natid: document.getElementById(prefix + 'natid').value,
+                bankname: document.getElementById(prefix + 'bankname').value,
+                bankbranch: document.getElementById(prefix + 'bankbranch').value,
+                accnum: document.getElementById(prefix + 'accnum').value,
+                sortcode: document.getElementById(prefix + 'sortcode').value,
+                pos: document.getElementById(prefix + 'pos').value,
+                dept: document.getElementById(prefix + 'dept').value,
+                branch: document.getElementById(prefix + 'branch').value,
+                joined: document.getElementById(prefix + 'joined').value,
+                deduct: document.getElementById(prefix + 'deduct').value,
+                deductnote: document.getElementById(prefix + 'deductnote').value,
+                totalcharges: document.getElementById(prefix + 'totalcharges').value,
+                method: document.getElementById(prefix + 'method').value
+            };
+
+            localStorage.setItem("dc_staff_profile_" + name.toLowerCase(), JSON.stringify(profile));
+            alert("Staff profile saved for " + name + "! You can load it anytime by entering their name and clicking 'Load'.");
         }
 
         function loadStaffProfile(role) {
-            try {
-                var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
-                var nameInput = document.getElementById(prefix + 'name');
-                var name = nameInput.value.trim().toLowerCase();
-                if (!name) {
-                    alert("Please enter the staff member's name to load their profile.");
-                    nameInput.focus();
-                    return;
-                }
+            var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
+            var nameInput = document.getElementById(prefix + 'name');
+            var name = nameInput.value.trim().toLowerCase();
+            if (!name) {
+                alert("Please enter the staff member's name to load their profile.");
+                nameInput.focus();
+                return;
+            }
 
-                var saved = localStorage.getItem("dc_staff_profile_" + name);
-                if (saved) {
-                    var profile = JSON.parse(saved);
-                    document.getElementById(prefix + 'paynum').value = profile.paynum || '';
-                    document.getElementById(prefix + 'id').value = profile.id || '';
-                    document.getElementById(prefix + 'natid').value = profile.natid || '';
-                    document.getElementById(prefix + 'bankname').value = profile.bankname || '';
-                    document.getElementById(prefix + 'bankbranch').value = profile.bankbranch || '';
-                    document.getElementById(prefix + 'accnum').value = profile.accnum || '';
-                    document.getElementById(prefix + 'sortcode').value = profile.sortcode || '';
-                    document.getElementById(prefix + 'pos').value = profile.pos || '';
-                    document.getElementById(prefix + 'dept').value = profile.dept || '';
-                    document.getElementById(prefix + 'branch').value = profile.branch || '';
-                    document.getElementById(prefix + 'joined').value = profile.joined || '';
-                    document.getElementById(prefix + 'deduct').value = profile.deduct || '0';
-                    document.getElementById(prefix + 'deductnote').value = profile.deductnote || '';
-                    document.getElementById(prefix + 'totalcharges').value = profile.totalcharges || '0';
-                    document.getElementById(prefix + 'method').value = profile.method || 'Bank Transfer';
-                    alert("Profile loaded successfully for " + profile.name + "!");
-                } else {
-                    alert("No saved profile found for '" + nameInput.value + "'.");
-                }
-            } catch (err) {
-                alert("Error loading profile: " + err.message);
+            var saved = localStorage.getItem("dc_staff_profile_" + name);
+            if (saved) {
+                var profile = JSON.parse(saved);
+                document.getElementById(prefix + 'paynum').value = profile.paynum || '';
+                document.getElementById(prefix + 'id').value = profile.id || '';
+                document.getElementById(prefix + 'natid').value = profile.natid || '';
+                document.getElementById(prefix + 'bankname').value = profile.bankname || '';
+                document.getElementById(prefix + 'bankbranch').value = profile.bankbranch || '';
+                document.getElementById(prefix + 'accnum').value = profile.accnum || '';
+                document.getElementById(prefix + 'sortcode').value = profile.sortcode || '';
+                document.getElementById(prefix + 'pos').value = profile.pos || '';
+                document.getElementById(prefix + 'dept').value = profile.dept || '';
+                document.getElementById(prefix + 'branch').value = profile.branch || '';
+                document.getElementById(prefix + 'joined').value = profile.joined || '';
+                document.getElementById(prefix + 'deduct').value = profile.deduct || '0';
+                document.getElementById(prefix + 'deductnote').value = profile.deductnote || '';
+                document.getElementById(prefix + 'totalcharges').value = profile.totalcharges || '0';
+                document.getElementById(prefix + 'method').value = profile.method || 'Bank Transfer';
+                alert("Profile loaded successfully for " + profile.name + "!");
+            } else {
+                alert("No saved profile found for '" + nameInput.value + "'.");
             }
         }
 
@@ -2115,7 +2107,7 @@
 
             var profile = { client: client, phone: phone, pickup: pickup };
             localStorage.setItem("dc_profile_" + email.toLowerCase().trim(), JSON.stringify(profile));
-            alert("Profile saved for " + email + "!");
+            alert("Profile saved for " + email + "! Next time you visit, simply enter your email above to auto-fill your details.");
         }
 
         function lookupClientProfile() {
@@ -2134,7 +2126,7 @@
                 document.getElementById('inv-pickup').value = profile.pickup || '';
                 alert("Welcome back! Your profile details have been loaded into the form.");
             } else {
-                alert("No saved profile found for that email address.");
+                alert("No saved profile found for that email address. You can fill in the form and click 'Save My Info' to create one!");
             }
         }
 
@@ -2201,112 +2193,108 @@
 
         /* GENERATE FORMAL WEEKLY PAYSLIP */
         function generateWeeklyPayslip(roleType) {
-            try {
-                var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
-                var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
-                var staffIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-id') : document.getElementById('payroll-asst-id');
-                var natIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-natid') : document.getElementById('payroll-asst-natid');
-                var bankNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankname') : document.getElementById('payroll-asst-bankname');
-                var bankBranchInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankbranch') : document.getElementById('payroll-asst-bankbranch');
-                var accNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-accnum') : document.getElementById('payroll-asst-accnum');
-                var sortCodeInput = roleType === 'driver' ? document.getElementById('payroll-driver-sortcode') : document.getElementById('payroll-asst-sortcode');
-                var posInput = roleType === 'driver' ? document.getElementById('payroll-driver-pos') : document.getElementById('payroll-asst-pos');
-                var deptInput = roleType === 'driver' ? document.getElementById('payroll-driver-dept') : document.getElementById('payroll-asst-dept');
-                var branchInput = roleType === 'driver' ? document.getElementById('payroll-driver-branch') : document.getElementById('payroll-asst-branch');
-                var joinedInput = roleType === 'driver' ? document.getElementById('payroll-driver-joined') : document.getElementById('payroll-asst-joined');
-                var deductInput = roleType === 'driver' ? document.getElementById('payroll-driver-deduct') : document.getElementById('payroll-asst-deduct');
-                var deductNoteInput = roleType === 'driver' ? document.getElementById('payroll-driver-deductnote') : document.getElementById('payroll-asst-deductnote');
-                var chargesInput = roleType === 'driver' ? document.getElementById('payroll-driver-totalcharges') : document.getElementById('payroll-asst-totalcharges');
-                var methodSelect = roleType === 'driver' ? document.getElementById('payroll-driver-method') : document.getElementById('payroll-asst-method');
-                var paydateInput = roleType === 'driver' ? document.getElementById('payroll-driver-paydate') : document.getElementById('payroll-asst-paydate');
+            var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
+            var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
+            var staffIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-id') : document.getElementById('payroll-asst-id');
+            var natIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-natid') : document.getElementById('payroll-asst-natid');
+            var bankNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankname') : document.getElementById('payroll-asst-bankname');
+            var bankBranchInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankbranch') : document.getElementById('payroll-asst-bankbranch');
+            var accNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-accnum') : document.getElementById('payroll-asst-accnum');
+            var sortCodeInput = roleType === 'driver' ? document.getElementById('payroll-driver-sortcode') : document.getElementById('payroll-asst-sortcode');
+            var posInput = roleType === 'driver' ? document.getElementById('payroll-driver-pos') : document.getElementById('payroll-asst-pos');
+            var deptInput = roleType === 'driver' ? document.getElementById('payroll-driver-dept') : document.getElementById('payroll-asst-dept');
+            var branchInput = roleType === 'driver' ? document.getElementById('payroll-driver-branch') : document.getElementById('payroll-asst-branch');
+            var joinedInput = roleType === 'driver' ? document.getElementById('payroll-driver-joined') : document.getElementById('payroll-asst-joined');
+            var deductInput = roleType === 'driver' ? document.getElementById('payroll-driver-deduct') : document.getElementById('payroll-asst-deduct');
+            var deductNoteInput = roleType === 'driver' ? document.getElementById('payroll-driver-deductnote') : document.getElementById('payroll-asst-deductnote');
+            var chargesInput = roleType === 'driver' ? document.getElementById('payroll-driver-totalcharges') : document.getElementById('payroll-asst-totalcharges');
+            var methodSelect = roleType === 'driver' ? document.getElementById('payroll-driver-method') : document.getElementById('payroll-asst-method');
+            var paydateInput = roleType === 'driver' ? document.getElementById('payroll-driver-paydate') : document.getElementById('payroll-asst-paydate');
 
-                var staffName = staffNameInput.value.trim();
-                var payNum = payNumInput.value.trim() || 'PAY-2026-001';
-                var staffId = staffIdInput.value.trim() || 'N/A';
-                var natId = natIdInput.value.trim() || 'N/A';
-                var bankName = bankNameInput.value.trim() || 'N/A';
-                var bankBranch = bankBranchInput.value.trim() || 'N/A';
-                var accNum = accNumInput.value.trim() || 'N/A';
-                var sortCode = sortCodeInput.value.trim() || 'N/A';
-                var position = posInput.value.trim() || (roleType === 'driver' ? 'Commercial Driver' : 'Truck Assistant');
-                var dept = deptInput.value.trim() || 'D&C Logistics';
-                var branch = branchInput.value.trim() || 'Kingston & Portmore Hub';
-                var joined = joinedInput.value || 'N/A';
-                var deduction = parseFloat(deductInput.value) || 0;
-                var deductionNoteText = deductNoteInput.value.trim() || 'Total Amount Of AR Charges Repayable';
-                var totalCharges = parseFloat(chargesInput.value) || 0;
-                var paymentMethod = methodSelect.value;
-                var payDate = paydateInput.value || new Date().toLocaleDateString();
+            var staffName = staffNameInput.value.trim();
+            var payNum = payNumInput.value.trim() || 'PAY-2026-001';
+            var staffId = staffIdInput.value.trim() || 'N/A';
+            var natId = natIdInput.value.trim() || 'N/A';
+            var bankName = bankNameInput.value.trim() || 'N/A';
+            var bankBranch = bankBranchInput.value.trim() || 'N/A';
+            var accNum = accNumInput.value.trim() || 'N/A';
+            var sortCode = sortCodeInput.value.trim() || 'N/A';
+            var position = posInput.value.trim() || (roleType === 'driver' ? 'Commercial Driver' : 'Truck Assistant');
+            var dept = deptInput.value.trim() || 'D&C Logistics';
+            var branch = branchInput.value.trim() || 'Kingston & Portmore Hub';
+            var joined = joinedInput.value || 'N/A';
+            var deduction = parseFloat(deductInput.value) || 0;
+            var deductionNoteText = deductNoteInput.value.trim() || 'Total Amount Of AR Charges Repayable';
+            var totalCharges = parseFloat(chargesInput.value) || 0;
+            var paymentMethod = methodSelect.value;
+            var payDate = paydateInput.value || new Date().toLocaleDateString();
 
-                if (!staffName) {
-                    alert("Please enter the " + roleType + "'s name first.");
-                    staffNameInput.focus();
-                    return;
-                }
-
-                var allJobs = getStoredJobs();
-                var weekJobs = allJobs.filter(function(j) {
-                    if (!isCurrentWeek(j.date)) return false;
-                    if (roleType === 'driver') {
-                        return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
-                    } else {
-                        return j.assistant && j.assistant.toLowerCase().includes(staffName.toLowerCase());
-                    }
-                });
-
-                if (weekJobs.length === 0) {
-                    alert("No logged operating runs found for " + staffName + " during the current active week. Log some jobs in the tracker first!");
-                    return;
-                }
-
-                document.getElementById('slip-title-main').innerText = staffName.toUpperCase() + ' (Weekly)';
-                document.getElementById('slip-name').innerText = staffName;
-                document.getElementById('slip-paynum').innerText = payNum;
-                document.getElementById('slip-natid').innerText = natId;
-                document.getElementById('slip-bankname').innerText = bankName;
-                document.getElementById('slip-bankbranch').innerText = bankBranch;
-                document.getElementById('slip-accnum').innerText = accNum;
-                document.getElementById('slip-sortcode').innerText = sortCode;
-                document.getElementById('slip-position').innerText = position;
-                document.getElementById('slip-dept').innerText = dept;
-                document.getElementById('slip-branch').innerText = branch;
-                document.getElementById('slip-joined').innerText = joined;
-                document.getElementById('slip-method').innerText = paymentMethod;
-                document.getElementById('slip-paydate').innerText = payDate;
-                document.getElementById('slip-period').innerText = 'Weekly Operating Statement (' + new Date().toLocaleDateString() + ')';
-                document.getElementById('slip-deduct-note').innerText = deductionNoteText;
-
-                var tbody = document.getElementById('slip-runs-tbody');
-                tbody.innerHTML = '';
-
-                var grossEarnings = 0;
-
-                for (var i = 0; i < weekJobs.length; i++) {
-                    var j = weekJobs[i];
-                    var payout = roleType === 'driver' ? j.driverPay : j.asstPay;
-                    grossEarnings += payout;
-
-                    var tr = document.createElement('tr');
-                    tr.innerHTML = '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br><span style="font-size:0.78rem; color:#64748b;">' + j.date + '</span></td>' +
-                                   '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
-                                   '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
-                    tbody.appendChild(tr);
-                }
-
-                var netPayable = grossEarnings - deduction;
-                if (netPayable < 0) netPayable = 0;
-
-                document.getElementById('slip-gross').innerText = '$' + grossEarnings.toLocaleString() + ' JMD';
-                document.getElementById('slip-deduct-amt').innerText = '$' + deduction.toLocaleString() + ' JMD';
-                document.getElementById('slip-total-charges').innerText = '$' + totalCharges.toLocaleString() + ' JMD';
-                document.getElementById('slip-total-amount').innerText = '$' + netPayable.toLocaleString() + ' JMD';
-
-                document.getElementById('invoice-preview').style.display = 'none';
-                document.getElementById('payslip-preview').style.display = 'block';
-                document.getElementById('payslip-preview').scrollIntoView({ behavior: 'smooth' });
-            } catch (err) {
-                alert("Error generating payslip: " + err.message);
+            if (!staffName) {
+                alert("Please enter the " + roleType + "'s name first.");
+                staffNameInput.focus();
+                return;
             }
+
+            var allJobs = getStoredJobs();
+            var weekJobs = allJobs.filter(function(j) {
+                if (!isCurrentWeek(j.date)) return false;
+                if (roleType === 'driver') {
+                    return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
+                } else {
+                    return j.assistant && j.assistant.toLowerCase().includes(staffName.toLowerCase());
+                }
+            });
+
+            if (weekJobs.length === 0) {
+                alert("No logged operating runs found for " + staffName + " during the current active week. Log some jobs in the tracker first!");
+                return;
+            }
+
+            document.getElementById('slip-title-main').innerText = staffName.toUpperCase() + ' (Weekly)';
+            document.getElementById('slip-name').innerText = staffName;
+            document.getElementById('slip-paynum').innerText = payNum;
+            document.getElementById('slip-natid').innerText = natId;
+            document.getElementById('slip-bankname').innerText = bankName;
+            document.getElementById('slip-bankbranch').innerText = bankBranch;
+            document.getElementById('slip-accnum').innerText = accNum;
+            document.getElementById('slip-sortcode').innerText = sortCode;
+            document.getElementById('slip-position').innerText = position;
+            document.getElementById('slip-dept').innerText = dept;
+            document.getElementById('slip-branch').innerText = branch;
+            document.getElementById('slip-joined').innerText = joined;
+            document.getElementById('slip-method').innerText = paymentMethod;
+            document.getElementById('slip-paydate').innerText = payDate;
+            document.getElementById('slip-period').innerText = 'Weekly Operating Statement (' + new Date().toLocaleDateString() + ')';
+            document.getElementById('slip-deduct-note').innerText = deductionNoteText;
+
+            var tbody = document.getElementById('slip-runs-tbody');
+            tbody.innerHTML = '';
+
+            var grossEarnings = 0;
+
+            for (var i = 0; i < weekJobs.length; i++) {
+                var j = weekJobs[i];
+                var payout = roleType === 'driver' ? j.driverPay : j.asstPay;
+                grossEarnings += payout;
+
+                var tr = document.createElement('tr');
+                tr.innerHTML = '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br><span style="font-size:0.78rem; color:#64748b;">' + j.date + '</span></td>' +
+                               '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
+                               '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
+                tbody.appendChild(tr);
+            }
+
+            var netPayable = grossEarnings - deduction;
+            if (netPayable < 0) netPayable = 0;
+
+            document.getElementById('slip-gross').innerText = '$' + grossEarnings.toLocaleString() + ' JMD';
+            document.getElementById('slip-deduct-amt').innerText = '$' + deduction.toLocaleString() + ' JMD';
+            document.getElementById('slip-total-charges').innerText = '$' + totalCharges.toLocaleString() + ' JMD';
+            document.getElementById('slip-total-amount').innerText = '$' + netPayable.toLocaleString() + ' JMD';
+
+            document.getElementById('invoice-preview').style.display = 'none';
+            document.getElementById('payslip-preview').style.display = 'block';
+            document.getElementById('payslip-preview').scrollIntoView({ behavior: 'smooth' });
         }
 
         function sendWhatsAppWeeklyPayslip() {
@@ -2399,57 +2387,53 @@
         }
 
         function addTrackerJob() {
-            try {
-                var day = document.getElementById('tr-day').value;
-                var date = document.getElementById('tr-date').value || new Date().toISOString().split('T')[0];
-                var inv = document.getElementById('tr-inv').value;
-                var pickup = document.getElementById('tr-pickup').value;
-                var drop = document.getElementById('tr-drop').value;
-                var driver = document.getElementById('tr-driver').value || 'N/A';
-                var driverPay = parseFloat(document.getElementById('tr-driver-pay').value) || 0;
-                var assistant = document.getElementById('tr-assistant').value || 'N/A';
-                var asstPay = parseFloat(document.getElementById('tr-asst-pay').value) || 0;
-                var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
-                var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
-                var status = document.getElementById('tr-status').value;
+            var day = document.getElementById('tr-day').value;
+            var date = document.getElementById('tr-date').value || new Date().toISOString().split('T')[0];
+            var inv = document.getElementById('tr-inv').value;
+            var pickup = document.getElementById('tr-pickup').value;
+            var drop = document.getElementById('tr-drop').value;
+            var driver = document.getElementById('tr-driver').value || 'N/A';
+            var driverPay = parseFloat(document.getElementById('tr-driver-pay').value) || 0;
+            var assistant = document.getElementById('tr-assistant').value || 'N/A';
+            var asstPay = parseFloat(document.getElementById('tr-asst-pay').value) || 0;
+            var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
+            var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
+            var status = document.getElementById('tr-status').value;
 
-                if (!inv) {
-                    alert("Please enter an Invoice Number.");
-                    return;
-                }
-
-                var jobs = getStoredJobs();
-                jobs.push({ 
-                    id: Date.now(), 
-                    day: day, 
-                    date: date,
-                    inv: inv, 
-                    pickup: pickup, 
-                    drop: drop, 
-                    driver: driver, 
-                    driverPay: driverPay,
-                    assistant: assistant, 
-                    asstPay: asstPay,
-                    petrol: petrol, 
-                    rate: rate, 
-                    status: status 
-                });
-                saveStoredJobs(jobs);
-
-                document.getElementById('tr-date').value = '';
-                document.getElementById('tr-inv').value = '';
-                document.getElementById('tr-pickup').value = '';
-                document.getElementById('tr-drop').value = '';
-                document.getElementById('tr-driver-pay').value = '';
-                document.getElementById('tr-asst-pay').value = '';
-                document.getElementById('tr-petrol').value = '';
-                document.getElementById('tr-rate').value = '';
-                updateLiveProfit();
-                
-                loadTrackerJobs();
-            } catch (err) {
-                alert("Error adding job: " + err.message);
+            if (!inv) {
+                alert("Please enter an Invoice Number.");
+                return;
             }
+
+            var jobs = getStoredJobs();
+            jobs.push({ 
+                id: Date.now(), 
+                day: day, 
+                date: date,
+                inv: inv, 
+                pickup: pickup, 
+                drop: drop, 
+                driver: driver, 
+                driverPay: driverPay,
+                assistant: assistant, 
+                asstPay: asstPay,
+                petrol: petrol, 
+                rate: rate, 
+                status: status 
+            });
+            saveStoredJobs(jobs);
+
+            document.getElementById('tr-date').value = '';
+            document.getElementById('tr-inv').value = '';
+            document.getElementById('tr-pickup').value = '';
+            document.getElementById('tr-drop').value = '';
+            document.getElementById('tr-driver-pay').value = '';
+            document.getElementById('tr-asst-pay').value = '';
+            document.getElementById('tr-petrol').value = '';
+            document.getElementById('tr-rate').value = '';
+            updateLiveProfit();
+            
+            loadTrackerJobs();
         }
 
         function toggleJobStatus(id) {
@@ -2515,39 +2499,35 @@
         }
 
         function addMaintenanceLog() {
-            try {
-                var date = document.getElementById('maint-date').value || new Date().toISOString().split('T')[0];
-                var cat = document.getElementById('maint-cat').value;
-                var desc = document.getElementById('maint-desc').value.trim();
-                var cost = parseFloat(document.getElementById('maint-cost').value) || 0;
-                var vendor = document.getElementById('maint-vendor').value.trim() || 'N/A';
+            var date = document.getElementById('maint-date').value || new Date().toISOString().split('T')[0];
+            var cat = document.getElementById('maint-cat').value;
+            var desc = document.getElementById('maint-desc').value.trim();
+            var cost = parseFloat(document.getElementById('maint-cost').value) || 0;
+            var vendor = document.getElementById('maint-vendor').value.trim() || 'N/A';
 
-                if (!desc || cost <= 0) {
-                    alert("Please enter an Item Description and valid Cost.");
-                    return;
-                }
-
-                var maint = getStoredMaintenance();
-                maint.push({
-                    id: Date.now(),
-                    date: date,
-                    cat: cat,
-                    desc: desc,
-                    cost: cost,
-                    vendor: vendor
-                });
-
-                saveStoredMaintenance(maint);
-
-                document.getElementById('maint-date').value = '';
-                document.getElementById('maint-desc').value = '';
-                document.getElementById('maint-cost').value = '';
-                document.getElementById('maint-vendor').value = '';
-
-                loadTrackerJobs();
-            } catch (err) {
-                alert("Error adding maintenance log: " + err.message);
+            if (!desc || cost <= 0) {
+                alert("Please enter an Item Description and valid Cost.");
+                return;
             }
+
+            var maint = getStoredMaintenance();
+            maint.push({
+                id: Date.now(),
+                date: date,
+                cat: cat,
+                desc: desc,
+                cost: cost,
+                vendor: vendor
+            });
+
+            saveStoredMaintenance(maint);
+
+            document.getElementById('maint-date').value = '';
+            document.getElementById('maint-desc').value = '';
+            document.getElementById('maint-cost').value = '';
+            document.getElementById('maint-vendor').value = '';
+
+            loadTrackerJobs();
         }
 
         function deleteMaintenanceLog(id) {
@@ -2561,7 +2541,6 @@
         function loadMaintenanceLogs() {
             var maint = getStoredMaintenance();
             var tbody = document.getElementById('maint-table-body');
-            if (!tbody) return;
             tbody.innerHTML = '';
 
             if (maint.length === 0) {
@@ -2577,7 +2556,7 @@
                                '<td>' + m.desc + '</td>' +
                                '<td>' + m.vendor + '</td>' +
                                '<td style="font-weight:900; color:#f87171;">$' + m.cost.toLocaleString() + ' JMD</td>' +
-                               '<td><button type="button" style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMaintenanceLog(' + m.id + ')">🗑️</button></td>';
+                               '<td><button style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMaintenanceLog(' + m.id + ')">🗑️</button></td>';
                 tbody.appendChild(tr);
             }
         }
@@ -2603,7 +2582,6 @@
             var allJobs = getStoredJobs();
             var allMaint = getStoredMaintenance();
             var tbody = document.getElementById('tracker-table-body');
-            if (!tbody) return;
             tbody.innerHTML = '';
 
             var totalMaintCost = 0;
@@ -2685,8 +2663,8 @@
                                    '<td>' + statusHTML + '</td>' +
                                    '<td>' +
                                       '<div class="action-btn-group">' +
-                                          '<button type="button" class="btn-table-edit" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
-                                          '<button type="button" class="btn-table-delete" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
+                                          '<button class="btn-table-edit" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
+                                          '<button class="btn-table-delete" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
                                       '</div>' +
                                    '</td>';
                     tbody.appendChild(tr);
