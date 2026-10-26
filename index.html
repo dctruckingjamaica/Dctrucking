@@ -844,25 +844,25 @@
 
         .table-scroll {
             overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            width: 100%;
         }
 
         .tracker-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #ffffff;
-            min-width: 950px; /* Ensures all columns fit comfortably with horizontal scroll */
-            table-layout: auto; 
+            min-width: 100%;
+            table-layout: fixed; /* Controls column widths to prevent infinite stretching */
         }
 
         .tracker-table th, .tracker-table td {
             border: 1px solid #224d2d;
-            padding: 10px 8px;
+            padding: 6px 3px;
             text-align: left;
             vertical-align: middle;
-            white-space: nowrap; /* Keeps table cells clean without awkward vertical letter wrapping */
+            white-space: normal;        /* Prevents forced single-line overflow */
+            word-wrap: break-word;      /* Allows long text/numbers to wrap */
+            overflow-wrap: break-word;  /* Modern wrapping standard */
         }
 
         .tracker-table th {
@@ -870,14 +870,14 @@
             color: var(--primary-green);
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 0.82rem;
-            letter-spacing: 0.5px;
+            font-size: 0.78rem;
         }
 
         .inv-badge-container {
             display: flex;
             flex-direction: column;
             gap: 4px;
+            max-width: 100%;
         }
 
         .inv-badge-pill {
@@ -885,20 +885,23 @@
             background: #0f381b;
             color: #4ade80;
             border: 1px solid #22c55e;
-            padding: 4px 8px;
+            padding: 3px 5px;
             border-radius: 4px;
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             font-weight: 900;
+            white-space: normal;       /* Allows invoice numbers to wrap inside the pill */
+            word-break: break-all;     /* Breaks long continuous numbers cleanly */
             text-align: center;
+            max-width: 100%;
         }
 
         .status-badge-paid {
             background: #166534;
             color: #ffffff;
-            padding: 6px 10px;
+            padding: 3px 6px;
             border-radius: 4px;
             font-weight: 800;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             display: inline-block;
             text-align: center;
@@ -907,10 +910,10 @@
         .status-badge-unpaid {
             background: #991b1b;
             color: #ffffff;
-            padding: 6px 10px;
+            padding: 3px 6px;
             border-radius: 4px;
             font-weight: 800;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             display: inline-block;
             text-align: center;
@@ -918,32 +921,36 @@
 
         .action-btn-group {
             display: flex;
-            gap: 6px;
+            gap: 3px;
             align-items: center;
-            justify-content: flex-start;
-            flex-direction: row;
+            justify-content: center;
+            flex-direction: column;
         }
 
         .btn-table-edit {
             background: #0284c7;
             color: #fff;
             border: none;
-            padding: 6px 10px;
+            padding: 4px 6px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 800;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            width: 100%;
+            text-align: center;
         }
 
         .btn-table-delete {
             background: #dc2626;
             color: #fff;
             border: none;
-            padding: 6px 10px;
+            padding: 4px 6px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 800;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            width: 100%;
+            text-align: center;
         }
 
         .btn-action-group {
@@ -1656,6 +1663,18 @@
 
                 <div class="table-scroll">
                     <table class="tracker-table" id="tracker-table">
+                        <colgroup>
+                            <col style="width: 10%;">
+                            <col style="width: 13%;">
+                            <col style="width: 14%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 8%;">
+                            <col style="width: 9%;">
+                            <col style="width: 9%;">
+                            <col style="width: 8%;">
+                            <col style="width: 9%;">
+                        </colgroup>
                         <thead>
                             <tr>
                                 <th>Day & Date</th>
@@ -1715,7 +1734,7 @@
                     </div>
 
                     <div class="table-scroll">
-                        <table class="tracker-table" style="min-width: 850px;">
+                        <table class="tracker-table" style="min-width: 850px; table-layout: auto;">
                             <thead>
                                 <tr style="background: #3b1219;">
                                     <th style="color: #fb7185;">Date</th>
