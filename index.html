@@ -686,7 +686,7 @@
             font-size: 0.9rem;
         }
 
-        /* CREW PAYROLL GENERATOR */
+        /* MONDAY-TO-FRIDAY CREW PAYROLL GENERATOR */
         .payroll-section-box {
             background: #0a2914;
             border: 2px solid var(--primary-green);
@@ -1397,19 +1397,16 @@
                     </div>
                 </div>
 
-                <!-- CREW PAYROLL GENERATOR WITH DEDUCTIONS & BALANCE -->
+                <!-- MONDAY-TO-FRIDAY CREW PAYROLL GENERATOR WITH DEDUCTIONS & BALANCE -->
                 <div class="payroll-section-box">
-                    <h5>👥 Crew Payroll & Corporate Payslips</h5>
-                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan operating runs, include Permanent Payroll Number, Earnings, Deductions, and AR Charges Notes (Fully Saveable & Editable):</p>
+                    <h5>👥 Monday–Friday Crew Payroll & Corporate Payslips</h5>
+                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan M-F operating runs, include Payroll Number, Earnings, Deductions, and AR Charges Notes:</p>
                     
                     <div class="payroll-grid">
                         <!-- DRIVER PAYROLL CARD -->
                         <div class="payroll-card">
                             <label>🛞 Driver Name:</label>
-                            <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
-                                <input type="text" id="payroll-driver-name" placeholder="Driver Full Name">
-                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadStaffProfile('driver')">🔍 Load</button>
-                            </div>
+                            <input type="text" id="payroll-driver-name" placeholder="Driver Full Name">
                             
                             <label>Payroll # / Employee ID:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -1449,17 +1446,13 @@
                                 <input type="date" id="payroll-driver-paydate">
                             </div>
 
-                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('driver')">💾 Save Driver Profile</button>
-                            <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver Weekly Payslip</button>
+                            <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver M-F Payslip</button>
                         </div>
 
                         <!-- ASSISTANT PAYROLL CARD -->
                         <div class="payroll-card">
                             <label>🤝 Assistant Name:</label>
-                            <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
-                                <input type="text" id="payroll-asst-name" placeholder="Assistant Full Name">
-                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadStaffProfile('assistant')">🔍 Load</button>
-                            </div>
+                            <input type="text" id="payroll-asst-name" placeholder="Assistant Full Name">
                             
                             <label>Payroll # / Employee ID:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -1499,8 +1492,7 @@
                                 <input type="date" id="payroll-asst-paydate">
                             </div>
 
-                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('assistant')">💾 Save Assistant Profile</button>
-                            <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant Weekly Payslip</button>
+                            <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant M-F Payslip</button>
                         </div>
                     </div>
                 </div>
@@ -1513,12 +1505,12 @@
 
                 <!-- Corporate Multi-Drop Daily Job Tracker -->
                 <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log operational runs, track crew payouts, and view invoice numbers instantly below!</p>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log M-F operational runs, track crew payouts, and view invoice numbers instantly below!</p>
 
                 <div class="tracker-form-container">
                     <div class="tracker-form-grid">
                         <div class="tracker-field-group">
-                            <label>Day of Week</label>
+                            <label>Day of Week (M-F)</label>
                             <select id="tr-day">
                                 <option value="Monday">Monday</option>
                                 <option value="Tuesday">Tuesday</option>
@@ -1762,7 +1754,7 @@
                 <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
             </div>
 
-            <!-- Printable Weekly Payslip Output Container (Formal Reference Layout & Editable) -->
+            <!-- Printable Monday-to-Friday Crew Payslip Output Container (Formal Reference Layout & Editable) -->
             <div id="payslip-preview">
                 <div class="inv-header">
                     <div class="inv-logo-box">
@@ -1818,7 +1810,7 @@
                         </tr>
                     </thead>
                     <tbody id="slip-runs-tbody">
-                        <!-- Dynamic itemized runs inserted here -->
+                        <!-- Dynamic itemized M-F runs inserted here -->
                     </tbody>
                 </table>
 
@@ -1846,7 +1838,7 @@
                 </div>
 
                 <div class="inv-footer">
-                    <p style="margin-bottom: 4px; font-weight: bold; color: #1a531f;">✅ Official Corporation Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
+                    <p style="margin-bottom: 4px; font-weight: bold; color: #1a531f;">✅ Official Weekly Corporate Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
                     <p>Authorized Dispatcher Sign-off: ___________________________</p>
                 </div>
                 <br>
@@ -1925,64 +1917,6 @@
             if (savedAsst !== null) {
                 if (document.getElementById('tr-assistant').value === '') document.getElementById('tr-assistant').value = savedAsst;
                 if (document.getElementById('payroll-asst-name').value === '') document.getElementById('payroll-asst-name').value = savedAsst;
-            }
-        }
-
-        /* STAFF PROFILE SAVE & LOAD LOGIC */
-        function saveStaffProfile(role) {
-            var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
-            var name = document.getElementById(prefix + 'name').value.trim();
-            if (!name) {
-                alert("Please enter the staff member's name first.");
-                return;
-            }
-
-            var profile = {
-                name: name,
-                paynum: document.getElementById(prefix + 'paynum').value,
-                id: document.getElementById(prefix + 'id').value,
-                natid: document.getElementById(prefix + 'natid').value,
-                pos: document.getElementById(prefix + 'pos').value,
-                dept: document.getElementById(prefix + 'dept').value,
-                branch: document.getElementById(prefix + 'branch').value,
-                joined: document.getElementById(prefix + 'joined').value,
-                deduct: document.getElementById(prefix + 'deduct').value,
-                deductnote: document.getElementById(prefix + 'deductnote').value,
-                totalcharges: document.getElementById(prefix + 'totalcharges').value,
-                method: document.getElementById(prefix + 'method').value
-            };
-
-            localStorage.setItem("dc_staff_profile_" + name.toLowerCase(), JSON.stringify(profile));
-            alert("Staff profile saved for " + name + "! You can load it anytime by entering their name and clicking 'Load'.");
-        }
-
-        function loadStaffProfile(role) {
-            var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
-            var nameInput = document.getElementById(prefix + 'name');
-            var name = nameInput.value.trim().toLowerCase();
-            if (!name) {
-                alert("Please enter the staff member's name to load their profile.");
-                nameInput.focus();
-                return;
-            }
-
-            var saved = localStorage.getItem("dc_staff_profile_" + name);
-            if (saved) {
-                var profile = JSON.parse(saved);
-                document.getElementById(prefix + 'paynum').value = profile.paynum || '';
-                document.getElementById(prefix + 'id').value = profile.id || '';
-                document.getElementById(prefix + 'natid').value = profile.natid || '';
-                document.getElementById(prefix + 'pos').value = profile.pos || '';
-                document.getElementById(prefix + 'dept').value = profile.dept || '';
-                document.getElementById(prefix + 'branch').value = profile.branch || '';
-                document.getElementById(prefix + 'joined').value = profile.joined || '';
-                document.getElementById(prefix + 'deduct').value = profile.deduct || '0';
-                document.getElementById(prefix + 'deductnote').value = profile.deductnote || '';
-                document.getElementById(prefix + 'totalcharges').value = profile.totalcharges || '0';
-                document.getElementById(prefix + 'method').value = profile.method || 'Bank Transfer';
-                alert("Profile loaded successfully for " + profile.name + "!");
-            } else {
-                alert("No saved profile found for '" + nameInput.value + "'.");
             }
         }
 
@@ -2205,7 +2139,7 @@
             });
 
             if (weekJobs.length === 0) {
-                alert("No logged operating runs found for " + staffName + " during the current active week. Log some jobs in the tracker first!");
+                alert("No logged M-F operating runs found for " + staffName + " during the current active week. Log some jobs in the tracker first!");
                 return;
             }
 
@@ -2581,7 +2515,7 @@
             document.getElementById('sum-count').innerText = currentWeekJobs.length + (currentWeekJobs.length === 1 ? ' Job' : ' Jobs');
 
             if (tableJobs.length === 0) {
-                var emptyMsg = showAllHistory ? "No corporate jobs logged yet." : "No operating week jobs logged yet. Ready to roll!";
+                var emptyMsg = showAllHistory ? "No corporate jobs logged yet." : "No M-F operating week jobs logged yet. Ready to roll!";
                 tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:#94a3b8;">' + emptyMsg + '</td></tr>';
             } else {
                 for (var i = 0; i < tableJobs.length; i++) {
