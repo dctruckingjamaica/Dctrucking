@@ -12,7 +12,7 @@
 
     <style>
         :root {
-            --primary-green: #00e676; /* Vibrant popping neon emerald */
+            --primary-green: #00e676;
             --dark-green: #0a2e12;
             --bg-dark: #000000;
             --card-dark: #181818;
@@ -37,8 +37,7 @@
         header {
             background-color: #0a0a0a;
             color: var(--text-light);
-            /* Generous top margin/padding restored so header text never touches the top border line */
-            padding: 40px 12px 18px 12px;
+            padding: 40px 12px 18px 12px; /* Generous top margin/padding restored */
             text-align: center;
             border-bottom: 4px solid var(--primary-green);
         }
@@ -249,7 +248,6 @@
         }
 
         .text-red-alert { color: #ff3333; font-weight: 900; }
-        .text-yellow-highlight { color: #ffeb3b; font-weight: 900; background: rgba(0, 0, 0, 0.4); padding: 1px 4px; border-radius: 3px; }
 
         .fleet-gallery {
             display: grid;
@@ -297,34 +295,6 @@
         }
 
         .features-list li span { font-weight: 800; color: var(--primary-green); }
-
-        .fresh-rate-card {
-            background-color: #ffffff;
-            color: #000000;
-            border-radius: 10px;
-            padding: 14px 12px;
-            margin-top: 10px;
-            box-shadow: 0 5px 16px rgba(0,0,0,0.4);
-            border: 2.5px solid var(--primary-green);
-        }
-
-        .fresh-rate-scroll {
-            max-height: 420px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-
-        .rate-row {
-            padding: 10px 6px;
-            border-bottom: 2px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        .rate-row:last-child { border-bottom: none; }
-        .rate-loc { font-weight: 800; font-size: 0.98rem; color: #0f172a; }
-        .rate-price { font-weight: 900; font-size: 1.1rem; color: #059669; padding-left: 20px; }
 
         .client-account-bar {
             background: #112616;
@@ -385,10 +355,10 @@
         }
 
         .input-group input, .input-group select {
-            padding: 8px;
+            padding: 10px;
             border: 2px solid var(--primary-green);
             border-radius: 6px;
-            font-size: 0.95rem;
+            font-size: 1rem;
             background-color: #ffffff;
             color: #0f172a;
             font-weight: 800;
@@ -399,11 +369,11 @@
             grid-column: 1 / -1;
             background: linear-gradient(135deg, #0284c7, #0369a1);
             color: #ffffff;
-            padding: 10px 16px;
+            padding: 12px 16px;
             border: 2px solid #38bdf8;
             border-radius: 6px;
             font-weight: 900;
-            font-size: 0.95rem;
+            font-size: 1rem;
             text-transform: uppercase;
             cursor: pointer;
             width: 100%;
@@ -416,156 +386,114 @@
             background: #1e293b;
             color: #38bdf8;
             border: 1px solid #38bdf8;
-            padding: 8px 14px;
+            padding: 10px 16px;
             border-radius: 5px;
             font-weight: 900;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             cursor: pointer;
         }
 
         .manager-panel {
             display: block;
             background: #091a10;
-            border: 2px solid var(--primary-green);
-            border-radius: 10px;
-            padding: 14px;
+            border: 2.5px solid var(--primary-green);
+            border-radius: 12px;
+            padding: 18px;
             margin-top: 14px;
             margin-bottom: 14px;
+            box-shadow: 0 6px 20px rgba(0, 230, 118, 0.15);
         }
 
         .manager-panel h4 {
             color: var(--primary-green);
-            font-size: 1.05rem;
+            font-size: 1.2rem;
             font-weight: 900;
             text-transform: uppercase;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #1c4d28;
-            padding-bottom: 4px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #1c4d28;
+            padding-bottom: 6px;
         }
 
         .payment-status-box {
             background: #0a2412;
-            border: 1.5px solid var(--primary-green);
-            padding: 10px;
-            border-radius: 6px;
+            border: 2px solid var(--primary-green);
+            padding: 14px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            margin-bottom: 14px;
-        }
-
-        .checkbox-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .checkbox-item input { width: 18px; height: 18px; accent-color: var(--primary-green); cursor: pointer; }
-        .checkbox-item label { color: #ffffff; font-weight: 800; font-size: 0.92rem; cursor: pointer; }
-
-        .weekly-summary-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .summary-box {
-            background: #063816;
-            border: 2px solid var(--primary-green);
-            border-radius: 6px;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .summary-box h6 { color: #ffffff; font-size: 0.88rem; font-weight: 900; text-transform: uppercase; margin-bottom: 2px; }
-        .summary-box span { color: var(--primary-green); font-size: 1.3rem; font-weight: 900; }
-
-        .alltime-summary-container {
-            background: #08281a;
-            border: 2.5px solid #38bdf8;
-            border-radius: 8px;
-            padding: 14px;
+            gap: 8px;
             margin-bottom: 16px;
         }
 
-        .alltime-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
-        }
-
-        .alltime-box {
-            background: #031c10;
-            border: 1.5px solid #38bdf8;
-            border-radius: 6px;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .alltime-box h6 { color: #e2e8f0; font-size: 0.85rem; font-weight: 900; text-transform: uppercase; margin-bottom: 2px; }
-        .alltime-box span { color: #38bdf8; font-size: 1.2rem; font-weight: 900; }
+        .checkbox-item { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .checkbox-item input { width: 20px; height: 20px; accent-color: var(--primary-green); cursor: pointer; }
+        .checkbox-item label { color: #ffffff; font-weight: 900; font-size: 1rem; cursor: pointer; }
 
         .week-filter-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: #0a2412;
-            border: 1px solid #1c4d28;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            gap: 6px;
+            border: 1.5px solid #1c4d28;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            gap: 8px;
         }
 
         .btn-week-toggle {
             background: #1e293b;
             color: #38bdf8;
-            border: 1px solid #38bdf8;
-            padding: 6px 10px;
-            border-radius: 5px;
+            border: 1.5px solid #38bdf8;
+            padding: 8px 12px;
+            border-radius: 6px;
             font-weight: 900;
             cursor: pointer;
-            font-size: 0.88rem;
+            font-size: 0.92rem;
         }
 
-        /* COMPACT CREW PAYROLL FORM INPUTS */
+        /* ORIGINAL LARGE CREW PAYROLL & CONTROL BOXES */
         .payroll-section-box {
             background: #0a2914;
-            border: 2px solid var(--primary-green);
-            padding: 12px;
-            border-radius: 8px;
+            border: 2.5px solid var(--primary-green);
+            padding: 16px;
+            border-radius: 10px;
             margin-bottom: 16px;
         }
 
         .payroll-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 14px;
         }
 
         @media (max-width: 768px) { .payroll-grid { grid-template-columns: 1fr; } }
 
         .payroll-card {
             background: #041f0e;
-            border: 1px solid #1c4d28;
-            padding: 10px;
-            border-radius: 6px;
+            border: 2px solid #1c4d28;
+            padding: 14px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 8px;
         }
 
         .payroll-card label {
-            font-size: 0.82rem;
-            font-weight: 800;
+            font-size: 0.9rem;
+            font-weight: 900;
             color: #00e676;
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
         .payroll-card input, .payroll-card select {
-            padding: 5px 8px;
+            padding: 8px 10px;
             background: #000;
             color: #fff;
-            border: 1.5px solid var(--primary-green);
-            border-radius: 5px;
-            font-weight: 800;
-            font-size: 0.88rem;
+            border: 2px solid var(--primary-green);
+            border-radius: 6px;
+            font-weight: 900;
+            font-size: 0.95rem;
             width: 100%;
         }
 
@@ -573,12 +501,12 @@
             color: #fff;
             font-weight: 900;
             border: none;
-            padding: 8px;
-            border-radius: 5px;
+            padding: 10px;
+            border-radius: 6px;
             cursor: pointer;
             text-transform: uppercase;
-            font-size: 0.88rem;
-            margin-top: 4px;
+            font-size: 0.92rem;
+            margin-top: 6px;
         }
 
         .btn-gen-payroll-driver { background: #059669; }
@@ -586,37 +514,37 @@
 
         .tracker-form-container {
             background: #0d2614;
-            border: 1px solid #1e4626;
-            padding: 12px;
-            border-radius: 6px;
-            margin-bottom: 10px;
+            border: 2px solid #1e4626;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 12px;
         }
 
         .tracker-form-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 12px;
+            margin-bottom: 12px;
         }
 
-        .tracker-field-group { display: flex; flex-direction: column; gap: 3px; }
-        .tracker-field-group label { font-size: 0.85rem; font-weight: 900; color: var(--primary-green); }
+        .tracker-field-group { display: flex; flex-direction: column; gap: 4px; }
+        .tracker-field-group label { font-size: 0.9rem; font-weight: 900; color: var(--primary-green); }
         .tracker-field-group input, .tracker-field-group select {
-            padding: 7px;
-            border-radius: 5px;
-            border: 1.5px solid #444;
+            padding: 8px;
+            border-radius: 6px;
+            border: 2px solid #444;
             background: #000;
             color: #fff;
-            font-size: 0.9rem;
-            font-weight: 800;
+            font-size: 0.95rem;
+            font-weight: 900;
         }
 
         .live-profit-preview-box {
             grid-column: 1 / -1;
             background: #042410;
-            border: 2px dashed #38bdf8;
-            padding: 8px 12px;
-            border-radius: 6px;
+            border: 2.5px dashed #38bdf8;
+            padding: 12px 16px;
+            border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -626,11 +554,11 @@
             background: var(--primary-green);
             color: #000;
             font-weight: 900;
-            padding: 10px 14px;
+            padding: 12px 16px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 1rem;
             width: 100%;
             text-transform: uppercase;
         }
@@ -639,36 +567,22 @@
         .tracker-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             color: #ffffff;
             min-width: 950px;
         }
 
         .tracker-table th, .tracker-table td {
-            border: 1px solid #224d2d;
-            padding: 6px 8px;
+            border: 1.5px solid #224d2d;
+            padding: 8px 10px;
             text-align: left;
         }
 
         .tracker-table th { background: #14381e; color: var(--primary-green); font-weight: 900; }
 
-        .inv-badge-pill {
-            display: inline-block;
-            background: #0f381b;
-            color: #4ade80;
-            border: 1px solid #22c55e;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 900;
-        }
-
-        .status-badge-paid { background: #166534; color: #fff; padding: 4px 8px; border-radius: 4px; font-weight: 900; font-size: 0.82rem; cursor: pointer; }
-        .status-badge-unpaid { background: #991b1b; color: #fff; padding: 4px 8px; border-radius: 4px; font-weight: 900; font-size: 0.82rem; cursor: pointer; }
-
-        .btn-action-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-        .btn-gen { background-color: var(--primary-green); color: #000; padding: 10px 16px; border: none; border-radius: 6px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.95rem; flex: 1; min-width: 180px; }
-        .btn-whatsapp { background-color: #25d366; color: #fff; padding: 10px 16px; border: none; border-radius: 6px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.95rem; text-decoration: none; text-align: center; flex: 1; min-width: 180px; }
+        .btn-action-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+        .btn-gen { background-color: var(--primary-green); color: #000; padding: 12px 18px; border: none; border-radius: 6px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 1rem; flex: 1; min-width: 180px; }
+        .btn-whatsapp { background-color: #25d366; color: #fff; padding: 12px 18px; border: none; border-radius: 6px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 1rem; text-decoration: none; text-align: center; flex: 1; min-width: 180px; }
 
         /* ==========================================================================
            PRINTABLE PAYSLIP & INVOICE — 100% SINGLE PAGE FIT WITH LARGER LOGO
@@ -676,7 +590,7 @@
         #invoice-preview, #payslip-preview {
             display: none;
             border: 2.5px solid #059669;
-            padding: 6px 10px;
+            padding: 8px 12px;
             background: #ffffff;
             color: #111111;
             margin-top: 10px;
@@ -701,8 +615,8 @@
             grid-template-columns: 170px 1fr;
             align-items: center; 
             border-bottom: 3px solid #059669;
-            padding-bottom: 3px; 
-            margin-bottom: 5px;  
+            padding-bottom: 4px; 
+            margin-bottom: 6px;  
         }
 
         .inv-logo-box {
@@ -716,7 +630,7 @@
 
         .inv-logo-box img {
             width: 100%;
-            max-height: 125px;
+            max-height: 125px; /* LARGER LOGO PRESERVED */
             object-fit: contain;
             display: block;
             background: transparent !important;
@@ -737,7 +651,6 @@
             text-transform: uppercase;
             line-height: 1.05;
             margin-bottom: 1px;
-            letter-spacing: -0.2px;
         }
 
         .inv-title-sub {
@@ -759,7 +672,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 6px;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             color: #111827;
             font-size: 0.75rem;
         }
@@ -767,9 +680,9 @@
         .inv-bank-box {
             background: #f8fafc;
             border: 1px solid #cbd5e1;
-            padding: 4px 8px;
+            padding: 5px 8px;
             border-radius: 5px;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             font-size: 0.73rem;
         }
 
@@ -782,8 +695,8 @@
         }
 
         .inv-footer {
-            margin-top: 3px;
-            padding-top: 3px;
+            margin-top: 4px;
+            padding-top: 4px;
             border-top: 1px solid #ddd;
             text-align: center;
             font-style: italic;
@@ -957,19 +870,19 @@
 
                 <!-- CREW PAYROLL GENERATOR -->
                 <div class="payroll-section-box">
-                    <h5 style="color: var(--primary-green); font-size: 1.05rem; font-weight: 900; text-transform: uppercase; margin-bottom: 6px;">👥 Crew Payroll & Corporate Payslips</h5>
+                    <h5 style="color: var(--primary-green); font-size: 1.15rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px;">👥 Crew Payroll & Corporate Payslips</h5>
                     
                     <div class="payroll-grid">
                         <!-- DRIVER PAYROLL CARD -->
                         <div class="payroll-card">
                             <label>🛞 Driver Name:</label>
-                            <div style="display:grid; grid-template-columns: 1fr auto; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
                                 <input type="text" id="payroll-driver-name" placeholder="Driver Full Name">
-                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:900; cursor:pointer;" onclick="loadStaffProfile('driver')">🔍 Load</button>
+                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:900; cursor:pointer;" onclick="loadStaffProfile('driver')">🔍 Load</button>
                             </div>
                             
                             <label>Payroll # / Employee ID:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <input type="text" id="payroll-driver-paynum" value="PAY-2026-001">
                                 <input type="text" id="payroll-driver-id" placeholder="Staff ID">
                             </div>
@@ -978,23 +891,23 @@
                             <input type="text" id="payroll-driver-natid" placeholder="TRN Number">
 
                             <label>Bank Name & Branch:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <input type="text" id="payroll-driver-bankname" placeholder="Bank Name">
                                 <input type="text" id="payroll-driver-bankbranch" placeholder="Branch">
                             </div>
 
                             <label>Account Number & Sort Code:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <input type="text" id="payroll-driver-accnum" placeholder="Account Number">
                                 <input type="text" id="payroll-driver-sortcode" placeholder="Sort Code">
                             </div>
 
                             <label>Job Position / Dept / Branch:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <input type="text" id="payroll-driver-pos" value="Commercial Driver">
                                 <input type="text" id="payroll-driver-dept" value="D&C Logistics">
                             </div>
-                            <input type="text" id="payroll-driver-branch" value="Kingston & Portmore Hub" style="margin-top:2px;">
+                            <input type="text" id="payroll-driver-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
 
                             <label>Date Joined:</label>
                             <input type="date" id="payroll-driver-joined">
@@ -1009,29 +922,30 @@
                             <input type="number" id="payroll-driver-totalcharges" value="0">
 
                             <label>Payment Method & Date:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <select id="payroll-driver-method">
                                     <option value="Bank Transfer">🏦 Bank Transfer</option>
                                     <option value="Cash">💵 Cash</option>
                                     <option value="Company Check">📜 Check</option>
                                 </select>
+                                <!-- Pre-filled Date Box so it is never blank -->
                                 <input type="date" id="payroll-driver-paydate">
                             </div>
 
-                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:4px; margin-bottom:4px; font-size:0.85rem; padding:6px;" onclick="saveStaffProfile('driver')">💾 Save Driver Profile</button>
+                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px;" onclick="saveStaffProfile('driver')">💾 Save Driver Profile</button>
                             <button type="button" class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver Weekly Payslip</button>
                         </div>
 
                         <!-- ASSISTANT PAYROLL CARD -->
                         <div class="payroll-card">
                             <label>🤝 Assistant Name:</label>
-                            <div style="display:grid; grid-template-columns: 1fr auto; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
                                 <input type="text" id="payroll-asst-name" placeholder="Assistant Full Name">
-                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:900; cursor:pointer;" onclick="loadStaffProfile('assistant')">🔍 Load</button>
+                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:900; cursor:pointer;" onclick="loadStaffProfile('assistant')">🔍 Load</button>
                             </div>
                             
                             <label>Payroll # / Employee ID:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <input type="text" id="payroll-asst-paynum" value="PAY-2026-002">
                                 <input type="text" id="payroll-asst-id" placeholder="Staff ID">
                             </div>
@@ -1040,23 +954,23 @@
                             <input type="text" id="payroll-asst-natid" placeholder="TRN Number">
 
                             <label>Bank Name & Branch:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <input type="text" id="payroll-asst-bankname" placeholder="Bank Name">
                                 <input type="text" id="payroll-asst-bankbranch" placeholder="Branch">
                             </div>
 
                             <label>Account Number & Sort Code:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <input type="text" id="payroll-asst-accnum" placeholder="Account Number">
                                 <input type="text" id="payroll-asst-sortcode" placeholder="Sort Code">
                             </div>
 
                             <label>Job Position / Dept / Branch:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <input type="text" id="payroll-asst-pos" value="Truck Assistant">
                                 <input type="text" id="payroll-asst-dept" value="D&C Logistics">
                             </div>
-                            <input type="text" id="payroll-asst-branch" value="Kingston & Portmore Hub" style="margin-top:2px;">
+                            <input type="text" id="payroll-asst-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
 
                             <label>Date Joined:</label>
                             <input type="date" id="payroll-asst-joined">
@@ -1071,16 +985,17 @@
                             <input type="number" id="payroll-asst-totalcharges" value="0">
 
                             <label>Payment Method & Date:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px;">
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <select id="payroll-asst-method">
                                     <option value="Bank Transfer">🏦 Bank Transfer</option>
                                     <option value="Cash">💵 Cash</option>
                                     <option value="Company Check">📜 Check</option>
                                 </select>
+                                <!-- Pre-filled Date Box so it is never blank -->
                                 <input type="date" id="payroll-asst-paydate">
                             </div>
 
-                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:4px; margin-bottom:4px; font-size:0.85rem; padding:6px;" onclick="saveStaffProfile('assistant')">💾 Save Assistant Profile</button>
+                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px;" onclick="saveStaffProfile('assistant')">💾 Save Assistant Profile</button>
                             <button type="button" class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant Weekly Payslip</button>
                         </div>
                     </div>
@@ -1088,12 +1003,12 @@
 
                 <!-- WEEK VIEW TOGGLE BAR -->
                 <div class="week-filter-bar">
-                    <span id="current-view-label" style="color: #38bdf8; font-weight: 900;">📅 Showing: Current M-F Operating Week</span>
+                    <span id="current-view-label" style="color: #38bdf8; font-weight: 900; font-size: 1rem;">📅 Showing: Current M-F Operating Week</span>
                     <button class="btn-week-toggle" onclick="toggleViewMode()">🔄 Switch to View All History Table</button>
                 </div>
 
                 <!-- Corporate Multi-Drop Daily Job Tracker -->
-                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 6px; font-size: 1.05rem;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
+                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px; font-size: 1.15rem;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
 
                 <div class="tracker-form-container">
                     <div class="tracker-form-grid">
@@ -1149,8 +1064,8 @@
                         </div>
 
                         <div class="live-profit-preview-box">
-                            <label style="font-weight: 900; color: #38bdf8;">Live Net Profit Preview:</label>
-                            <span id="live-net-profit-display" style="font-weight: 900; color: #38bdf8;">$0 JMD</span>
+                            <label style="font-weight: 900; color: #38bdf8; font-size: 1.05rem;">Live Net Profit Preview:</label>
+                            <span id="live-net-profit-display" style="font-weight: 900; color: #38bdf8; font-size: 1.25rem;">$0 JMD</span>
                         </div>
 
                         <div class="tracker-field-group" style="grid-column: 1 / -1; max-width: 280px;">
@@ -1176,7 +1091,7 @@
                                 <th>Petrol Cost</th>
                                 <th>Total Rate</th>
                                 <th>Net Profit</th>
-                                <th>Status</th>
+                                <th>Status (Tap to Change)</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -1261,52 +1176,37 @@
                         <img src="IMG-20250804-WA0004.jpg" alt="D&C Logo">
                     </div>
                     <div class="inv-title-box">
-                        <div class="inv-title-main" id="slip-title-main">DRIVER WEEKLY PAYSLIP</div>
-                        <div class="inv-title-sub">D&C REFUSE TRUCKING & EQUIPMENT CO. LTD</div>
-                        <div class="inv-title-loc">Weekly Operating Statement (JMD)</div>
+                        <div class="inv-title-main" id="slip-title-main">DRIVER M-F WEEKLY PAYSLIP</div>
+                        <div class="inv-title-sub">D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</div>
+                        <div class="inv-title-loc">Jamaica | Kingston & Portmore Hub</div>
                     </div>
                 </div>
 
-                <div style="background: #f1f5f9; padding: 4px 8px; border-radius: 4px; margin-bottom: 4px; font-size: 0.73rem; border-left: 3px solid #059669; color: #1e293b;">
-                    <p><strong>Statement Period:</strong> <span id="slip-period" class="editable-preview-field" contenteditable="true">Weekly Operating Period</span></p>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 4px; font-size: 0.72rem; background: #fafafa; padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; color: #0f172a;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 4px; font-size: 0.73rem; color: #0f172a;">
                     <div>
-                        <p style="margin-bottom: 1px; color: #475569; font-size: 0.65rem; text-transform: uppercase; font-weight: 900;">Employee Name & Payroll #</p>
-                        <p><span id="slip-name" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0f172a; font-size: 0.8rem;"></span> (<span id="slip-paynum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span>)</p>
-                        
-                        <p style="margin: 2px 0 1px 0; color: #475569; font-size: 0.65rem; text-transform: uppercase; font-weight: 900;">National ID / TRN</p>
-                        <p><span id="slip-natid" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-
-                        <p style="margin: 2px 0 1px 0; color: #475569; font-size: 0.65rem; text-transform: uppercase; font-weight: 900;">Bank Name & Branch</p>
-                        <p><span id="slip-bankname" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span> — <span id="slip-bankbranch" class="editable-preview-field" contenteditable="true"></span></p>
-
-                        <p style="margin: 2px 0 1px 0; color: #475569; font-size: 0.65rem; text-transform: uppercase; font-weight: 900;">Account # & Sort Code</p>
-                        <p>Acc: <span id="slip-accnum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> | Sort: <span id="slip-sortcode" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Staff Name:</strong> <span id="slip-name" class="editable-preview-field" contenteditable="true" style="font-weight: 900;"></span></p>
+                        <p><strong>Payroll #:</strong> <span id="slip-paynum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span></p>
+                        <p><strong>Employee ID:</strong> <span id="slip-id" class="editable-preview-field" contenteditable="true" style="font-weight: 800;">TRN</span></p>
+                        <p><strong>National ID:</strong> <span id="slip-natid" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Job Position:</strong> <span id="slip-position" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
                     </div>
-                    <div>
-                        <p style="margin-bottom: 1px; color: #475569; font-size: 0.65rem; text-transform: uppercase; font-weight: 900;">Job Position</p>
-                        <p><span id="slip-position" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-
-                        <p style="margin: 2px 0 1px 0; color: #475569; font-size: 0.65rem; text-transform: uppercase; font-weight: 900;">Department</p>
-                        <p><span id="slip-dept" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-
-                        <p style="margin: 2px 0 1px 0; color: #475569; font-size: 0.65rem; text-transform: uppercase; font-weight: 900;">Branch / Location</p>
-                        <p><span id="slip-branch" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-
-                        <p style="margin: 2px 0 1px 0; color: #475569; font-size: 0.65rem; text-transform: uppercase; font-weight: 900;">Payment Method & Date</p>
-                        <p><span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> (<span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #166534;"></span>)</p>
+                    <div style="text-align: right;">
+                        <p><strong>Department:</strong> <span id="slip-dept" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Branch:</strong> <span id="slip-branch" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Date Joined:</strong> <span id="slip-joined" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Payment Method:</strong> <span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span></p>
+                        <p><strong>Payment Date:</strong> <span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #166534;"></span></p>
                     </div>
                 </div>
 
-                <p style="margin-bottom: 2px; color: #0f172a; font-size: 0.74rem; font-weight: 900; text-transform: uppercase;">Itemized Operating Runs & Earnings:</p>
-                <table style="margin-bottom: 4px; width: 100%; border-collapse: collapse; font-size: 0.72rem; color: #0f172a;">
+                <p style="margin-bottom: 2px; color: #0f172a; font-size: 0.74rem; font-weight: 900; text-transform: uppercase;">Itemized M-F Operating Runs & Earnings:</p>
+                <table style="margin-bottom: 6px; width: 100%; border-collapse: collapse; font-size: 0.72rem; color: #0f172a;">
                     <thead>
                         <tr style="background-color: #059669; color: #ffffff;">
-                            <th style="padding: 3px 5px; text-align: left;">Date / Day</th>
-                            <th style="padding: 3px 5px; text-align: left;">Route</th>
-                            <th style="padding: 3px 5px; text-align: right;">Earnings (JMD)</th>
+                            <th style="padding: 4px 6px; text-align: left;">Date / Day</th>
+                            <th style="padding: 4px 6px; text-align: left;">Invoice #(s)</th>
+                            <th style="padding: 4px 6px; text-align: left;">Route</th>
+                            <th style="padding: 4px 6px; text-align: right;">Earnings (JMD)</th>
                         </tr>
                     </thead>
                     <tbody id="slip-runs-tbody">
@@ -1314,37 +1214,34 @@
                     </tbody>
                 </table>
 
-                <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; margin-bottom: 4px; font-size: 0.72rem; color: #0f172a;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 2px; align-items: center;">
-                        <span style="font-weight: 800;">Gross Earnings:</span>
-                        <strong id="slip-gross" class="editable-preview-field" contenteditable="true" style="font-size: 0.8rem;">$0 JMD</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 2px; color: #dc2626; align-items: center;">
-                        <div style="flex: 1; padding-right: 6px;">
-                            <span style="font-weight: 800;">Deductions This Period:</span>
-                            <div id="slip-deduct-note" class="editable-preview-field" contenteditable="true" style="font-size: 0.65rem; color: #475569; margin-top: 1px; width: 100%;">Total Amount Of AR Charges Repayable</div>
-                        </div>
-                        <strong id="slip-deduct-amt" class="editable-preview-field" contenteditable="true" style="font-size: 0.8rem;">$0 JMD</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; color: #b45309; align-items: center; margin-top: 2px; border-top: 1px dashed #cbd5e1; padding-top: 2px;">
-                        <span style="font-weight: 800;">Total Outstanding Charges / Balance:</span>
-                        <strong id="slip-total-charges" class="editable-preview-field" contenteditable="true" style="font-size: 0.8rem;">$0 JMD</strong>
-                    </div>
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 4px; margin-bottom: 6px; font-size: 0.73rem; color: #0f172a;">
+                    <p style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+                        <span>Gross Earnings:</span>
+                        <strong id="slip-gross" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
+                    </p>
+                    <p style="display: flex; justify-content: space-between; margin-bottom: 2px; color: #dc2626;">
+                        <span id="slip-deduct-note" class="editable-preview-field" contenteditable="true">Deductions This Period:</span>
+                        <strong id="slip-deduct-amt" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
+                    </p>
+                    <p style="display: flex; justify-content: space-between; color: #b45309;">
+                        <span>Total Outstanding Charges / Balance:</span>
+                        <strong id="slip-total-charges" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
+                    </p>
                 </div>
 
-                <div style="background: #f0fdf4; border: 1.5px solid #059669; padding: 4px 8px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                    <span style="font-weight: 900; color: #059669; font-size: 0.8rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
-                    <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #059669; font-size: 0.98rem;">$0 JMD</span>
+                <div style="background: #f0fdf4; border: 1.5px solid #059669; padding: 5px 8px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span style="font-weight: 900; color: #059669; font-size: 0.85rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
+                    <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #059669; font-size: 1.05rem;">$0 JMD</span>
                 </div>
 
                 <div class="inv-footer">
-                    <p style="margin-bottom: 1px; font-weight: bold; color: #059669;">✅ Official Corporation Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
+                    <p style="margin-bottom: 1px; font-weight: bold; color: #059669;">✅ Official M-F Corporate Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
                     <p>Authorized Dispatcher Sign-off: ___________________________</p>
                 </div>
                 <br>
                 <div style="display: flex; flex-direction: column; gap: 4px;">
-                    <button type="button" class="btn-gen btn-print" style="background-color: #059669; color: #ffffff; width: 100%; min-width: unset; font-size: 0.82rem; padding: 8px;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
-                    <button type="button" class="btn-whatsapp btn-print" style="width: 100%; min-width: unset; font-size: 0.82rem; padding: 8px;" onclick="sendWhatsAppWeeklyPayslip()">📱 Send via WhatsApp</button>
+                    <button type="button" class="btn-gen btn-print" style="background-color: #059669; color: #ffffff; width: 100%; min-width: unset; font-size: 0.85rem; padding: 8px;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
+                    <button type="button" class="btn-whatsapp btn-print" style="width: 100%; min-width: unset; font-size: 0.85rem; padding: 8px;" onclick="sendWhatsAppWeeklyPayslip()">📱 Send via WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -1360,6 +1257,15 @@
 
         window.onload = function() {
             try {
+                // Pre-fill date inputs with today's date so they are never blank
+                var todayStr = new Date().toISOString().split('T')[0];
+                var dPay = document.getElementById('payroll-driver-paydate');
+                var aPay = document.getElementById('payroll-asst-paydate');
+                var tDate = document.getElementById('tr-date');
+                if (dPay && !dPay.value) dPay.value = todayStr;
+                if (aPay && !aPay.value) aPay.value = todayStr;
+                if (tDate && !tDate.value) tDate.value = todayStr;
+
                 loadTrackerJobs();
                 loadCrewPreferences();
             } catch (e) {
@@ -1393,25 +1299,16 @@
             var assistant = document.getElementById('tr-assistant').value;
             localStorage.setItem("dc_default_driver", driver);
             localStorage.setItem("dc_default_assistant", assistant);
-
-            if (driver && !document.getElementById('payroll-driver-name').value) {
-                document.getElementById('payroll-driver-name').value = driver;
-            }
-            if (assistant && !document.getElementById('payroll-asst-name').value) {
-                document.getElementById('payroll-asst-name').value = assistant;
-            }
         }
 
         function loadCrewPreferences() {
             var savedDriver = localStorage.getItem("dc_default_driver");
             var savedAsst = localStorage.getItem("dc_default_assistant");
-            if (savedDriver !== null) {
-                if (document.getElementById('tr-driver').value === '') document.getElementById('tr-driver').value = savedDriver;
-                if (document.getElementById('payroll-driver-name').value === '') document.getElementById('payroll-driver-name').value = savedDriver;
+            if (savedDriver !== null && document.getElementById('payroll-driver-name').value === '') {
+                document.getElementById('payroll-driver-name').value = savedDriver;
             }
-            if (savedAsst !== null) {
-                if (document.getElementById('tr-assistant').value === '') document.getElementById('tr-assistant').value = savedAsst;
-                if (document.getElementById('payroll-asst-name').value === '') document.getElementById('payroll-asst-name').value = savedAsst;
+            if (savedAsst !== null && document.getElementById('payroll-asst-name').value === '') {
+                document.getElementById('payroll-asst-name').value = savedAsst;
             }
         }
 
@@ -1440,7 +1337,8 @@
                     deduct: document.getElementById(prefix + 'deduct').value,
                     deductnote: document.getElementById(prefix + 'deductnote').value,
                     totalcharges: document.getElementById(prefix + 'totalcharges').value,
-                    method: document.getElementById(prefix + 'method').value
+                    method: document.getElementById(prefix + 'method').value,
+                    paydate: document.getElementById(prefix + 'paydate').value
                 };
 
                 localStorage.setItem("dc_staff_profile_" + name.toLowerCase(), JSON.stringify(profile));
@@ -1479,6 +1377,7 @@
                     document.getElementById(prefix + 'deductnote').value = profile.deductnote || '';
                     document.getElementById(prefix + 'totalcharges').value = profile.totalcharges || '0';
                     document.getElementById(prefix + 'method').value = profile.method || 'Bank Transfer';
+                    if (profile.paydate) document.getElementById(prefix + 'paydate').value = profile.paydate;
                     alert("Profile loaded successfully for " + profile.name + "!");
                 } else {
                     alert("No saved profile found for '" + nameInput.value + "'.");
@@ -1601,14 +1500,12 @@
             try {
                 var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
                 var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
+                var idInput = roleType === 'driver' ? document.getElementById('payroll-driver-id') : document.getElementById('payroll-asst-id');
                 var natIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-natid') : document.getElementById('payroll-asst-natid');
-                var bankNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankname') : document.getElementById('payroll-asst-bankname');
-                var bankBranchInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankbranch') : document.getElementById('payroll-asst-bankbranch');
-                var accNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-accnum') : document.getElementById('payroll-asst-accnum');
-                var sortCodeInput = roleType === 'driver' ? document.getElementById('payroll-driver-sortcode') : document.getElementById('payroll-asst-sortcode');
                 var posInput = roleType === 'driver' ? document.getElementById('payroll-driver-pos') : document.getElementById('payroll-asst-pos');
                 var deptInput = roleType === 'driver' ? document.getElementById('payroll-driver-dept') : document.getElementById('payroll-asst-dept');
                 var branchInput = roleType === 'driver' ? document.getElementById('payroll-driver-branch') : document.getElementById('payroll-asst-branch');
+                var joinedInput = roleType === 'driver' ? document.getElementById('payroll-driver-joined') : document.getElementById('payroll-asst-joined');
                 var deductInput = roleType === 'driver' ? document.getElementById('payroll-driver-deduct') : document.getElementById('payroll-asst-deduct');
                 var deductNoteInput = roleType === 'driver' ? document.getElementById('payroll-driver-deductnote') : document.getElementById('payroll-asst-deductnote');
                 var chargesInput = roleType === 'driver' ? document.getElementById('payroll-driver-totalcharges') : document.getElementById('payroll-asst-totalcharges');
@@ -1623,23 +1520,22 @@
                 }
 
                 var payNum = payNumInput.value.trim() || 'PAY-2026-001';
+                var empId = idInput.value.trim() || 'TRN';
                 var natId = natIdInput.value.trim() || 'N/A';
-                var bankName = bankNameInput.value.trim() || 'N/A';
-                var bankBranch = bankBranchInput.value.trim() || 'N/A';
-                var accNum = accNumInput.value.trim() || 'N/A';
-                var sortCode = sortCodeInput.value.trim() || 'N/A';
                 var position = posInput.value.trim() || (roleType === 'driver' ? 'Commercial Driver' : 'Truck Assistant');
-                var dept = deptInput.value.trim() || 'D&C Logistics';
+                var dept = deptInput.value.trim() || 'Haulage';
                 var branch = branchInput.value.trim() || 'Kingston & Portmore Hub';
+                var dateJoined = joinedInput.value || '2025-01-03';
                 var deduction = parseFloat(deductInput.value) || 0;
-                var deductionNoteText = deductNoteInput.value.trim() || 'Total Amount Of AR Charges Repayable';
+                var deductionNoteText = deductNoteInput.value.trim() || 'Deductions This Period:';
                 var totalCharges = parseFloat(chargesInput.value) || 0;
                 var paymentMethod = methodSelect.value;
-                var payDate = paydateInput.value || new Date().toLocaleDateString();
+                var payDate = paydateInput.value || new Date().toISOString().split('T')[0];
 
                 var allJobs = getStoredJobs();
                 
                 var weekJobs = allJobs.filter(function(j) {
+                    if (showAllHistory) return true;
                     var isRecent = true;
                     if (j.date) {
                         var jobDate = new Date(j.date);
@@ -1656,21 +1552,18 @@
                     }
                 });
 
-                document.getElementById('slip-title-main').innerText = roleType === 'driver' ? 'DRIVER WEEKLY PAYSLIP' : 'ASSISTANT WEEKLY PAYSLIP';
+                document.getElementById('slip-title-main').innerText = roleType === 'driver' ? 'DRIVER M-F WEEKLY PAYSLIP' : 'ASSISTANT M-F WEEKLY PAYSLIP';
 
                 document.getElementById('slip-name').innerText = staffName;
                 document.getElementById('slip-paynum').innerText = payNum;
+                document.getElementById('slip-id').innerText = empId;
                 document.getElementById('slip-natid').innerText = natId;
-                document.getElementById('slip-bankname').innerText = bankName;
-                document.getElementById('slip-bankbranch').innerText = bankBranch;
-                document.getElementById('slip-accnum').innerText = accNum;
-                document.getElementById('slip-sortcode').innerText = sortCode;
                 document.getElementById('slip-position').innerText = position;
                 document.getElementById('slip-dept').innerText = dept;
                 document.getElementById('slip-branch').innerText = branch;
+                document.getElementById('slip-joined').innerText = dateJoined;
                 document.getElementById('slip-method').innerText = paymentMethod;
                 document.getElementById('slip-paydate').innerText = payDate;
-                document.getElementById('slip-period').innerText = 'Operating Statement (Includes recent runs up to 7 days)';
                 document.getElementById('slip-deduct-note').innerText = deductionNoteText;
 
                 var tbody = document.getElementById('slip-runs-tbody');
@@ -1685,17 +1578,19 @@
                         grossEarnings += payout;
 
                         var tr = document.createElement('tr');
-                        tr.innerHTML = '<td style="padding: 3px 5px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br><span style="font-size:0.65rem; color:#475569;">' + j.date + '</span></td>' +
-                                       '<td style="padding: 3px 5px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
-                                       '<td style="padding: 3px 5px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
+                        tr.innerHTML = '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br>' + j.date + '</td>' +
+                                       '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;">' + j.inv + '</td>' +
+                                       '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
+                                       '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
                         tbody.appendChild(tr);
                     }
                 } else {
-                    grossEarnings = 19000;
+                    grossEarnings = 5000;
                     var tr = document.createElement('tr');
-                    tr.innerHTML = '<td style="padding: 3px 5px; border-bottom: 1px solid #ddd;"><strong>Wednesday</strong><br><span style="font-size:0.65rem; color:#475569;">Recent Run</span></td>' +
-                                   '<td style="padding: 3px 5px; border-bottom: 1px solid #ddd;">Kingston ➔ Negril</td>' +
-                                   '<td style="padding: 3px 5px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$7,000 JMD</td>';
+                    tr.innerHTML = '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;"><strong>Friday</strong><br>' + payDate + '</td>' +
+                                   '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;">654546/768658</td>' +
+                                   '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;">Halfway tree ➔ Browns town</td>' +
+                                   '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$5,000 JMD</td>';
                     tbody.appendChild(tr);
                 }
 
@@ -1760,6 +1655,7 @@
                 saveStoredJobs(jobs);
 
                 loadTrackerJobs();
+                saveCrewPreferences();
             } catch (err) { alert("Error adding job: " + err.message); }
         }
 
@@ -1769,11 +1665,23 @@
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            if (allJobs.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:#94a3b8;">No jobs logged yet.</td></tr>';
+            var displayJobs = allJobs;
+            if (!showAllHistory) {
+                displayJobs = allJobs.filter(function(j) {
+                    if (!j.date) return true;
+                    var jobDate = new Date(j.date);
+                    var today = new Date();
+                    var diffDays = (today - jobDate) / (1000 * 60 * 60 * 24);
+                    return (diffDays >= 0 && diffDays <= 7);
+                });
+            }
+
+            if (displayJobs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:#94a3b8;">No jobs logged for this view.</td></tr>';
             } else {
-                for (var i = 0; i < allJobs.length; i++) {
-                    var j = allJobs[i];
+                for (var i = 0; i < displayJobs.length; i++) {
+                    var j = displayJobs[i];
+                    var statusColor = j.status === 'PAID' ? '#166534' : '#991b1b';
                     var tr = document.createElement('tr');
                     tr.innerHTML = '<td><strong>' + j.day + '</strong><br>' + j.date + '</td>' +
                                    '<td>' + j.inv + '</td>' +
@@ -1783,11 +1691,49 @@
                                    '<td>$' + j.petrol.toLocaleString() + '</td>' +
                                    '<td>$' + j.rate.toLocaleString() + '</td>' +
                                    '<td>$' + (j.rate - (j.driverPay + j.asstPay + j.petrol)).toLocaleString() + '</td>' +
-                                   '<td>' + j.status + '</td>' +
-                                   '<td><button onclick="deleteJob(' + j.id + ')">🗑️</button></td>';
+                                   '<td><span onclick="toggleJobStatus(' + j.id + ')" title="Tap to toggle Paid/Unpaid" style="cursor:pointer; display:inline-block; padding:4px 8px; border-radius:4px; font-weight:900; background:' + statusColor + '; color:#fff;">' + j.status + '</span></td>' +
+                                   '<td><button onclick="editJob(' + j.id + ')" style="background:#0284c7; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:900; cursor:pointer; margin-right:4px;">✏️ Edit</button><button onclick="deleteJob(' + j.id + ')" style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:900; cursor:pointer;">🗑️</button></td>';
                     tbody.appendChild(tr);
                 }
             }
+        }
+
+        function toggleJobStatus(id) {
+            var jobs = getStoredJobs();
+            for (var i = 0; i < jobs.length; i++) {
+                if (jobs[i].id === id) {
+                    jobs[i].status = jobs[i].status === 'PAID' ? 'UNPAID' : 'PAID';
+                    break;
+                }
+            }
+            saveStoredJobs(jobs);
+            loadTrackerJobs();
+        }
+
+        function editJob(id) {
+            var jobs = getStoredJobs();
+            var target = null;
+            for (var i = 0; i < jobs.length; i++) {
+                if (jobs[i].id === id) { target = jobs[i]; break; }
+            }
+            if (!target) return;
+
+            document.getElementById('tr-day').value = target.day;
+            document.getElementById('tr-date').value = target.date;
+            document.getElementById('tr-inv').value = target.inv;
+            document.getElementById('tr-pickup').value = target.pickup;
+            document.getElementById('tr-drop').value = target.drop;
+            document.getElementById('tr-driver').value = target.driver;
+            document.getElementById('tr-driver-pay').value = target.driverPay;
+            document.getElementById('tr-assistant').value = target.assistant;
+            document.getElementById('tr-asst-pay').value = target.asstPay;
+            document.getElementById('tr-petrol').value = target.petrol;
+            document.getElementById('tr-rate').value = target.rate;
+            document.getElementById('tr-status').value = target.status;
+            updateLiveProfit();
+
+            deleteJob(id);
+            window.scrollTo({ top: document.getElementById('manager-panel').offsetTop, behavior: 'smooth' });
         }
 
         function deleteJob(id) {
