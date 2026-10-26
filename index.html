@@ -26,6 +26,10 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -34,85 +38,141 @@
             font-size: 1.1rem;
         }
 
-        header {
-            background-color: #0a0a0a;
-            color: var(--text-light);
-            padding: 25px 12px 18px 12px;
-            text-align: center;
+        /* --- PROFESSIONAL FULL-WIDTH BANNER WITH FLOATING PROMINENT LOGO --- */
+        header.pro-banner {
+            position: relative;
+            width: 100%;
+            background: linear-gradient(135deg, #041408 0%, #0d2312 50%, #050505 100%);
             border-bottom: 5px solid var(--primary-green);
+            box-shadow: 0 8px 25px rgba(0, 230, 118, 0.25);
+            padding: 16px 20px 12px 20px;
         }
 
-        header h1 {
-            font-size: clamp(1.15rem, 3.8vw, 1.7rem);
+        .banner-flex-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .banner-logo-box {
+            flex: 0 0 auto;
+            max-width: 150px;
+            display: flex;
+            align-items: center;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        .banner-logo-box img {
+            width: 100%;
+            max-height: 115px;
+            object-fit: contain;
+            display: block;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            mix-blend-mode: screen; /* Floating effect against dark header background */
+            filter: drop-shadow(0 0 12px rgba(0, 230, 118, 0.5));
+        }
+
+        .banner-text-box {
+            flex: 1 1 350px;
+            text-align: left;
+        }
+
+        .banner-text-box h1 {
+            font-size: clamp(1.15rem, 3.2vw, 1.75rem);
             text-transform: uppercase;
             color: var(--primary-green);
-            margin-bottom: 3px;
-            letter-spacing: 0.5px;
-            font-weight: 800;
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
-            white-space: nowrap;
-        }
-
-        header h2.sub-title {
-            font-size: clamp(1.05rem, 3.5vw, 1.45rem);
-            text-transform: uppercase;
-            color: var(--primary-green);
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-            font-weight: 800;
-            text-shadow: 0 0 8px rgba(0, 230, 118, 0.25);
-            white-space: nowrap;
-        }
-
-        .tagline-box {
-            margin-bottom: 12px;
-        }
-
-        header p.tagline-line1 {
-            color: #ffffff;
-            font-size: clamp(0.88rem, 2.9vw, 1.1rem);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        header p.tagline-line2 {
-            color: var(--primary-green);
-            font-size: clamp(1rem, 3.4vw, 1.25rem);
+            line-height: 1.15;
             font-weight: 900;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 12px rgba(0, 230, 118, 0.35);
+            margin-bottom: 4px;
+        }
+
+        .banner-text-box p.tagline {
+            color: #ffffff;
+            font-size: clamp(0.85rem, 2.2vw, 1.05rem);
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .banner-text-box p.location-sub {
+            color: var(--primary-green);
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
+            font-weight: 700;
             margin-top: 2px;
         }
 
-        .base-location-badge {
-            display: inline-block;
-            background: #112616;
+        /* QUICK SHORTCUT NAVIGATION BAR IN BANNER */
+        .header-shortcuts-bar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0, 230, 118, 0.25);
+        }
+
+        .shortcut-btn {
+            background: #0f2b15;
             color: #ffffff;
-            border: 2px solid var(--primary-green);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: clamp(0.95rem, 3.2vw, 1.15rem);
+            border: 1px solid var(--primary-green);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-weight: 800;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .shortcut-btn:hover, .shortcut-btn:active {
+            background: var(--primary-green);
+            color: #000000;
+            transform: translateY(-1px);
+        }
+
+        .shortcut-btn-highlight {
+            background: var(--primary-green);
+            color: #000000;
             font-weight: 900;
-            margin-bottom: 14px;
-            box-shadow: 0 0 12px rgba(0, 230, 118, 0.2);
+            box-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
+        }
+
+        .shortcut-btn-highlight:hover {
+            background: #25d366;
+            color: #ffffff;
         }
 
         .hours-badge-bar {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
-            margin-bottom: 14px;
+            margin-top: 10px;
+            width: 100%;
         }
 
         .hours-item {
-            background: #0f2413;
-            border: 1px solid var(--primary-green);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.95rem;
+            background: #091a0c;
+            border: 1px solid #1c4d28;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
             font-weight: 700;
             color: #ffffff;
         }
@@ -122,65 +182,22 @@
             font-weight: 900;
         }
 
-        .contact-bar {
-            background-color: #141414;
-            border: 2px solid var(--primary-green);
-            border-radius: 12px;
-            padding: 14px 12px;
-            margin: 15px auto 5px auto;
-            max-width: 850px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            align-items: center;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .contact-item {
-            font-size: clamp(0.95rem, 3.5vw, 1.2rem);
-            font-weight: 800;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            white-space: nowrap;
-            width: 100%;
-        }
-
-        .contact-item.email-item {
-            white-space: nowrap;
-            font-size: clamp(0.72rem, 2.7vw, 1.02rem);
-            text-align: center;
-            background: #0d2312;
-            padding: 8px 10px;
-            border-radius: 8px;
-            border: 1px solid var(--primary-green);
-            color: #ffffff;
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .contact-item a {
-            color: var(--primary-green);
-            text-decoration: none;
-            font-weight: 900;
-        }
-
-        .contact-btn {
-            background-color: var(--primary-green);
-            color: #000000;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 900;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 1.05rem;
-            width: 100%;
-            max-width: 340px;
-            text-align: center;
+        @media (max-width: 768px) {
+            .banner-flex-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .banner-text-box {
+                text-align: center;
+            }
+            .header-shortcuts-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .shortcut-btn {
+                justify-content: center;
+                width: 100%;
+            }
         }
 
         .container {
@@ -1119,26 +1136,33 @@
 </head>
 <body>
 
-    <header>
-        <h1>D&C REFUSE TRUCKING & EQUIPMENT</h1>
-        <h2 class="sub-title">COMPANY LIMITED</h2>
-        <div class="tagline-box">
-            <p class="tagline-line1">RELIABLE ISLANDWIDE HAULAGE & REFUSE</p>
-            <p class="tagline-line2">MANAGEMENT SERVICES</p>
-        </div>
-        <div class="base-location-badge">📍 Operational Hub: Kingston & Portmore • Dispatching Islandwide</div>
+    <!-- FULL-WIDTH BRANDING & FLOATING LOGO HEADER BANNER -->
+    <header class="pro-banner">
+        <div class="banner-flex-container">
+            <div class="banner-logo-box">
+                <img src="IMG-20250804-WA0004.jpg" alt="D&C Refuse Trucking Logo">
+            </div>
 
-        <div class="hours-badge-bar">
-            <div class="hours-item">M-F: <span>7:00 AM – 8:00 PM</span></div>
-            <div class="hours-item">Sat: <span>7:30 AM – 6:30 PM</span></div>
-            <div class="hours-item">Sun: <span>8:00 AM – 6:00 PM</span></div>
-            <div class="hours-item" style="border-color: #ffeb3b; color: #ffeb3b;">🚨 <span>24/7 Emergency Dispatch Available</span></div>
-        </div>
+            <div class="banner-text-box">
+                <h1>D&C REFUSE TRUCKING & EQUIPMENT</h1>
+                <p class="tagline">COMPANY LIMITED • RELIABLE ISLANDWIDE HAULAGE</p>
+                <p class="location-sub">📍 Kingston & Portmore Operational Hubs • Dispatching Across Jamaica</p>
+            </div>
 
-        <div class="contact-bar">
-            <div class="contact-item">📞 Call/WhatsApp: <a href="https://wa.me/18768628579">+1 (876) 862-8579</a></div>
-            <div class="contact-item email-item">✉️ Email: <a href="mailto:d.crefusetruckingequipment@gmail.com">d.crefusetruckingequipment@gmail.com</a></div>
-            <a href="https://wa.me/18768628579" class="contact-btn">📱 Contact via WhatsApp</a>
+            <!-- QUICK ONE-CLICK SHORTCUTS BAR -->
+            <div class="header-shortcuts-bar">
+                <a href="#rates-section" class="shortcut-btn">📍 Rate Sheet</a>
+                <a href="#booking-section" class="shortcut-btn">📄 Get Quote / Book Truck</a>
+                <a href="#client-autofill" class="shortcut-btn">👤 Client Auto-Fill</a>
+                <a href="https://wa.me/18768628579" class="shortcut-btn shortcut-btn-highlight" target="_blank">📱 Direct WhatsApp</a>
+            </div>
+
+            <div class="hours-badge-bar">
+                <div class="hours-item">M-F: <span>7:00 AM – 8:00 PM</span></div>
+                <div class="hours-item">Sat: <span>7:30 AM – 6:30 PM</span></div>
+                <div class="hours-item">Sun: <span>8:00 AM – 6:00 PM</span></div>
+                <div class="hours-item" style="border-color: #ffeb3b; color: #ffeb3b;">🚨 <span>24/7 Emergency Dispatch</span></div>
+            </div>
         </div>
     </header>
 
@@ -1183,7 +1207,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" id="rates-section">
             <h3>Destination Rate Sheet</h3>
             
             <p style="color: #e0e0e0; font-weight: 700; margin-bottom: 12px;">Scroll down to view standard transport rates in Jamaican Dollars (JMD):</p>
@@ -1227,10 +1251,10 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" id="booking-section">
             <h3>Invoice Generator & Quote Request</h3>
             
-            <div class="client-account-bar">
+            <div class="client-account-bar" id="client-autofill">
                 <h4>👤 Returning Client Auto-Fill (No Password Needed)</h4>
                 <div class="quick-lookup-grid">
                     <input type="email" id="lookup-email" placeholder="Enter your registered email address...">
