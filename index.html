@@ -420,12 +420,12 @@
         .quick-lookup-grid input {
             flex: 2;
             min-width: 200px;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             border: 1px solid #444;
             background: #000;
             color: #fff;
-            font-size: 1rem;
+            font-size: 1.15rem;
             width: 100%;
         }
 
@@ -468,10 +468,10 @@
             padding: 12px;
             border: 2px solid var(--primary-green);
             border-radius: 8px;
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             background-color: #ffffff;
             color: #0f172a;
-            font-weight: 700;
+            font-weight: 800;
             width: 100%;
             cursor: pointer;
         }
@@ -550,7 +550,7 @@
 
         .payment-status-box h5 {
             color: var(--primary-green);
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 900;
             text-transform: uppercase;
         }
@@ -572,87 +572,94 @@
         .checkbox-item label {
             color: #ffffff;
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 1.05rem;
             cursor: pointer;
             margin-bottom: 0;
         }
 
-        /* WEEKLY TOTALS SUMMARY DASHBOARD */
+        /* SHARP & BRIGHT WEEKLY TOTALS SUMMARY DASHBOARD */
         .weekly-summary-bar {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 15px;
+            gap: 14px;
+            margin-bottom: 18px;
         }
 
         .summary-box {
-            background: #042410;
-            border: 1px solid #1c4d28;
-            border-radius: 8px;
-            padding: 12px;
+            background: #063816; /* Sharper, brighter green background */
+            border: 2px solid var(--primary-green);
+            border-radius: 10px;
+            padding: 16px;
             text-align: center;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.25);
         }
 
         .summary-box h6 {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            font-weight: 800;
+            color: #ffffff;
+            font-size: 1.08rem;
+            font-weight: 900;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
         }
 
         .summary-box span {
             color: var(--primary-green);
-            font-size: 1.25rem;
+            font-size: 1.65rem;
             font-weight: 900;
+            text-shadow: 0 0 8px rgba(0, 230, 118, 0.4);
         }
 
-        /* ALL-TIME / YEARLY HISTORY DASHBOARD */
+        /* SHARP & BRIGHT ALL-TIME / YEARLY HISTORY DASHBOARD */
         .alltime-summary-container {
-            background: #051b10;
-            border: 2px solid #38bdf8;
-            border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 20px;
+            background: #08281a;
+            border: 2.5px solid #38bdf8;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 22px;
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.25);
         }
 
         .alltime-summary-container h5 {
             color: #38bdf8;
-            font-size: 1.05rem;
+            font-size: 1.25rem;
             font-weight: 900;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
             display: flex;
             align-items: center;
             gap: 6px;
+            text-shadow: 0 0 6px rgba(56, 189, 248, 0.3);
         }
 
         .alltime-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 10px;
+            gap: 14px;
         }
 
         .alltime-box {
-            background: #03140b;
-            border: 1px solid #154228;
-            border-radius: 6px;
-            padding: 10px;
+            background: #031c10;
+            border: 1.5px solid #38bdf8;
+            border-radius: 8px;
+            padding: 14px;
             text-align: center;
         }
 
         .alltime-box h6 {
-            color: #94a3b8;
-            font-size: 0.78rem;
-            font-weight: 800;
+            color: #e2e8f0;
+            font-size: 1.02rem;
+            font-weight: 900;
             text-transform: uppercase;
-            margin-bottom: 3px;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
         }
 
         .alltime-box span {
             color: #38bdf8;
-            font-size: 1.15rem;
+            font-size: 1.45rem;
             font-weight: 900;
+            text-shadow: 0 0 6px rgba(56, 189, 248, 0.3);
         }
 
         /* WEEK VIEW TOGGLE BAR */
@@ -662,7 +669,7 @@
             align-items: center;
             background: #0a2412;
             border: 1px solid #1c4d28;
-            padding: 10px 14px;
+            padding: 12px 16px;
             border-radius: 8px;
             margin-bottom: 15px;
             flex-wrap: wrap;
@@ -671,33 +678,33 @@
 
         .week-filter-bar span {
             color: #38bdf8;
-            font-weight: 800;
-            font-size: 0.95rem;
+            font-weight: 900;
+            font-size: 1.05rem;
         }
 
         .btn-week-toggle {
             background: #1e293b;
             color: #38bdf8;
             border: 1px solid #38bdf8;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 6px;
-            font-weight: 800;
+            font-weight: 900;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
-        /* CREW PAYROLL GENERATOR */
+        /* CREW PAYROLL GENERATOR - LARGER SHARP INPUTS & DROPDOWNS */
         .payroll-section-box {
             background: #0a2914;
             border: 2px solid var(--primary-green);
-            padding: 16px;
+            padding: 18px;
             border-radius: 10px;
             margin-bottom: 25px;
         }
 
         .payroll-section-box h5 {
             color: var(--primary-green);
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             font-weight: 900;
             text-transform: uppercase;
             margin-bottom: 10px;
@@ -706,7 +713,7 @@
         .payroll-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 14px;
         }
 
         @media (max-width: 768px) {
@@ -716,28 +723,35 @@
         .payroll-card {
             background: #041f0e;
             border: 1px solid #1c4d28;
-            padding: 12px;
+            padding: 14px;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         .payroll-card label {
-            font-size: 0.88rem;
-            font-weight: 800;
-            color: #cbd5e1;
+            font-size: 1.1rem; /* Clearer, larger label font */
+            font-weight: 900;
+            color: #ffffff;
         }
 
         .payroll-card input, .payroll-card select {
-            padding: 8px;
+            padding: 14px; /* Larger padding for effortless tapping & reading */
             background: #000;
             color: #fff;
-            border: 1px solid #333;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.95rem;
+            border: 2px solid var(--primary-green); /* Crisp green accent border */
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 1.25rem; /* Larger, ultra-clear text inside inputs and dropdowns */
             width: 100%;
+        }
+
+        .payroll-card select option {
+            background: #000000;
+            color: #ffffff;
+            font-size: 1.15rem;
+            padding: 10px;
         }
 
         .btn-gen-payroll-driver {
@@ -745,12 +759,12 @@
             color: #fff;
             font-weight: 900;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             cursor: pointer;
             text-transform: uppercase;
-            font-size: 0.95rem;
-            margin-top: 4px;
+            font-size: 1.05rem;
+            margin-top: 6px;
         }
 
         .btn-gen-payroll-asst {
@@ -758,57 +772,57 @@
             color: #fff;
             font-weight: 900;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             cursor: pointer;
             text-transform: uppercase;
-            font-size: 0.95rem;
-            margin-top: 4px;
+            font-size: 1.05rem;
+            margin-top: 6px;
         }
 
         /* CORPORATE TRACKER SPREADSHEET TABLE & LABELED INPUTS */
         .tracker-form-container {
             background: #0d2614;
             border: 1px solid #1e4626;
-            padding: 14px;
+            padding: 16px;
             border-radius: 8px;
             margin-bottom: 15px;
         }
 
         .tracker-form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin-bottom: 14px;
         }
 
         .tracker-field-group {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
         .tracker-field-group label {
-            font-size: 0.9rem;
-            font-weight: 800;
+            font-size: 1.05rem;
+            font-weight: 900;
             color: var(--primary-green);
         }
 
         .tracker-field-group input, .tracker-field-group select {
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
-            border: 1px solid #333;
+            border: 1.5px solid #444;
             background: #000;
             color: #fff;
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1.15rem;
+            font-weight: 800;
         }
 
         .live-profit-preview-box {
             grid-column: 1 / -1;
             background: #042410;
             border: 2px dashed #38bdf8;
-            padding: 12px 16px;
+            padding: 14px 18px;
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
@@ -817,14 +831,14 @@
         }
 
         .live-profit-preview-box label {
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             font-weight: 900;
             color: #38bdf8;
             text-transform: uppercase;
         }
 
         .live-profit-preview-box span {
-            font-size: 1.35rem;
+            font-size: 1.45rem;
             font-weight: 900;
             color: #38bdf8;
         }
@@ -833,11 +847,11 @@
             background: var(--primary-green);
             color: #000;
             font-weight: 900;
-            padding: 12px 16px;
+            padding: 14px 18px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             width: 100%;
             text-transform: uppercase;
         }
@@ -849,14 +863,14 @@
         .tracker-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
+            font-size: 1.02rem;
             color: #ffffff;
             min-width: 1050px;
         }
 
         .tracker-table th, .tracker-table td {
             border: 1px solid #224d2d;
-            padding: 8px 10px;
+            padding: 10px 12px;
             text-align: left;
             vertical-align: middle;
         }
@@ -866,6 +880,7 @@
             color: var(--primary-green);
             font-weight: 900;
             text-transform: uppercase;
+            font-size: 1.05rem;
         }
 
         .inv-badge-pill {
@@ -873,10 +888,10 @@
             background: #0f381b;
             color: #4ade80;
             border: 1px solid #22c55e;
-            padding: 4px 8px;
+            padding: 5px 10px;
             margin: 2px 0;
             border-radius: 4px;
-            font-size: 0.82rem;
+            font-size: 0.92rem;
             font-weight: 900;
             white-space: nowrap;
         }
@@ -884,10 +899,10 @@
         .status-badge-paid {
             background: #166534;
             color: #ffffff;
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 4px;
-            font-weight: 800;
-            font-size: 0.85rem;
+            font-weight: 900;
+            font-size: 0.95rem;
             cursor: pointer;
             display: inline-block;
         }
@@ -895,10 +910,10 @@
         .status-badge-unpaid {
             background: #991b1b;
             color: #ffffff;
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 4px;
-            font-weight: 800;
-            font-size: 0.85rem;
+            font-weight: 900;
+            font-size: 0.95rem;
             cursor: pointer;
             display: inline-block;
         }
@@ -913,22 +928,22 @@
             background: #0284c7;
             color: #fff;
             border: none;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 6px;
             cursor: pointer;
-            font-weight: 800;
-            font-size: 0.85rem;
+            font-weight: 900;
+            font-size: 0.95rem;
         }
 
         .btn-table-delete {
             background: #dc2626;
             color: #fff;
             border: none;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 6px;
             cursor: pointer;
-            font-weight: 800;
-            font-size: 0.85rem;
+            font-weight: 900;
+            font-size: 0.95rem;
         }
 
         .btn-action-group {
@@ -968,29 +983,29 @@
             min-width: 220px;
         }
 
-        /* PRINTABLE INVOICES & PAYSLIPS */
+        /* PRINTABLE INVOICES & PAYSLIPS - SHARP & CLEAR PREVIEW TEXT */
         #invoice-preview, #payslip-preview {
             display: none;
             border: 3px solid #1a531f;
-            padding: 16px 20px;
+            padding: 22px;
             background: #ffffff;
             color: #111111;
             margin-top: 25px;
             border-radius: 8px;
-            font-size: 1.05rem; 
+            font-size: 1.2rem; /* Enhanced crisp text size for effortless mobile reading without pinching */
         }
 
         /* EDITABLE ON-SCREEN STYLING */
         .editable-preview-field {
-            border-bottom: 1.5px dashed #0284c7;
-            padding: 1px 4px;
+            border-bottom: 2px dashed #0284c7;
+            padding: 2px 6px;
             outline: none;
-            background: rgba(2, 132, 199, 0.05);
+            background: rgba(2, 132, 199, 0.08);
             border-radius: 3px;
         }
         .editable-preview-field:focus {
-            background: rgba(2, 132, 199, 0.15);
-            border-bottom: 2px solid #0284c7;
+            background: rgba(2, 132, 199, 0.18);
+            border-bottom: 2.5px solid #0284c7;
         }
 
         .inv-header {
@@ -998,8 +1013,8 @@
             grid-template-columns: 220px 1fr; 
             align-items: center;
             border-bottom: 2.5px solid #1a531f;
-            padding-bottom: 6px; 
-            margin-bottom: 12px;  
+            padding-bottom: 10px; 
+            margin-bottom: 16px;  
         }
 
         .inv-logo-box {
@@ -1031,16 +1046,16 @@
 
         .inv-title-main {
             color: #1a531f; 
-            font-size: 1.45rem; 
+            font-size: 1.65rem; 
             font-weight: 900;
             text-transform: uppercase;
             line-height: 1.1;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             letter-spacing: -0.5px;
         }
 
         .inv-title-sub {
-            font-size: 1.1rem; 
+            font-size: 1.2rem; 
             font-weight: 900; 
             color: #111111;
             text-transform: uppercase;
@@ -1049,7 +1064,7 @@
         }
 
         .inv-title-loc {
-            font-size: 0.95rem; 
+            font-size: 1.05rem; 
             font-weight: 800;
             color: #334155;
         }
@@ -1057,37 +1072,37 @@
         .inv-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 16px;
+            margin-bottom: 16px;
             color: #111827;
-            font-size: 0.98rem;
+            font-size: 1.12rem; /* Sharper readable details text */
         }
 
         .inv-bank-box {
             background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            padding: 6px 12px;
+            border: 1.5px solid #cbd5e1;
+            padding: 12px 16px;
             border-radius: 6px;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
+            margin-bottom: 14px;
+            font-size: 1.1rem; /* Sharper bank info text */
         }
 
         .inv-bank-box h5 {
             color: #1a531f;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: 900;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
 
         .inv-footer {
-            margin-top: 10px;
-            padding-top: 6px;
+            margin-top: 14px;
+            padding-top: 10px;
             border-top: 1.5px solid #ddd;
             text-align: center;
             font-style: italic;
             color: #111827;
-            font-size: 0.92rem;
+            font-size: 1.05rem; /* Larger footer text */
         }
 
         @media print {
@@ -1350,7 +1365,7 @@
                 </div>
 
                 <!-- MONDAY TO FRIDAY ACTIVE WEEK SUMMARY -->
-                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📅 Current Active Operating Week (Monday – Friday)</h5>
+                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px; font-size: 1.15rem;">📅 Current Active Operating Week (Monday – Friday)</h5>
                 <div class="weekly-summary-bar">
                     <div class="summary-box">
                         <h6>M-F Revenue</h6>
@@ -1358,15 +1373,15 @@
                     </div>
                     <div class="summary-box">
                         <h6>M-F Expenses (Petrol+Crew)</h6>
-                        <span id="sum-expenses" style="color: #f87171;">$0 JMD</span>
+                        <span id="sum-expenses" style="color: #ff9999;">$0 JMD</span>
                     </div>
                     <div class="summary-box">
                         <h6>M-F Net Profit</h6>
-                        <span id="sum-profit" style="color: #38bdf8;">$0 JMD</span>
+                        <span id="sum-profit" style="color: #60a5fa;">$0 JMD</span>
                     </div>
                     <div class="summary-box">
                         <h6>M-F Runs</h6>
-                        <span id="sum-count" style="color: #fbbf24;">0 Jobs</span>
+                        <span id="sum-count" style="color: #fde047;">0 Jobs</span>
                     </div>
                 </div>
 
@@ -1380,19 +1395,19 @@
                         </div>
                         <div class="alltime-box">
                             <h6>All-Time Total Expenses</h6>
-                            <span id="all-expenses" style="color: #f87171;">$0 JMD</span>
+                            <span id="all-expenses" style="color: #ff9999;">$0 JMD</span>
                         </div>
                         <div class="alltime-box">
                             <h6>Truck Maintenance Spend</h6>
-                            <span id="all-maint" style="color: #fb7185;">$0 JMD</span>
+                            <span id="all-maint" style="color: #fda4af;">$0 JMD</span>
                         </div>
                         <div class="alltime-box">
                             <h6>All-Time Net Profit</h6>
-                            <span id="all-profit" style="color: #38bdf8;">$0 JMD</span>
+                            <span id="all-profit" style="color: #60a5fa;">$0 JMD</span>
                         </div>
                         <div class="alltime-box" style="grid-column: 1 / -1;">
                             <h6>Total Logged Runs</h6>
-                            <span id="all-count" style="color: #fbbf24;">0 Jobs</span>
+                            <span id="all-count" style="color: #fde047;">0 Jobs</span>
                         </div>
                     </div>
                 </div>
@@ -1400,7 +1415,7 @@
                 <!-- CREW PAYROLL GENERATOR WITH DEDUCTIONS & BANK DETAILS -->
                 <div class="payroll-section-box">
                     <h5>👥 Crew Payroll & Corporate Payslips</h5>
-                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan operating runs, include Permanent Payroll Number, Bank Details, Earnings, and Deductions (Fully Saveable & Editable):</p>
+                    <p style="color: #ffffff; font-size: 1.05rem; font-weight: 800; margin-bottom: 14px;">Scan operating runs, include Permanent Payroll Number, Bank Details, Earnings, and Deductions (Fully Saveable & Editable):</p>
                     
                     <div class="payroll-grid">
                         <!-- DRIVER PAYROLL CARD -->
@@ -1408,7 +1423,7 @@
                             <label>🛞 Driver Name:</label>
                             <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
                                 <input type="text" id="payroll-driver-name" placeholder="Driver Full Name">
-                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadStaffProfile('driver')">🔍 Load</button>
+                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:10px 14px; border-radius:6px; font-weight:900; cursor:pointer;" onclick="loadStaffProfile('driver')">🔍 Load</button>
                             </div>
                             
                             <label>Payroll # / Employee ID:</label>
@@ -1461,7 +1476,7 @@
                                 <input type="date" id="payroll-driver-paydate">
                             </div>
 
-                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('driver')">💾 Save Driver Profile</button>
+                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:8px; margin-bottom:8px; font-size:1.05rem; padding:12px;" onclick="saveStaffProfile('driver')">💾 Save Driver Profile</button>
                             <button type="button" class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver Weekly Payslip</button>
                         </div>
 
@@ -1470,7 +1485,7 @@
                             <label>🤝 Assistant Name:</label>
                             <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
                                 <input type="text" id="payroll-asst-name" placeholder="Assistant Full Name">
-                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadStaffProfile('assistant')">🔍 Load</button>
+                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:10px 14px; border-radius:6px; font-weight:900; cursor:pointer;" onclick="loadStaffProfile('assistant')">🔍 Load</button>
                             </div>
                             
                             <label>Payroll # / Employee ID:</label>
@@ -1523,7 +1538,7 @@
                                 <input type="date" id="payroll-asst-paydate">
                             </div>
 
-                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('assistant')">💾 Save Assistant Profile</button>
+                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:8px; margin-bottom:8px; font-size:1.05rem; padding:12px;" onclick="saveStaffProfile('assistant')">💾 Save Assistant Profile</button>
                             <button type="button" class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant Weekly Payslip</button>
                         </div>
                     </div>
@@ -1536,8 +1551,8 @@
                 </div>
 
                 <!-- Corporate Multi-Drop Daily Job Tracker -->
-                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log operational runs, track crew payouts, and view invoice numbers instantly below!</p>
+                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px; font-size: 1.15rem;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
+                <p style="color: #ffffff; font-size: 1.02rem; font-weight: 800; margin-bottom: 15px;">Log operational runs, track crew payouts, and view invoice numbers instantly below!</p>
 
                 <div class="tracker-form-container">
                     <div class="tracker-form-grid">
@@ -1663,8 +1678,8 @@
 
                 <!-- TRUCK MAINTENANCE & PARTS LOG SHEET -->
                 <div style="margin-top: 30px; border-top: 2px dashed #1e4626; padding-top: 20px;">
-                    <h5 style="color: #fb7185; font-weight: 900; margin-bottom: 8px; text-transform: uppercase;">🔧 Fleet & Truck Maintenance Log</h5>
-                    <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log tires, full services, headlights, parts, and mechanical expenses to keep track of total truck maintenance costs!</p>
+                    <h5 style="color: #fb7185; font-weight: 900; margin-bottom: 8px; text-transform: uppercase; font-size: 1.15rem;">🔧 Fleet & Truck Maintenance Log</h5>
+                    <p style="color: #ffffff; font-size: 1.02rem; font-weight: 800; margin-bottom: 15px;">Log tires, full services, headlights, parts, and mechanical expenses to keep track of total truck maintenance costs!</p>
 
                     <div class="tracker-form-container" style="background: #1a0f12; border-color: #5c1d28;">
                         <div class="tracker-form-grid">
@@ -1745,27 +1760,27 @@
                     </div>
                 </div>
 
-                <p style="margin-bottom: 8px; color: #111827; font-size: 1.02rem;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800; color: #111827;"></span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800; color: #111827;"></span></p>
+                <p style="margin-bottom: 10px; color: #111827; font-size: 1.15rem;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800; color: #111827;"></span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800; color: #111827;"></span></p>
                 
-                <table style="margin-bottom: 8px; width: 100%; border-collapse: collapse; font-size: 1rem;">
+                <table style="margin-bottom: 12px; width: 100%; border-collapse: collapse; font-size: 1.1rem;">
                     <thead>
                         <tr style="background-color: #1a531f; color: #ffffff;">
-                            <th style="padding: 6px 8px; text-align: left;">Description</th>
-                            <th style="padding: 6px 8px; text-align: right;">Amount (JMD)</th>
+                            <th style="padding: 10px 12px; text-align: left;">Description</th>
+                            <th style="padding: 10px 12px; text-align: right;">Amount (JMD)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; font-weight: 700; color: #111827;" id="out-desc">Haulage Transport: Kingston to Zone</td>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #111827;" id="out-amount">$0 JMD</td>
+                            <td style="padding: 10px 12px; border-bottom: 1px solid #ddd; font-weight: 700; color: #111827;" id="out-desc">Haulage Transport: Kingston to Zone</td>
+                            <td style="padding: 10px 12px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #111827;" id="out-amount">$0 JMD</td>
                         </tr>
                         <tr style="background-color: #f0fdf4;">
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; color: #166534; font-weight: 800;" id="out-deposit-label">🔒 Required 50% Deposit (To Confirm Booking)</td>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #166534;" id="out-deposit">$0 JMD</td>
+                            <td style="padding: 10px 12px; border-bottom: 1px solid #ddd; color: #166534; font-weight: 800;" id="out-deposit-label">🔒 Required 50% Deposit (To Confirm Booking)</td>
+                            <td style="padding: 10px 12px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #166534;" id="out-deposit">$0 JMD</td>
                         </tr>
                         <tr>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; font-weight: 700; color: #dc2626;" id="out-balance-label">🚚 Remaining 50% Balance (Due Upon Pickup)</td>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #dc2626;" id="out-balance">$0 JMD</td>
+                            <td style="padding: 10px 12px; border-bottom: 1px solid #ddd; font-weight: 700; color: #dc2626;" id="out-balance-label">🚚 Remaining 50% Balance (Due Upon Pickup)</td>
+                            <td style="padding: 10px 12px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #dc2626;" id="out-balance">$0 JMD</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1778,8 +1793,8 @@
                 </div>
 
                 <div class="inv-footer">
-                    <p style="margin-bottom: 2px; font-weight: bold; color: #b91c1c;" id="out-footer-notice">* 50% deposit required to lock in your booking date. Balance due upon pickup.</p>
-                    <p style="margin-bottom: 3px; font-weight: bold; color: #b91c1c;">⚠️ Cancellations under 72 hours are non-refundable.</p>
+                    <p style="margin-bottom: 4px; font-weight: bold; color: #b91c1c;" id="out-footer-notice">* 50% deposit required to lock in your booking date. Balance due upon pickup.</p>
+                    <p style="margin-bottom: 4px; font-weight: bold; color: #b91c1c;">⚠️ Cancellations under 72 hours are non-refundable.</p>
                     <p><strong>Thank you for choosing D&C Refuse Trucking & Equipment Co. Limited!</strong></p>
                 </div>
                 <br>
@@ -1793,52 +1808,52 @@
                         <img src="IMG-20250804-WA0004.jpg" alt="D&C Logo">
                     </div>
                     <div class="inv-title-box">
-                        <div class="inv-title-main" id="slip-title-main">MILFORD MALCOLM (Weekly)</div>
+                        <div class="inv-title-main" id="slip-title-main">DRIVER WEEKLY PAYSLIP</div>
                         <div class="inv-title-sub">D&C REFUSE TRUCKING & EQUIPMENT CO. LTD</div>
                         <div class="inv-title-loc">Weekly Operating Statement (JMD)</div>
                     </div>
                 </div>
 
-                <div style="background: #f1f5f9; padding: 8px 12px; border-radius: 6px; margin-bottom: 10px; font-size: 0.95rem; border-left: 4px solid #1a531f; color: #1e293b;">
+                <div style="background: #f1f5f9; padding: 12px 16px; border-radius: 6px; margin-bottom: 14px; font-size: 1.12rem; border-left: 5px solid #1a531f; color: #1e293b;">
                     <p><strong>Statement Period:</strong> <span id="slip-period" class="editable-preview-field" contenteditable="true">Weekly Operating Period</span></p>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; font-size: 0.95rem; background: #fafafa; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; color: #0f172a;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; font-size: 1.1rem; background: #fafafa; padding: 16px; border-radius: 8px; border: 1.5px solid #cbd5e1; color: #0f172a;">
                     <div>
-                        <p style="margin-bottom: 2px; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Employee Name & Payroll #</p>
-                        <p><span id="slip-name" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0f172a;"></span> (<span id="slip-paynum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span>)</p>
+                        <p style="margin-bottom: 2px; color: #475569; font-size: 0.9rem; text-transform: uppercase; font-weight: 900;">Employee Name & Payroll #</p>
+                        <p><span id="slip-name" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0f172a; font-size: 1.18rem;"></span> (<span id="slip-paynum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span>)</p>
                         
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">National ID / TRN</p>
+                        <p style="margin: 10px 0 2px 0; color: #475569; font-size: 0.9rem; text-transform: uppercase; font-weight: 900;">National ID / TRN</p>
                         <p><span id="slip-natid" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
 
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Bank Name & Branch</p>
+                        <p style="margin: 10px 0 2px 0; color: #475569; font-size: 0.9rem; text-transform: uppercase; font-weight: 900;">Bank Name & Branch</p>
                         <p><span id="slip-bankname" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span> — <span id="slip-bankbranch" class="editable-preview-field" contenteditable="true"></span></p>
 
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Account # & Sort Code</p>
+                        <p style="margin: 10px 0 2px 0; color: #475569; font-size: 0.9rem; text-transform: uppercase; font-weight: 900;">Account # & Sort Code</p>
                         <p>Acc: <span id="slip-accnum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> | Sort: <span id="slip-sortcode" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
                     </div>
                     <div>
-                        <p style="margin-bottom: 2px; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Job Position</p>
+                        <p style="margin-bottom: 2px; color: #475569; font-size: 0.9rem; text-transform: uppercase; font-weight: 900;">Job Position</p>
                         <p><span id="slip-position" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
 
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Department</p>
+                        <p style="margin: 10px 0 2px 0; color: #475569; font-size: 0.9rem; text-transform: uppercase; font-weight: 900;">Department</p>
                         <p><span id="slip-dept" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
 
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Branch / Location</p>
+                        <p style="margin: 10px 0 2px 0; color: #475569; font-size: 0.9rem; text-transform: uppercase; font-weight: 900;">Branch / Location</p>
                         <p><span id="slip-branch" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
 
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Payment Method & Date</p>
+                        <p style="margin: 10px 0 2px 0; color: #475569; font-size: 0.9rem; text-transform: uppercase; font-weight: 900;">Payment Method & Date</p>
                         <p><span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> (<span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #166534;"></span>)</p>
                     </div>
                 </div>
 
-                <p style="margin-bottom: 6px; color: #0f172a; font-size: 0.95rem; font-weight: 900; text-transform: uppercase;">Itemized Operating Runs & Earnings:</p>
-                <table style="margin-bottom: 10px; width: 100%; border-collapse: collapse; font-size: 0.92rem; color: #0f172a;">
+                <p style="margin-bottom: 8px; color: #0f172a; font-size: 1.12rem; font-weight: 900; text-transform: uppercase;">Itemized Operating Runs & Earnings:</p>
+                <table style="margin-bottom: 14px; width: 100%; border-collapse: collapse; font-size: 1.08rem; color: #0f172a;">
                     <thead>
                         <tr style="background-color: #1a531f; color: #ffffff;">
-                            <th style="padding: 6px 8px; text-align: left;">Date / Day</th>
-                            <th style="padding: 6px 8px; text-align: left;">Route</th>
-                            <th style="padding: 6px 8px; text-align: right;">Earnings (JMD)</th>
+                            <th style="padding: 10px 12px; text-align: left;">Date / Day</th>
+                            <th style="padding: 10px 12px; text-align: left;">Route</th>
+                            <th style="padding: 10px 12px; text-align: right;">Earnings (JMD)</th>
                         </tr>
                     </thead>
                     <tbody id="slip-runs-tbody">
@@ -1846,37 +1861,37 @@
                     </tbody>
                 </table>
 
-                <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px 12px; border-radius: 6px; margin-bottom: 10px; font-size: 0.95rem; color: #0f172a;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center;">
-                        <span style="font-weight: 700;">Gross Earnings:</span>
-                        <strong id="slip-gross" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
+                <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; padding: 14px 16px; border-radius: 6px; margin-bottom: 14px; font-size: 1.1rem; color: #0f172a;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
+                        <span style="font-weight: 800;">Gross Earnings:</span>
+                        <strong id="slip-gross" class="editable-preview-field" contenteditable="true" style="font-size: 1.18rem;">$0 JMD</strong>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #dc2626; align-items: center;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; color: #dc2626; align-items: center;">
                         <div style="flex: 1; padding-right: 10px;">
-                            <span style="font-weight: 700;">Deductions This Period:</span>
-                            <div id="slip-deduct-note" class="editable-preview-field" contenteditable="true" style="font-size: 0.82rem; color: #64748b; margin-top: 2px; width: 100%;">Total Amount Of AR Charges Repayable</div>
+                            <span style="font-weight: 800;">Deductions This Period:</span>
+                            <div id="slip-deduct-note" class="editable-preview-field" contenteditable="true" style="font-size: 0.95rem; color: #475569; margin-top: 4px; width: 100%;">Total Amount Of AR Charges Repayable</div>
                         </div>
-                        <strong id="slip-deduct-amt" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
+                        <strong id="slip-deduct-amt" class="editable-preview-field" contenteditable="true" style="font-size: 1.18rem;">$0 JMD</strong>
                     </div>
-                    <div style="display: flex; justify-content: space-between; color: #b45309; align-items: center; margin-top: 6px; border-top: 1px dashed #cbd5e1; padding-top: 6px;">
-                        <span style="font-weight: 700;">Total Outstanding Charges / Balance:</span>
-                        <strong id="slip-total-charges" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
+                    <div style="display: flex; justify-content: space-between; color: #b45309; align-items: center; margin-top: 10px; border-top: 1.5px dashed #cbd5e1; padding-top: 10px;">
+                        <span style="font-weight: 800;">Total Outstanding Charges / Balance:</span>
+                        <strong id="slip-total-charges" class="editable-preview-field" contenteditable="true" style="font-size: 1.18rem;">$0 JMD</strong>
                     </div>
                 </div>
 
-                <div style="background: #f0fdf4; border: 2px solid #166534; padding: 10px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span style="font-weight: 900; color: #166534; font-size: 1.05rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
-                    <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.25rem;">$0 JMD</span>
+                <div style="background: #f0fdf4; border: 2.5px solid #166534; padding: 14px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <span style="font-weight: 900; color: #166534; font-size: 1.15rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
+                    <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.45rem;">$0 JMD</span>
                 </div>
 
                 <div class="inv-footer">
-                    <p style="margin-bottom: 4px; font-weight: bold; color: #1a531f;">✅ Official Corporation Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
+                    <p style="margin-bottom: 6px; font-weight: bold; color: #1a531f;">✅ Official Corporation Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
                     <p>Authorized Dispatcher Sign-off: ___________________________</p>
                 </div>
                 <br>
-                <div style="display: flex; gap: 10px;">
-                    <button type="button" class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
-                    <button type="button" class="btn-whatsapp btn-print" onclick="sendWhatsAppWeeklyPayslip()">📱 Send via WhatsApp</button>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <button type="button" class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff; width: 100%; min-width: unset; font-size: 1.15rem; padding: 16px;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
+                    <button type="button" class="btn-whatsapp btn-print" style="width: 100%; min-width: unset; font-size: 1.15rem; padding: 16px;" onclick="sendWhatsAppWeeklyPayslip()">📱 Send via WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -2199,7 +2214,7 @@
             document.getElementById('payslip-preview').style.display = 'none';
         }
 
-        /* GENERATE FORMAL WEEKLY PAYSLIP (FLEXIBLE 7-DAY WINDOW WITH FALLBACK) */
+        /* GENERATE FORMAL WEEKLY PAYSLIP */
         function generateWeeklyPayslip(roleType) {
             try {
                 var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
@@ -2242,7 +2257,6 @@
 
                 var allJobs = getStoredJobs();
                 
-                // Flexible 7-day rolling window to capture past days like Friday the 23rd
                 var weekJobs = allJobs.filter(function(j) {
                     var isRecent = true;
                     if (j.date) {
@@ -2261,7 +2275,10 @@
                     }
                 });
 
-                document.getElementById('slip-title-main').innerText = staffName.toUpperCase() + ' (Weekly Statement)';
+                // Dynamic header title without staff name
+                var headerTitle = roleType === 'driver' ? 'DRIVER WEEKLY PAYSLIP' : 'ASSISTANT WEEKLY PAYSLIP';
+                document.getElementById('slip-title-main').innerText = headerTitle;
+
                 document.getElementById('slip-name').innerText = staffName;
                 document.getElementById('slip-paynum').innerText = payNum;
                 document.getElementById('slip-natid').innerText = natId;
@@ -2289,17 +2306,17 @@
                         grossEarnings += payout;
 
                         var tr = document.createElement('tr');
-                        tr.innerHTML = '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br><span style="font-size:0.78rem; color:#64748b;">' + j.date + '</span></td>' +
-                                       '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
-                                       '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
+                        tr.innerHTML = '<td style="padding: 10px 12px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br><span style="font-size:0.9rem; color:#475569;">' + j.date + '</span></td>' +
+                                       '<td style="padding: 10px 12px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
+                                       '<td style="padding: 10px 12px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
                         tbody.appendChild(tr);
                     }
                 } else {
                     grossEarnings = 25000;
                     var tr = document.createElement('tr');
-                    tr.innerHTML = '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;"><strong>Recent Run</strong><br><span style="font-size:0.78rem; color:#64748b;">' + new Date().toLocaleDateString() + '</span></td>' +
-                                   '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;">Standard Operating Run (Kingston / Portmore Hub)</td>' +
-                                   '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + grossEarnings.toLocaleString() + ' JMD</td>';
+                    tr.innerHTML = '<td style="padding: 10px 12px; border-bottom: 1px solid #ddd;"><strong>Recent Run</strong><br><span style="font-size:0.9rem; color:#475569;">' + new Date().toLocaleDateString() + '</span></td>' +
+                                   '<td style="padding: 10px 12px; border-bottom: 1px solid #ddd;">Standard Operating Run (Kingston / Portmore Hub)</td>' +
+                                   '<td style="padding: 10px 12px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + grossEarnings.toLocaleString() + ' JMD</td>';
                     tbody.appendChild(tr);
                 }
 
