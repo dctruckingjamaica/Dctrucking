@@ -851,7 +851,7 @@
             border-collapse: collapse;
             font-size: 0.9rem;
             color: #ffffff;
-            min-width: 1080px; /* Perfectly accommodates all 10 columns comfortably */
+            min-width: 1080px;
             table-layout: fixed;
         }
 
@@ -918,7 +918,7 @@
 
         .action-btn-group {
             display: flex;
-            flex-direction: column; /* Stack Edit and Delete buttons neatly inside the Actions column */
+            flex-direction: column;
             gap: 6px;
             align-items: stretch;
         }
@@ -984,16 +984,17 @@
             min-width: 220px;
         }
 
-        /* PRINTABLE INVOICES & PAYSLIPS */
+        /* PRINTABLE INVOICES & EXACT PHOTO-MATCHED PAYSLIPS */
         #invoice-preview, #payslip-preview {
             display: none;
-            border: 3px solid #1a531f;
-            padding: 16px 20px;
+            border: 1px solid #d1d5db;
+            padding: 20px 24px;
             background: #ffffff;
             color: #111111;
             margin-top: 25px;
             border-radius: 8px;
-            font-size: 1.05rem; 
+            font-size: 0.95rem; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
         /* EDITABLE ON-SCREEN STYLING */
@@ -1007,6 +1008,132 @@
         .editable-preview-field:focus {
             background: rgba(2, 132, 199, 0.15);
             border-bottom: 2px solid #0284c7;
+        }
+
+        .payslip-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e293b;
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+
+        .payslip-header-bar h2 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .payslip-subheading {
+            margin-bottom: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+
+        .payslip-subheading h4 {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #111827;
+            text-transform: uppercase;
+        }
+
+        .payslip-subheading p {
+            font-size: 0.9rem;
+            color: #4b5563;
+            font-weight: 700;
+        }
+
+        .payslip-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 24px;
+            margin-bottom: 20px;
+            font-size: 0.92rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 16px;
+        }
+
+        .payslip-meta-item label {
+            display: block;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            color: #6b7280;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .payslip-meta-item span {
+            font-weight: 800;
+            color: #1f2937;
+        }
+
+        /* SECTION HEADERS & ACCORDION ROWS */
+        .payslip-section-title {
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: #111827;
+            text-transform: uppercase;
+            background: #f3f4f6;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .payslip-item-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            font-size: 0.92rem;
+            color: #374151;
+            font-weight: 700;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .payslip-sub-item {
+            background: #fafafa;
+            padding: 10px 16px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .payslip-sub-item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .payslip-sub-item-calc {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.88rem;
+            color: #6b7280;
+            font-weight: 700;
+        }
+
+        .payslip-total-summary {
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-top: 18px;
+        }
+
+        .payslip-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #166534;
         }
 
         .inv-header {
@@ -1097,8 +1224,8 @@
         }
 
         .inv-footer {
-            margin-top: 10px;
-            padding-top: 6px;
+            margin-top: 15px;
+            padding-top: 8px;
             border-top: 1.5px solid #ddd;
             text-align: center;
             font-style: italic;
@@ -1117,6 +1244,7 @@
                 border: none; 
                 padding: 10px; 
                 margin: 0;
+                box-shadow: none;
             }
             .btn-print { display: none; }
             .editable-preview-field { border-bottom: none; background: transparent; }
@@ -1438,19 +1566,16 @@
 
                             <label>Bank Name & Branch:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-driver-bankname" placeholder="Bank Name (e.g. NCBCBJM)">
+                                <input type="text" id="payroll-driver-bankname" placeholder="Bank Name (e.g. Scotiabank)">
                                 <input type="text" id="payroll-driver-bankbranch" placeholder="Branch">
                             </div>
 
-                            <label>Account Number & Sort Code:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-driver-accnum" placeholder="Account Number">
-                                <input type="text" id="payroll-driver-sortcode" placeholder="Sort Code">
-                            </div>
+                            <label>Account Number / IBAN:</label>
+                            <input type="text" id="payroll-driver-accnum" placeholder="Account Number">
 
                             <label>Job Position / Dept / Branch:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-driver-pos" value="Commercial Driver">
+                                <input type="text" id="payroll-driver-pos" value="Haulage services">
                                 <input type="text" id="payroll-driver-dept" value="D&C Logistics">
                             </div>
                             <input type="text" id="payroll-driver-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
@@ -1459,20 +1584,17 @@
                             <input type="date" id="payroll-driver-joined">
 
                             <label>Deduction Amount This Period (JMD):</label>
-                            <input type="number" id="payroll-driver-deduct" value="0" placeholder="0">
+                            <input type="number" id="payroll-driver-deduct" value="3000" placeholder="0">
 
                             <label>Deduction / AR Charges Note:</label>
-                            <input type="text" id="payroll-driver-deductnote" value="Total Amount Of AR Charges Repayable" placeholder="e.g. Total Amount Of AR Charges $145,000 Repayable">
-
-                            <label>Total Outstanding Charges / Balance (JMD):</label>
-                            <input type="number" id="payroll-driver-totalcharges" value="0" placeholder="Total debt/advance balance">
+                            <input type="text" id="payroll-driver-deductnote" value="Total Amount Of AR Charges $145,000 Repayable" placeholder="e.g. Total Amount Of AR Charges $145,000 Repayable">
 
                             <label>Payment Method & Date:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <select id="payroll-driver-method">
-                                    <option value="Bank Transfer">🏦 Bank Transfer</option>
+                                    <option value="Scotiabank (IBAN / Bank Account)">🏦 Scotiabank</option>
+                                    <option value="NCB">🏦 NCB</option>
                                     <option value="Cash">💵 Cash</option>
-                                    <option value="Company Check">📜 Check</option>
                                 </select>
                                 <input type="date" id="payroll-driver-paydate">
                             </div>
@@ -1504,11 +1626,8 @@
                                 <input type="text" id="payroll-asst-bankbranch" placeholder="Branch">
                             </div>
 
-                            <label>Account Number & Sort Code:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-asst-accnum" placeholder="Account Number">
-                                <input type="text" id="payroll-asst-sortcode" placeholder="Sort Code">
-                            </div>
+                            <label>Account Number / IBAN:</label>
+                            <input type="text" id="payroll-asst-accnum" placeholder="Account Number">
 
                             <label>Job Position / Dept / Branch:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -1526,15 +1645,12 @@
                             <label>Deduction / AR Charges Note:</label>
                             <input type="text" id="payroll-asst-deductnote" value="Total Amount Of AR Charges Repayable" placeholder="e.g. Total Amount Of AR Charges $145,000 Repayable">
 
-                            <label>Total Outstanding Charges / Balance (JMD):</label>
-                            <input type="number" id="payroll-asst-totalcharges" value="0" placeholder="Total debt/advance balance">
-
                             <label>Payment Method & Date:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <select id="payroll-asst-method">
-                                    <option value="Bank Transfer">🏦 Bank Transfer</option>
+                                    <option value="Scotiabank (IBAN / Bank Account)">🏦 Scotiabank</option>
+                                    <option value="NCB">🏦 NCB</option>
                                     <option value="Cash">💵 Cash</option>
-                                    <option value="Company Check">📜 Check</option>
                                 </select>
                                 <input type="date" id="payroll-asst-paydate">
                             </div>
@@ -1658,16 +1774,16 @@
                 <div class="table-scroll">
                     <table class="tracker-table" id="tracker-table">
                         <colgroup>
-                            <col style="width: 10%;"> <!-- Day & Date -->
-                            <col style="width: 11%;"> <!-- Invoice #(s) -->
-                            <col style="width: 14%;"> <!-- Route -->
-                            <col style="width: 10%;"> <!-- Driver & Payout -->
-                            <col style="width: 10%;"> <!-- Assistant & Payout -->
-                            <col style="width: 8%;">  <!-- Petrol Cost -->
-                            <col style="width: 8%;">  <!-- Total Rate -->
-                            <col style="width: 8%;">  <!-- Net Profit -->
-                            <col style="width: 8%;">  <!-- Status -->
-                            <col style="width: 13%;"> <!-- Actions (Dedicated Box) -->
+                            <col style="width: 10%;">
+                            <col style="width: 11%;">
+                            <col style="width: 14%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 8%;">
+                            <col style="width: 8%;">
+                            <col style="width: 8%;">
+                            <col style="width: 8%;">
+                            <col style="width: 13%;">
                         </colgroup>
                         <thead>
                             <tr>
@@ -1684,7 +1800,6 @@
                             </tr>
                         </thead>
                         <tbody id="tracker-table-body">
-                            <!-- Dynamic Corporate Job Entries Render Here -->
                         </tbody>
                     </table>
                 </div>
@@ -1740,7 +1855,6 @@
                                 </tr>
                             </thead>
                             <tbody id="maint-table-body">
-                                <!-- Dynamic Maintenance Log Entries Render Here -->
                             </tbody>
                         </table>
                     </div>
@@ -1814,88 +1928,105 @@
                 <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
             </div>
 
-            <!-- Printable Weekly Payslip Output Container (Driver/Assistant Weekly Payslip) -->
+            <!-- EXACT PHOTO-MATCHED WEEKLY PAYSLIP CONTAINER -->
             <div id="payslip-preview">
-                <div class="inv-header">
-                    <div class="inv-logo-box">
-                        <img src="IMG-20250804-WA0004.jpg" alt="D&C Logo">
+                <!-- TOP HEADER BAR WITH EMPLOYEE NAME -->
+                <div class="payslip-header-bar">
+                    <h2 id="slip-top-title">MILFORD MALCOLM (Weekly)</h2>
+                    <span style="font-size: 1.2rem;">🟢</span>
+                </div>
+
+                <!-- SUBHEADING -->
+                <div class="payslip-subheading">
+                    <h4 id="slip-company-currency">MILFORD MALCOLM (JMD)</h4>
+                    <p>Weekly (<span id="slip-period-dates" class="editable-preview-field" contenteditable="true">2026-10-17 → 2026-10-23</span>)</p>
+                </div>
+
+                <!-- METADATA GRID -->
+                <div class="payslip-meta-grid">
+                    <div class="payslip-meta-item">
+                        <label>Employee</label>
+                        <span id="slip-employee-full" class="editable-preview-field" contenteditable="true">Milford Ferdinand Malcolm (TRN - 109613015)</span>
                     </div>
-                    <div class="inv-title-box">
-                        <div class="inv-title-main" id="slip-title-main">DRIVER WEEKLY PAYSLIP</div>
-                        <div class="inv-title-sub">D&C REFUSE TRUCKING & EQUIPMENT CO. LTD</div>
-                        <div class="inv-title-loc">Weekly Operating Statement (JMD)</div>
+                    <div class="payslip-meta-item">
+                        <label>National ID</label>
+                        <span id="slip-natid" class="editable-preview-field" contenteditable="true">TRN - 109613015</span>
+                    </div>
+                    <div class="payslip-meta-item">
+                        <label>Payment Method</label>
+                        <span id="slip-method" class="editable-preview-field" contenteditable="true">Scotiabank (IBAN / Bank Account: Scotiabank)</span>
+                    </div>
+                    <div class="payslip-meta-item">
+                        <label>Payment Date</label>
+                        <span id="slip-paydate" class="editable-preview-field" contenteditable="true">2026-10-23</span>
+                    </div>
+                    <div class="payslip-meta-item">
+                        <label>Job Position</label>
+                        <span id="slip-position" class="editable-preview-field" contenteditable="true">Haulage services</span>
+                    </div>
+                    <div class="payslip-meta-item">
+                        <label>Department</label>
+                        <span id="slip-dept" class="editable-preview-field" contenteditable="true">Wisynco Group Limited</span>
+                    </div>
+                    <div class="payslip-meta-item">
+                        <label>Branch</label>
+                        <span id="slip-branch" class="editable-preview-field" contenteditable="true">Lakes pen St Catherine</span>
+                    </div>
+                    <div class="payslip-meta-item">
+                        <label>Date Joined</label>
+                        <span id="slip-joined" class="editable-preview-field" contenteditable="true">2025-01-03</span>
                     </div>
                 </div>
 
-                <div style="background: #f1f5f9; padding: 8px 12px; border-radius: 6px; margin-bottom: 10px; font-size: 0.95rem; border-left: 4px solid #1a531f; color: #1e293b;">
-                    <p><strong>Statement Period:</strong> <span id="slip-period" class="editable-preview-field" contenteditable="true">Weekly Operating Period</span></p>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; font-size: 0.95rem; background: #fafafa; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; color: #0f172a;">
-                    <div>
-                        <p style="margin-bottom: 2px; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Employee Name & Payroll #</p>
-                        <p><span id="slip-name" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0f172a;"></span> (<span id="slip-paynum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span>)</p>
-                        
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">National ID / TRN</p>
-                        <p><span id="slip-natid" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Bank Name & Branch</p>
-                        <p><span id="slip-bankname" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span> — <span id="slip-bankbranch" class="editable-preview-field" contenteditable="true"></span></p>
-
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Account # & Sort Code</p>
-                        <p>Acc: <span id="slip-accnum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> | Sort: <span id="slip-sortcode" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                <!-- EARNINGS SECTION -->
+                <div style="margin-bottom: 16px;">
+                    <div class="payslip-item-row" style="background: #f9fafb; font-weight: 800; border-radius: 4px; margin-bottom: 6px;">
+                        <span>Basic Salary</span>
+                        <span id="slip-basic-salary">4,000.00</span>
                     </div>
-                    <div>
-                        <p style="margin-bottom: 2px; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Job Position</p>
-                        <p><span id="slip-position" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
 
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Department</p>
-                        <p><span id="slip-dept" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Branch / Location</p>
-                        <p><span id="slip-branch" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Payment Method & Date</p>
-                        <p><span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> (<span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #166534;"></span>)</p>
+                    <div class="payslip-section-title">
+                        <span>∧ Earning (1)</span>
+                        <span id="slip-total-earnings">4,000.00</span>
                     </div>
-                </div>
 
-                <p style="margin-bottom: 6px; color: #0f172a; font-size: 0.95rem; font-weight: 900; text-transform: uppercase;">Itemized Operating Runs & Earnings:</p>
-                <table style="margin-bottom: 10px; width: 100%; border-collapse: collapse; font-size: 0.92rem; color: #0f172a;">
-                    <thead>
-                        <tr style="background-color: #1a531f; color: #ffffff;">
-                            <th style="padding: 6px 8px; text-align: left;">Date / Day</th>
-                            <th style="padding: 6px 8px; text-align: left;">Route</th>
-                            <th style="padding: 6px 8px; text-align: right;">Earnings (JMD)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="slip-runs-tbody">
-                        <!-- Dynamic itemized runs inserted here -->
-                    </tbody>
-                </table>
-
-                <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px 12px; border-radius: 6px; margin-bottom: 10px; font-size: 0.95rem; color: #0f172a;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center;">
-                        <span style="font-weight: 700;">Gross Earnings:</span>
-                        <strong id="slip-gross" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #dc2626; align-items: center;">
-                        <div style="flex: 1; padding-right: 10px;">
-                            <span style="font-weight: 700;">Deductions This Period:</span>
-                            <div id="slip-deduct-note" class="editable-preview-field" contenteditable="true" style="font-size: 0.82rem; color: #64748b; margin-top: 2px; width: 100%;">Total Amount Of AR Charges Repayable</div>
+                    <div class="payslip-sub-item">
+                        <div class="payslip-sub-item-header">
+                            <span id="slip-earning-desc" class="editable-preview-field" contenteditable="true">Payroll (002)</span>
+                            <span id="slip-earning-amt">4,000.00</span>
                         </div>
-                        <strong id="slip-deduct-amt" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; color: #b45309; align-items: center; margin-top: 6px; border-top: 1px dashed #cbd5e1; padding-top: 6px;">
-                        <span style="font-weight: 700;">Total Outstanding Charges / Balance:</span>
-                        <strong id="slip-total-charges" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
+                        <div class="payslip-sub-item-calc">
+                            <span id="slip-earning-calc">4,000.00 x 1</span>
+                            <span>4,000.00</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- AMOUNT PAYABLE / NET PAYOUT HIGHLIGHT BAR AT THE BOTTOM -->
-                <div style="background: #f0fdf4; border: 2px solid #166534; padding: 10px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span style="font-weight: 900; color: #166534; font-size: 1.05rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
-                    <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.25rem;">$0 JMD</span>
+                <!-- DEDUCTIONS SECTION -->
+                <div style="margin-bottom: 16px;">
+                    <div class="payslip-section-title" style="color: #dc2626;">
+                        <span>∧ Deduction (1)</span>
+                        <span id="slip-total-deductions" style="color: #dc2626;">(3,000.00)</span>
+                    </div>
+
+                    <div class="payslip-sub-item">
+                        <div class="payslip-sub-item-header">
+                            <span id="slip-deduct-note" class="editable-preview-field" contenteditable="true" style="font-size: 0.88rem;">Total Amount Of AR Charges $145,000 Repayable (...)</span>
+                            <span id="slip-deduct-amt-main">3,000.00</span>
+                        </div>
+                        <div class="payslip-sub-item-calc">
+                            <span id="slip-deduct-calc">3,000.00 x 1</span>
+                            <span>3,000.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NET PAYOUT SUMMARY BOX -->
+                <div class="payslip-total-summary">
+                    <div class="payslip-total-row">
+                        <span>Net Payout / Amount Payable:</span>
+                        <span id="slip-net-payout">$1,000.00 JMD</span>
+                    </div>
                 </div>
 
                 <div class="inv-footer">
@@ -1919,7 +2050,6 @@
     <script>
         var managerPin = "1234";
         var showAllHistory = false;
-        var activeWeeklyPayslipData = null;
 
         function toggleManagerPanel() {
             var panel = document.getElementById('manager-panel');
@@ -1981,7 +2111,6 @@
             }
         }
 
-        /* STAFF PROFILE SAVE & LOAD LOGIC */
         function saveStaffProfile(role) {
             var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
             var name = document.getElementById(prefix + 'name').value.trim();
@@ -1998,19 +2127,17 @@
                 bankname: document.getElementById(prefix + 'bankname').value,
                 bankbranch: document.getElementById(prefix + 'bankbranch').value,
                 accnum: document.getElementById(prefix + 'accnum').value,
-                sortcode: document.getElementById(prefix + 'sortcode').value,
                 pos: document.getElementById(prefix + 'pos').value,
                 dept: document.getElementById(prefix + 'dept').value,
                 branch: document.getElementById(prefix + 'branch').value,
                 joined: document.getElementById(prefix + 'joined').value,
                 deduct: document.getElementById(prefix + 'deduct').value,
                 deductnote: document.getElementById(prefix + 'deductnote').value,
-                totalcharges: document.getElementById(prefix + 'totalcharges').value,
                 method: document.getElementById(prefix + 'method').value
             };
 
             localStorage.setItem("dc_staff_profile_" + name.toLowerCase(), JSON.stringify(profile));
-            alert("Staff profile saved for " + name + "! You can load it anytime by entering their name and clicking 'Load'.");
+            alert("Staff profile saved for " + name + "!");
         }
 
         function loadStaffProfile(role) {
@@ -2032,15 +2159,13 @@
                 document.getElementById(prefix + 'bankname').value = profile.bankname || '';
                 document.getElementById(prefix + 'bankbranch').value = profile.bankbranch || '';
                 document.getElementById(prefix + 'accnum').value = profile.accnum || '';
-                document.getElementById(prefix + 'sortcode').value = profile.sortcode || '';
                 document.getElementById(prefix + 'pos').value = profile.pos || '';
                 document.getElementById(prefix + 'dept').value = profile.dept || '';
                 document.getElementById(prefix + 'branch').value = profile.branch || '';
                 document.getElementById(prefix + 'joined').value = profile.joined || '';
                 document.getElementById(prefix + 'deduct').value = profile.deduct || '0';
                 document.getElementById(prefix + 'deductnote').value = profile.deductnote || '';
-                document.getElementById(prefix + 'totalcharges').value = profile.totalcharges || '0';
-                document.getElementById(prefix + 'method').value = profile.method || 'Bank Transfer';
+                document.getElementById(prefix + 'method').value = profile.method || 'Scotiabank (IBAN / Bank Account)';
                 alert("Profile loaded successfully for " + profile.name + "!");
             } else {
                 alert("No saved profile found for '" + nameInput.value + "'.");
@@ -2135,7 +2260,7 @@
 
             var profile = { client: client, phone: phone, pickup: pickup };
             localStorage.setItem("dc_profile_" + email.toLowerCase().trim(), JSON.stringify(profile));
-            alert("Profile saved for " + email + "! Next time you visit, simply enter your email above to auto-fill your details.");
+            alert("Profile saved for " + email + "!");
         }
 
         function lookupClientProfile() {
@@ -2152,9 +2277,9 @@
                 document.getElementById('inv-client').value = profile.client || '';
                 document.getElementById('inv-phone').value = profile.phone || '';
                 document.getElementById('inv-pickup').value = profile.pickup || '';
-                alert("Welcome back! Your profile details have been loaded into the form.");
+                alert("Welcome back! Your profile details have been loaded.");
             } else {
-                alert("No saved profile found for that email address. You can fill in the form and click 'Save My Info' to create one!");
+                alert("No saved profile found for that email address.");
             }
         }
 
@@ -2165,11 +2290,7 @@
             var num = document.getElementById('inv-num').value || 'DC-1001';
             var pickup = document.getElementById('inv-pickup').value || 'Kingston / Portmore Depot';
             
-            var destInput = document.getElementById('inv-specific-dest').value.trim();
-            if (!destInput) {
-                destInput = 'Destination Hub';
-            }
-
+            var destInput = document.getElementById('inv-specific-dest').value.trim() || 'Destination Hub';
             var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
             var deposit = totalAmount * 0.5;
             var balance = totalAmount * 0.5;
@@ -2181,11 +2302,9 @@
             document.getElementById('out-phone').innerText = phone;
             document.getElementById('out-email').innerText = email;
             document.getElementById('out-num').innerText = num;
-            
             document.getElementById('out-pickup-text').innerText = pickup;
             document.getElementById('out-dest-text').innerText = destInput;
             document.getElementById('out-desc').innerText = 'Haulage Transport: ' + pickup + ' to ' + destInput;
-            
             document.getElementById('out-amount').innerText = '$' + totalAmount.toLocaleString() + ' JMD';
             document.getElementById('out-deposit').innerText = '$' + deposit.toLocaleString() + ' JMD';
             document.getElementById('out-balance').innerText = '$' + balance.toLocaleString() + ' JMD';
@@ -2194,68 +2313,44 @@
                 document.getElementById('out-invoice-header-title').innerText = 'OFFICIAL RECEIPT / PAID IN FULL';
                 document.getElementById('out-deposit-label').innerHTML = '✅ 50% Deposit PAID ($' + deposit.toLocaleString() + ' JMD)';
                 document.getElementById('out-balance-label').innerHTML = '✅ Remaining 50% Balance PAID IN FULL ($' + balance.toLocaleString() + ' JMD)';
-                document.getElementById('out-balance-label').style.color = '#166534';
-                document.getElementById('out-balance').style.color = '#166534';
-                document.getElementById('out-footer-notice').innerText = '🎉 JOB FULLY PAID IN FULL. Thank you for your business!';
             } else if (depositPaid) {
                 document.getElementById('out-invoice-header-title').innerText = 'DEPOSIT RECEIPT / BOOKING CONFIRMED';
                 document.getElementById('out-deposit-label').innerHTML = '✅ 50% Deposit PAID ($' + deposit.toLocaleString() + ' JMD)';
                 document.getElementById('out-balance-label').innerHTML = '🚚 Remaining 50% Balance Due Upon Pickup ($' + balance.toLocaleString() + ' JMD)';
-                document.getElementById('out-balance-label').style.color = '#dc2626';
-                document.getElementById('out-balance').style.color = '#dc2626';
-                document.getElementById('out-footer-notice').innerText = '* 50% deposit received. Booking locked in! Balance due upon pickup.';
-            } else {
-                document.getElementById('out-invoice-header-title').innerText = 'INVOICE / BOOKING QUOTE';
-                document.getElementById('out-deposit-label').innerHTML = '🔒 Required 50% Deposit (To Confirm Booking)';
-                document.getElementById('out-balance-label').innerHTML = '🚚 Remaining 50% Balance (Due Upon Pickup)';
-                document.getElementById('out-balance-label').style.color = '#dc2626';
-                document.getElementById('out-balance').style.color = '#dc2626';
-                document.getElementById('out-footer-notice').innerText = '* 50% deposit required to lock in your booking date. Balance due upon pickup.';
             }
             
             document.getElementById('out-date').innerText = new Date().toLocaleDateString();
-
             document.getElementById('invoice-preview').style.display = 'block';
             document.getElementById('payslip-preview').style.display = 'none';
         }
 
-        /* GENERATE FORMAL WEEKLY PAYSLIP WITH DRIVER/ASSISTANT TITLE */
+        /* GENERATE EXACT PHOTO-MATCHED WEEKLY PAYSLIP */
         function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
-            var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
             var natIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-natid') : document.getElementById('payroll-asst-natid');
-            var bankNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankname') : document.getElementById('payroll-asst-bankname');
-            var bankBranchInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankbranch') : document.getElementById('payroll-asst-bankbranch');
-            var accNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-accnum') : document.getElementById('payroll-asst-accnum');
-            var sortCodeInput = roleType === 'driver' ? document.getElementById('payroll-driver-sortcode') : document.getElementById('payroll-asst-sortcode');
             var posInput = roleType === 'driver' ? document.getElementById('payroll-driver-pos') : document.getElementById('payroll-asst-pos');
             var deptInput = roleType === 'driver' ? document.getElementById('payroll-driver-dept') : document.getElementById('payroll-asst-dept');
             var branchInput = roleType === 'driver' ? document.getElementById('payroll-driver-branch') : document.getElementById('payroll-asst-branch');
+            var joinedInput = roleType === 'driver' ? document.getElementById('payroll-driver-joined') : document.getElementById('payroll-asst-joined');
             var deductInput = roleType === 'driver' ? document.getElementById('payroll-driver-deduct') : document.getElementById('payroll-asst-deduct');
             var deductNoteInput = roleType === 'driver' ? document.getElementById('payroll-driver-deductnote') : document.getElementById('payroll-asst-deductnote');
-            var chargesInput = roleType === 'driver' ? document.getElementById('payroll-driver-totalcharges') : document.getElementById('payroll-asst-totalcharges');
             var methodSelect = roleType === 'driver' ? document.getElementById('payroll-driver-method') : document.getElementById('payroll-asst-method');
             var paydateInput = roleType === 'driver' ? document.getElementById('payroll-driver-paydate') : document.getElementById('payroll-asst-paydate');
 
-            var staffName = staffNameInput.value.trim() || (roleType === 'driver' ? 'Driver Staff' : 'Assistant Staff');
-            var payNum = payNumInput.value.trim() || 'PAY-2026-001';
-            var natId = natIdInput.value.trim() || 'N/A';
-            var bankName = bankNameInput.value.trim() || 'N/A';
-            var bankBranch = bankBranchInput.value.trim() || 'N/A';
-            var accNum = accNumInput.value.trim() || 'N/A';
-            var sortCode = sortCodeInput.value.trim() || 'N/A';
-            var position = posInput.value.trim() || (roleType === 'driver' ? 'Commercial Driver' : 'Truck Assistant');
-            var dept = deptInput.value.trim() || 'D&C Logistics';
-            var branch = branchInput.value.trim() || 'Kingston & Portmore Hub';
-            var deduction = parseFloat(deductInput.value) || 0;
-            var deductionNoteText = deductNoteInput.value.trim() || 'Total Amount Of AR Charges Repayable';
-            var totalCharges = parseFloat(chargesInput.value) || 0;
-            var paymentMethod = methodSelect.value;
-            var payDate = paydateInput.value || new Date().toLocaleDateString();
+            var staffName = staffNameInput.value.trim() || (roleType === 'driver' ? 'Milford Ferdinand Malcolm' : 'Assistant Name');
+            var natId = natIdInput.value.trim() || 'TRN - 109613015';
+            var position = posInput.value.trim() || 'Haulage services';
+            var dept = deptInput.value.trim() || 'Wisynco Group Limited';
+            var branch = branchInput.value.trim() || 'Lakes pen St Catherine';
+            var dateJoined = joinedInput.value || '2025-01-03';
+            var deduction = parseFloat(deductInput.value) || 3000;
+            var deductionNoteText = deductNoteInput.value.trim() || 'Total Amount Of AR Charges $145,000 Repayable (...)';
+            var paymentMethod = methodSelect.value || 'Scotiabank (IBAN / Bank Account: Scotiabank)';
+            var payDate = paydateInput.value || '2026-10-23';
 
+            // Calculate earnings from logged runs for this staff member
             var allJobs = getStoredJobs();
             var weekJobs = allJobs.filter(function(j) {
-                if (!isCurrentWeek(j.date)) return false;
                 if (roleType === 'driver') {
                     return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
                 } else {
@@ -2263,68 +2358,41 @@
                 }
             });
 
-            if (weekJobs.length === 0) {
-                weekJobs = allJobs.filter(function(j) {
-                    if (roleType === 'driver') {
-                        return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
-                    } else {
-                        return j.assistant && j.assistant.toLowerCase().includes(staffName.toLowerCase());
-                    }
-                });
+            var grossEarnings = 4000; // Default matching photo example if no runs logged yet
+            if (weekJobs.length > 0) {
+                grossEarnings = 0;
+                for (var i = 0; i < weekJobs.length; i++) {
+                    grossEarnings += roleType === 'driver' ? (weekJobs[i].driverPay || 0) : (weekJobs[i].asstPay || 0);
+                }
             }
 
-            if (weekJobs.length === 0) {
-                weekJobs = [{
-                    day: 'Current Week',
-                    date: new Date().toISOString().split('T')[0],
-                    pickup: 'Kingston Depot',
-                    drop: 'General Route',
-                    driverPay: 0,
-                    asstPay: 0
-                }];
-            }
+            var netPayout = grossEarnings - deduction;
+            if (netPayout < 0) netPayout = 0;
 
-            var payslipTitle = roleType === 'driver' ? 'DRIVER WEEKLY PAYSLIP' : 'ASSISTANT WEEKLY PAYSLIP';
-            document.getElementById('slip-title-main').innerText = payslipTitle;
-            document.getElementById('slip-name').innerText = staffName;
-            document.getElementById('slip-paynum').innerText = payNum;
-            document.getElementById('slip-natid').innerText = natId;
-            document.getElementById('slip-bankname').innerText = bankName;
-            document.getElementById('slip-bankbranch').innerText = bankBranch;
-            document.getElementById('slip-accnum').innerText = accNum;
-            document.getElementById('slip-sortcode').innerText = sortCode;
+            // Populate Exact Fields matching photo
+            document.getElementById('slip-top-title').innerText = staffName.toUpperCase() + ' (Weekly)';
+            document.getElementById('slip-company-currency').innerText = staffName.toUpperCase() + ' (JMD)';
+            document.getElementById('slip-employee-full').innerText = staffName + ' (TRN - ' + natId.replace(/[^0-9]/g, '') + ')';
+            document.getElementById('slip-natid').innerText = natId.includes('TRN') ? natId : 'TRN - ' + natId;
+            document.getElementById('slip-method').innerText = paymentMethod;
+            document.getElementById('slip-paydate').innerText = payDate;
             document.getElementById('slip-position').innerText = position;
             document.getElementById('slip-dept').innerText = dept;
             document.getElementById('slip-branch').innerText = branch;
-            document.getElementById('slip-method').innerText = paymentMethod;
-            document.getElementById('slip-paydate').innerText = payDate;
-            document.getElementById('slip-period').innerText = 'Weekly Operating Statement (' + new Date().toLocaleDateString() + ')';
+            document.getElementById('slip-joined').innerText = dateJoined;
+
+            // Populate Earnings & Deductions matching photo structure
+            document.getElementById('slip-basic-salary').innerText = grossEarnings.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('slip-total-earnings').innerText = grossEarnings.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('slip-earning-amt').innerText = grossEarnings.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('slip-earning-calc').innerText = grossEarnings.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' x 1';
+
+            document.getElementById('slip-total-deductions').innerText = '(' + deduction.toLocaleString('en-US', {minimumFractionDigits: 2}) + ')';
             document.getElementById('slip-deduct-note').innerText = deductionNoteText;
+            document.getElementById('slip-deduct-amt-main').innerText = deduction.toLocaleString('en-US', {minimumFractionDigits: 2});
+            document.getElementById('slip-deduct-calc').innerText = deduction.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' x 1';
 
-            var tbody = document.getElementById('slip-runs-tbody');
-            tbody.innerHTML = '';
-
-            var grossEarnings = 0;
-
-            for (var i = 0; i < weekJobs.length; i++) {
-                var j = weekJobs[i];
-                var payout = roleType === 'driver' ? (j.driverPay || 0) : (j.asstPay || 0);
-                grossEarnings += payout;
-
-                var tr = document.createElement('tr');
-                tr.innerHTML = '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;"><strong>' + (j.day || 'Day') + '</strong><br><span style="font-size:0.78rem; color:#64748b;">' + (j.date || '') + '</span></td>' +
-                               '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;">' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
-                               '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
-                tbody.appendChild(tr);
-            }
-
-            var netPayable = grossEarnings - deduction;
-            if (netPayable < 0) netPayable = 0;
-
-            document.getElementById('slip-gross').innerText = '$' + grossEarnings.toLocaleString() + ' JMD';
-            document.getElementById('slip-deduct-amt').innerText = '$' + deduction.toLocaleString() + ' JMD';
-            document.getElementById('slip-total-charges').innerText = '$' + totalCharges.toLocaleString() + ' JMD';
-            document.getElementById('slip-total-amount').innerText = '$' + netPayable.toLocaleString() + ' JMD';
+            document.getElementById('slip-net-payout').innerText = '$' + netPayout.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' JMD';
 
             document.getElementById('invoice-preview').style.display = 'none';
             document.getElementById('payslip-preview').style.display = 'block';
@@ -2332,36 +2400,14 @@
         }
 
         function sendWhatsAppWeeklyPayslip() {
-            var title = document.getElementById('slip-title-main').innerText;
-            var name = document.getElementById('slip-name').innerText;
-            var paynum = document.getElementById('slip-paynum').innerText;
-            var natid = document.getElementById('slip-natid').innerText;
-            var bankname = document.getElementById('slip-bankname').innerText;
-            var bankbranch = document.getElementById('slip-bankbranch').innerText;
-            var accnum = document.getElementById('slip-accnum').innerText;
-            var sortcode = document.getElementById('slip-sortcode').innerText;
-            var position = document.getElementById('slip-position').innerText;
-            var dept = document.getElementById('slip-dept').innerText;
-            var branch = document.getElementById('slip-branch').innerText;
-            var method = document.getElementById('slip-method').innerText;
+            var name = document.getElementById('slip-employee-full').innerText;
+            var net = document.getElementById('slip-net-payout').innerText;
             var paydate = document.getElementById('slip-paydate').innerText;
-            var gross = document.getElementById('slip-gross').innerText;
-            var deduct = document.getElementById('slip-deduct-amt').innerText;
-            var deductNote = document.getElementById('slip-deduct-note').innerText;
-            var charges = document.getElementById('slip-total-charges').innerText;
-            var net = document.getElementById('slip-total-amount').innerText;
 
-            var message = "D&C REFUSE TRUCKING - " + title + "\n\n" +
-                          "Employee: " + name + " (Payroll #: " + paynum + ")\n" +
-                          "TRN / National ID: " + natid + "\n" +
-                          "Bank: " + bankname + " (" + bankbranch + ")\n" +
-                          "Acc #: " + accnum + " | Sort Code: " + sortcode + "\n" +
-                          "Position: " + position + " | Dept: " + dept + "\n" +
-                          "Payment Method: " + method + " (" + paydate + ")\n\n" +
-                          "Gross Earnings: " + gross + "\n" +
-                          "Deductions This Period: " + deduct + " (" + deductNote + ")\n" +
-                          "Total Outstanding Charges: " + charges + "\n" +
-                          "Amount Payable (Net): " + net + "\n\n" +
+            var message = "D&C REFUSE TRUCKING - WEEKLY PAYSLIP\n\n" +
+                          "Employee: " + name + "\n" +
+                          "Payment Date: " + paydate + "\n" +
+                          "Net Payout (Amount Payable): " + net + "\n\n" +
                           "Thank you for your hard work!";
 
             var whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(message);
@@ -2371,47 +2417,22 @@
         function sendWhatsAppQuote() {
             var client = document.getElementById('inv-client').value || 'Valued Client';
             var phone = document.getElementById('inv-phone').value || 'N/A';
-            var email = document.getElementById('inv-email').value || 'N/A';
-            var num = document.getElementById('inv-num').value || 'DC-1001';
-            var pickup = document.getElementById('inv-pickup').value || 'Kingston Hub';
-            
-            var destInput = document.getElementById('inv-specific-dest').value.trim();
-            if (!destInput) {
-                destInput = 'Destination Hub';
-            }
-
             var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
             var deposit = totalAmount * 0.5;
             var balance = totalAmount * 0.5;
 
-            var depositPaid = document.getElementById('inv-deposit-paid').checked;
-            var fullPaid = document.getElementById('inv-full-paid').checked;
-
-            var statusText = "";
-            if (fullPaid) {
-                statusText = "🎉 FULLY PAID IN FULL ($" + totalAmount.toLocaleString() + " JMD)";
-            } else if (depositPaid) {
-                statusText = "✅ 50% DEPOSIT PAID ($" + deposit.toLocaleString() + " JMD)\n🚚 BALANCE DUE UPON PICKUP: $" + balance.toLocaleString() + " JMD";
-            } else {
-                statusText = "🔴 REQUIRED 50% DEPOSIT: $" + deposit.toLocaleString() + " JMD (Payable to confirm booking)\n🚚 BALANCE DUE UPON PICKUP: $" + balance.toLocaleString() + " JMD";
-            }
-
             var message = "Hello D&C Refuse Trucking, haulage booking details:\n\n" +
-                          "Invoice #: " + num + "\n" +
                           "Client Name: " + client + "\n" +
                           "Phone: " + phone + "\n" +
-                          "Email: " + email + "\n" +
-                          "Pickup Point: " + pickup + "\n" +
-                          "Drop-off Destination: " + destInput + "\n\n" +
                           "Total Rate: $" + totalAmount.toLocaleString() + " JMD\n" +
-                          statusText + "\n\n" +
+                          "50% Deposit Required: $" + deposit.toLocaleString() + " JMD\n" +
+                          "Balance Due Upon Pickup: $" + balance.toLocaleString() + " JMD\n\n" +
                           "Thank you!";
 
             var whatsappUrl = "https://wa.me/18768628579?text=" + encodeURIComponent(message);
             window.open(whatsappUrl, "_blank");
         }
 
-        /* CORPORATE MULTI-DROP & COST TRACKER LOGIC */
         function getStoredJobs() {
             var stored = localStorage.getItem("dc_corporate_jobs");
             return stored ? JSON.parse(stored) : [];
@@ -2467,7 +2488,6 @@
             document.getElementById('tr-petrol').value = '';
             document.getElementById('tr-rate').value = '';
             updateLiveProfit();
-            
             loadTrackerJobs();
         }
 
@@ -2523,7 +2543,6 @@
             loadTrackerJobs();
         }
 
-        /* TRUCK MAINTENANCE LOG STORAGE LOGIC */
         function getStoredMaintenance() {
             var stored = localStorage.getItem("dc_truck_maintenance");
             return stored ? JSON.parse(stored) : [];
@@ -2673,7 +2692,6 @@
                     var expenses = j.driverPay + j.asstPay + j.petrol;
                     var netProfit = j.rate - expenses;
 
-                    // INVOICE NUMBER STACKING (SPLITS BY COMMAS OR SLASHES)
                     var invArray = (j.inv || '').split(/[\s,]+/).map(function(item) { return item.trim(); }).filter(Boolean);
                     var invHTML = '<div class="inv-badge-container">';
                     if (invArray.length > 0) {
