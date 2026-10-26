@@ -1400,13 +1400,16 @@
                 <!-- MONDAY-TO-FRIDAY CREW PAYROLL GENERATOR WITH DEDUCTIONS & BALANCE -->
                 <div class="payroll-section-box">
                     <h5>👥 Monday–Friday Crew Payroll & Corporate Payslips</h5>
-                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan M-F operating runs, include Payroll Number, Earnings, Deductions, and AR Charges Notes:</p>
+                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan M-F operating runs, include Payroll Number, Earnings, Deductions, and AR Charges Notes (Fully Saveable & Editable):</p>
                     
                     <div class="payroll-grid">
                         <!-- DRIVER PAYROLL CARD -->
                         <div class="payroll-card">
                             <label>🛞 Driver Name:</label>
-                            <input type="text" id="payroll-driver-name" placeholder="Driver Full Name">
+                            <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
+                                <input type="text" id="payroll-driver-name" placeholder="Driver Full Name">
+                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadStaffProfile('driver')">🔍 Load</button>
+                            </div>
                             
                             <label>Payroll # / Employee ID:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -1446,13 +1449,17 @@
                                 <input type="date" id="payroll-driver-paydate">
                             </div>
 
+                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('driver')">💾 Save Driver Profile</button>
                             <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver M-F Payslip</button>
                         </div>
 
                         <!-- ASSISTANT PAYROLL CARD -->
                         <div class="payroll-card">
                             <label>🤝 Assistant Name:</label>
-                            <input type="text" id="payroll-asst-name" placeholder="Assistant Full Name">
+                            <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
+                                <input type="text" id="payroll-asst-name" placeholder="Assistant Full Name">
+                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadStaffProfile('assistant')">🔍 Load</button>
+                            </div>
                             
                             <label>Payroll # / Employee ID:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -1492,6 +1499,7 @@
                                 <input type="date" id="payroll-asst-paydate">
                             </div>
 
+                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('assistant')">💾 Save Assistant Profile</button>
                             <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant M-F Payslip</button>
                         </div>
                     </div>
@@ -1917,6 +1925,64 @@
             if (savedAsst !== null) {
                 if (document.getElementById('tr-assistant').value === '') document.getElementById('tr-assistant').value = savedAsst;
                 if (document.getElementById('payroll-asst-name').value === '') document.getElementById('payroll-asst-name').value = savedAsst;
+            }
+        }
+
+        /* STAFF PROFILE SAVE & LOAD LOGIC */
+        function saveStaffProfile(role) {
+            var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
+            var name = document.getElementById(prefix + 'name').value.trim();
+            if (!name) {
+                alert("Please enter the staff member's name first.");
+                return;
+            }
+
+            var profile = {
+                name: name,
+                paynum: document.getElementById(prefix + 'paynum').value,
+                id: document.getElementById(prefix + 'id').value,
+                natid: document.getElementById(prefix + 'natid').value,
+                pos: document.getElementById(prefix + 'pos').value,
+                dept: document.getElementById(prefix + 'dept').value,
+                branch: document.getElementById(prefix + 'branch').value,
+                joined: document.getElementById(prefix + 'joined').value,
+                deduct: document.getElementById(prefix + 'deduct').value,
+                deductnote: document.getElementById(prefix + 'deductnote').value,
+                totalcharges: document.getElementById(prefix + 'totalcharges').value,
+                method: document.getElementById(prefix + 'method').value
+            };
+
+            localStorage.setItem("dc_staff_profile_" + name.toLowerCase(), JSON.stringify(profile));
+            alert("Staff profile saved for " + name + "! You can load it anytime by entering their name and clicking 'Load'.");
+        }
+
+        function loadStaffProfile(role) {
+            var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
+            var nameInput = document.getElementById(prefix + 'name');
+            var name = nameInput.value.trim().toLowerCase();
+            if (!name) {
+                alert("Please enter the staff member's name to load their profile.");
+                nameInput.focus();
+                return;
+            }
+
+            var saved = localStorage.getItem("dc_staff_profile_" + name);
+            if (saved) {
+                var profile = JSON.parse(saved);
+                document.getElementById(prefix + 'paynum').value = profile.paynum || '';
+                document.getElementById(prefix + 'id').value = profile.id || '';
+                document.getElementById(prefix + 'natid').value = profile.natid || '';
+                document.getElementById(prefix + 'pos').value = profile.pos || '';
+                document.getElementById(prefix + 'dept').value = profile.dept || '';
+                document.getElementById(prefix + 'branch').value = profile.branch || '';
+                document.getElementById(prefix + 'joined').value = profile.joined || '';
+                document.getElementById(prefix + 'deduct').value = profile.deduct || '0';
+                document.getElementById(prefix + 'deductnote').value = profile.deductnote || '';
+                document.getElementById(prefix + 'totalcharges').value = profile.totalcharges || '0';
+                document.getElementById(prefix + 'method').value = profile.method || 'Bank Transfer';
+                alert("Profile loaded successfully for " + profile.name + "!");
+            } else {
+                alert("No saved profile found for '" + nameInput.value + "'.");
             }
         }
 
