@@ -972,7 +972,7 @@
         #invoice-preview, #payslip-preview {
             display: none;
             border: 3px solid #1a531f;
-            padding: 14px 20px;
+            padding: 16px 20px;
             background: #ffffff;
             color: #111111;
             margin-top: 25px;
@@ -995,15 +995,15 @@
 
         .inv-header {
             display: grid;
-            grid-template-columns: 240px 1fr; 
+            grid-template-columns: 220px 1fr; 
             align-items: center;
             border-bottom: 2.5px solid #1a531f;
-            padding-bottom: 4px; 
-            margin-bottom: 8px;  
+            padding-bottom: 6px; 
+            margin-bottom: 12px;  
         }
 
         .inv-logo-box {
-            width: 240px;
+            width: 220px;
             background: transparent !important; 
             border: none !important;             
             box-shadow: none !important;
@@ -1013,7 +1013,7 @@
 
         .inv-logo-box img {
             width: 100%;
-            max-height: 180px; 
+            max-height: 140px; 
             object-fit: contain;
             display: block;
             background: transparent !important;
@@ -1026,12 +1026,12 @@
         .inv-title-box {
             min-width: 0;
             text-align: left;
-            margin-left: -28px; 
+            margin-left: -15px; 
         }
 
         .inv-title-main {
             color: #1a531f; 
-            font-size: 1.6rem; 
+            font-size: 1.45rem; 
             font-weight: 900;
             text-transform: uppercase;
             line-height: 1.1;
@@ -1040,17 +1040,16 @@
         }
 
         .inv-title-sub {
-            font-size: 1.18rem; 
+            font-size: 1.1rem; 
             font-weight: 900; 
             color: #111111;
             text-transform: uppercase;
             line-height: 1.15;
             margin-bottom: 2px;
-            white-space: nowrap; 
         }
 
         .inv-title-loc {
-            font-size: 1rem; 
+            font-size: 0.95rem; 
             font-weight: 800;
             color: #334155;
         }
@@ -1058,10 +1057,10 @@
         .inv-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 8px;
+            gap: 12px;
+            margin-bottom: 12px;
             color: #111827;
-            font-size: 1.02rem;
+            font-size: 0.98rem;
         }
 
         .inv-bank-box {
@@ -1082,7 +1081,7 @@
         }
 
         .inv-footer {
-            margin-top: 8px;
+            margin-top: 10px;
             padding-top: 6px;
             border-top: 1.5px solid #ddd;
             text-align: center;
@@ -1401,7 +1400,7 @@
                 <!-- MONDAY-TO-FRIDAY CREW PAYROLL GENERATOR WITH DEDUCTIONS & BALANCE -->
                 <div class="payroll-section-box">
                     <h5>👥 Monday–Friday Crew Payroll & Corporate Payslips</h5>
-                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan M-F operating runs, include Payroll Number, Earnings, Deductions, and Total Balance Charges:</p>
+                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan M-F operating runs, include Payroll Number, Earnings, Deductions, and AR Charges Notes:</p>
                     
                     <div class="payroll-grid">
                         <!-- DRIVER PAYROLL CARD -->
@@ -1415,13 +1414,13 @@
                                 <input type="text" id="payroll-driver-id" placeholder="Staff ID">
                             </div>
 
-                            <label>National ID:</label>
-                            <input type="text" id="payroll-driver-natid" placeholder="National ID Number">
+                            <label>National ID / TRN:</label>
+                            <input type="text" id="payroll-driver-natid" placeholder="TRN Number">
 
                             <label>Job Position / Dept / Branch:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <input type="text" id="payroll-driver-pos" value="Commercial Driver">
-                                <input type="text" id="payroll-driver-dept" value="Logistics">
+                                <input type="text" id="payroll-driver-dept" value="D&C Logistics">
                             </div>
                             <input type="text" id="payroll-driver-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
 
@@ -1430,6 +1429,9 @@
 
                             <label>Deduction Amount This Period (JMD):</label>
                             <input type="number" id="payroll-driver-deduct" value="0" placeholder="0">
+
+                            <label>Deduction / AR Charges Note:</label>
+                            <input type="text" id="payroll-driver-deductnote" value="Total Amount Of AR Charges Repayable" placeholder="e.g. Total Amount Of AR Charges $145,000 Repayable">
 
                             <label>Total Outstanding Charges / Balance (JMD):</label>
                             <input type="number" id="payroll-driver-totalcharges" value="0" placeholder="Total debt/advance balance">
@@ -1458,13 +1460,13 @@
                                 <input type="text" id="payroll-asst-id" placeholder="Staff ID">
                             </div>
 
-                            <label>National ID:</label>
-                            <input type="text" id="payroll-asst-natid" placeholder="National ID Number">
+                            <label>National ID / TRN:</label>
+                            <input type="text" id="payroll-asst-natid" placeholder="TRN Number">
 
                             <label>Job Position / Dept / Branch:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
                                 <input type="text" id="payroll-asst-pos" value="Truck Assistant">
-                                <input type="text" id="payroll-asst-dept" value="Logistics">
+                                <input type="text" id="payroll-asst-dept" value="D&C Logistics">
                             </div>
                             <input type="text" id="payroll-asst-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
 
@@ -1473,6 +1475,9 @@
 
                             <label>Deduction Amount This Period (JMD):</label>
                             <input type="number" id="payroll-asst-deduct" value="0" placeholder="0">
+
+                            <label>Deduction / AR Charges Note:</label>
+                            <input type="text" id="payroll-asst-deductnote" value="Total Amount Of AR Charges Repayable" placeholder="e.g. Total Amount Of AR Charges $145,000 Repayable">
 
                             <label>Total Outstanding Charges / Balance (JMD):</label>
                             <input type="number" id="payroll-asst-totalcharges" value="0" placeholder="Total debt/advance balance">
@@ -1749,73 +1754,91 @@
                 <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
             </div>
 
-            <!-- Printable Monday-to-Friday Crew Payslip Output Container (FULLY ON-SCREEN EDITABLE & NO INVOICE NUMBERS) -->
+            <!-- Printable Monday-to-Friday Crew Payslip Output Container (Formal Reference Layout & Editable) -->
             <div id="payslip-preview">
                 <div class="inv-header">
                     <div class="inv-logo-box">
                         <img src="IMG-20250804-WA0004.jpg" alt="D&C Logo">
                     </div>
                     <div class="inv-title-box">
-                        <div class="inv-title-main" id="slip-title">MONDAY – FRIDAY CREW PAYSLIP</div>
-                        <div class="inv-title-sub">D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</div>
-                        <div class="inv-title-loc">Jamaica | Kingston & Portmore Hub</div>
+                        <div class="inv-title-main" id="slip-title-main">MILFORD MALCOLM (Weekly)</div>
+                        <div class="inv-title-sub">D&C REFUSE TRUCKING & EQUIPMENT CO. LTD</div>
+                        <div class="inv-title-loc">Weekly Operating Statement (JMD)</div>
                     </div>
                 </div>
 
-                <div class="inv-details">
+                <div style="background: #f1f5f9; padding: 8px 12px; border-radius: 6px; margin-bottom: 10px; font-size: 0.95rem; border-left: 4px solid #1a531f; color: #1e293b;">
+                    <p><strong>Statement Period:</strong> <span id="slip-period" class="editable-preview-field" contenteditable="true">Weekly Operating Period</span></p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; font-size: 0.95rem; background: #fafafa; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; color: #0f172a;">
                     <div>
-                        <p><strong>Staff Name:</strong> <span id="slip-name" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #1a531f;"></span></p>
-                        <p><strong>Payroll #:</strong> <span id="slip-paynum" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0284c7;"></span></p>
-                        <p><strong>Employee ID:</strong> <span id="slip-id" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-                        <p><strong>National ID:</strong> <span id="slip-natid" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-                        <p><strong>Job Position:</strong> <span id="slip-position" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p style="margin-bottom: 2px; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Employee Name & Payroll #</p>
+                        <p><span id="slip-name" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0f172a;"></span> (<span id="slip-paynum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span>)</p>
+                        
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">National ID / TRN</p>
+                        <p><span id="slip-natid" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Payment Method</p>
+                        <p><span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span></p>
+
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Payment Date</p>
+                        <p><span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #166534;"></span></p>
                     </div>
-                    <div style="text-align: right;">
-                        <p><strong>Department:</strong> <span id="slip-dept" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-                        <p><strong>Branch:</strong> <span id="slip-branch" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-                        <p><strong>Date Joined:</strong> <span id="slip-joined" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-                        <p><strong>Payment Method:</strong> <span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0284c7;"></span></p>
-                        <p><strong>Payment Date:</strong> <span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534;"></span></p>
+                    <div>
+                        <p style="margin-bottom: 2px; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Job Position</p>
+                        <p><span id="slip-position" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Department</p>
+                        <p><span id="slip-dept" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Branch / Location</p>
+                        <p><span id="slip-branch" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Date Joined</p>
+                        <p><span id="slip-joined" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
                     </div>
                 </div>
 
-                <p style="margin-bottom: 8px; color: #111827; font-size: 1.02rem; font-weight: 800;">Itemized Monday–Friday Operating Runs & Earnings:</p>
-                
-                <table style="margin-bottom: 12px; width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+                <p style="margin-bottom: 6px; color: #0f172a; font-size: 0.95rem; font-weight: 900; text-transform: uppercase;">Itemized Operating Runs & Earnings:</p>
+                <table style="margin-bottom: 10px; width: 100%; border-collapse: collapse; font-size: 0.92rem; color: #0f172a;">
                     <thead>
                         <tr style="background-color: #1a531f; color: #ffffff;">
-                            <th style="padding: 8px; text-align: left;">Date / Day</th>
-                            <th style="padding: 8px; text-align: left;">Route</th>
-                            <th style="padding: 8px; text-align: right;">Earnings (JMD)</th>
+                            <th style="padding: 6px 8px; text-align: left;">Date / Day</th>
+                            <th style="padding: 6px 8px; text-align: left;">Route</th>
+                            <th style="padding: 6px 8px; text-align: right;">Earnings (JMD)</th>
                         </tr>
                     </thead>
                     <tbody id="slip-runs-tbody">
-                        <!-- Dynamic itemized M-F runs inserted here (Invoice column removed) -->
+                        <!-- Dynamic itemized M-F runs inserted here -->
                     </tbody>
                 </table>
 
-                <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.98rem;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center;">
-                        <span>Gross Earnings:</span>
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px 12px; border-radius: 6px; margin-bottom: 10px; font-size: 0.95rem; color: #0f172a;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center;">
+                        <span style="font-weight: 700;">Gross Earnings:</span>
                         <strong id="slip-gross" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #dc2626; align-items: center;">
-                        <span>Deductions This Period:</span>
+                        <div style="flex: 1; padding-right: 10px;">
+                            <span style="font-weight: 700;">Deductions This Period:</span>
+                            <div id="slip-deduct-note" class="editable-preview-field" contenteditable="true" style="font-size: 0.82rem; color: #64748b; margin-top: 2px; width: 100%;">Total Amount Of AR Charges Repayable</div>
+                        </div>
                         <strong id="slip-deduct-amt" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
                     </div>
-                    <div style="display: flex; justify-content: space-between; color: #b45309; align-items: center;">
-                        <span>Total Outstanding Charges / Balance:</span>
+                    <div style="display: flex; justify-content: space-between; color: #b45309; align-items: center; margin-top: 6px; border-top: 1px dashed #cbd5e1; padding-top: 6px;">
+                        <span style="font-weight: 700;">Total Outstanding Charges / Balance:</span>
                         <strong id="slip-total-charges" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
                     </div>
                 </div>
 
-                <div style="background: #f0fdf4; border: 2px solid #166534; padding: 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <span style="font-weight: 900; color: #166534; font-size: 1.1rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
-                    <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.35rem;">$0 JMD</span>
+                <div style="background: #f0fdf4; border: 2px solid #166534; padding: 10px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <span style="font-weight: 900; color: #166534; font-size: 1.05rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
+                    <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.25rem;">$0 JMD</span>
                 </div>
 
                 <div class="inv-footer">
-                    <p style="margin-bottom: 4px; font-weight: bold; color: #1a531f;">✅ Official M-F Corporate Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
+                    <p style="margin-bottom: 4px; font-weight: bold; color: #1a531f;">✅ Official Weekly Corporate Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
                     <p>Authorized Dispatcher Sign-off: ___________________________</p>
                 </div>
                 <br>
@@ -2069,7 +2092,7 @@
             document.getElementById('payslip-preview').style.display = 'none';
         }
 
-        /* GENERATE PREFILLED MONDAY-TO-FRIDAY CREW PAYSLIP (WITHOUT INVOICE NUMBERS) */
+        /* GENERATE FORMAL WEEKLY PAYSLIP */
         function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
@@ -2080,6 +2103,7 @@
             var branchInput = roleType === 'driver' ? document.getElementById('payroll-driver-branch') : document.getElementById('payroll-asst-branch');
             var joinedInput = roleType === 'driver' ? document.getElementById('payroll-driver-joined') : document.getElementById('payroll-asst-joined');
             var deductInput = roleType === 'driver' ? document.getElementById('payroll-driver-deduct') : document.getElementById('payroll-asst-deduct');
+            var deductNoteInput = roleType === 'driver' ? document.getElementById('payroll-driver-deductnote') : document.getElementById('payroll-asst-deductnote');
             var chargesInput = roleType === 'driver' ? document.getElementById('payroll-driver-totalcharges') : document.getElementById('payroll-asst-totalcharges');
             var methodSelect = roleType === 'driver' ? document.getElementById('payroll-driver-method') : document.getElementById('payroll-asst-method');
             var paydateInput = roleType === 'driver' ? document.getElementById('payroll-driver-paydate') : document.getElementById('payroll-asst-paydate');
@@ -2089,10 +2113,11 @@
             var staffId = staffIdInput.value.trim() || 'N/A';
             var natId = natIdInput.value.trim() || 'N/A';
             var position = posInput.value.trim() || (roleType === 'driver' ? 'Commercial Driver' : 'Truck Assistant');
-            var dept = deptInput.value.trim() || 'Logistics';
+            var dept = deptInput.value.trim() || 'D&C Logistics';
             var branch = branchInput.value.trim() || 'Kingston & Portmore Hub';
             var joined = joinedInput.value || 'N/A';
             var deduction = parseFloat(deductInput.value) || 0;
+            var deductionNoteText = deductNoteInput.value.trim() || 'Total Amount Of AR Charges Repayable';
             var totalCharges = parseFloat(chargesInput.value) || 0;
             var paymentMethod = methodSelect.value;
             var payDate = paydateInput.value || new Date().toLocaleDateString();
@@ -2118,7 +2143,7 @@
                 return;
             }
 
-            document.getElementById('slip-title').innerText = roleType === 'driver' ? 'DRIVER M-F WEEKLY PAYSLIP' : 'ASSISTANT M-F WEEKLY PAYSLIP';
+            document.getElementById('slip-title-main').innerText = staffName.toUpperCase() + ' (Weekly)';
             document.getElementById('slip-name').innerText = staffName;
             document.getElementById('slip-paynum').innerText = payNum;
             document.getElementById('slip-id').innerText = staffId;
@@ -2129,6 +2154,8 @@
             document.getElementById('slip-joined').innerText = joined;
             document.getElementById('slip-method').innerText = paymentMethod;
             document.getElementById('slip-paydate').innerText = payDate;
+            document.getElementById('slip-period').innerText = 'Weekly Operating Statement (' + new Date().toLocaleDateString() + ')';
+            document.getElementById('slip-deduct-note').innerText = deductionNoteText;
 
             var tbody = document.getElementById('slip-runs-tbody');
             tbody.innerHTML = '';
@@ -2141,9 +2168,9 @@
                 grossEarnings += payout;
 
                 var tr = document.createElement('tr');
-                tr.innerHTML = '<td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br><span style="font-size:0.8rem; color:#64748b;">' + j.date + '</span></td>' +
-                               '<td style="padding: 8px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
-                               '<td style="padding: 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
+                tr.innerHTML = '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br><span style="font-size:0.78rem; color:#64748b;">' + j.date + '</span></td>' +
+                               '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
+                               '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
                 tbody.appendChild(tr);
             }
 
@@ -2172,19 +2199,18 @@
             var paydate = document.getElementById('slip-paydate').innerText;
             var gross = document.getElementById('slip-gross').innerText;
             var deduct = document.getElementById('slip-deduct-amt').innerText;
+            var deductNote = document.getElementById('slip-deduct-note').innerText;
             var charges = document.getElementById('slip-total-charges').innerText;
             var net = document.getElementById('slip-total-amount').innerText;
 
-            var message = "Hello " + name + ", here is your D&C Refuse Trucking M-F payslip:\n\n" +
-                          "Payroll #: " + paynum + "\n" +
-                          "Employee ID: " + id + "\n" +
-                          "National ID: " + natid + "\n" +
-                          "Position: " + position + " (" + dept + ")\n" +
+            var message = "D&C REFUSE TRUCKING - WEEKLY STATEMENT\n\n" +
+                          "Employee: " + name + " (Payroll #: " + paynum + ")\n" +
+                          "TRN / National ID: " + natid + "\n" +
+                          "Position: " + position + " | Dept: " + dept + "\n" +
                           "Branch: " + branch + "\n" +
-                          "Payment Method: " + method + "\n" +
-                          "Payment Date: " + paydate + "\n\n" +
+                          "Payment Method: " + method + " (" + paydate + ")\n\n" +
                           "Gross Earnings: " + gross + "\n" +
-                          "Deductions This Period: " + deduct + "\n" +
+                          "Deductions This Period: " + deduct + " (" + deductNote + ")\n" +
                           "Total Outstanding Charges: " + charges + "\n" +
                           "Amount Payable (Net): " + net + "\n\n" +
                           "Thank you for your hard work!";
