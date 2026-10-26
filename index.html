@@ -992,7 +992,7 @@
             color: #111111;
             margin-top: 25px;
             border-radius: 8px;
-            font-size: 1.2rem; /* Enhanced crisp text size for effortless mobile reading without pinching */
+            font-size: 1.2rem;
         }
 
         /* EDITABLE ON-SCREEN STYLING */
@@ -1075,7 +1075,7 @@
             gap: 16px;
             margin-bottom: 16px;
             color: #111827;
-            font-size: 1.12rem; /* Sharper readable details text */
+            font-size: 1.12rem;
         }
 
         .inv-bank-box {
@@ -1084,7 +1084,7 @@
             padding: 12px 16px;
             border-radius: 6px;
             margin-bottom: 14px;
-            font-size: 1.1rem; /* Sharper bank info text */
+            font-size: 1.1rem;
         }
 
         .inv-bank-box h5 {
@@ -1102,9 +1102,10 @@
             text-align: center;
             font-style: italic;
             color: #111827;
-            font-size: 1.05rem; /* Larger footer text */
+            font-size: 1.05rem;
         }
 
+        /* STRICT SINGLE-PAGE PRINT OPTIMIZATION */
         @media print {
             body * { visibility: hidden; }
             #invoice-preview, #invoice-preview *, #payslip-preview, #payslip-preview * { visibility: visible; }
@@ -1114,11 +1115,27 @@
                 top: 0; 
                 width: 100%; 
                 border: none; 
-                padding: 10px; 
+                padding: 4px 8px; 
                 margin: 0;
+                font-size: 0.9rem !important; /* Compacts print text slightly so it strictly fits 1 page */
+                max-height: 100vh;
+                overflow: hidden;
             }
-            .btn-print { display: none; }
+            .inv-header { padding-bottom: 4px; margin-bottom: 8px; }
+            .inv-logo-box img { max-height: 70px; }
+            .inv-title-main { font-size: 1.3rem !important; }
+            .inv-title-sub { font-size: 1rem !important; }
+            .inv-details { margin-bottom: 8px; gap: 8px; }
+            .inv-bank-box { padding: 6px 10px; margin-bottom: 8px; }
+            .inv-footer { margin-top: 6px; padding-top: 4px; }
+            #payslip-preview > div { margin-bottom: 6px !important; padding: 6px 10px !important; }
+            #payslip-preview table th, #payslip-preview table td { padding: 4px 8px !important; }
+            .btn-print { display: none !important; }
             .editable-preview-field { border-bottom: none; background: transparent; }
+            @page {
+                size: auto;
+                margin: 5mm; /* Tightens printer margin to guarantee single-page fit */
+            }
         }
 
         footer {
