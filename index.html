@@ -42,6 +42,20 @@
             border-bottom: 5px solid var(--primary-green);
         }
 
+        .header-logo-container {
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .header-logo-container img {
+            max-height: 210px; /* Massive prominent logo height */
+            width: auto;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 0 12px rgba(0, 230, 118, 0.5));
+        }
+
         header h1 {
             font-size: clamp(1.15rem, 3.8vw, 1.7rem);
             text-transform: uppercase;
@@ -731,19 +745,19 @@
         }
 
         .payroll-card label {
-            font-size: 1.1rem; /* Clearer, larger label font */
+            font-size: 1.1rem;
             font-weight: 900;
             color: #ffffff;
         }
 
         .payroll-card input, .payroll-card select {
-            padding: 14px; /* Larger padding for effortless tapping & reading */
+            padding: 14px;
             background: #000;
             color: #fff;
-            border: 2px solid var(--primary-green); /* Crisp green accent border */
+            border: 2px solid var(--primary-green);
             border-radius: 8px;
             font-weight: 900;
-            font-size: 1.25rem; /* Larger, ultra-clear text inside inputs and dropdowns */
+            font-size: 1.25rem;
             width: 100%;
         }
 
@@ -1010,15 +1024,15 @@
 
         .inv-header {
             display: grid;
-            grid-template-columns: 220px 1fr; 
+            grid-template-columns: 240px 1fr; 
             align-items: center;
             border-bottom: 2.5px solid #1a531f;
-            padding-bottom: 10px; 
+            padding-bottom: 12px; 
             margin-bottom: 16px;  
         }
 
         .inv-logo-box {
-            width: 220px;
+            width: 240px;
             background: transparent !important; 
             border: none !important;             
             box-shadow: none !important;
@@ -1028,7 +1042,7 @@
 
         .inv-logo-box img {
             width: 100%;
-            max-height: 140px; 
+            max-height: 200px; /* EXTRA LARGE PROMINENT LOGO IN PREVIEWS */
             object-fit: contain;
             display: block;
             background: transparent !important;
@@ -1041,7 +1055,7 @@
         .inv-title-box {
             min-width: 0;
             text-align: left;
-            margin-left: -15px; 
+            margin-left: -10px; 
         }
 
         .inv-title-main {
@@ -1105,7 +1119,7 @@
             font-size: 1.05rem;
         }
 
-        /* STRICT SINGLE-PAGE PRINT OPTIMIZATION */
+        /* PRINT STYLING - EXTRA LARGE LOGO PRESERVED */
         @media print {
             body * { visibility: hidden; }
             #invoice-preview, #invoice-preview *, #payslip-preview, #payslip-preview * { visibility: visible; }
@@ -1115,27 +1129,12 @@
                 top: 0; 
                 width: 100%; 
                 border: none; 
-                padding: 4px 8px; 
+                padding: 12px; 
                 margin: 0;
-                font-size: 0.9rem !important; /* Compacts print text slightly so it strictly fits 1 page */
-                max-height: 100vh;
-                overflow: hidden;
             }
-            .inv-header { padding-bottom: 4px; margin-bottom: 8px; }
-            .inv-logo-box img { max-height: 70px; }
-            .inv-title-main { font-size: 1.3rem !important; }
-            .inv-title-sub { font-size: 1rem !important; }
-            .inv-details { margin-bottom: 8px; gap: 8px; }
-            .inv-bank-box { padding: 6px 10px; margin-bottom: 8px; }
-            .inv-footer { margin-top: 6px; padding-top: 4px; }
-            #payslip-preview > div { margin-bottom: 6px !important; padding: 6px 10px !important; }
-            #payslip-preview table th, #payslip-preview table td { padding: 4px 8px !important; }
+            .inv-logo-box img { max-height: 200px !important; width: 100% !important; }
             .btn-print { display: none !important; }
             .editable-preview-field { border-bottom: none; background: transparent; }
-            @page {
-                size: auto;
-                margin: 5mm; /* Tightens printer margin to guarantee single-page fit */
-            }
         }
 
         footer {
@@ -1152,6 +1151,11 @@
 <body>
 
     <header>
+        <!-- MASSIVE LOGO FRONT AND CENTER -->
+        <div class="header-logo-container">
+            <img src="IMG-20250804-WA0004.jpg" alt="D&C Refuse Trucking & Equipment Logo">
+        </div>
+
         <h1>D&C REFUSE TRUCKING & EQUIPMENT</h1>
         <h2 class="sub-title">COMPANY LIMITED</h2>
         <div class="tagline-box">
@@ -1922,7 +1926,6 @@
     <script>
         var showAllHistory = false;
 
-        // Automatically load data on page startup
         window.onload = function() {
             try {
                 loadTrackerJobs();
@@ -1985,7 +1988,6 @@
             }
         }
 
-        /* STAFF PROFILE SAVE & LOAD LOGIC */
         function saveStaffProfile(role) {
             try {
                 var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
@@ -2231,7 +2233,6 @@
             document.getElementById('payslip-preview').style.display = 'none';
         }
 
-        /* GENERATE FORMAL WEEKLY PAYSLIP */
         function generateWeeklyPayslip(roleType) {
             try {
                 var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
@@ -2292,7 +2293,6 @@
                     }
                 });
 
-                // Dynamic header title without staff name
                 var headerTitle = roleType === 'driver' ? 'DRIVER WEEKLY PAYSLIP' : 'ASSISTANT WEEKLY PAYSLIP';
                 document.getElementById('slip-title-main').innerText = headerTitle;
 
@@ -2432,7 +2432,6 @@
             window.open(whatsappUrl, "_blank");
         }
 
-        /* CORPORATE MULTI-DROP & COST TRACKER LOGIC */
         function getStoredJobs() {
             var stored = localStorage.getItem("dc_corporate_jobs");
             return stored ? JSON.parse(stored) : [];
@@ -2548,7 +2547,6 @@
             loadTrackerJobs();
         }
 
-        /* TRUCK MAINTENANCE LOG STORAGE LOGIC */
         function getStoredMaintenance() {
             var stored = localStorage.getItem("dc_truck_maintenance");
             return stored ? JSON.parse(stored) : [];
