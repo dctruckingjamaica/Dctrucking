@@ -851,8 +851,8 @@
             border-collapse: collapse;
             font-size: 0.9rem;
             color: #ffffff;
-            min-width: 900px;
-            table-layout: fixed; /* Controls column widths to prevent infinite stretching */
+            min-width: 1080px; /* Perfectly accommodates all 10 columns comfortably */
+            table-layout: fixed;
         }
 
         .tracker-table th, .tracker-table td {
@@ -860,9 +860,9 @@
             padding: 8px 10px;
             text-align: left;
             vertical-align: middle;
-            white-space: normal;        /* Prevents forced single-line overflow */
-            word-wrap: break-word;      /* Allows long text/numbers to wrap */
-            overflow-wrap: break-word;  /* Modern wrapping standard */
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .tracker-table th {
@@ -888,8 +888,8 @@
             border-radius: 4px;
             font-size: 0.85rem;
             font-weight: 900;
-            white-space: normal;       /* Allows invoice numbers to wrap inside the pill */
-            word-break: break-all;     /* Breaks long continuous numbers cleanly */
+            white-space: normal;
+            word-break: break-all;
             text-align: center;
             max-width: 100%;
         }
@@ -918,30 +918,33 @@
 
         .action-btn-group {
             display: flex;
-            gap: 8px;
-            align-items: center;
+            flex-direction: column; /* Stack Edit and Delete buttons neatly inside the Actions column */
+            gap: 6px;
+            align-items: stretch;
         }
 
         .btn-table-edit {
             background: #0284c7;
             color: #fff;
             border: none;
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 800;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
+            text-align: center;
         }
 
         .btn-table-delete {
             background: #dc2626;
             color: #fff;
             border: none;
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 800;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
+            text-align: center;
         }
 
         .btn-action-group {
@@ -1655,15 +1658,16 @@
                 <div class="table-scroll">
                     <table class="tracker-table" id="tracker-table">
                         <colgroup>
-                            <col style="width: 12%;">
-                            <col style="width: 14%;">
-                            <col style="width: 16%;">
-                            <col style="width: 11%;">
-                            <col style="width: 11%;">
-                            <col style="width: 9%;">
-                            <col style="width: 9%;">
-                            <col style="width: 9%;">
-                            <col style="width: 9%;">
+                            <col style="width: 10%;"> <!-- Day & Date -->
+                            <col style="width: 11%;"> <!-- Invoice #(s) -->
+                            <col style="width: 14%;"> <!-- Route -->
+                            <col style="width: 10%;"> <!-- Driver & Payout -->
+                            <col style="width: 10%;"> <!-- Assistant & Payout -->
+                            <col style="width: 8%;">  <!-- Petrol Cost -->
+                            <col style="width: 8%;">  <!-- Total Rate -->
+                            <col style="width: 8%;">  <!-- Net Profit -->
+                            <col style="width: 8%;">  <!-- Status -->
+                            <col style="width: 13%;"> <!-- Actions (Dedicated Box) -->
                         </colgroup>
                         <thead>
                             <tr>
