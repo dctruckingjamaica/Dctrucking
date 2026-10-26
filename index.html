@@ -1749,7 +1749,7 @@
                 <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
             </div>
 
-            <!-- Printable Monday-to-Friday Crew Payslip Output Container (FULLY ON-SCREEN EDITABLE) -->
+            <!-- Printable Monday-to-Friday Crew Payslip Output Container (FULLY ON-SCREEN EDITABLE & NO INVOICE NUMBERS) -->
             <div id="payslip-preview">
                 <div class="inv-header">
                     <div class="inv-logo-box">
@@ -1785,13 +1785,12 @@
                     <thead>
                         <tr style="background-color: #1a531f; color: #ffffff;">
                             <th style="padding: 8px; text-align: left;">Date / Day</th>
-                            <th style="padding: 8px; text-align: left;">Invoice #(s)</th>
                             <th style="padding: 8px; text-align: left;">Route</th>
                             <th style="padding: 8px; text-align: right;">Earnings (JMD)</th>
                         </tr>
                     </thead>
                     <tbody id="slip-runs-tbody">
-                        <!-- Dynamic itemized M-F runs inserted here -->
+                        <!-- Dynamic itemized M-F runs inserted here (Invoice column removed) -->
                     </tbody>
                 </table>
 
@@ -2070,7 +2069,7 @@
             document.getElementById('payslip-preview').style.display = 'none';
         }
 
-        /* GENERATE PREFILLED MONDAY-TO-FRIDAY CREW PAYSLIP WITH DEDUCTIONS & BALANCE */
+        /* GENERATE PREFILLED MONDAY-TO-FRIDAY CREW PAYSLIP (WITHOUT INVOICE NUMBERS) */
         function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
@@ -2135,18 +2134,14 @@
             tbody.innerHTML = '';
 
             var grossEarnings = 0;
-            var runsSummaryText = "";
 
             for (var i = 0; i < weekJobs.length; i++) {
                 var j = weekJobs[i];
                 var payout = roleType === 'driver' ? j.driverPay : j.asstPay;
                 grossEarnings += payout;
 
-                runsSummaryText += "• " + j.day + " (" + j.date + ") | Inv: " + j.inv + " | " + j.pickup + " to " + j.drop + " - $" + payout.toLocaleString() + " JMD\n";
-
                 var tr = document.createElement('tr');
                 tr.innerHTML = '<td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br><span style="font-size:0.8rem; color:#64748b;">' + j.date + '</span></td>' +
-                               '<td style="padding: 8px; border-bottom: 1px solid #ddd;">' + j.inv + '</td>' +
                                '<td style="padding: 8px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
                                '<td style="padding: 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
                 tbody.appendChild(tr);
@@ -2160,18 +2155,12 @@
             document.getElementById('slip-total-charges').innerText = '$' + totalCharges.toLocaleString() + ' JMD';
             document.getElementById('slip-total-amount').innerText = '$' + netPayable.toLocaleString() + ' JMD';
 
-            // Store for WhatsApp sharing (pulling live from DOM in case user edited any text inline!)
-            activeWeeklyPayslipData = {
-                roleType: roleType
-            };
-
             document.getElementById('invoice-preview').style.display = 'none';
             document.getElementById('payslip-preview').style.display = 'block';
             document.getElementById('payslip-preview').scrollIntoView({ behavior: 'smooth' });
         }
 
         function sendWhatsAppWeeklyPayslip() {
-            // Read live values from the preview DOM in case the user edited them on screen!
             var name = document.getElementById('slip-name').innerText;
             var paynum = document.getElementById('slip-paynum').innerText;
             var id = document.getElementById('slip-id').innerText;
@@ -2442,7 +2431,6 @@
             var monday = new Date(now.setDate(diffToMonday));
             monday.setHours(0, 0, 0, 0);
 
-            // Strict Monday to Friday operating window (Friday end of day)
             var friday = new Date(monday);
             friday.setDate(monday.getDate() + 4);
             friday.setHours(23, 59, 59, 999);
