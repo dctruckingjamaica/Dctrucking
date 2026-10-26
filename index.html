@@ -980,6 +980,19 @@
             font-size: 1.05rem; 
         }
 
+        /* EDITABLE ON-SCREEN STYLING */
+        .editable-preview-field {
+            border-bottom: 1.5px dashed #0284c7;
+            padding: 1px 4px;
+            outline: none;
+            background: rgba(2, 132, 199, 0.05);
+            border-radius: 3px;
+        }
+        .editable-preview-field:focus {
+            background: rgba(2, 132, 199, 0.15);
+            border-bottom: 2px solid #0284c7;
+        }
+
         .inv-header {
             display: grid;
             grid-template-columns: 240px 1fr; 
@@ -1091,6 +1104,7 @@
                 margin: 0;
             }
             .btn-print { display: none; }
+            .editable-preview-field { border-bottom: none; background: transparent; }
         }
 
         footer {
@@ -1735,7 +1749,7 @@
                 <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
             </div>
 
-            <!-- Printable Monday-to-Friday Crew Payslip Output Container -->
+            <!-- Printable Monday-to-Friday Crew Payslip Output Container (FULLY ON-SCREEN EDITABLE) -->
             <div id="payslip-preview">
                 <div class="inv-header">
                     <div class="inv-logo-box">
@@ -1750,18 +1764,18 @@
 
                 <div class="inv-details">
                     <div>
-                        <p><strong>Staff Name:</strong> <span id="slip-name" style="font-weight: 900; color: #1a531f;"></span></p>
-                        <p><strong>Payroll #:</strong> <span id="slip-paynum" style="font-weight: 900; color: #0284c7;"></span></p>
-                        <p><strong>Employee ID:</strong> <span id="slip-id" style="font-weight: 800;"></span></p>
-                        <p><strong>National ID:</strong> <span id="slip-natid" style="font-weight: 800;"></span></p>
-                        <p><strong>Job Position:</strong> <span id="slip-position" style="font-weight: 800;"></span></p>
+                        <p><strong>Staff Name:</strong> <span id="slip-name" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #1a531f;"></span></p>
+                        <p><strong>Payroll #:</strong> <span id="slip-paynum" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0284c7;"></span></p>
+                        <p><strong>Employee ID:</strong> <span id="slip-id" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>National ID:</strong> <span id="slip-natid" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Job Position:</strong> <span id="slip-position" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
                     </div>
                     <div style="text-align: right;">
-                        <p><strong>Department:</strong> <span id="slip-dept" style="font-weight: 800;"></span></p>
-                        <p><strong>Branch:</strong> <span id="slip-branch" style="font-weight: 800;"></span></p>
-                        <p><strong>Date Joined:</strong> <span id="slip-joined" style="font-weight: 800;"></span></p>
-                        <p><strong>Payment Method:</strong> <span id="slip-method" style="font-weight: 900; color: #0284c7;"></span></p>
-                        <p><strong>Payment Date:</strong> <span id="slip-paydate" style="font-weight: 900; color: #166534;"></span></p>
+                        <p><strong>Department:</strong> <span id="slip-dept" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Branch:</strong> <span id="slip-branch" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Date Joined:</strong> <span id="slip-joined" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Payment Method:</strong> <span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0284c7;"></span></p>
+                        <p><strong>Payment Date:</strong> <span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534;"></span></p>
                     </div>
                 </div>
 
@@ -1782,23 +1796,23 @@
                 </table>
 
                 <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.98rem;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center;">
                         <span>Gross Earnings:</span>
-                        <strong id="slip-gross">$0 JMD</strong>
+                        <strong id="slip-gross" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #dc2626;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #dc2626; align-items: center;">
                         <span>Deductions This Period:</span>
-                        <strong id="slip-deduct-amt">$0 JMD</strong>
+                        <strong id="slip-deduct-amt" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
                     </div>
-                    <div style="display: flex; justify-content: space-between; color: #b45309;">
+                    <div style="display: flex; justify-content: space-between; color: #b45309; align-items: center;">
                         <span>Total Outstanding Charges / Balance:</span>
-                        <strong id="slip-total-charges">$0 JMD</strong>
+                        <strong id="slip-total-charges" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
                     </div>
                 </div>
 
                 <div style="background: #f0fdf4; border: 2px solid #166534; padding: 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <span style="font-weight: 900; color: #166534; font-size: 1.1rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
-                    <span id="slip-total-amount" style="font-weight: 900; color: #166534; font-size: 1.35rem;">$0 JMD</span>
+                    <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.35rem;">$0 JMD</span>
                 </div>
 
                 <div class="inv-footer">
@@ -2146,22 +2160,9 @@
             document.getElementById('slip-total-charges').innerText = '$' + totalCharges.toLocaleString() + ' JMD';
             document.getElementById('slip-total-amount').innerText = '$' + netPayable.toLocaleString() + ' JMD';
 
-            // Store for WhatsApp sharing
+            // Store for WhatsApp sharing (pulling live from DOM in case user edited any text inline!)
             activeWeeklyPayslipData = {
-                name: staffName,
-                paynum: payNum,
-                id: staffId,
-                natid: natId,
-                position: position,
-                dept: dept,
-                branch: branch,
-                method: paymentMethod,
-                paydate: payDate,
-                gross: grossEarnings,
-                deduct: deduction,
-                charges: totalCharges,
-                net: netPayable,
-                summary: runsSummaryText
+                roleType: roleType
             };
 
             document.getElementById('invoice-preview').style.display = 'none';
@@ -2170,20 +2171,33 @@
         }
 
         function sendWhatsAppWeeklyPayslip() {
-            if (!activeWeeklyPayslipData) return;
-            var message = "Hello " + activeWeeklyPayslipData.name + ", here is your D&C Refuse Trucking M-F payslip:\n\n" +
-                          "Payroll #: " + activeWeeklyPayslipData.paynum + "\n" +
-                          "Employee ID: " + activeWeeklyPayslipData.id + "\n" +
-                          "National ID: " + activeWeeklyPayslipData.natid + "\n" +
-                          "Position: " + activeWeeklyPayslipData.position + " (" + activeWeeklyPayslipData.dept + ")\n" +
-                          "Branch: " + activeWeeklyPayslipData.branch + "\n" +
-                          "Payment Method: " + activeWeeklyPayslipData.method + "\n" +
-                          "Payment Date: " + activeWeeklyPayslipData.paydate + "\n\n" +
-                          "Itemized M-F Runs:\n" + activeWeeklyPayslipData.summary + "\n" +
-                          "Gross Earnings: $" + activeWeeklyPayslipData.gross.toLocaleString() + " JMD\n" +
-                          "Deductions This Period: $" + activeWeeklyPayslipData.deduct.toLocaleString() + " JMD\n" +
-                          "Total Outstanding Charges: $" + activeWeeklyPayslipData.charges.toLocaleString() + " JMD\n" +
-                          "Amount Payable (Net): $" + activeWeeklyPayslipData.net.toLocaleString() + " JMD\n\n" +
+            // Read live values from the preview DOM in case the user edited them on screen!
+            var name = document.getElementById('slip-name').innerText;
+            var paynum = document.getElementById('slip-paynum').innerText;
+            var id = document.getElementById('slip-id').innerText;
+            var natid = document.getElementById('slip-natid').innerText;
+            var position = document.getElementById('slip-position').innerText;
+            var dept = document.getElementById('slip-dept').innerText;
+            var branch = document.getElementById('slip-branch').innerText;
+            var method = document.getElementById('slip-method').innerText;
+            var paydate = document.getElementById('slip-paydate').innerText;
+            var gross = document.getElementById('slip-gross').innerText;
+            var deduct = document.getElementById('slip-deduct-amt').innerText;
+            var charges = document.getElementById('slip-total-charges').innerText;
+            var net = document.getElementById('slip-total-amount').innerText;
+
+            var message = "Hello " + name + ", here is your D&C Refuse Trucking M-F payslip:\n\n" +
+                          "Payroll #: " + paynum + "\n" +
+                          "Employee ID: " + id + "\n" +
+                          "National ID: " + natid + "\n" +
+                          "Position: " + position + " (" + dept + ")\n" +
+                          "Branch: " + branch + "\n" +
+                          "Payment Method: " + method + "\n" +
+                          "Payment Date: " + paydate + "\n\n" +
+                          "Gross Earnings: " + gross + "\n" +
+                          "Deductions This Period: " + deduct + "\n" +
+                          "Total Outstanding Charges: " + charges + "\n" +
+                          "Amount Payable (Net): " + net + "\n\n" +
                           "Thank you for your hard work!";
 
             var whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(message);
