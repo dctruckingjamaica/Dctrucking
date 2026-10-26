@@ -871,7 +871,7 @@
         .inv-badge-container {
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 4px;
         }
 
         .inv-badge-pill {
@@ -1792,14 +1792,14 @@
                 <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
             </div>
 
-            <!-- Printable Weekly Payslip Output Container (Formal Reference Layout & Editable) -->
+            <!-- Printable Weekly Payslip Output Container (Driver/Assistant Weekly Payslip) -->
             <div id="payslip-preview">
                 <div class="inv-header">
                     <div class="inv-logo-box">
                         <img src="IMG-20250804-WA0004.jpg" alt="D&C Logo">
                     </div>
                     <div class="inv-title-box">
-                        <div class="inv-title-main" id="slip-title-main">MILFORD MALCOLM (Weekly)</div>
+                        <div class="inv-title-main" id="slip-title-main">DRIVER WEEKLY PAYSLIP</div>
                         <div class="inv-title-sub">D&C REFUSE TRUCKING & EQUIPMENT CO. LTD</div>
                         <div class="inv-title-loc">Weekly Operating Statement (JMD)</div>
                     </div>
@@ -1881,9 +1881,9 @@
                     <p>Authorized Dispatcher Sign-off: ___________________________</p>
                 </div>
                 <br>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
-                    <button class="btn-whatsapp btn-print" onclick="sendWhatsAppWeeklyPayslip()">📱 Send via WhatsApp</button>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff; flex: 1; min-width: 200px;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
+                    <button class="btn-whatsapp btn-print" style="flex: 1; min-width: 200px;" onclick="sendWhatsAppWeeklyPayslip()">📱 Send via WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -2197,7 +2197,7 @@
             document.getElementById('payslip-preview').style.display = 'none';
         }
 
-        /* GUARANTEED RESPONSIVE WEEKLY PAYSLIP GENERATOR */
+        /* GENERATE FORMAL WEEKLY PAYSLIP WITH DRIVER/ASSISTANT TITLE */
         function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
@@ -2232,7 +2232,6 @@
             var payDate = paydateInput.value || new Date().toLocaleDateString();
 
             var allJobs = getStoredJobs();
-            // Filter by current week, or fallback to all jobs if none found in current week
             var weekJobs = allJobs.filter(function(j) {
                 if (!isCurrentWeek(j.date)) return false;
                 if (roleType === 'driver') {
@@ -2243,7 +2242,6 @@
             });
 
             if (weekJobs.length === 0) {
-                // Fallback: check all stored jobs for this staff member
                 weekJobs = allJobs.filter(function(j) {
                     if (roleType === 'driver') {
                         return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
@@ -2254,7 +2252,6 @@
             }
 
             if (weekJobs.length === 0) {
-                // Ultimate fallback: Create a placeholder run so the payslip opens immediately and responsively
                 weekJobs = [{
                     day: 'Current Week',
                     date: new Date().toISOString().split('T')[0],
@@ -2265,7 +2262,8 @@
                 }];
             }
 
-            document.getElementById('slip-title-main').innerText = staffName.toUpperCase() + ' (Weekly)';
+            var payslipTitle = roleType === 'driver' ? 'DRIVER WEEKLY PAYSLIP' : 'ASSISTANT WEEKLY PAYSLIP';
+            document.getElementById('slip-title-main').innerText = payslipTitle;
             document.getElementById('slip-name').innerText = staffName;
             document.getElementById('slip-paynum').innerText = payNum;
             document.getElementById('slip-natid').innerText = natId;
@@ -2312,6 +2310,7 @@
         }
 
         function sendWhatsAppWeeklyPayslip() {
+            var title = document.getElementById('slip-title-main').innerText;
             var name = document.getElementById('slip-name').innerText;
             var paynum = document.getElementById('slip-paynum').innerText;
             var natid = document.getElementById('slip-natid').innerText;
@@ -2330,7 +2329,7 @@
             var charges = document.getElementById('slip-total-charges').innerText;
             var net = document.getElementById('slip-total-amount').innerText;
 
-            var message = "D&C REFUSE TRUCKING - WEEKLY STATEMENT\n\n" +
+            var message = "D&C REFUSE TRUCKING - " + title + "\n\n" +
                           "Employee: " + name + " (Payroll #: " + paynum + ")\n" +
                           "TRN / National ID: " + natid + "\n" +
                           "Bank: " + bankname + " (" + bankbranch + ")\n" +
@@ -2652,8 +2651,8 @@
                     var expenses = j.driverPay + j.asstPay + j.petrol;
                     var netProfit = j.rate - expenses;
 
-                    // INVOICE STACKING DISPLAY
-                    var invArray = (j.inv || '').split(',').map(function(item) { return item.trim(); }).filter(Boolean);
+                    // ROBUST INVOICE NUMBER STACKING (SPLITS BY COMMAS OR SPACES)
+                    var invArray = (j.inv || '').split(/[\s,]+/).map(function(item) { return item.trim(); }).filter(Boolean);
                     var invHTML = '<div class="inv-badge-container">';
                     if (invArray.length > 0) {
                         for (var k = 0; k < invArray.length; k++) {
