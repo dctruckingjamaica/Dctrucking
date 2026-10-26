@@ -1397,10 +1397,10 @@
                     </div>
                 </div>
 
-                <!-- CREW PAYROLL GENERATOR WITH DEDUCTIONS & BALANCE -->
+                <!-- CREW PAYROLL GENERATOR WITH DEDUCTIONS & BANK DETAILS -->
                 <div class="payroll-section-box">
                     <h5>👥 Crew Payroll & Corporate Payslips</h5>
-                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan operating runs, include Permanent Payroll Number, Earnings, Deductions, and AR Charges Notes (Fully Saveable & Editable):</p>
+                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan operating runs, include Permanent Payroll Number, Bank Details, Earnings, and Deductions (Fully Saveable & Editable):</p>
                     
                     <div class="payroll-grid">
                         <!-- DRIVER PAYROLL CARD -->
@@ -1419,6 +1419,18 @@
 
                             <label>National ID / TRN:</label>
                             <input type="text" id="payroll-driver-natid" placeholder="TRN Number">
+
+                            <label>Bank Name & Branch:</label>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                                <input type="text" id="payroll-driver-bankname" placeholder="Bank Name (e.g. NCBCBJM)">
+                                <input type="text" id="payroll-driver-bankbranch" placeholder="Branch">
+                            </div>
+
+                            <label>Account Number & Sort Code:</label>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                                <input type="text" id="payroll-driver-accnum" placeholder="Account Number">
+                                <input type="text" id="payroll-driver-sortcode" placeholder="Sort Code">
+                            </div>
 
                             <label>Job Position / Dept / Branch:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -1469,6 +1481,18 @@
 
                             <label>National ID / TRN:</label>
                             <input type="text" id="payroll-asst-natid" placeholder="TRN Number">
+
+                            <label>Bank Name & Branch:</label>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                                <input type="text" id="payroll-asst-bankname" placeholder="Bank Name">
+                                <input type="text" id="payroll-asst-bankbranch" placeholder="Branch">
+                            </div>
+
+                            <label>Account Number & Sort Code:</label>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                                <input type="text" id="payroll-asst-accnum" placeholder="Account Number">
+                                <input type="text" id="payroll-asst-sortcode" placeholder="Sort Code">
+                            </div>
 
                             <label>Job Position / Dept / Branch:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -1787,11 +1811,11 @@
                         <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">National ID / TRN</p>
                         <p><span id="slip-natid" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
 
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Payment Method</p>
-                        <p><span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span></p>
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Bank Name & Branch</p>
+                        <p><span id="slip-bankname" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span> — <span id="slip-bankbranch" class="editable-preview-field" contenteditable="true"></span></p>
 
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Payment Date</p>
-                        <p><span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #166534;"></span></p>
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Account # & Sort Code</p>
+                        <p>Acc: <span id="slip-accnum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> | Sort: <span id="slip-sortcode" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
                     </div>
                     <div>
                         <p style="margin-bottom: 2px; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Job Position</p>
@@ -1803,8 +1827,8 @@
                         <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Branch / Location</p>
                         <p><span id="slip-branch" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
 
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Date Joined</p>
-                        <p><span id="slip-joined" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Payment Method & Date</p>
+                        <p><span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> (<span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #166534;"></span>)</p>
                     </div>
                 </div>
 
@@ -1943,6 +1967,10 @@
                 paynum: document.getElementById(prefix + 'paynum').value,
                 id: document.getElementById(prefix + 'id').value,
                 natid: document.getElementById(prefix + 'natid').value,
+                bankname: document.getElementById(prefix + 'bankname').value,
+                bankbranch: document.getElementById(prefix + 'bankbranch').value,
+                accnum: document.getElementById(prefix + 'accnum').value,
+                sortcode: document.getElementById(prefix + 'sortcode').value,
                 pos: document.getElementById(prefix + 'pos').value,
                 dept: document.getElementById(prefix + 'dept').value,
                 branch: document.getElementById(prefix + 'branch').value,
@@ -1973,6 +2001,10 @@
                 document.getElementById(prefix + 'paynum').value = profile.paynum || '';
                 document.getElementById(prefix + 'id').value = profile.id || '';
                 document.getElementById(prefix + 'natid').value = profile.natid || '';
+                document.getElementById(prefix + 'bankname').value = profile.bankname || '';
+                document.getElementById(prefix + 'bankbranch').value = profile.bankbranch || '';
+                document.getElementById(prefix + 'accnum').value = profile.accnum || '';
+                document.getElementById(prefix + 'sortcode').value = profile.sortcode || '';
                 document.getElementById(prefix + 'pos').value = profile.pos || '';
                 document.getElementById(prefix + 'dept').value = profile.dept || '';
                 document.getElementById(prefix + 'branch').value = profile.branch || '';
@@ -2165,6 +2197,10 @@
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
             var staffIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-id') : document.getElementById('payroll-asst-id');
             var natIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-natid') : document.getElementById('payroll-asst-natid');
+            var bankNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankname') : document.getElementById('payroll-asst-bankname');
+            var bankBranchInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankbranch') : document.getElementById('payroll-asst-bankbranch');
+            var accNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-accnum') : document.getElementById('payroll-asst-accnum');
+            var sortCodeInput = roleType === 'driver' ? document.getElementById('payroll-driver-sortcode') : document.getElementById('payroll-asst-sortcode');
             var posInput = roleType === 'driver' ? document.getElementById('payroll-driver-pos') : document.getElementById('payroll-asst-pos');
             var deptInput = roleType === 'driver' ? document.getElementById('payroll-driver-dept') : document.getElementById('payroll-asst-dept');
             var branchInput = roleType === 'driver' ? document.getElementById('payroll-driver-branch') : document.getElementById('payroll-asst-branch');
@@ -2179,6 +2215,10 @@
             var payNum = payNumInput.value.trim() || 'PAY-2026-001';
             var staffId = staffIdInput.value.trim() || 'N/A';
             var natId = natIdInput.value.trim() || 'N/A';
+            var bankName = bankNameInput.value.trim() || 'N/A';
+            var bankBranch = bankBranchInput.value.trim() || 'N/A';
+            var accNum = accNumInput.value.trim() || 'N/A';
+            var sortCode = sortCodeInput.value.trim() || 'N/A';
             var position = posInput.value.trim() || (roleType === 'driver' ? 'Commercial Driver' : 'Truck Assistant');
             var dept = deptInput.value.trim() || 'D&C Logistics';
             var branch = branchInput.value.trim() || 'Kingston & Portmore Hub';
@@ -2213,8 +2253,11 @@
             document.getElementById('slip-title-main').innerText = staffName.toUpperCase() + ' (Weekly)';
             document.getElementById('slip-name').innerText = staffName;
             document.getElementById('slip-paynum').innerText = payNum;
-            document.getElementById('slip-id').innerText = staffId;
             document.getElementById('slip-natid').innerText = natId;
+            document.getElementById('slip-bankname').innerText = bankName;
+            document.getElementById('slip-bankbranch').innerText = bankBranch;
+            document.getElementById('slip-accnum').innerText = accNum;
+            document.getElementById('slip-sortcode').innerText = sortCode;
             document.getElementById('slip-position').innerText = position;
             document.getElementById('slip-dept').innerText = dept;
             document.getElementById('slip-branch').innerText = branch;
@@ -2257,8 +2300,11 @@
         function sendWhatsAppWeeklyPayslip() {
             var name = document.getElementById('slip-name').innerText;
             var paynum = document.getElementById('slip-paynum').innerText;
-            var id = document.getElementById('slip-id').innerText;
             var natid = document.getElementById('slip-natid').innerText;
+            var bankname = document.getElementById('slip-bankname').innerText;
+            var bankbranch = document.getElementById('slip-bankbranch').innerText;
+            var accnum = document.getElementById('slip-accnum').innerText;
+            var sortcode = document.getElementById('slip-sortcode').innerText;
             var position = document.getElementById('slip-position').innerText;
             var dept = document.getElementById('slip-dept').innerText;
             var branch = document.getElementById('slip-branch').innerText;
@@ -2273,8 +2319,9 @@
             var message = "D&C REFUSE TRUCKING - WEEKLY STATEMENT\n\n" +
                           "Employee: " + name + " (Payroll #: " + paynum + ")\n" +
                           "TRN / National ID: " + natid + "\n" +
+                          "Bank: " + bankname + " (" + bankbranch + ")\n" +
+                          "Acc #: " + accnum + " | Sort Code: " + sortcode + "\n" +
                           "Position: " + position + " | Dept: " + dept + "\n" +
-                          "Branch: " + branch + "\n" +
                           "Payment Method: " + method + " (" + paydate + ")\n\n" +
                           "Gross Earnings: " + gross + "\n" +
                           "Deductions This Period: " + deduct + " (" + deductNote + ")\n" +
