@@ -693,13 +693,14 @@
             border-collapse: collapse;
             font-size: 0.9rem;
             color: #ffffff;
-            min-width: 950px;
+            min-width: 1050px;
         }
 
         .tracker-table th, .tracker-table td {
             border: 1px solid #224d2d;
             padding: 8px 10px;
             text-align: left;
+            vertical-align: middle;
         }
 
         .tracker-table th {
@@ -709,24 +710,26 @@
             text-transform: uppercase;
         }
 
-        /* 2-PER-ROW STACKED MULTI-INVOICE GRID */
+        /* STRICT FIXED-WIDTH 2-PER-ROW STACKED INVOICE CONTAINER */
         .inv-stacked-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(75px, 1fr));
-            gap: 3px;
-            max-width: 165px;
+            grid-template-columns: repeat(2, 65px);
+            gap: 4px;
+            width: 138px;
         }
 
         .inv-badge-pill {
             background: #0f381b;
             color: #4ade80;
             border: 1px solid #22c55e;
-            padding: 2px 4px;
+            padding: 3px 2px;
             border-radius: 4px;
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             font-weight: 800;
             text-align: center;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .status-badge-paid {
@@ -737,6 +740,7 @@
             font-weight: 800;
             font-size: 0.85rem;
             cursor: pointer;
+            display: inline-block;
         }
 
         .status-badge-unpaid {
@@ -747,6 +751,7 @@
             font-weight: 800;
             font-size: 0.85rem;
             cursor: pointer;
+            display: inline-block;
         }
 
         .btn-action-group {
@@ -1214,47 +1219,47 @@
                             <input type="text" id="tr-drop" list="jamaica-towns-list" placeholder="Type town (e.g. Negril)" oninput="trackerLiveAutoPrice()">
                             <datalist id="jamaica-towns-list">
                                 <option value="Downtown">
-                                    <option value="Kingston">
-                                        <option value="Half Way Tree">
-                                            <option value="Liguanea">
-                                                <option value="Spanish Town">
-                                                    <option value="Portmore">
-                                                        <option value="Old Harbour">
-                                                            <option value="Stony Hill">
-                                                                <option value="May Pen">
-                                                                    <option value="Mandeville">
-                                                                        <option value="Montego Bay">
-                                                                            <option value="Negril">
-                                                                                <option value="Sav-La-Mar">
-                                                                                    <option value="Ocho Rios">
-                                                                                        <option value="Port Antonio">
-                                                                                            <option value="Morant Bay">
-                                                                                                <option value="Falmouth">
-                                                                                                    <option value="Santa Cruz">
-                                                                                                        <option value="Black River">
-                                                                                                            <option value="Lucea">
-                                                                                                                <option value="Spaldings">
-                                                                                                                    <option value="Linstead">
-                                                                                                                        <option value="Bogwalk">
-                                                                                                                            <option value="Papine">
-                                                                                                                                <option value="Red Hills">
-                                                                                                                                    <option value="Claremont">
-                                                                                                                                        <option value="Annotto Bay">
-                                                                                                                                            <option value="Bath">
-                                                                                                                                                <option value="Junction">
+                                <option value="Kingston">
+                                <option value="Half Way Tree">
+                                <option value="Liguanea">
+                                <option value="Spanish Town">
+                                <option value="Portmore">
+                                <option value="Old Harbour">
+                                <option value="Stony Hill">
+                                <option value="May Pen">
+                                <option value="Mandeville">
+                                <option value="Montego Bay">
+                                <option value="Negril">
+                                <option value="Sav-La-Mar">
+                                <option value="Ocho Rios">
+                                <option value="Port Antonio">
+                                <option value="Morant Bay">
+                                <option value="Falmouth">
+                                <option value="Santa Cruz">
+                                <option value="Black River">
+                                <option value="Lucea">
+                                <option value="Spaldings">
+                                <option value="Linstead">
+                                <option value="Bogwalk">
+                                <option value="Papine">
+                                <option value="Red Hills">
+                                <option value="Claremont">
+                                <option value="Annotto Bay">
+                                <option value="Bath">
+                                <option value="Junction">
                             </datalist>
                         </div>
                         <div class="tracker-field-group">
-                            <label>Driver Name</label>
-                            <input type="text" id="tr-driver" placeholder="Driver name">
+                            <label>Driver Name (Pre-Filled)</label>
+                            <input type="text" id="tr-driver" placeholder="Driver name" oninput="saveCrewPreferences()">
                         </div>
                         <div class="tracker-field-group">
                             <label>Driver Payout (JMD)</label>
                             <input type="number" id="tr-driver-pay" placeholder="0" oninput="updateLiveProfit()">
                         </div>
                         <div class="tracker-field-group">
-                            <label>Assistant Name</label>
-                            <input type="text" id="tr-assistant" placeholder="Assistant name">
+                            <label>Assistant Name (Pre-Filled)</label>
+                            <input type="text" id="tr-assistant" placeholder="Assistant name" oninput="saveCrewPreferences()">
                         </div>
                         <div class="tracker-field-group">
                             <label>Assistant Payout (JMD)</label>
@@ -1397,9 +1402,28 @@
                 if (entered === managerPin) {
                     panel.style.display = 'block';
                     loadTrackerJobs();
+                    loadCrewPreferences();
                 } else if (entered !== null) {
                     alert("Incorrect PIN. Access denied.");
                 }
+            }
+        }
+
+        function saveCrewPreferences() {
+            var driver = document.getElementById('tr-driver').value;
+            var assistant = document.getElementById('tr-assistant').value;
+            localStorage.setItem("dc_default_driver", driver);
+            localStorage.setItem("dc_default_assistant", assistant);
+        }
+
+        function loadCrewPreferences() {
+            var savedDriver = localStorage.getItem("dc_default_driver");
+            var savedAsst = localStorage.getItem("dc_default_assistant");
+            if (savedDriver !== null && document.getElementById('tr-driver').value === '') {
+                document.getElementById('tr-driver').value = savedDriver;
+            }
+            if (savedAsst !== null && document.getElementById('tr-assistant').value === '') {
+                document.getElementById('tr-assistant').value = savedAsst;
             }
         }
 
@@ -1666,14 +1690,12 @@
             });
             saveStoredJobs(jobs);
 
-            // Reset Form Inputs
+            // Reset Form Inputs (keeping pre-filled driver/assistant names)
             document.getElementById('tr-date').value = '';
             document.getElementById('tr-inv').value = '';
             document.getElementById('tr-pickup').value = '';
             document.getElementById('tr-drop').value = '';
-            document.getElementById('tr-driver').value = '';
             document.getElementById('tr-driver-pay').value = '';
-            document.getElementById('tr-assistant').value = '';
             document.getElementById('tr-asst-pay').value = '';
             document.getElementById('tr-petrol').value = '';
             document.getElementById('tr-rate').value = '';
@@ -1762,7 +1784,7 @@
                 totalExp += expenses;
                 totalProf += netProfit;
 
-                // Format Invoice Numbers into Clean 2-Per-Row Stacked Grid
+                // Format Invoice Numbers into Strict 2-Per-Row Block
                 var invArray = j.inv.split(',').map(function(item) { return item.trim(); }).filter(Boolean);
                 var invHTML = '<div class="inv-stacked-grid">';
                 for (var k = 0; k < invArray.length; k++) {
