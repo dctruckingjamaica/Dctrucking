@@ -471,28 +471,29 @@
         .payroll-card {
             background: #041f0e;
             border: 2px solid #1c4d28;
-            padding: 14px;
+            padding: 12px;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .payroll-card label {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 900;
             color: #00e676;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
+        /* Streamlined compact sizing for payroll inputs */
         .payroll-card input, .payroll-card select {
-            padding: 8px 10px;
+            padding: 6px 8px;
             background: #000;
             color: #fff;
-            border: 2px solid var(--primary-green);
-            border-radius: 6px;
-            font-weight: 900;
-            font-size: 0.95rem;
+            border: 1.5px solid var(--primary-green);
+            border-radius: 5px;
+            font-weight: 800;
+            font-size: 0.9rem;
             width: 100%;
         }
 
@@ -874,7 +875,7 @@
                             <label>🛞 Driver Name:</label>
                             <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
                                 <input type="text" id="payroll-driver-name" placeholder="Driver Full Name">
-                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:900; cursor:pointer;" onclick="loadStaffProfile('driver')">🔍 Load</button>
+                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:5px; font-weight:900; cursor:pointer;" onclick="loadStaffProfile('driver')">🔍 Load</button>
                             </div>
                             
                             <label>Payroll # / Employee ID:</label>
@@ -903,7 +904,7 @@
                                 <input type="text" id="payroll-driver-pos" value="Commercial Driver">
                                 <input type="text" id="payroll-driver-dept" value="D&C Logistics">
                             </div>
-                            <input type="text" id="payroll-driver-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
+                            <input type="text" id="payroll-driver-branch" value="Kingston & Portmore Hub" style="margin-top:2px;">
 
                             <label>Date Joined:</label>
                             <input type="date" id="payroll-driver-joined">
@@ -927,7 +928,7 @@
                                 <input type="date" id="payroll-driver-paydate">
                             </div>
 
-                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px;" onclick="saveStaffProfile('driver')">💾 Save Driver Profile</button>
+                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:4px; padding:8px;" onclick="saveStaffProfile('driver')">💾 Save Driver Profile</button>
                             <button type="button" class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver Weekly Payslip</button>
                         </div>
 
@@ -936,7 +937,7 @@
                             <label>🤝 Assistant Name:</label>
                             <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
                                 <input type="text" id="payroll-asst-name" placeholder="Assistant Full Name">
-                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:900; cursor:pointer;" onclick="loadStaffProfile('assistant')">🔍 Load</button>
+                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:5px; font-weight:900; cursor:pointer;" onclick="loadStaffProfile('assistant')">🔍 Load</button>
                             </div>
                             
                             <label>Payroll # / Employee ID:</label>
@@ -965,7 +966,7 @@
                                 <input type="text" id="payroll-asst-pos" value="Truck Assistant">
                                 <input type="text" id="payroll-asst-dept" value="D&C Logistics">
                             </div>
-                            <input type="text" id="payroll-asst-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
+                            <input type="text" id="payroll-asst-branch" value="Kingston & Portmore Hub" style="margin-top:2px;">
 
                             <label>Date Joined:</label>
                             <input type="date" id="payroll-asst-joined">
@@ -989,7 +990,7 @@
                                 <input type="date" id="payroll-asst-paydate">
                             </div>
 
-                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px;" onclick="saveStaffProfile('assistant')">💾 Save Assistant Profile</button>
+                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:4px; padding:8px;" onclick="saveStaffProfile('assistant')">💾 Save Assistant Profile</button>
                             <button type="button" class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant Weekly Payslip</button>
                         </div>
                     </div>
@@ -1163,7 +1164,7 @@
                 <button type="button" class="btn-gen btn-print" style="background-color: #059669; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
             </div>
 
-            <!-- Printable Weekly Payslip Output Container -->
+            <!-- Printable Weekly Payslip Output Container (Invoice # completely removed for clean layout) -->
             <div id="payslip-preview">
                 <div class="inv-header">
                     <div class="inv-logo-box">
@@ -1198,7 +1199,6 @@
                     <thead>
                         <tr style="background-color: #059669; color: #ffffff;">
                             <th style="padding: 4px 6px; text-align: left;">Date / Day</th>
-                            <th style="padding: 4px 6px; text-align: left;">Invoice #(s)</th>
                             <th style="padding: 4px 6px; text-align: left;">Route</th>
                             <th style="padding: 4px 6px; text-align: right;">Earnings (JMD)</th>
                         </tr>
@@ -1393,7 +1393,9 @@
             var asstPay = parseFloat(document.getElementById('tr-asst-pay').value) || 0;
             
             var net = rate - (petrol + driverPay + asstPay);
-            document.getElementById('live-net-profit-display').innerText = '$' + net.toLocaleString() + ' JMD';
+            var netDisplay = document.getElementById('live-net-profit-display');
+            netDisplay.innerText = '$' + net.toLocaleString() + ' JMD';
+            netDisplay.style.color = net >= 0 ? '#00e676' : '#ff3333';
         }
 
         function saveClientProfile() {
@@ -1572,7 +1574,6 @@
 
                         var tr = document.createElement('tr');
                         tr.innerHTML = '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br>' + j.date + '</td>' +
-                                       '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;">' + j.inv + '</td>' +
                                        '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
                                        '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
                         tbody.appendChild(tr);
@@ -1581,7 +1582,6 @@
                     grossEarnings = 5000;
                     var tr = document.createElement('tr');
                     tr.innerHTML = '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;"><strong>Friday</strong><br>' + payDate + '</td>' +
-                                   '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;">654546/768658</td>' +
                                    '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd;">Halfway tree ➔ Browns town</td>' +
                                    '<td style="padding: 4px 6px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$5,000 JMD</td>';
                     tbody.appendChild(tr);
@@ -1675,6 +1675,9 @@
                 for (var i = 0; i < displayJobs.length; i++) {
                     var j = displayJobs[i];
                     var statusColor = j.status === 'PAID' ? '#166534' : '#991b1b';
+                    var netProfit = j.rate - (j.driverPay + j.asstPay + j.petrol);
+                    var netColor = netProfit >= 0 ? '#00e676' : '#ff3333';
+
                     var tr = document.createElement('tr');
                     tr.innerHTML = '<td><strong>' + j.day + '</strong><br>' + j.date + '</td>' +
                                    '<td>' + j.inv + '</td>' +
@@ -1683,9 +1686,9 @@
                                    '<td>' + j.assistant + ' ($' + j.asstPay.toLocaleString() + ')</td>' +
                                    '<td>$' + j.petrol.toLocaleString() + '</td>' +
                                    '<td>$' + j.rate.toLocaleString() + '</td>' +
-                                   '<td>$' + (j.rate - (j.driverPay + j.asstPay + j.petrol)).toLocaleString() + '</td>' +
+                                   '<td><span style="color:' + netColor + '; font-weight:900;">$' + netProfit.toLocaleString() + ' JMD</span></td>' +
                                    '<td><span onclick="toggleJobStatus(' + j.id + ')" title="Tap to toggle Paid/Unpaid" style="cursor:pointer; display:inline-block; padding:4px 8px; border-radius:4px; font-weight:900; background:' + statusColor + '; color:#fff;">' + j.status + '</span></td>' +
-                                   '<td><button onclick="editJob(' + j.id + ')" style="background:#0284c7; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:900; cursor:pointer; margin-right:4px;">✏️ Edit</button><button onclick="deleteJob(' + j.id + ')" style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:900; cursor:pointer;">🗑️</button></td>';
+                                   '<td><div style="display:flex; gap:4px;"><button onclick="editJob(' + j.id + ')" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:4px; font-weight:900; cursor:pointer;">✏️ Edit</button><button onclick="deleteJob(' + j.id + ')" style="background:#dc2626; color:#fff; border:none; padding:6px 10px; border-radius:4px; font-weight:900; cursor:pointer;">🗑️</button></div></td>';
                     tbody.appendChild(tr);
                 }
             }
