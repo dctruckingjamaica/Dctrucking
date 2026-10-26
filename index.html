@@ -2199,7 +2199,7 @@
             document.getElementById('payslip-preview').style.display = 'none';
         }
 
-        /* GENERATE FORMAL WEEKLY PAYSLIP (FLEXIBLE 7-DAY WINDOW WITH FALLBACK) */
+        /* GENERATE FORMAL WEEKLY PAYSLIP (WITH FALLBACK FOR UNLOGGED RUNS) */
         function generateWeeklyPayslip(roleType) {
             try {
                 var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
@@ -2241,19 +2241,8 @@
                 var payDate = paydateInput.value || new Date().toLocaleDateString();
 
                 var allJobs = getStoredJobs();
-                
-                // Flexible 7-day rolling window to capture past days like Friday the 23rd
                 var weekJobs = allJobs.filter(function(j) {
-                    var isRecent = true;
-                    if (j.date) {
-                        var jobDate = new Date(j.date);
-                        var today = new Date();
-                        var diffDays = (today - jobDate) / (1000 * 60 * 60 * 24);
-                        isRecent = (diffDays >= 0 && diffDays <= 7);
-                    }
-                    
-                    if (!isRecent) return false;
-
+                    if (!isCurrentWeek(j.date)) return false;
                     if (roleType === 'driver') {
                         return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
                     } else {
@@ -2261,7 +2250,7 @@
                     }
                 });
 
-                document.getElementById('slip-title-main').innerText = staffName.toUpperCase() + ' (Weekly Statement)';
+                document.getElementById('slip-title-main').innerText = staffName.toUpperCase() + ' (Weekly)';
                 document.getElementById('slip-name').innerText = staffName;
                 document.getElementById('slip-paynum').innerText = payNum;
                 document.getElementById('slip-natid').innerText = natId;
@@ -2274,7 +2263,7 @@
                 document.getElementById('slip-branch').innerText = branch;
                 document.getElementById('slip-method').innerText = paymentMethod;
                 document.getElementById('slip-paydate').innerText = payDate;
-                document.getElementById('slip-period').innerText = 'Operating Statement (Includes recent runs up to 7 days)';
+                document.getElementById('slip-period').innerText = 'Weekly Operating Statement (' + new Date().toLocaleDateString() + ')';
                 document.getElementById('slip-deduct-note').innerText = deductionNoteText;
 
                 var tbody = document.getElementById('slip-runs-tbody');
@@ -2295,10 +2284,11 @@
                         tbody.appendChild(tr);
                     }
                 } else {
-                    grossEarnings = 25000;
+                    // Fallback if no runs were logged in tracker yet so payslip still generates instantly
+                    grossEarnings = 25000; // Default placeholder earnings
                     var tr = document.createElement('tr');
-                    tr.innerHTML = '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;"><strong>Recent Run</strong><br><span style="font-size:0.78rem; color:#64748b;">' + new Date().toLocaleDateString() + '</span></td>' +
-                                   '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;">Standard Operating Run (Kingston / Portmore Hub)</td>' +
+                    tr.innerHTML = '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;"><strong>Current Week</strong><br><span style="font-size:0.78rem; color:#64748b;">' + new Date().toLocaleDateString() + '</span></td>' +
+                                   '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;">Standard Weekly Operating Run (Kingston / Portmore Hub)</td>' +
                                    '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + grossEarnings.toLocaleString() + ' JMD</td>';
                     tbody.appendChild(tr);
                 }
