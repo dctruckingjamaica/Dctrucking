@@ -851,7 +851,8 @@
             border-collapse: collapse;
             font-size: 0.9rem;
             color: #ffffff;
-            min-width: 1050px;
+            min-width: 900px;
+            table-layout: fixed; /* Controls column widths to prevent infinite stretching */
         }
 
         .tracker-table th, .tracker-table td {
@@ -859,6 +860,9 @@
             padding: 8px 10px;
             text-align: left;
             vertical-align: middle;
+            white-space: normal;        /* Prevents forced single-line overflow */
+            word-wrap: break-word;      /* Allows long text/numbers to wrap */
+            overflow-wrap: break-word;  /* Modern wrapping standard */
         }
 
         .tracker-table th {
@@ -872,6 +876,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            max-width: 100%;
         }
 
         .inv-badge-pill {
@@ -881,10 +886,12 @@
             border: 1px solid #22c55e;
             padding: 4px 8px;
             border-radius: 4px;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             font-weight: 900;
-            white-space: nowrap;
+            white-space: normal;       /* Allows invoice numbers to wrap inside the pill */
+            word-break: break-all;     /* Breaks long continuous numbers cleanly */
             text-align: center;
+            max-width: 100%;
         }
 
         .status-badge-paid {
@@ -1562,8 +1569,8 @@
                             <input type="date" id="tr-date">
                         </div>
                         <div class="tracker-field-group">
-                            <label>Invoice Number(s) — (Separate with commas)</label>
-                            <input type="text" id="tr-inv" placeholder="e.g. DC-901, DC-902">
+                            <label>Invoice Number(s) — (Separate with commas or slashes)</label>
+                            <input type="text" id="tr-inv" placeholder="e.g. 76567/87648/095425">
                         </div>
                         <div class="tracker-field-group">
                             <label>Pickup Town</label>
@@ -1647,6 +1654,17 @@
 
                 <div class="table-scroll">
                     <table class="tracker-table" id="tracker-table">
+                        <colgroup>
+                            <col style="width: 12%;">
+                            <col style="width: 14%;">
+                            <col style="width: 16%;">
+                            <col style="width: 11%;">
+                            <col style="width: 11%;">
+                            <col style="width: 9%;">
+                            <col style="width: 9%;">
+                            <col style="width: 9%;">
+                            <col style="width: 9%;">
+                        </colgroup>
                         <thead>
                             <tr>
                                 <th>Day & Date</th>
@@ -1706,7 +1724,7 @@
                     </div>
 
                     <div class="table-scroll">
-                        <table class="tracker-table" style="min-width: 850px;">
+                        <table class="tracker-table" style="min-width: 850px; table-layout: auto;">
                             <thead>
                                 <tr style="background: #3b1219;">
                                     <th style="color: #fb7185;">Date</th>
@@ -2651,7 +2669,7 @@
                     var expenses = j.driverPay + j.asstPay + j.petrol;
                     var netProfit = j.rate - expenses;
 
-                    // ROBUST INVOICE NUMBER STACKING (SPLITS BY COMMAS OR SPACES)
+                    // INVOICE NUMBER STACKING (SPLITS BY COMMAS OR SLASHES)
                     var invArray = (j.inv || '').split(/[\s,]+/).map(function(item) { return item.trim(); }).filter(Boolean);
                     var invHTML = '<div class="inv-badge-container">';
                     if (invArray.length > 0) {
