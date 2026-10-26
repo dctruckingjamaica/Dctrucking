@@ -849,15 +849,15 @@
         .tracker-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #ffffff;
-            min-width: 100%;
+            min-width: 900px;
             table-layout: fixed; /* Controls column widths to prevent infinite stretching */
         }
 
         .tracker-table th, .tracker-table td {
             border: 1px solid #224d2d;
-            padding: 6px 3px;
+            padding: 8px 10px;
             text-align: left;
             vertical-align: middle;
             white-space: normal;        /* Prevents forced single-line overflow */
@@ -870,7 +870,6 @@
             color: var(--primary-green);
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 0.78rem;
         }
 
         .inv-badge-container {
@@ -885,9 +884,9 @@
             background: #0f381b;
             color: #4ade80;
             border: 1px solid #22c55e;
-            padding: 3px 5px;
+            padding: 4px 8px;
             border-radius: 4px;
-            font-size: 0.78rem;
+            font-size: 0.85rem;
             font-weight: 900;
             white-space: normal;       /* Allows invoice numbers to wrap inside the pill */
             word-break: break-all;     /* Breaks long continuous numbers cleanly */
@@ -898,59 +897,51 @@
         .status-badge-paid {
             background: #166534;
             color: #ffffff;
-            padding: 3px 6px;
+            padding: 4px 10px;
             border-radius: 4px;
             font-weight: 800;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             cursor: pointer;
             display: inline-block;
-            text-align: center;
         }
 
         .status-badge-unpaid {
             background: #991b1b;
             color: #ffffff;
-            padding: 3px 6px;
+            padding: 4px 10px;
             border-radius: 4px;
             font-weight: 800;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             cursor: pointer;
             display: inline-block;
-            text-align: center;
         }
 
         .action-btn-group {
             display: flex;
-            gap: 3px;
+            gap: 8px;
             align-items: center;
-            justify-content: center;
-            flex-direction: column;
         }
 
         .btn-table-edit {
             background: #0284c7;
             color: #fff;
             border: none;
-            padding: 4px 6px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 800;
-            font-size: 0.75rem;
-            width: 100%;
-            text-align: center;
+            font-size: 0.85rem;
         }
 
         .btn-table-delete {
             background: #dc2626;
             color: #fff;
             border: none;
-            padding: 4px 6px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 800;
-            font-size: 0.75rem;
-            width: 100%;
-            text-align: center;
+            font-size: 0.85rem;
         }
 
         .btn-action-group {
@@ -1664,15 +1655,14 @@
                 <div class="table-scroll">
                     <table class="tracker-table" id="tracker-table">
                         <colgroup>
-                            <col style="width: 10%;">
-                            <col style="width: 13%;">
+                            <col style="width: 12%;">
                             <col style="width: 14%;">
-                            <col style="width: 10%;">
-                            <col style="width: 10%;">
-                            <col style="width: 8%;">
+                            <col style="width: 16%;">
+                            <col style="width: 11%;">
+                            <col style="width: 11%;">
                             <col style="width: 9%;">
                             <col style="width: 9%;">
-                            <col style="width: 8%;">
+                            <col style="width: 9%;">
                             <col style="width: 9%;">
                         </colgroup>
                         <thead>
@@ -2696,7 +2686,7 @@
                         : '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
 
                     var tr = document.createElement('tr');
-                    tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.8rem;">' + j.date + '</span></td>' +
+                    tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.82rem;">' + j.date + '</span></td>' +
                                    '<td>' + invHTML + '</td>' +
                                    '<td>' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
                                    '<td>' + j.driver + '<br><span style="color:#4ade80;">$' + j.driverPay.toLocaleString() + ' JMD</span></td>' +
