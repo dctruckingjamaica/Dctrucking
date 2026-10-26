@@ -686,6 +686,86 @@
             font-size: 0.9rem;
         }
 
+        /* MONDAY-TO-FRIDAY CREW PAYROLL GENERATOR */
+        .payroll-section-box {
+            background: #0a2914;
+            border: 2px solid var(--primary-green);
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .payroll-section-box h5 {
+            color: var(--primary-green);
+            font-size: 1.15rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .payroll-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .payroll-grid { grid-template-columns: 1fr; }
+        }
+
+        .payroll-card {
+            background: #041f0e;
+            border: 1px solid #1c4d28;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .payroll-card label {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #cbd5e1;
+        }
+
+        .payroll-card input, .payroll-card select {
+            padding: 8px;
+            background: #000;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            width: 100%;
+        }
+
+        .btn-gen-payroll-driver {
+            background: #059669;
+            color: #fff;
+            font-weight: 900;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        .btn-gen-payroll-asst {
+            background: #d97706;
+            color: #fff;
+            font-weight: 900;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
         /* CORPORATE TRACKER SPREADSHEET TABLE & LABELED INPUTS */
         .tracker-form-container {
             background: #0d2614;
@@ -788,32 +868,23 @@
             text-transform: uppercase;
         }
 
-        /* STRICT FIXED-WIDTH 2-PER-ROW STACKED INVOICE CONTAINER */
-        .inv-stacked-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 65px);
-            gap: 4px;
-            width: 138px;
-        }
-
         .inv-badge-pill {
+            display: inline-block;
             background: #0f381b;
             color: #4ade80;
             border: 1px solid #22c55e;
-            padding: 3px 2px;
+            padding: 4px 8px;
+            margin: 2px 0;
             border-radius: 4px;
-            font-size: 0.72rem;
-            font-weight: 800;
-            text-align: center;
+            font-size: 0.82rem;
+            font-weight: 900;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .status-badge-paid {
             background: #166534;
             color: #ffffff;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 4px;
             font-weight: 800;
             font-size: 0.85rem;
@@ -824,12 +895,40 @@
         .status-badge-unpaid {
             background: #991b1b;
             color: #ffffff;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 4px;
             font-weight: 800;
             font-size: 0.85rem;
             cursor: pointer;
             display: inline-block;
+        }
+
+        .action-btn-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-table-edit {
+            background: #0284c7;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 0.85rem;
+        }
+
+        .btn-table-delete {
+            background: #dc2626;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 0.85rem;
         }
 
         .btn-action-group {
@@ -869,8 +968,8 @@
             min-width: 220px;
         }
 
-        /* PRINTABLE INVOICE */
-        #invoice-preview {
+        /* PRINTABLE INVOICES & PAYSLIPS */
+        #invoice-preview, #payslip-preview {
             display: none;
             border: 3px solid #1a531f;
             padding: 14px 20px;
@@ -879,6 +978,19 @@
             margin-top: 25px;
             border-radius: 8px;
             font-size: 1.05rem; 
+        }
+
+        /* EDITABLE ON-SCREEN STYLING */
+        .editable-preview-field {
+            border-bottom: 1.5px dashed #0284c7;
+            padding: 1px 4px;
+            outline: none;
+            background: rgba(2, 132, 199, 0.05);
+            border-radius: 3px;
+        }
+        .editable-preview-field:focus {
+            background: rgba(2, 132, 199, 0.15);
+            border-bottom: 2px solid #0284c7;
         }
 
         .inv-header {
@@ -981,8 +1093,8 @@
 
         @media print {
             body * { visibility: hidden; }
-            #invoice-preview, #invoice-preview * { visibility: visible; }
-            #invoice-preview { 
+            #invoice-preview, #invoice-preview *, #payslip-preview, #payslip-preview * { visibility: visible; }
+            #invoice-preview, #payslip-preview { 
                 position: absolute; 
                 left: 0; 
                 top: 0; 
@@ -992,6 +1104,7 @@
                 margin: 0;
             }
             .btn-print { display: none; }
+            .editable-preview-field { border-bottom: none; background: transparent; }
         }
 
         footer {
@@ -1150,7 +1263,6 @@
                     <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
                 </div>
 
-                <!-- Destination Zone Dropdown -->
                 <div class="input-group">
                     <label>Select Destination Zone (Auto-Fills All Towns)</label>
                     <select id="inv-destination" onchange="selectDestinationZone()">
@@ -1191,7 +1303,6 @@
                     </select>
                 </div>
 
-                <!-- Specific Town Field -->
                 <div class="input-group">
                     <label>Specific Drop-off Town / Zone List</label>
                     <input type="text" id="inv-specific-dest" placeholder="e.g. Little London or Select Zone above" oninput="liveTypeAutoPrice()">
@@ -1227,7 +1338,6 @@
             <div id="manager-panel" class="manager-panel">
                 <h4>🔐 Dispatcher Control Panel (Private)</h4>
                 
-                <!-- Payment Status Box (Hidden from customers) -->
                 <div class="payment-status-box">
                     <h5>💳 Payment & Booking Status</h5>
                     <div class="checkbox-item">
@@ -1240,23 +1350,23 @@
                     </div>
                 </div>
 
-                <!-- WEEKLY TOTALS SUMMARY DASHBOARD -->
-                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📅 Current Active Week Summary (Mon – Sun)</h5>
+                <!-- MONDAY TO FRIDAY ACTIVE WEEK SUMMARY -->
+                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📅 Current Active Operating Week (Monday – Friday)</h5>
                 <div class="weekly-summary-bar">
                     <div class="summary-box">
-                        <h6>Week Revenue</h6>
+                        <h6>M-F Revenue</h6>
                         <span id="sum-revenue">$0 JMD</span>
                     </div>
                     <div class="summary-box">
-                        <h6>Week Expenses (Petrol+Crew)</h6>
+                        <h6>M-F Expenses (Petrol+Crew)</h6>
                         <span id="sum-expenses" style="color: #f87171;">$0 JMD</span>
                     </div>
                     <div class="summary-box">
-                        <h6>Week Net Profit</h6>
+                        <h6>M-F Net Profit</h6>
                         <span id="sum-profit" style="color: #38bdf8;">$0 JMD</span>
                     </div>
                     <div class="summary-box">
-                        <h6>Week Runs</h6>
+                        <h6>M-F Runs</h6>
                         <span id="sum-count" style="color: #fbbf24;">0 Jobs</span>
                     </div>
                 </div>
@@ -1288,28 +1398,120 @@
                     </div>
                 </div>
 
+                <!-- MONDAY-TO-FRIDAY CREW PAYROLL GENERATOR WITH DEDUCTIONS & BALANCE -->
+                <div class="payroll-section-box">
+                    <h5>👥 Monday–Friday Crew Payroll & Corporate Payslips</h5>
+                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan M-F operating runs, include Payroll Number, Earnings, Deductions, and Total Balance Charges:</p>
+                    
+                    <div class="payroll-grid">
+                        <!-- DRIVER PAYROLL CARD -->
+                        <div class="payroll-card">
+                            <label>🛞 Driver Name:</label>
+                            <input type="text" id="payroll-driver-name" placeholder="Driver Full Name">
+                            
+                            <label>Payroll # / Employee ID:</label>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                                <input type="text" id="payroll-driver-paynum" value="PAY-2026-001">
+                                <input type="text" id="payroll-driver-id" placeholder="Staff ID">
+                            </div>
+
+                            <label>National ID:</label>
+                            <input type="text" id="payroll-driver-natid" placeholder="National ID Number">
+
+                            <label>Job Position / Dept / Branch:</label>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                                <input type="text" id="payroll-driver-pos" value="Commercial Driver">
+                                <input type="text" id="payroll-driver-dept" value="Logistics">
+                            </div>
+                            <input type="text" id="payroll-driver-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
+
+                            <label>Date Joined:</label>
+                            <input type="date" id="payroll-driver-joined">
+
+                            <label>Deduction Amount This Period (JMD):</label>
+                            <input type="number" id="payroll-driver-deduct" value="0" placeholder="0">
+
+                            <label>Total Outstanding Charges / Balance (JMD):</label>
+                            <input type="number" id="payroll-driver-totalcharges" value="0" placeholder="Total debt/advance balance">
+
+                            <label>Payment Method & Date:</label>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                                <select id="payroll-driver-method">
+                                    <option value="Bank Transfer">🏦 Bank Transfer</option>
+                                    <option value="Cash">💵 Cash</option>
+                                    <option value="Company Check">📜 Check</option>
+                                </select>
+                                <input type="date" id="payroll-driver-paydate">
+                            </div>
+
+                            <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver M-F Payslip</button>
+                        </div>
+
+                        <!-- ASSISTANT PAYROLL CARD -->
+                        <div class="payroll-card">
+                            <label>🤝 Assistant Name:</label>
+                            <input type="text" id="payroll-asst-name" placeholder="Assistant Full Name">
+                            
+                            <label>Payroll # / Employee ID:</label>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                                <input type="text" id="payroll-asst-paynum" value="PAY-2026-002">
+                                <input type="text" id="payroll-asst-id" placeholder="Staff ID">
+                            </div>
+
+                            <label>National ID:</label>
+                            <input type="text" id="payroll-asst-natid" placeholder="National ID Number">
+
+                            <label>Job Position / Dept / Branch:</label>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                                <input type="text" id="payroll-asst-pos" value="Truck Assistant">
+                                <input type="text" id="payroll-asst-dept" value="Logistics">
+                            </div>
+                            <input type="text" id="payroll-asst-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
+
+                            <label>Date Joined:</label>
+                            <input type="date" id="payroll-asst-joined">
+
+                            <label>Deduction Amount This Period (JMD):</label>
+                            <input type="number" id="payroll-asst-deduct" value="0" placeholder="0">
+
+                            <label>Total Outstanding Charges / Balance (JMD):</label>
+                            <input type="number" id="payroll-asst-totalcharges" value="0" placeholder="Total debt/advance balance">
+
+                            <label>Payment Method & Date:</label>
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                                <select id="payroll-asst-method">
+                                    <option value="Bank Transfer">🏦 Bank Transfer</option>
+                                    <option value="Cash">💵 Cash</option>
+                                    <option value="Company Check">📜 Check</option>
+                                </select>
+                                <input type="date" id="payroll-asst-paydate">
+                            </div>
+
+                            <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant M-F Payslip</button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- WEEK VIEW TOGGLE BAR -->
                 <div class="week-filter-bar">
-                    <span id="current-view-label">📅 Showing: Current Week (Monday – Sunday)</span>
+                    <span id="current-view-label">📅 Showing: Current M-F Operating Week</span>
                     <button class="btn-week-toggle" onclick="toggleViewMode()">🔄 Switch to View All History Table</button>
                 </div>
 
                 <!-- Corporate Multi-Drop Daily Job Tracker -->
                 <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log weekly runs, type towns with auto-prompting, and tap any logged row below to instantly edit it!</p>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log M-F operational runs, track crew payouts, and view invoice numbers instantly below!</p>
 
                 <div class="tracker-form-container">
                     <div class="tracker-form-grid">
                         <div class="tracker-field-group">
-                            <label>Day of Week</label>
+                            <label>Day of Week (M-F)</label>
                             <select id="tr-day">
                                 <option value="Monday">Monday</option>
                                 <option value="Tuesday">Tuesday</option>
                                 <option value="Wednesday">Wednesday</option>
                                 <option value="Thursday">Thursday</option>
                                 <option value="Friday">Friday</option>
-                                <option value="Saturday">Saturday</option>
-                                <option value="Sunday">Sunday</option>
                             </select>
                         </div>
                         <div class="tracker-field-group">
@@ -1546,6 +1748,83 @@
                 <br>
                 <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
             </div>
+
+            <!-- Printable Monday-to-Friday Crew Payslip Output Container (FULLY ON-SCREEN EDITABLE) -->
+            <div id="payslip-preview">
+                <div class="inv-header">
+                    <div class="inv-logo-box">
+                        <img src="IMG-20250804-WA0004.jpg" alt="D&C Logo">
+                    </div>
+                    <div class="inv-title-box">
+                        <div class="inv-title-main" id="slip-title">MONDAY – FRIDAY CREW PAYSLIP</div>
+                        <div class="inv-title-sub">D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</div>
+                        <div class="inv-title-loc">Jamaica | Kingston & Portmore Hub</div>
+                    </div>
+                </div>
+
+                <div class="inv-details">
+                    <div>
+                        <p><strong>Staff Name:</strong> <span id="slip-name" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #1a531f;"></span></p>
+                        <p><strong>Payroll #:</strong> <span id="slip-paynum" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0284c7;"></span></p>
+                        <p><strong>Employee ID:</strong> <span id="slip-id" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>National ID:</strong> <span id="slip-natid" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Job Position:</strong> <span id="slip-position" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p><strong>Department:</strong> <span id="slip-dept" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Branch:</strong> <span id="slip-branch" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Date Joined:</strong> <span id="slip-joined" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
+                        <p><strong>Payment Method:</strong> <span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0284c7;"></span></p>
+                        <p><strong>Payment Date:</strong> <span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534;"></span></p>
+                    </div>
+                </div>
+
+                <p style="margin-bottom: 8px; color: #111827; font-size: 1.02rem; font-weight: 800;">Itemized Monday–Friday Operating Runs & Earnings:</p>
+                
+                <table style="margin-bottom: 12px; width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+                    <thead>
+                        <tr style="background-color: #1a531f; color: #ffffff;">
+                            <th style="padding: 8px; text-align: left;">Date / Day</th>
+                            <th style="padding: 8px; text-align: left;">Invoice #(s)</th>
+                            <th style="padding: 8px; text-align: left;">Route</th>
+                            <th style="padding: 8px; text-align: right;">Earnings (JMD)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="slip-runs-tbody">
+                        <!-- Dynamic itemized M-F runs inserted here -->
+                    </tbody>
+                </table>
+
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 0.98rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center;">
+                        <span>Gross Earnings:</span>
+                        <strong id="slip-gross" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #dc2626; align-items: center;">
+                        <span>Deductions This Period:</span>
+                        <strong id="slip-deduct-amt" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; color: #b45309; align-items: center;">
+                        <span>Total Outstanding Charges / Balance:</span>
+                        <strong id="slip-total-charges" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
+                    </div>
+                </div>
+
+                <div style="background: #f0fdf4; border: 2px solid #166534; padding: 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span style="font-weight: 900; color: #166534; font-size: 1.1rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
+                    <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.35rem;">$0 JMD</span>
+                </div>
+
+                <div class="inv-footer">
+                    <p style="margin-bottom: 4px; font-weight: bold; color: #1a531f;">✅ Official M-F Corporate Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
+                    <p>Authorized Dispatcher Sign-off: ___________________________</p>
+                </div>
+                <br>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
+                    <button class="btn-whatsapp btn-print" onclick="sendWhatsAppWeeklyPayslip()">📱 Send via WhatsApp</button>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -1557,6 +1836,7 @@
     <script>
         var managerPin = "1234";
         var showAllHistory = false;
+        var activeWeeklyPayslipData = null;
 
         function toggleManagerPanel() {
             var panel = document.getElementById('manager-panel');
@@ -1581,10 +1861,10 @@
             var btn = document.querySelector('.btn-week-toggle');
             if (showAllHistory) {
                 label.innerText = "📅 Showing: All Historical Records in Table";
-                btn.innerText = "🔄 Switch to Current Week Table Only";
+                btn.innerText = "🔄 Switch to Current M-F Week Table Only";
                 btn.style.background = '#0369a1';
             } else {
-                label.innerText = "📅 Showing: Current Week (Monday – Sunday)";
+                label.innerText = "📅 Showing: Current M-F Operating Week";
                 btn.innerText = "🔄 Switch to View All History Table";
                 btn.style.background = '#1e293b';
             }
@@ -1596,16 +1876,25 @@
             var assistant = document.getElementById('tr-assistant').value;
             localStorage.setItem("dc_default_driver", driver);
             localStorage.setItem("dc_default_assistant", assistant);
+
+            if (driver && !document.getElementById('payroll-driver-name').value) {
+                document.getElementById('payroll-driver-name').value = driver;
+            }
+            if (assistant && !document.getElementById('payroll-asst-name').value) {
+                document.getElementById('payroll-asst-name').value = assistant;
+            }
         }
 
         function loadCrewPreferences() {
             var savedDriver = localStorage.getItem("dc_default_driver");
             var savedAsst = localStorage.getItem("dc_default_assistant");
-            if (savedDriver !== null && document.getElementById('tr-driver').value === '') {
-                document.getElementById('tr-driver').value = savedDriver;
+            if (savedDriver !== null) {
+                if (document.getElementById('tr-driver').value === '') document.getElementById('tr-driver').value = savedDriver;
+                if (document.getElementById('payroll-driver-name').value === '') document.getElementById('payroll-driver-name').value = savedDriver;
             }
-            if (savedAsst !== null && document.getElementById('tr-assistant').value === '') {
-                document.getElementById('tr-assistant').value = savedAsst;
+            if (savedAsst !== null) {
+                if (document.getElementById('tr-assistant').value === '') document.getElementById('tr-assistant').value = savedAsst;
+                if (document.getElementById('payroll-asst-name').value === '') document.getElementById('payroll-asst-name').value = savedAsst;
             }
         }
 
@@ -1778,6 +2067,141 @@
             document.getElementById('out-date').innerText = new Date().toLocaleDateString();
 
             document.getElementById('invoice-preview').style.display = 'block';
+            document.getElementById('payslip-preview').style.display = 'none';
+        }
+
+        /* GENERATE PREFILLED MONDAY-TO-FRIDAY CREW PAYSLIP WITH DEDUCTIONS & BALANCE */
+        function generateWeeklyPayslip(roleType) {
+            var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
+            var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
+            var staffIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-id') : document.getElementById('payroll-asst-id');
+            var natIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-natid') : document.getElementById('payroll-asst-natid');
+            var posInput = roleType === 'driver' ? document.getElementById('payroll-driver-pos') : document.getElementById('payroll-asst-pos');
+            var deptInput = roleType === 'driver' ? document.getElementById('payroll-driver-dept') : document.getElementById('payroll-asst-dept');
+            var branchInput = roleType === 'driver' ? document.getElementById('payroll-driver-branch') : document.getElementById('payroll-asst-branch');
+            var joinedInput = roleType === 'driver' ? document.getElementById('payroll-driver-joined') : document.getElementById('payroll-asst-joined');
+            var deductInput = roleType === 'driver' ? document.getElementById('payroll-driver-deduct') : document.getElementById('payroll-asst-deduct');
+            var chargesInput = roleType === 'driver' ? document.getElementById('payroll-driver-totalcharges') : document.getElementById('payroll-asst-totalcharges');
+            var methodSelect = roleType === 'driver' ? document.getElementById('payroll-driver-method') : document.getElementById('payroll-asst-method');
+            var paydateInput = roleType === 'driver' ? document.getElementById('payroll-driver-paydate') : document.getElementById('payroll-asst-paydate');
+
+            var staffName = staffNameInput.value.trim();
+            var payNum = payNumInput.value.trim() || 'PAY-2026-001';
+            var staffId = staffIdInput.value.trim() || 'N/A';
+            var natId = natIdInput.value.trim() || 'N/A';
+            var position = posInput.value.trim() || (roleType === 'driver' ? 'Commercial Driver' : 'Truck Assistant');
+            var dept = deptInput.value.trim() || 'Logistics';
+            var branch = branchInput.value.trim() || 'Kingston & Portmore Hub';
+            var joined = joinedInput.value || 'N/A';
+            var deduction = parseFloat(deductInput.value) || 0;
+            var totalCharges = parseFloat(chargesInput.value) || 0;
+            var paymentMethod = methodSelect.value;
+            var payDate = paydateInput.value || new Date().toLocaleDateString();
+
+            if (!staffName) {
+                alert("Please enter the " + roleType + "'s name first.");
+                staffNameInput.focus();
+                return;
+            }
+
+            var allJobs = getStoredJobs();
+            var weekJobs = allJobs.filter(function(j) {
+                if (!isCurrentWeek(j.date)) return false;
+                if (roleType === 'driver') {
+                    return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
+                } else {
+                    return j.assistant && j.assistant.toLowerCase().includes(staffName.toLowerCase());
+                }
+            });
+
+            if (weekJobs.length === 0) {
+                alert("No logged M-F operating runs found for " + staffName + " during the current active week. Log some jobs in the tracker first!");
+                return;
+            }
+
+            document.getElementById('slip-title').innerText = roleType === 'driver' ? 'DRIVER M-F WEEKLY PAYSLIP' : 'ASSISTANT M-F WEEKLY PAYSLIP';
+            document.getElementById('slip-name').innerText = staffName;
+            document.getElementById('slip-paynum').innerText = payNum;
+            document.getElementById('slip-id').innerText = staffId;
+            document.getElementById('slip-natid').innerText = natId;
+            document.getElementById('slip-position').innerText = position;
+            document.getElementById('slip-dept').innerText = dept;
+            document.getElementById('slip-branch').innerText = branch;
+            document.getElementById('slip-joined').innerText = joined;
+            document.getElementById('slip-method').innerText = paymentMethod;
+            document.getElementById('slip-paydate').innerText = payDate;
+
+            var tbody = document.getElementById('slip-runs-tbody');
+            tbody.innerHTML = '';
+
+            var grossEarnings = 0;
+            var runsSummaryText = "";
+
+            for (var i = 0; i < weekJobs.length; i++) {
+                var j = weekJobs[i];
+                var payout = roleType === 'driver' ? j.driverPay : j.asstPay;
+                grossEarnings += payout;
+
+                runsSummaryText += "• " + j.day + " (" + j.date + ") | Inv: " + j.inv + " | " + j.pickup + " to " + j.drop + " - $" + payout.toLocaleString() + " JMD\n";
+
+                var tr = document.createElement('tr');
+                tr.innerHTML = '<td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br><span style="font-size:0.8rem; color:#64748b;">' + j.date + '</span></td>' +
+                               '<td style="padding: 8px; border-bottom: 1px solid #ddd;">' + j.inv + '</td>' +
+                               '<td style="padding: 8px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
+                               '<td style="padding: 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
+                tbody.appendChild(tr);
+            }
+
+            var netPayable = grossEarnings - deduction;
+            if (netPayable < 0) netPayable = 0;
+
+            document.getElementById('slip-gross').innerText = '$' + grossEarnings.toLocaleString() + ' JMD';
+            document.getElementById('slip-deduct-amt').innerText = '$' + deduction.toLocaleString() + ' JMD';
+            document.getElementById('slip-total-charges').innerText = '$' + totalCharges.toLocaleString() + ' JMD';
+            document.getElementById('slip-total-amount').innerText = '$' + netPayable.toLocaleString() + ' JMD';
+
+            // Store for WhatsApp sharing (pulling live from DOM in case user edited any text inline!)
+            activeWeeklyPayslipData = {
+                roleType: roleType
+            };
+
+            document.getElementById('invoice-preview').style.display = 'none';
+            document.getElementById('payslip-preview').style.display = 'block';
+            document.getElementById('payslip-preview').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function sendWhatsAppWeeklyPayslip() {
+            // Read live values from the preview DOM in case the user edited them on screen!
+            var name = document.getElementById('slip-name').innerText;
+            var paynum = document.getElementById('slip-paynum').innerText;
+            var id = document.getElementById('slip-id').innerText;
+            var natid = document.getElementById('slip-natid').innerText;
+            var position = document.getElementById('slip-position').innerText;
+            var dept = document.getElementById('slip-dept').innerText;
+            var branch = document.getElementById('slip-branch').innerText;
+            var method = document.getElementById('slip-method').innerText;
+            var paydate = document.getElementById('slip-paydate').innerText;
+            var gross = document.getElementById('slip-gross').innerText;
+            var deduct = document.getElementById('slip-deduct-amt').innerText;
+            var charges = document.getElementById('slip-total-charges').innerText;
+            var net = document.getElementById('slip-total-amount').innerText;
+
+            var message = "Hello " + name + ", here is your D&C Refuse Trucking M-F payslip:\n\n" +
+                          "Payroll #: " + paynum + "\n" +
+                          "Employee ID: " + id + "\n" +
+                          "National ID: " + natid + "\n" +
+                          "Position: " + position + " (" + dept + ")\n" +
+                          "Branch: " + branch + "\n" +
+                          "Payment Method: " + method + "\n" +
+                          "Payment Date: " + paydate + "\n\n" +
+                          "Gross Earnings: " + gross + "\n" +
+                          "Deductions This Period: " + deduct + "\n" +
+                          "Total Outstanding Charges: " + charges + "\n" +
+                          "Amount Payable (Net): " + net + "\n\n" +
+                          "Thank you for your hard work!";
+
+            var whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(message);
+            window.open(whatsappUrl, "_blank");
         }
 
         function sendWhatsAppQuote() {
@@ -1914,7 +2338,7 @@
             }
             if (!job) return;
 
-            var newDay = prompt("Edit Day of Week:", job.day);
+            var newDay = prompt("Edit Day of Week (Monday - Friday):", job.day);
             if (newDay === null) return;
             var newDate = prompt("Edit Exact Date (YYYY-MM-DD):", job.date);
             if (newDate === null) return;
@@ -1974,7 +2398,7 @@
             document.getElementById('maint-cost').value = '';
             document.getElementById('maint-vendor').value = '';
 
-            loadTrackerJobs(); // Refresh all totals and tables
+            loadTrackerJobs();
         }
 
         function deleteMaintenanceLog(id) {
@@ -2018,11 +2442,12 @@
             var monday = new Date(now.setDate(diffToMonday));
             monday.setHours(0, 0, 0, 0);
 
-            var sunday = new Date(monday);
-            sunday.setDate(monday.getDate() + 6);
-            sunday.setHours(23, 59, 59, 999);
+            // Strict Monday to Friday operating window (Friday end of day)
+            var friday = new Date(monday);
+            friday.setDate(monday.getDate() + 4);
+            friday.setHours(23, 59, 59, 999);
 
-            return jobDate >= monday && jobDate <= sunday;
+            return jobDate >= monday && jobDate <= friday;
         }
 
         function loadTrackerJobs() {
@@ -2031,13 +2456,11 @@
             var tbody = document.getElementById('tracker-table-body');
             tbody.innerHTML = '';
 
-            // Calculate All-Time Maintenance Total Cost
             var totalMaintCost = 0;
             for (var m = 0; m < allMaint.length; m++) {
                 totalMaintCost += allMaint[m].cost;
             }
 
-            // Calculate ALL-TIME / YEARLY Totals
             var allTimeRev = 0;
             var allTimeJobExp = 0;
 
@@ -2057,7 +2480,6 @@
             document.getElementById('all-profit').innerText = '$' + allTimeNetProfit.toLocaleString() + ' JMD';
             document.getElementById('all-count').innerText = allJobs.length + (allJobs.length === 1 ? ' Job' : ' Jobs');
 
-            // Filter active week jobs
             var tableJobs = showAllHistory ? allJobs : allJobs.filter(function(j) {
                 return isCurrentWeek(j.date);
             });
@@ -2079,7 +2501,7 @@
             document.getElementById('sum-count').innerText = currentWeekJobs.length + (currentWeekJobs.length === 1 ? ' Job' : ' Jobs');
 
             if (tableJobs.length === 0) {
-                var emptyMsg = showAllHistory ? "No corporate jobs logged yet." : "No jobs logged for this week yet. Fresh week, ready to roll!";
+                var emptyMsg = showAllHistory ? "No corporate jobs logged yet." : "No M-F operating week jobs logged yet. Ready to roll!";
                 tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:#94a3b8;">' + emptyMsg + '</td></tr>';
             } else {
                 for (var i = 0; i < tableJobs.length; i++) {
@@ -2087,12 +2509,15 @@
                     var expenses = j.driverPay + j.asstPay + j.petrol;
                     var netProfit = j.rate - expenses;
 
-                    var invArray = j.inv.split(',').map(function(item) { return item.trim(); }).filter(Boolean);
-                    var invHTML = '<div class="inv-stacked-grid">';
-                    for (var k = 0; k < invArray.length; k++) {
-                        invHTML += '<span class="inv-badge-pill">' + invArray[k] + '</span>';
+                    var invArray = (j.inv || '').split(',').map(function(item) { return item.trim(); }).filter(Boolean);
+                    var invHTML = '';
+                    if (invArray.length > 0) {
+                        for (var k = 0; k < invArray.length; k++) {
+                            invHTML += '<span class="inv-badge-pill">' + invArray[k] + '</span> ';
+                        }
+                    } else {
+                        invHTML = '<span class="inv-badge-pill">' + (j.inv || 'DC-1001') + '</span>';
                     }
-                    invHTML += '</div>';
 
                     var statusHTML = j.status === 'PAID' 
                         ? '<span class="status-badge-paid" onclick="toggleJobStatus(' + j.id + ')">✅ PAID</span>' 
@@ -2109,8 +2534,10 @@
                                    '<td style="font-weight:900; color:#38bdf8;">$' + netProfit.toLocaleString() + ' JMD</td>' +
                                    '<td>' + statusHTML + '</td>' +
                                    '<td>' +
-                                      '<button style="background:#0284c7; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; margin-right:4px;" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
-                                      '<button style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
+                                      '<div class="action-btn-group">' +
+                                          '<button class="btn-table-edit" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
+                                          '<button class="btn-table-delete" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
+                                      '</div>' +
                                    '</td>';
                     tbody.appendChild(tr);
                 }
