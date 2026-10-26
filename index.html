@@ -686,7 +686,7 @@
             font-size: 0.9rem;
         }
 
-        /* MONDAY-TO-FRIDAY CREW PAYROLL GENERATOR */
+        /* CREW PAYROLL GENERATOR */
         .payroll-section-box {
             background: #0a2914;
             border: 2px solid var(--primary-green);
@@ -1397,10 +1397,10 @@
                     </div>
                 </div>
 
-                <!-- MONDAY-TO-FRIDAY CREW PAYROLL GENERATOR WITH DEDUCTIONS & BALANCE -->
+                <!-- CREW PAYROLL GENERATOR WITH DEDUCTIONS & BALANCE -->
                 <div class="payroll-section-box">
-                    <h5>👥 Monday–Friday Crew Payroll & Corporate Payslips</h5>
-                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan M-F operating runs, include Payroll Number, Earnings, Deductions, and AR Charges Notes (Fully Saveable & Editable):</p>
+                    <h5>👥 Crew Payroll & Corporate Payslips</h5>
+                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan operating runs, include Permanent Payroll Number, Earnings, Deductions, and AR Charges Notes (Fully Saveable & Editable):</p>
                     
                     <div class="payroll-grid">
                         <!-- DRIVER PAYROLL CARD -->
@@ -1450,7 +1450,7 @@
                             </div>
 
                             <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('driver')">💾 Save Driver Profile</button>
-                            <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver M-F Payslip</button>
+                            <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver Weekly Payslip</button>
                         </div>
 
                         <!-- ASSISTANT PAYROLL CARD -->
@@ -1500,7 +1500,7 @@
                             </div>
 
                             <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('assistant')">💾 Save Assistant Profile</button>
-                            <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant M-F Payslip</button>
+                            <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant Weekly Payslip</button>
                         </div>
                     </div>
                 </div>
@@ -1513,12 +1513,12 @@
 
                 <!-- Corporate Multi-Drop Daily Job Tracker -->
                 <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log M-F operational runs, track crew payouts, and view invoice numbers instantly below!</p>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log operational runs, track crew payouts, and view invoice numbers instantly below!</p>
 
                 <div class="tracker-form-container">
                     <div class="tracker-form-grid">
                         <div class="tracker-field-group">
-                            <label>Day of Week (M-F)</label>
+                            <label>Day of Week</label>
                             <select id="tr-day">
                                 <option value="Monday">Monday</option>
                                 <option value="Tuesday">Tuesday</option>
@@ -1762,7 +1762,7 @@
                 <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
             </div>
 
-            <!-- Printable Monday-to-Friday Crew Payslip Output Container (Formal Reference Layout & Editable) -->
+            <!-- Printable Weekly Payslip Output Container (Formal Reference Layout & Editable) -->
             <div id="payslip-preview">
                 <div class="inv-header">
                     <div class="inv-logo-box">
@@ -1818,7 +1818,7 @@
                         </tr>
                     </thead>
                     <tbody id="slip-runs-tbody">
-                        <!-- Dynamic itemized M-F runs inserted here -->
+                        <!-- Dynamic itemized runs inserted here -->
                     </tbody>
                 </table>
 
@@ -1846,7 +1846,7 @@
                 </div>
 
                 <div class="inv-footer">
-                    <p style="margin-bottom: 4px; font-weight: bold; color: #1a531f;">✅ Official Weekly Corporate Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
+                    <p style="margin-bottom: 4px; font-weight: bold; color: #1a531f;">✅ Official Corporation Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
                     <p>Authorized Dispatcher Sign-off: ___________________________</p>
                 </div>
                 <br>
@@ -2205,7 +2205,7 @@
             });
 
             if (weekJobs.length === 0) {
-                alert("No logged M-F operating runs found for " + staffName + " during the current active week. Log some jobs in the tracker first!");
+                alert("No logged operating runs found for " + staffName + " during the current active week. Log some jobs in the tracker first!");
                 return;
             }
 
@@ -2581,7 +2581,7 @@
             document.getElementById('sum-count').innerText = currentWeekJobs.length + (currentWeekJobs.length === 1 ? ' Job' : ' Jobs');
 
             if (tableJobs.length === 0) {
-                var emptyMsg = showAllHistory ? "No corporate jobs logged yet." : "No M-F operating week jobs logged yet. Ready to roll!";
+                var emptyMsg = showAllHistory ? "No corporate jobs logged yet." : "No operating week jobs logged yet. Ready to roll!";
                 tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:#94a3b8;">' + emptyMsg + '</td></tr>';
             } else {
                 for (var i = 0; i < tableJobs.length; i++) {
