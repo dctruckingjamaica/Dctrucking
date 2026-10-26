@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED | Kingston & Portmore Jamaica</title>
     
-    <!-- GOOGLE SEARCH (SEO) META TAGS -->
     <meta name="description" content="D&C Refuse Trucking & Equipment Co. Limited provides reliable 7.5-ton box truck haulage, private truck hire, cargo removal, and commercial refuse management based in Kingston / Portmore, serving all Jamaica islandwide.">
-    <meta name="keywords" content="removal, haulage, private truck hire, box truck services, refuse management, trucking company Kingston, haulage Portmore, truck rental Jamaica, tail lift truck Jamaica, D&C Refuse Trucking, 7.5 ton truck, 20ft box truck">
-    <meta name="author" content="D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED">
-
+    
     <style>
         :root {
-            --primary-green: #00e676; /* Vibrant popping neon emerald */
+            --primary-green: #00e676;
             --dark-green: #0a2e12;
             --bg-dark: #000000;
-            --card-dark: #181818;
+            --card-dark: #141414;
             --text-light: #ffffff;
-            --card-shadow: 0 4px 25px rgba(0, 230, 118, 0.25);
         }
 
         * {
@@ -31,198 +27,116 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
             color: var(--text-light);
             background-color: var(--bg-dark);
-            font-size: 1.1rem;
+            -webkit-text-size-adjust: 100%;
         }
 
         header {
             background: linear-gradient(135deg, var(--dark-green) 0%, var(--bg-dark) 100%);
             color: var(--text-light);
-            padding: 40px 20px;
+            padding: 30px 15px;
             text-align: center;
-            border-bottom: 4px solid var(--primary-green);
-            box-shadow: 0 4px 20px rgba(0, 230, 118, 0.15);
+            border-bottom: 3px solid var(--primary-green);
         }
 
         header h1 {
-            font-size: clamp(1.4rem, 4.5vw, 2.3rem);
+            font-size: 1.35rem;
             text-transform: uppercase;
             color: var(--primary-green);
             margin-bottom: 8px;
             font-weight: 900;
-            letter-spacing: 0.5px;
-            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+            letter-spacing: 0.3px;
         }
 
         header p {
-            font-size: clamp(0.95rem, 2.5vw, 1.2rem);
-            color: #ffffff;
+            font-size: 0.85rem;
+            color: #e2e8f0;
             font-weight: 700;
             text-transform: uppercase;
         }
 
+        /* QUICK SHORTCUT BUTTONS BAR */
+        .shortcut-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 15px;
+            background: #081c10;
+            border-bottom: 2px solid var(--primary-green);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .shortcut-btn {
+            background: #112616;
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+            padding: 12px 10px;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            box-shadow: 0 2px 10px rgba(0, 230, 118, 0.2);
+        }
+
+        .shortcut-btn:active {
+            transform: scale(0.97);
+            background: var(--primary-green);
+            color: #000;
+        }
+
         .container {
-            max-width: 1100px;
-            margin: 25px auto;
-            padding: 0 12px;
+            max-width: 100%;
+            padding: 12px;
+            margin: 0 auto;
         }
 
         .card {
             background: var(--card-dark);
-            padding: 22px 16px;
-            margin-bottom: 28px;
-            border-radius: 14px;
-            border: 2px solid #282828;
-            box-shadow: var(--card-shadow);
+            padding: 18px 14px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 1px solid #222;
         }
 
         .card h3 {
             color: var(--primary-green);
-            font-size: clamp(1.05rem, 3.8vw, 1.55rem);
-            margin-bottom: 15px;
-            border-bottom: 3px solid var(--primary-green);
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--primary-green);
             padding-bottom: 6px;
-            display: inline-block;
             text-transform: uppercase;
             font-weight: 900;
-            white-space: nowrap;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .about-text {
-            color: #e0e0e0;
-            font-size: 1.08rem;
-            line-height: 1.6;
-            margin-bottom: 18px;
+            color: #d1d5db;
+            font-size: 0.98rem;
+            line-height: 1.55;
+            margin-bottom: 14px;
         }
 
         .about-text strong {
             color: #ffffff;
         }
 
-        .deposit-policy-banner {
-            background: linear-gradient(135deg, #0d2b14, #1b4d24);
-            border: 2px solid var(--primary-green);
-            border-radius: 10px;
-            padding: 16px;
-            margin-top: 10px;
-            margin-bottom: 18px;
-            color: #ffffff;
-            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.2);
-        }
-
-        .deposit-policy-banner h4 {
-            color: var(--primary-green);
-            font-size: 1.15rem;
-            font-weight: 900;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .deposit-policy-banner p {
-            font-size: 1.02rem;
-            font-weight: 700;
-            line-height: 1.55;
-            color: #f1f5f9;
-            margin-bottom: 8px;
-        }
-
-        .deposit-policy-banner p:last-child {
-            margin-bottom: 0;
-        }
-
-        .text-red-alert {
-            color: #ff3333;
-            font-weight: 900;
-        }
-
-        .text-yellow-highlight {
-            color: #ffeb3b;
-            font-weight: 900;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        .fleet-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
-            margin-top: 18px;
-        }
-
-        .fleet-card {
-            position: relative;
-            border-radius: 10px;
-            border: 2px solid #333333;
-            overflow: hidden;
-            background: #111;
-        }
-
-        .fleet-card img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .fleet-card .caption {
-            padding: 10px;
-            background: #111111;
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--primary-green);
-            text-align: center;
-            border-top: 1px solid #222;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .blur-plate {
-            position: absolute;
-            bottom: 45px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 85px;
-            height: 28px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 4px;
-        }
-
-        .blur-plate-bumper-high {
-            position: absolute;
-            bottom: 110px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 110px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(16px);
-            border-radius: 5px;
-            z-index: 30;
-        }
-
         .features-list {
             list-style: none;
-            margin-top: 15px;
-            margin-bottom: 18px;
+            margin-top: 12px;
+            margin-bottom: 14px;
         }
 
         .features-list li {
-            padding: 10px 0;
-            font-size: 1.1rem;
-            border-bottom: 1px dashed #333333;
-            color: #ffffff;
+            padding: 8px 0;
+            font-size: 0.95rem;
+            border-bottom: 1px dashed #222;
+            color: #e5e7eb;
         }
 
         .features-list li span {
@@ -230,28 +144,71 @@
             color: var(--primary-green);
         }
 
+        .fleet-gallery {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin-top: 15px;
+        }
+
+        .fleet-card {
+            position: relative;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .fleet-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .fleet-card .caption {
+            padding: 10px;
+            background: #111;
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        .blur-plate {
+            position: absolute;
+            bottom: 42px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 75px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 4px;
+        }
+
+        /* RATE SHEET */
         .fresh-rate-card {
             background-color: #ffffff;
             color: #000000;
-            border-radius: 14px;
-            padding: 20px 16px;
-            margin-top: 15px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-            border: 3px solid var(--primary-green);
+            border-radius: 10px;
+            padding: 12px 10px;
+            margin-top: 12px;
+            border: 2px solid var(--primary-green);
         }
 
         .fresh-rate-scroll {
-            max-height: 550px;
+            max-height: 400px;
             overflow-y: auto;
-            padding-right: 6px;
         }
 
         .rate-row {
-            padding: 14px 10px;
-            border-bottom: 2px solid #e2e8f0;
+            padding: 12px 8px;
+            border-bottom: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
 
         .rate-row:last-child {
@@ -260,766 +217,105 @@
 
         .rate-loc {
             font-weight: 800;
-            font-size: 1.12rem;
+            font-size: 0.98rem;
             color: #0f172a;
-            display: flex;
-            align-items: flex-start;
-            gap: 6px;
-            line-height: 1.35;
         }
 
         .rate-price {
             font-weight: 900;
-            font-size: 1.25rem;
-            color: #059669;
-            padding-left: 28px;
-        }
-
-        .client-account-bar {
-            background: #112616;
-            border: 2px solid var(--primary-green);
-            padding: 14px;
-            border-radius: 10px;
-            margin-bottom: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .client-account-bar h4 {
-            color: var(--primary-green);
             font-size: 1.1rem;
-            font-weight: 900;
+            color: #059669;
         }
 
-        .quick-lookup-grid {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .quick-lookup-grid input {
-            flex: 2;
-            min-width: 200px;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #444;
-            background: #000;
-            color: #fff;
-            font-size: 1rem;
-            width: 100%;
-        }
-
-        .btn-lookup {
-            background: var(--primary-green);
-            color: #000;
-            font-weight: 900;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .invoice-builder {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 18px;
-        }
-
-        @media (max-width: 768px) {
-            .invoice-builder { grid-template-columns: 1fr; }
-        }
-
+        /* BOOKING & FORM SECTION */
         .input-group {
             display: flex;
             flex-direction: column;
-            width: 100%;
+            margin-bottom: 12px;
         }
 
         .input-group label {
             font-weight: 800;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             color: var(--primary-green);
-            font-size: 1.05rem;
+            font-size: 0.9rem;
         }
 
         .input-group input, .input-group select {
-            padding: 12px;
+            padding: 10px;
             border: 2px solid var(--primary-green);
-            border-radius: 8px;
-            font-size: 1.05rem;
+            border-radius: 6px;
+            font-size: 0.98rem;
             background-color: #ffffff;
             color: #0f172a;
             font-weight: 700;
             width: 100%;
-            cursor: pointer;
         }
 
-        .btn-save-profile {
-            grid-column: 1 / -1;
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            color: #ffffff;
-            padding: 12px 20px;
-            border: 2px solid #38bdf8;
-            border-radius: 10px;
-            font-weight: 900;
-            font-size: 1.08rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 4px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-            transition: all 0.2s ease-in-out;
-        }
-
-        .btn-save-profile:active {
-            transform: scale(0.98);
-        }
-
-        /* SECURE MANAGER LOCK PANEL & MULTI-DROP TRACKER */
-        .admin-toggle-bar {
-            margin-top: 15px;
-            text-align: right;
-        }
-
-        .btn-admin-login {
-            background: #1e293b;
-            color: #38bdf8;
-            border: 1px solid #38bdf8;
-            padding: 8px 14px;
-            border-radius: 6px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            cursor: pointer;
-        }
-
-        .manager-panel {
-            display: none;
-            background: #091a10;
-            border: 2px solid var(--primary-green);
-            border-radius: 12px;
-            padding: 18px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .manager-panel h4 {
-            color: var(--primary-green);
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 14px;
-            border-bottom: 1px solid #1c4d28;
-            padding-bottom: 6px;
-        }
-
-        .payment-status-box {
-            background: #0a2412;
-            border: 1.5px solid var(--primary-green);
-            padding: 14px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .payment-status-box h5 {
-            color: var(--primary-green);
-            font-size: 1.05rem;
-            font-weight: 900;
-            text-transform: uppercase;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .checkbox-item input {
-            width: 22px;
-            height: 22px;
-            accent-color: var(--primary-green);
-            cursor: pointer;
-        }
-
-        .checkbox-item label {
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-bottom: 0;
-        }
-
-        /* WEEKLY TOTALS SUMMARY DASHBOARD */
-        .weekly-summary-bar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .summary-box {
-            background: #042410;
-            border: 1px solid #1c4d28;
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .summary-box h6 {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .summary-box span {
-            color: var(--primary-green);
-            font-size: 1.25rem;
-            font-weight: 900;
-        }
-
-        /* ALL-TIME / YEARLY HISTORY DASHBOARD */
-        .alltime-summary-container {
-            background: #051b10;
-            border: 2px solid #38bdf8;
-            border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 20px;
-        }
-
-        .alltime-summary-container h5 {
-            color: #38bdf8;
-            font-size: 1.05rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .alltime-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 10px;
-        }
-
-        .alltime-box {
-            background: #03140b;
-            border: 1px solid #154228;
-            border-radius: 6px;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .alltime-box h6 {
-            color: #94a3b8;
-            font-size: 0.78rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 3px;
-        }
-
-        .alltime-box span {
-            color: #38bdf8;
-            font-size: 1.15rem;
-            font-weight: 900;
-        }
-
-        /* WEEK VIEW TOGGLE BAR */
-        .week-filter-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #0a2412;
-            border: 1px solid #1c4d28;
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .week-filter-bar span {
-            color: #38bdf8;
-            font-weight: 800;
-            font-size: 0.95rem;
-        }
-
-        .btn-week-toggle {
-            background: #1e293b;
-            color: #38bdf8;
-            border: 1px solid #38bdf8;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-weight: 800;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        /* CREW PAYROLL GENERATOR */
-        .payroll-section-box {
-            background: #0a2914;
-            border: 2px solid var(--primary-green);
-            padding: 16px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-        }
-
-        .payroll-section-box h5 {
-            color: var(--primary-green);
-            font-size: 1.15rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .payroll-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        @media (max-width: 768px) {
-            .payroll-grid { grid-template-columns: 1fr; }
-        }
-
-        .payroll-card {
-            background: #041f0e;
-            border: 1px solid #1c4d28;
-            padding: 12px;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .payroll-card label {
-            font-size: 0.88rem;
-            font-weight: 800;
-            color: #cbd5e1;
-        }
-
-        .payroll-card input, .payroll-card select {
-            padding: 8px;
-            background: #000;
-            color: #fff;
-            border: 1px solid #333;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            width: 100%;
-        }
-
-        .btn-gen-payroll-driver {
-            background: #059669;
-            color: #fff;
-            font-weight: 900;
-            border: none;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 0.95rem;
-            margin-top: 4px;
-        }
-
-        .btn-gen-payroll-asst {
-            background: #d97706;
-            color: #fff;
-            font-weight: 900;
-            border: none;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 0.95rem;
-            margin-top: 4px;
-        }
-
-        /* CORPORATE TRACKER SPREADSHEET TABLE & LABELED INPUTS */
-        .tracker-form-container {
-            background: #0d2614;
-            border: 1px solid #1e4626;
-            padding: 14px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .tracker-form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .tracker-field-group {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .tracker-field-group label {
-            font-size: 0.9rem;
-            font-weight: 800;
-            color: var(--primary-green);
-        }
-
-        .tracker-field-group input, .tracker-field-group select {
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #333;
-            background: #000;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 700;
-        }
-
-        .live-profit-preview-box {
-            grid-column: 1 / -1;
-            background: #042410;
-            border: 2px dashed #38bdf8;
-            padding: 12px 16px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .live-profit-preview-box label {
-            font-size: 1.05rem;
-            font-weight: 900;
-            color: #38bdf8;
-            text-transform: uppercase;
-        }
-
-        .live-profit-preview-box span {
-            font-size: 1.35rem;
-            font-weight: 900;
-            color: #38bdf8;
-        }
-
-        .btn-add-job {
-            background: var(--primary-green);
-            color: #000;
-            font-weight: 900;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1.05rem;
-            width: 100%;
-            text-transform: uppercase;
-        }
-
-        .table-scroll {
-            overflow-x: auto;
-        }
-
-        .tracker-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            color: #ffffff;
-            min-width: 1050px;
-        }
-
-        .tracker-table th, .tracker-table td {
-            border: 1px solid #224d2d;
-            padding: 8px 10px;
-            text-align: left;
-            vertical-align: middle;
-        }
-
-        .tracker-table th {
-            background: #14381e;
-            color: var(--primary-green);
-            font-weight: 900;
-            text-transform: uppercase;
-        }
-
-        .inv-badge-pill {
-            display: inline-block;
-            background: #0f381b;
-            color: #4ade80;
-            border: 1px solid #22c55e;
-            padding: 4px 8px;
-            margin: 2px 0;
-            border-radius: 4px;
-            font-size: 0.82rem;
-            font-weight: 900;
-            white-space: nowrap;
-        }
-
-        .status-badge-paid {
-            background: #166534;
-            color: #ffffff;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-weight: 800;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .status-badge-unpaid {
-            background: #991b1b;
-            color: #ffffff;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-weight: 800;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .action-btn-group {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .btn-table-edit {
-            background: #0284c7;
-            color: #fff;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 800;
-            font-size: 0.85rem;
-        }
-
-        .btn-table-delete {
-            background: #dc2626;
-            color: #fff;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 800;
-            font-size: 0.85rem;
-        }
-
-        .btn-action-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        .btn-gen {
+        .btn-action {
             background-color: var(--primary-green);
             color: #000000;
-            padding: 14px 20px;
+            padding: 12px;
             border: none;
             border-radius: 8px;
             font-weight: 900;
             cursor: pointer;
             text-transform: uppercase;
-            font-size: 1.05rem;
-            flex: 1;
-            min-width: 220px;
+            font-size: 0.98rem;
+            width: 100%;
+            margin-top: 8px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
         }
 
         .btn-whatsapp {
             background-color: #25d366;
             color: #ffffff;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 900;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-size: 1.05rem;
-            text-decoration: none;
-            text-align: center;
-            flex: 1;
-            min-width: 220px;
-        }
-
-        /* PRINTABLE INVOICES & PAYSLIPS */
-        #invoice-preview, #payslip-preview {
-            display: none;
-            border: 3px solid #1a531f;
-            padding: 16px 20px;
-            background: #ffffff;
-            color: #111111;
-            margin-top: 25px;
-            border-radius: 8px;
-            font-size: 1.05rem; 
-        }
-
-        .editable-preview-field {
-            border-bottom: 1.5px dashed #0284c7;
-            padding: 1px 4px;
-            outline: none;
-            background: rgba(2, 132, 199, 0.05);
-            border-radius: 3px;
-        }
-        .editable-preview-field:focus {
-            background: rgba(2, 132, 199, 0.15);
-            border-bottom: 2px solid #0284c7;
-        }
-
-        .inv-header {
-            display: grid;
-            grid-template-columns: 220px 1fr; 
-            align-items: center;
-            border-bottom: 2.5px solid #1a531f;
-            padding-bottom: 6px; 
-            margin-bottom: 12px;  
-        }
-
-        .inv-logo-box {
-            width: 220px;
-            background: transparent !important; 
-            border: none !important;             
-            box-shadow: none !important;
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-
-        .inv-logo-box img {
-            width: 100%;
-            max-height: 140px; 
-            object-fit: contain;
-            display: block;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            outline: none !important;
-            mix-blend-mode: multiply; 
-        }
-
-        .inv-title-box {
-            min-width: 0;
-            text-align: left;
-            margin-left: -15px; 
-        }
-
-        .inv-title-main {
-            color: #1a531f; 
-            font-size: 1.45rem; 
-            font-weight: 900;
-            text-transform: uppercase;
-            line-height: 1.1;
-            margin-bottom: 2px;
-            letter-spacing: -0.5px;
-        }
-
-        .inv-title-sub {
-            font-size: 1.1rem; 
-            font-weight: 900; 
-            color: #111111;
-            text-transform: uppercase;
-            line-height: 1.15;
-            margin-bottom: 2px;
-        }
-
-        .inv-title-loc {
-            font-size: 0.95rem; 
-            font-weight: 800;
-            color: #334155;
-        }
-
-        .inv-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 12px;
-            color: #111827;
-            font-size: 0.98rem;
-        }
-
-        .inv-bank-box {
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            padding: 6px 12px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .inv-bank-box h5 {
-            color: #1a531f;
-            font-size: 0.95rem;
-            font-weight: 900;
-            margin-bottom: 2px;
-            text-transform: uppercase;
-        }
-
-        .inv-footer {
             margin-top: 10px;
-            padding-top: 6px;
-            border-top: 1.5px solid #ddd;
-            text-align: center;
-            font-style: italic;
-            color: #111827;
-            font-size: 0.92rem;
-        }
-
-        @media print {
-            body * { visibility: hidden; }
-            #invoice-preview, #invoice-preview *, #payslip-preview, #payslip-preview * { visibility: visible; }
-            #invoice-preview, #payslip-preview { 
-                position: absolute; 
-                left: 0; 
-                top: 0; 
-                width: 100%; 
-                border: none; 
-                padding: 10px; 
-                margin: 0;
-            }
-            .btn-print { display: none; }
-            .editable-preview-field { border-bottom: none; background: transparent; }
         }
 
         footer {
             background-color: #050505;
-            color: #aaaaaa;
+            color: #888;
             text-align: center;
-            padding: 20px;
-            margin-top: 35px;
-            border-top: 2px solid #1a1a1a;
-            font-size: 1rem;
+            padding: 20px 10px;
+            margin-top: 20px;
+            border-top: 1px solid #222;
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER WITH NO LOGO -->
+    <!-- CLEAN HEADER (NO LOGO) -->
     <header>
         <h1>D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</h1>
         <p>Reliable Islandwide Haulage & Refuse Management • Kingston & Portmore Jamaica</p>
     </header>
 
+    <!-- QUICK SHORTCUT BUTTONS -->
+    <div class="shortcut-bar">
+        <a href="#rates-section" class="shortcut-btn">📋 Rate Sheet</a>
+        <a href="#booking-section" class="shortcut-btn">📄 Get Quote</a>
+        <a href="#booking-section" class="shortcut-btn">👤 Client Auto-Fill</a>
+        <a href="#fleet-section" class="shortcut-btn">🚚 Our Fleet</a>
+    </div>
+
     <div class="container">
 
-        <div class="card">
+        <!-- WHY CHOOSE US & FLEET OVERVIEW -->
+        <div class="card" id="fleet-section">
             <h3>Why Choose Us & Fleet Overview</h3>
             
             <p class="about-text">
                 As a local Jamaican family business, <strong>D&C Refuse Trucking & Equipment Co. Limited</strong> treats every job with personal care and attention. We take great pride in our punctuality, transparent communication, and ensuring your goods and waste are transported safely every time across Jamaica.
             </p>
-
-            <p style="color: #e0e0e0; font-weight: 600;">Commercial box and refuse trucks outfitted with heavy-duty hydraulic tail-lifts for effortless cargo removal, haulage, and waste management across Jamaica.</p>
             
             <ul class="features-list">
                 <li>🚚 <span>Hydraulic Tail Lift Equipped:</span> Safe and simple loading for heavy equipment, machinery, and commercial pallets.</li>
-                <li>📦 <span>7.5-Ton / 20ft Enclosed Transport:</span> Weatherproof private truck hire, house removals, and furniture moving to protect cargo during long-distance delivery.</li>
-                <li>🛠️ <span>Commercial Waste Management:</span> Scheduled refuse collection, site clearance, and waste removal for businesses and developments.</li>
+                <li>📦 <span>7.5-Ton / 20ft Enclosed Transport:</span> Weatherproof private truck hire, house removals, and furniture moving.</li>
+                <li>🛠️ <span>Commercial Waste Management:</span> Scheduled refuse collection, site clearance, and waste removal for businesses.</li>
                 <li>⚡ <span>24/7 Emergency Haulage:</span> Always ready around the clock for emergency dispatch islandwide.</li>
             </ul>
 
@@ -1040,1496 +336,101 @@
                 </div>
                 <div class="fleet-card">
                     <img src="1000018424.jpg" alt="Fleet Unit - Side Profile">
-                    <div class="blur-plate-bumper-high"></div>
                     <div class="caption">Enclosed 20ft Box Truck</div>
                 </div>
             </div>
         </div>
 
+        <!-- DESTINATION RATE SHEET -->
         <div class="card" id="rates-section">
             <h3>Destination Rate Sheet</h3>
-            
-            <p style="color: #e0e0e0; font-weight: 700; margin-bottom: 12px;">Scroll down to view standard transport rates in Jamaican Dollars (JMD):</p>
+            <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 10px;">Standard transport rates in Jamaican Dollars (JMD):</p>
 
             <div class="fresh-rate-card">
                 <div class="fresh-rate-scroll">
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Downtown</div><div class="rate-price">💰 $26,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill</div><div class="rate-price">💰 $25,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Spanish Town, Portmore, Ferry</div><div class="rate-price">💰 $20,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town</div><div class="rate-price">💰 $27,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville</div><div class="rate-price">💰 $31,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap</div><div class="rate-price">💰 $39,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill</div><div class="rate-price">💰 $35,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank</div><div class="rate-price">💰 $42,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits</div><div class="rate-price">💰 $47,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Wait-A-Bit, Albert Town</div><div class="rate-price">💰 $51,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town</div><div class="rate-price">💰 $47,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond</div><div class="rate-price">💰 $57,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Maggotty, Siloah, Balaclava, Lacovia, Newton</div><div class="rate-price">💰 $57,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Santa Cruz, Gutters</div><div class="rate-price">💰 $54,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Black River, New Market, Springfield, Treasure Beach, Southfield</div><div class="rate-price">💰 $60,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town</div><div class="rate-price">💰 $71,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill</div><div class="rate-price">💰 $76,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Negril, Little London, Darliston, Delveland</div><div class="rate-price">💰 $78,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Green Island, Orange Bay</div><div class="rate-price">💰 $82,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Montego Bay, Wakefield</div><div class="rate-price">💰 $67,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Cambridge, Lambs River, Anchovy</div><div class="rate-price">💰 $70,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria</div><div class="rate-price">💰 $59,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel</div><div class="rate-price">💰 $53,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River</div><div class="rate-price">💰 $53,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Discovery Bay, Braco, Duncans</div><div class="rate-price">💰 $56,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Guys Hill, Glengoffe, Polly Ground</div><div class="rate-price">💰 $32,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall</div><div class="rate-price">💰 $42,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Annotto Bay, Windsor Castle, Buff Bay, Skibo</div><div class="rate-price">💰 $39,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay</div><div class="rate-price">💰 $59,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Boston, Long Bay</div><div class="rate-price">💰 $64,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Easington, Seaforth, Morant Bay, Lyssons, Airy Castle</div><div class="rate-price">💰 $42,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Stokes Hall, Trinityville, Bath, Bowden, Golden Grove</div><div class="rate-price">💰 $53,000 JMD</div></div>
-                    <div class="rate-row"><div class="rate-loc"><span>📍</span> Manchioneal, Hectors River</div><div class="rate-price">💰 $59,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Downtown</div><div class="rate-price">$26,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill</div><div class="rate-price">$25,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Spanish Town, Portmore, Ferry</div><div class="rate-price">$20,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town</div><div class="rate-price">$27,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville</div><div class="rate-price">$31,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap</div><div class="rate-price">$39,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill</div><div class="rate-price">$35,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank</div><div class="rate-price">$42,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits</div><div class="rate-price">$47,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Wait-A-Bit, Albert Town</div><div class="rate-price">$51,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town</div><div class="rate-price">$47,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond</div><div class="rate-price">$57,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Maggotty, Siloah, Balaclava, Lacovia, Newton</div><div class="rate-price">$57,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Santa Cruz, Gutters</div><div class="rate-price">$54,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Black River, New Market, Springfield, Treasure Beach, Southfield</div><div class="rate-price">$60,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town</div><div class="rate-price">$71,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill</div><div class="rate-price">$76,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Negril, Little London, Darliston, Delveland</div><div class="rate-price">$78,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Green Island, Orange Bay</div><div class="rate-price">$82,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Montego Bay, Wakefield</div><div class="rate-price">$67,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Cambridge, Lambs River, Anchovy</div><div class="rate-price">$70,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria</div><div class="rate-price">$59,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel</div><div class="rate-price">$53,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River</div><div class="rate-price">$53,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Discovery Bay, Braco, Duncans</div><div class="rate-price">$56,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Guys Hill, Glengoffe, Polly Ground</div><div class="rate-price">$32,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall</div><div class="rate-price">$42,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Annotto Bay, Windsor Castle, Buff Bay, Skibo</div><div class="rate-price">$39,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay</div><div class="rate-price">$59,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Boston, Long Bay</div><div class="rate-price">$64,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Easington, Seaforth, Morant Bay, Lyssons, Airy Castle</div><div class="rate-price">$42,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Stokes Hall, Trinityville, Bath, Bowden, Golden Grove</div><div class="rate-price">$53,000 JMD</div></div>
+                    <div class="rate-row"><div class="rate-loc">📍 Manchioneal, Hectors River</div><div class="rate-price">$59,000 JMD</div></div>
                 </div>
             </div>
         </div>
 
+        <!-- BOOKING & QUOTE SECTION -->
         <div class="card" id="booking-section">
-            <h3>Invoice Generator & Quote Request</h3>
+            <h3>Get Quote & Booking Request</h3>
             
-            <div class="client-account-bar" id="client-autofill">
-                <h4>👤 Returning Client Auto-Fill (No Password Needed)</h4>
-                <div class="quick-lookup-grid">
-                    <input type="email" id="lookup-email" placeholder="Enter your registered email address...">
-                    <button class="btn-lookup" onclick="lookupClientProfile()">🔍 Load Saved Profile</button>
-                </div>
+            <div class="input-group">
+                <label>Client Name</label>
+                <input type="text" id="q-client" placeholder="Your name">
+            </div>
+            <div class="input-group">
+                <label>Phone Number</label>
+                <input type="tel" id="q-phone" placeholder="Your phone number">
+            </div>
+            <div class="input-group">
+                <label>Pickup Location</label>
+                <input type="text" id="q-pickup" placeholder="e.g. Kingston / Portmore">
+            </div>
+            <div class="input-group">
+                <label>Drop-off Town / Destination</label>
+                <input type="text" id="q-dest" placeholder="e.g. Negril">
             </div>
 
-            <p style="color: #e0e0e0; font-weight: 600; margin-bottom: 15px;">Fill out the customer details below or load a saved profile to generate an instant quote:</p>
-            
-            <div class="invoice-builder">
-                <div class="input-group">
-                    <label>Client / Business Name</label>
-                    <input type="text" id="inv-client" placeholder="e.g. John Brown / ABC Ltd">
-                </div>
-                <div class="input-group">
-                    <label>Phone Number</label>
-                    <input type="tel" id="inv-phone" placeholder="e.g. 876-555-0199">
-                </div>
-                <div class="input-group">
-                    <label>Email Address</label>
-                    <input type="email" id="inv-email" placeholder="e.g. client@gmail.com">
-                </div>
-                <div class="input-group">
-                    <label>Invoice Number</label>
-                    <input type="text" id="inv-num" value="DC-1001">
-                </div>
-                <div class="input-group">
-                    <label>Pickup Location</label>
-                    <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
-                </div>
-
-                <div class="input-group">
-                    <label>Select Destination Zone (Auto-Fills All Towns)</label>
-                    <select id="inv-destination" onchange="selectDestinationZone()">
-                        <option value="" data-price="0">-- Click Arrow to Select Destination --</option>
-                        <option value="Downtown" data-price="26000">📍 Downtown — $26,000 JMD</option>
-                        <option value="Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill" data-price="25000">📍 Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill — $25,000 JMD</option>
-                        <option value="Spanish Town, Portmore, Ferry" data-price="20000">📍 Spanish Town, Portmore, Ferry — $20,000 JMD</option>
-                        <option value="Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town" data-price="27000">📍 Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town — $27,000 JMD</option>
-                        <option value="May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville" data-price="31000">📍 May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville — $31,000 JMD</option>
-                        <option value="Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap" data-price="39000">📍 Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap — $39,000 JMD</option>
-                        <option value="Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill" data-price="35000">📍 Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill — $35,000 JMD</option>
-                        <option value="Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank" data-price="42000">📍 Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank — $42,000 JMD</option>
-                        <option value="Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits" data-price="47000">📍 Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits — $47,000 JMD</option>
-                        <option value="Wait-A-Bit, Albert Town" data-price="51000">📍 Wait-A-Bit, Albert Town — $51,000 JMD</option>
-                        <option value="Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town" data-price="47000">📍 Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town — $47,000 JMD</option>
-                        <option value="Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond" data-price="57000">📍 Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond — $57,000 JMD</option>
-                        <option value="Maggotty, Siloah, Balaclava, Lacovia, Newton" data-price="57000">📍 Maggotty, Siloah, Balaclava, Lacovia, Newton — $57,000 JMD</option>
-                        <option value="Santa Cruz, Gutters" data-price="54000">📍 Santa Cruz, Gutters — $54,000 JMD</option>
-                        <option value="Black River, New Market, Springfield, Treasure Beach, Southfield" data-price="60000">📍 Black River, New Market, Springfield, Treasure Beach, Southfield — $60,000 JMD</option>
-                        <option value="Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town" data-price="71000">📍 Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town — $71,000 JMD</option>
-                        <option value="Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill" data-price="76000">📍 Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill — $76,000 JMD</option>
-                        <option value="Negril, Little London, Darliston, Delveland" data-price="78000">📍 Negril, Little London, Darliston, Delveland — $78,000 JMD</option>
-                        <option value="Green Island, Orange Bay" data-price="82000">📍 Green Island, Orange Bay — $82,000 JMD</option>
-                        <option value="Montego Bay, Wakefield" data-price="67000">📍 Montego Bay, Wakefield — $67,000 JMD</option>
-                        <option value="Cambridge, Lambs River, Anchovy" data-price="70000">📍 Cambridge, Lambs River, Anchovy — $70,000 JMD</option>
-                        <option value="Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria" data-price="59000">📍 Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria — $59,000 JMD</option>
-                        <option value="Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel" data-price="53000">📍 Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel — $53,000 JMD</option>
-                        <option value="St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River" data-price="53000">📍 St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River — $53,000 JMD</option>
-                        <option value="Discovery Bay, Braco, Duncans" data-price="56000">📍 Discovery Bay, Braco, Duncans — $56,000 JMD</option>
-                        <option value="Guys Hill, Glengoffe, Polly Ground" data-price="32000">📍 Guys Hill, Glengoffe, Polly Ground — $32,000 JMD</option>
-                        <option value="Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall" data-price="42000">📍 Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall — $42,000 JMD</option>
-                        <option value="Annotto Bay, Windsor Castle, Buff Bay, Skibo" data-price="39000">📍 Annotto Bay, Windsor Castle, Buff Bay, Skibo — $39,000 JMD</option>
-                        <option value="Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay" data-price="59000">📍 Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay — $59,000 JMD</option>
-                        <option value="Boston, Long Bay" data-price="64000">📍 Boston, Long Bay — $64,000 JMD</option>
-                        <option value="Easington, Seaforth, Morant Bay, Lyssons, Airy Castle" data-price="42000">📍 Easington, Seaforth, Morant Bay, Lyssons, Airy Castle — $42,000 JMD</option>
-                        <option value="Stokes Hall, Trinityville, Bath, Bowden, Golden Grove" data-price="53000">📍 Stokes Hall, Trinityville, Bath, Bowden, Golden Grove — $53,000 JMD</option>
-                        <option value="Manchioneal, Hectors River" data-price="59000">📍 Manchioneal, Hectors River — $59,000 JMD</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label>Specific Drop-off Town / Zone List</label>
-                    <input type="text" id="inv-specific-dest" placeholder="e.g. Little London or Select Zone above" oninput="liveTypeAutoPrice()">
-                </div>
-
-                <div class="input-group" style="grid-column: 1 / -1;">
-                    <label>Calculated Total Rate (JMD) - Or Enter Custom Rate</label>
-                    <input type="number" id="inv-amount" placeholder="0">
-                </div>
-
-                <button class="btn-save-profile" onclick="saveClientProfile()">💾 Save My Info for Future Bookings</button>
-
-                <!-- BOOKING & DEPOSIT POLICY -->
-                <div class="deposit-policy-banner" style="grid-column: 1 / -1;">
-                    <h4>🔒 Booking & Deposit Policy</h4>
-                    <p>• <span class="text-red-alert">50% Deposit Required:</span> Payable in advance to confirm and lock in your scheduled job date.</p>
-                    <p>• <span class="text-red-alert">50% Remaining Balance:</span> Payable upon pickup of goods/items on the job date.</p>
-                    <p>• <strong>Cancellation Policy:</strong> Full deposit refund for cancellations made at least <strong>72 hours (3 days)</strong> prior to the scheduled job. Cancellations made <span class="text-yellow-highlight">under 72 hours</span> are <span class="text-yellow-highlight">strictly non-refundable</span>.</p>
-                </div>
-            </div>
-
-            <div class="btn-action-group">
-                <button class="btn-gen" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
-                <button class="btn-whatsapp" onclick="sendWhatsAppQuote()">📱 Send Request via WhatsApp</button>
-            </div>
-
-            <!-- PIN-LOCKED MANAGER ACCESS BUTTON -->
-            <div class="admin-toggle-bar">
-                <button class="btn-admin-login" onclick="toggleManagerPanel()">🔐 Dispatcher / Manager Login</button>
-            </div>
-
-            <!-- PRIVATE PIN-PROTECTED MANAGER PANEL -->
-            <div id="manager-panel" class="manager-panel">
-                <h4>🔐 Dispatcher Control Panel (Private)</h4>
-                
-                <div class="payment-status-box">
-                    <h5>💳 Payment & Booking Status</h5>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="inv-deposit-paid" onchange="togglePaymentBoxes('deposit')">
-                        <label for="inv-deposit-paid">🔒 Mark 50% Deposit as PAID (Send to client to confirm booking)</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="inv-full-paid" onchange="togglePaymentBoxes('full')">
-                        <label for="inv-full-paid">🎉 Mark Job as FULLY PAID (Balance Settled on Job Date)</label>
-                    </div>
-                </div>
-
-                <!-- MONDAY TO FRIDAY ACTIVE WEEK SUMMARY -->
-                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📅 Current Active Operating Week (Monday – Friday)</h5>
-                <div class="weekly-summary-bar">
-                    <div class="summary-box">
-                        <h6>M-F Revenue</h6>
-                        <span id="sum-revenue">$0 JMD</span>
-                    </div>
-                    <div class="summary-box">
-                        <h6>M-F Expenses (Petrol+Crew)</h6>
-                        <span id="sum-expenses" style="color: #f87171;">$0 JMD</span>
-                    </div>
-                    <div class="summary-box">
-                        <h6>M-F Net Profit</h6>
-                        <span id="sum-profit" style="color: #38bdf8;">$0 JMD</span>
-                    </div>
-                    <div class="summary-box">
-                        <h6>M-F Runs</h6>
-                        <span id="sum-count" style="color: #fbbf24;">0 Jobs</span>
-                    </div>
-                </div>
-
-                <!-- ALL-TIME & YEARLY BUSINESS HISTORY SUMMARY -->
-                <div class="alltime-summary-container">
-                    <h5>📈 All-Time & Yearly Business History</h5>
-                    <div class="alltime-grid">
-                        <div class="alltime-box">
-                            <h6>All-Time Revenue</h6>
-                            <span id="all-revenue">$0 JMD</span>
-                        </div>
-                        <div class="alltime-box">
-                            <h6>All-Time Total Expenses</h6>
-                            <span id="all-expenses" style="color: #f87171;">$0 JMD</span>
-                        </div>
-                        <div class="alltime-box">
-                            <h6>Truck Maintenance Spend</h6>
-                            <span id="all-maint" style="color: #fb7185;">$0 JMD</span>
-                        </div>
-                        <div class="alltime-box">
-                            <h6>All-Time Net Profit</h6>
-                            <span id="all-profit" style="color: #38bdf8;">$0 JMD</span>
-                        </div>
-                        <div class="alltime-box" style="grid-column: 1 / -1;">
-                            <h6>Total Logged Runs</h6>
-                            <span id="all-count" style="color: #fbbf24;">0 Jobs</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CREW PAYROLL GENERATOR WITH DEDUCTIONS & BANK DETAILS -->
-                <div class="payroll-section-box">
-                    <h5>👥 Crew Payroll & Corporate Payslips</h5>
-                    <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan operating runs, include Permanent Payroll Number, Bank Details, Earnings, and Deductions (Fully Saveable & Editable):</p>
-                    
-                    <div class="payroll-grid">
-                        <!-- DRIVER PAYROLL CARD -->
-                        <div class="payroll-card">
-                            <label>🛞 Driver Name:</label>
-                            <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
-                                <input type="text" id="payroll-driver-name" placeholder="Driver Full Name">
-                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadStaffProfile('driver')">🔍 Load</button>
-                            </div>
-                            
-                            <label>Payroll # / Employee ID:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-driver-paynum" value="PAY-2026-001">
-                                <input type="text" id="payroll-driver-id" placeholder="Staff ID">
-                            </div>
-
-                            <label>National ID / TRN:</label>
-                            <input type="text" id="payroll-driver-natid" placeholder="TRN Number">
-
-                            <label>Bank Name & Branch:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-driver-bankname" placeholder="Bank Name (e.g. NCBCBJM)">
-                                <input type="text" id="payroll-driver-bankbranch" placeholder="Branch">
-                            </div>
-
-                            <label>Account Number & Sort Code:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-driver-accnum" placeholder="Account Number">
-                                <input type="text" id="payroll-driver-sortcode" placeholder="Sort Code">
-                            </div>
-
-                            <label>Job Position / Dept / Branch:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-driver-pos" value="Commercial Driver">
-                                <input type="text" id="payroll-driver-dept" value="D&C Logistics">
-                            </div>
-                            <input type="text" id="payroll-driver-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
-
-                            <label>Date Joined:</label>
-                            <input type="date" id="payroll-driver-joined">
-
-                            <label>Deduction Amount This Period (JMD):</label>
-                            <input type="number" id="payroll-driver-deduct" value="0" placeholder="0">
-
-                            <label>Deduction / AR Charges Note:</label>
-                            <input type="text" id="payroll-driver-deductnote" value="Total Amount Of AR Charges Repayable" placeholder="e.g. Total Amount Of AR Charges $145,000 Repayable">
-
-                            <label>Total Outstanding Charges / Balance (JMD):</label>
-                            <input type="number" id="payroll-driver-totalcharges" value="0" placeholder="Total debt/advance balance">
-
-                            <label>Payment Method & Date:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <select id="payroll-driver-method">
-                                    <option value="Bank Transfer">🏦 Bank Transfer</option>
-                                    <option value="Cash">💵 Cash</option>
-                                    <option value="Company Check">📜 Check</option>
-                                </select>
-                                <input type="date" id="payroll-driver-paydate">
-                            </div>
-
-                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('driver')">💾 Save Driver Profile</button>
-                            <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 Generate Driver Weekly Payslip</button>
-                        </div>
-
-                        <!-- ASSISTANT PAYROLL CARD -->
-                        <div class="payroll-card">
-                            <label>🤝 Assistant Name:</label>
-                            <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
-                                <input type="text" id="payroll-asst-name" placeholder="Assistant Full Name">
-                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadStaffProfile('assistant')">🔍 Load</button>
-                            </div>
-                            
-                            <label>Payroll # / Employee ID:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-asst-paynum" value="PAY-2026-002">
-                                <input type="text" id="payroll-asst-id" placeholder="Staff ID">
-                            </div>
-
-                            <label>National ID / TRN:</label>
-                            <input type="text" id="payroll-asst-natid" placeholder="TRN Number">
-
-                            <label>Bank Name & Branch:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-asst-bankname" placeholder="Bank Name">
-                                <input type="text" id="payroll-asst-bankbranch" placeholder="Branch">
-                            </div>
-
-                            <label>Account Number & Sort Code:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-asst-accnum" placeholder="Account Number">
-                                <input type="text" id="payroll-asst-sortcode" placeholder="Sort Code">
-                            </div>
-
-                            <label>Job Position / Dept / Branch:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <input type="text" id="payroll-asst-pos" value="Truck Assistant">
-                                <input type="text" id="payroll-asst-dept" value="D&C Logistics">
-                            </div>
-                            <input type="text" id="payroll-asst-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
-
-                            <label>Date Joined:</label>
-                            <input type="date" id="payroll-asst-joined">
-
-                            <label>Deduction Amount This Period (JMD):</label>
-                            <input type="number" id="payroll-asst-deduct" value="0" placeholder="0">
-
-                            <label>Deduction / AR Charges Note:</label>
-                            <input type="text" id="payroll-asst-deductnote" value="Total Amount Of AR Charges Repayable" placeholder="e.g. Total Amount Of AR Charges $145,000 Repayable">
-
-                            <label>Total Outstanding Charges / Balance (JMD):</label>
-                            <input type="number" id="payroll-asst-totalcharges" value="0" placeholder="Total debt/advance balance">
-
-                            <label>Payment Method & Date:</label>
-                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                                <select id="payroll-asst-method">
-                                    <option value="Bank Transfer">🏦 Bank Transfer</option>
-                                    <option value="Cash">💵 Cash</option>
-                                    <option value="Company Check">📜 Check</option>
-                                </select>
-                                <input type="date" id="payroll-asst-paydate">
-                            </div>
-
-                            <button type="button" class="btn-save-profile" style="background:#0369a1; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px;" onclick="saveStaffProfile('assistant')">💾 Save Assistant Profile</button>
-                            <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 Generate Assistant Weekly Payslip</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- WEEK VIEW TOGGLE BAR -->
-                <div class="week-filter-bar">
-                    <span id="current-view-label">📅 Showing: Current M-F Operating Week</span>
-                    <button class="btn-week-toggle" onclick="toggleViewMode()">🔄 Switch to View All History Table</button>
-                </div>
-
-                <!-- Corporate Multi-Drop Daily Job Tracker -->
-                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log operational runs, track crew payouts, and view invoice numbers instantly below!</p>
-
-                <div class="tracker-form-container">
-                    <div class="tracker-form-grid">
-                        <div class="tracker-field-group">
-                            <label>Day of Week</label>
-                            <select id="tr-day">
-                                <option value="Monday">Monday</option>
-                                <option value="Tuesday">Tuesday</option>
-                                <option value="Wednesday">Wednesday</option>
-                                <option value="Thursday">Thursday</option>
-                                <option value="Friday">Friday</option>
-                            </select>
-                        </div>
-                        <div class="tracker-field-group">
-                            <label>Exact Date (Manual)</label>
-                            <input type="date" id="tr-date">
-                        </div>
-                        <div class="tracker-field-group">
-                            <label>Invoice Number(s) — (Separate with commas)</label>
-                            <input type="text" id="tr-inv" placeholder="e.g. DC-901, DC-902">
-                        </div>
-                        <div class="tracker-field-group">
-                            <label>Pickup Town</label>
-                            <input type="text" id="tr-pickup" placeholder="Pickup location">
-                        </div>
-                        <div class="tracker-field-group">
-                            <label>Drop-off Destination (Auto-Prompts & Prices)</label>
-                            <input type="text" id="tr-drop" list="jamaica-towns-list" placeholder="Type town (e.g. Negril)" oninput="trackerLiveAutoPrice()">
-                            <datalist id="jamaica-towns-list">
-                                <option value="Downtown">
-                                <option value="Kingston">
-                                <option value="Half Way Tree">
-                                <option value="Liguanea">
-                                <option value="Spanish Town">
-                                <option value="Portmore">
-                                <option value="Old Harbour">
-                                <option value="Stony Hill">
-                                <option value="May Pen">
-                                <option value="Mandeville">
-                                <option value="Montego Bay">
-                                <option value="Negril">
-                                <option value="Sav-La-Mar">
-                                <option value="Ocho Rios">
-                                <option value="Port Antonio">
-                                <option value="Morant Bay">
-                                <option value="Falmouth">
-                                <option value="Santa Cruz">
-                                <option value="Black River">
-                                <option value="Lucea">
-                                <option value="Spaldings">
-                                <option value="Linstead">
-                                <option value="Bogwalk">
-                                <option value="Papine">
-                                <option value="Red Hills">
-                                <option value="Claremont">
-                                <option value="Annotto Bay">
-                                <option value="Bath">
-                                <option value="Junction">
-                            </datalist>
-                        </div>
-                        <div class="tracker-field-group">
-                            <label>Driver Name (Pre-Filled)</label>
-                            <input type="text" id="tr-driver" placeholder="Driver name" oninput="saveCrewPreferences()">
-                        </div>
-                        <div class="tracker-field-group">
-                            <label>Driver Payout (JMD)</label>
-                            <input type="number" id="tr-driver-pay" placeholder="0" oninput="updateLiveProfit()">
-                        </div>
-                        <div class="tracker-field-group">
-                            <label>Assistant Name (Pre-Filled)</label>
-                            <input type="text" id="tr-assistant" placeholder="Assistant name" oninput="saveCrewPreferences()">
-                        </div>
-                        <div class="tracker-field-group">
-                            <label>Assistant Payout (JMD)</label>
-                            <input type="number" id="tr-asst-pay" placeholder="0" oninput="updateLiveProfit()">
-                        </div>
-                        <div class="tracker-field-group">
-                            <label>Petrol Cost (JMD)</label>
-                            <input type="number" id="tr-petrol" placeholder="0" oninput="updateLiveProfit()">
-                        </div>
-                        <div class="tracker-field-group">
-                            <label>Total Rate (JMD) - Auto Filled</label>
-                            <input type="number" id="tr-rate" placeholder="0" oninput="updateLiveProfit()">
-                        </div>
-
-                        <div class="live-profit-preview-box">
-                            <label>Live Net Profit Preview:</label>
-                            <span id="live-net-profit-display">$0 JMD</span>
-                        </div>
-
-                        <div class="tracker-field-group" style="grid-column: 1 / -1; max-width: 300px;">
-                            <label>Payment Status</label>
-                            <select id="tr-status">
-                                <option value="UNPAID">🔴 UNPAID</option>
-                                <option value="PAID">✅ PAID</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button class="btn-add-job" onclick="addTrackerJob()">➕ Log Corporate Job</button>
-                </div>
-
-                <div class="table-scroll">
-                    <table class="tracker-table" id="tracker-table">
-                        <thead>
-                            <tr>
-                                <th>Day & Date</th>
-                                <th>Invoice #(s)</th>
-                                <th>Route</th>
-                                <th>Driver & Payout</th>
-                                <th>Assistant & Payout</th>
-                                <th>Petrol Cost</th>
-                                <th>Total Rate</th>
-                                <th>Net Profit</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tracker-table-body">
-                            <!-- Dynamic Corporate Job Entries Render Here -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- TRUCK MAINTENANCE & PARTS LOG SHEET -->
-                <div style="margin-top: 30px; border-top: 2px dashed #1e4626; padding-top: 20px;">
-                    <h5 style="color: #fb7185; font-weight: 900; margin-bottom: 8px; text-transform: uppercase;">🔧 Fleet & Truck Maintenance Log</h5>
-                    <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log tires, full services, headlights, parts, and mechanical expenses to keep track of total truck maintenance costs!</p>
-
-                    <div class="tracker-form-container" style="background: #1a0f12; border-color: #5c1d28;">
-                        <div class="tracker-form-grid">
-                            <div class="tracker-field-group">
-                                <label style="color: #fb7185;">Date Spent</label>
-                                <input type="date" id="maint-date">
-                            </div>
-                            <div class="tracker-field-group">
-                                <label style="color: #fb7185;">Category</label>
-                                <select id="maint-cat">
-                                    <option value="Tires">🛞 Tires</option>
-                                    <option value="Service">🛢️ Service / Oil Change</option>
-                                    <option value="Parts">💡 Headlights / Parts</option>
-                                    <option value="Electrical">⚡ Electrical / Battery</option>
-                                    <option value="Mechanical">⚙️ Engine / Mechanical</option>
-                                    <option value="General Repair">🛠️ General Repair</option>
-                                </select>
-                            </div>
-                            <div class="tracker-field-group">
-                                <label style="color: #fb7185;">Item Description / Notes</label>
-                                <input type="text" id="maint-desc" placeholder="e.g. Bought 2 New Front Tires / Changed Headlight Bulbs">
-                            </div>
-                            <div class="tracker-field-group">
-                                <label style="color: #fb7185;">Cost Spent (JMD)</label>
-                                <input type="number" id="maint-cost" placeholder="e.g. 45000">
-                            </div>
-                            <div class="tracker-field-group">
-                                <label style="color: #fb7185;">Vendor / Mechanic (Optional)</label>
-                                <input type="text" id="maint-vendor" placeholder="e.g. Kingston Tire Shop">
-                            </div>
-                        </div>
-                        <button class="btn-add-job" style="background: #fb7185; color: #000;" onclick="addMaintenanceLog()">🔧 Log Maintenance Expense</button>
-                    </div>
-
-                    <div class="table-scroll">
-                        <table class="tracker-table" style="min-width: 850px;">
-                            <thead>
-                                <tr style="background: #3b1219;">
-                                    <th style="color: #fb7185;">Date</th>
-                                    <th style="color: #fb7185;">Category</th>
-                                    <th style="color: #fb7185;">Description / Part Details</th>
-                                    <th style="color: #fb7185;">Vendor / Mechanic</th>
-                                    <th style="color: #fb7185;">Cost (JMD)</th>
-                                    <th style="color: #fb7185;">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="maint-table-body">
-                                <!-- Dynamic Maintenance Log Entries Render Here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Printable Invoice Output Container -->
-            <div id="invoice-preview">
-                <div class="inv-header">
-                    <div class="inv-logo-box">
-                        <img src="IMG-20250804-WA0004.jpg" alt="D&C Logo">
-                    </div>
-                    <div class="inv-title-box">
-                        <div class="inv-title-main" id="out-invoice-header-title">INVOICE / BOOKING QUOTE</div>
-                        <div class="inv-title-sub">D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED</div>
-                        <div class="inv-title-loc">Jamaica | Kingston & Portmore Hub</div>
-                    </div>
-                </div>
-
-                <div class="inv-details">
-                    <div>
-                        <p><strong>Billed To:</strong> <span id="out-client"></span></p>
-                        <p><strong>Phone:</strong> <span id="out-phone"></span></p>
-                        <p><strong>Email:</strong> <span id="out-email"></span></p>
-                    </div>
-                    <div style="text-align: right;">
-                        <p><strong>Invoice #:</strong> <span id="out-num"></span></p>
-                        <p><strong>Date:</strong> <span id="out-date"></span></p>
-                    </div>
-                </div>
-
-                <p style="margin-bottom: 8px; color: #111827; font-size: 1.02rem;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800; color: #111827;"></span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800; color: #111827;"></span></p>
-                
-                <table style="margin-bottom: 8px; width: 100%; border-collapse: collapse; font-size: 1rem;">
-                    <thead>
-                        <tr style="background-color: #1a531f; color: #ffffff;">
-                            <th style="padding: 6px 8px; text-align: left;">Description</th>
-                            <th style="padding: 6px 8px; text-align: right;">Amount (JMD)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; font-weight: 700; color: #111827;" id="out-desc">Haulage Transport: Kingston to Zone</td>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #111827;" id="out-amount">$0 JMD</td>
-                        </tr>
-                        <tr style="background-color: #f0fdf4;">
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; color: #166534; font-weight: 800;" id="out-deposit-label">🔒 Required 50% Deposit (To Confirm Booking)</td>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #166534;" id="out-deposit">$0 JMD</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; font-weight: 700; color: #dc2626;" id="out-balance-label">🚚 Remaining 50% Balance (Due Upon Pickup)</td>
-                            <td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #dc2626;" id="out-balance">$0 JMD</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="inv-bank-box">
-                    <h5>🏦 Payment / Bank Transfer Details</h5>
-                    <p><strong>Bank Name:</strong> [Enter Bank Name] | <strong>Branch:</strong> [Branch]</p>
-                    <p><strong>Account Name:</strong> D&C Refuse Trucking & Equipment Co. Ltd</p>
-                    <p><strong>Account Number:</strong> [Enter Account Number] | <strong>Account Type:</strong> [Checking/Savings]</p>
-                </div>
-
-                <div class="inv-footer">
-                    <p style="margin-bottom: 2px; font-weight: bold; color: #b91c1c;" id="out-footer-notice">* 50% deposit required to lock in your booking date. Balance due upon pickup.</p>
-                    <p style="margin-bottom: 3px; font-weight: bold; color: #b91c1c;">⚠️ Cancellations under 72 hours are non-refundable.</p>
-                    <p><strong>Thank you for choosing D&C Refuse Trucking & Equipment Co. Limited!</strong></p>
-                </div>
-                <br>
-                <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
-            </div>
-
-            <!-- Printable Weekly Payslip Output Container -->
-            <div id="payslip-preview">
-                <div class="inv-header">
-                    <div class="inv-logo-box">
-                        <img src="IMG-20250804-WA0004.jpg" alt="D&C Logo">
-                    </div>
-                    <div class="inv-title-box">
-                        <div class="inv-title-main" id="slip-title-main">MILFORD MALCOLM (Weekly)</div>
-                        <div class="inv-title-sub">D&C REFUSE TRUCKING & EQUIPMENT CO. LTD</div>
-                        <div class="inv-title-loc">Weekly Operating Statement (JMD)</div>
-                    </div>
-                </div>
-
-                <div style="background: #f1f5f9; padding: 8px 12px; border-radius: 6px; margin-bottom: 10px; font-size: 0.95rem; border-left: 4px solid #1a531f; color: #1e293b;">
-                    <p><strong>Statement Period:</strong> <span id="slip-period" class="editable-preview-field" contenteditable="true">Weekly Operating Period</span></p>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; font-size: 0.95rem; background: #fafafa; padding: 12px; border-radius: 6px; border: 1px solid #e2e8f0; color: #0f172a;">
-                    <div>
-                        <p style="margin-bottom: 2px; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Employee Name & Payroll #</p>
-                        <p><span id="slip-name" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0f172a;"></span> (<span id="slip-paynum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span>)</p>
-                        
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">National ID / TRN</p>
-                        <p><span id="slip-natid" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Bank Name & Branch</p>
-                        <p><span id="slip-bankname" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span> — <span id="slip-bankbranch" class="editable-preview-field" contenteditable="true"></span></p>
-
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Account # & Sort Code</p>
-                        <p>Acc: <span id="slip-accnum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> | Sort: <span id="slip-sortcode" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-                    </div>
-                    <div>
-                        <p style="margin-bottom: 2px; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Job Position</p>
-                        <p><span id="slip-position" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Department</p>
-                        <p><span id="slip-dept" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Branch / Location</p>
-                        <p><span id="slip-branch" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
-
-                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.8rem; text-transform: uppercase; font-weight: 800;">Payment Method & Date</p>
-                        <p><span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> (<span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #166534;"></span>)</p>
-                    </div>
-                </div>
-
-                <p style="margin-bottom: 6px; color: #0f172a; font-size: 0.95rem; font-weight: 900; text-transform: uppercase;">Itemized Operating Runs & Earnings:</p>
-                <table style="margin-bottom: 10px; width: 100%; border-collapse: collapse; font-size: 0.92rem; color: #0f172a;">
-                    <thead>
-                        <tr style="background-color: #1a531f; color: #ffffff;">
-                            <th style="padding: 6px 8px; text-align: left;">Date / Day</th>
-                            <th style="padding: 6px 8px; text-align: left;">Route</th>
-                            <th style="padding: 6px 8px; text-align: right;">Earnings (JMD)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="slip-runs-tbody">
-                        <!-- Dynamic itemized runs inserted here -->
-                    </tbody>
-                </table>
-
-                <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px 12px; border-radius: 6px; margin-bottom: 10px; font-size: 0.95rem; color: #0f172a;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center;">
-                        <span style="font-weight: 700;">Gross Earnings:</span>
-                        <strong id="slip-gross" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #dc2626; align-items: center;">
-                        <div style="flex: 1; padding-right: 10px;">
-                            <span style="font-weight: 700;">Deductions This Period:</span>
-                            <div id="slip-deduct-note" class="editable-preview-field" contenteditable="true" style="font-size: 0.82rem; color: #64748b; margin-top: 2px; width: 100%;">Total Amount Of AR Charges Repayable</div>
-                        </div>
-                        <strong id="slip-deduct-amt" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; color: #b45309; align-items: center; margin-top: 6px; border-top: 1px dashed #cbd5e1; padding-top: 6px;">
-                        <span style="font-weight: 700;">Total Outstanding Charges / Balance:</span>
-                        <strong id="slip-total-charges" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
-                    </div>
-                </div>
-
-                <div style="background: #f0fdf4; border: 2px solid #166534; padding: 10px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <span style="font-weight: 900; color: #166534; font-size: 1.05rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
-                    <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.25rem;">$0 JMD</span>
-                </div>
-
-                <div class="inv-footer">
-                    <p style="margin-bottom: 4px; font-weight: bold; color: #1a531f;">✅ Official Corporation Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
-                    <p>Authorized Dispatcher Sign-off: ___________________________</p>
-                </div>
-                <br>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
-                    <button class="btn-whatsapp btn-print" onclick="sendWhatsAppWeeklyPayslip()">📱 Send via WhatsApp</button>
-                </div>
-            </div>
+            <button class="btn-action btn-whatsapp" onclick="sendWhatsAppMessage()">📱 Send Request via WhatsApp</button>
         </div>
 
     </div>
 
     <footer>
-        <p>&copy; D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED. Kingston & Portmore, Jamaica. All rights reserved.</p>
+        <p>&copy; D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED. Kingston & Portmore, Jamaica.</p>
     </footer>
 
     <script>
-        var managerPin = "1234";
-        var showAllHistory = false;
-        var activeWeeklyPayslipData = null;
+        function sendWhatsAppMessage() {
+            var client = document.getElementById('q-client').value || 'Valued Client';
+            var phone = document.getElementById('q-phone').value || 'N/A';
+            var pickup = document.getElementById('q-pickup').value || 'N/A';
+            var dest = document.getElementById('q-dest').value || 'N/A';
 
-        function toggleManagerPanel() {
-            var panel = document.getElementById('manager-panel');
-            if (panel.style.display === 'block') {
-                panel.style.display = 'none';
-            } else {
-                var entered = prompt("Enter Manager PIN to access payment controls & corporate tracker:");
-                if (entered === managerPin) {
-                    panel.style.display = 'block';
-                    loadTrackerJobs();
-                    loadMaintenanceLogs();
-                    loadCrewPreferences();
-                } else if (entered !== null) {
-                    alert("Incorrect PIN. Access denied.");
-                }
-            }
-        }
-
-        function toggleViewMode() {
-            showAllHistory = !showAllHistory;
-            var label = document.getElementById('current-view-label');
-            var btn = document.querySelector('.btn-week-toggle');
-            if (showAllHistory) {
-                label.innerText = "📅 Showing: All Historical Records in Table";
-                btn.innerText = "🔄 Switch to Current M-F Week Table Only";
-                btn.style.background = '#0369a1';
-            } else {
-                label.innerText = "📅 Showing: Current M-F Operating Week";
-                btn.innerText = "🔄 Switch to View All History Table";
-                btn.style.background = '#1e293b';
-            }
-            loadTrackerJobs();
-        }
-
-        function saveCrewPreferences() {
-            var driver = document.getElementById('tr-driver').value;
-            var assistant = document.getElementById('tr-assistant').value;
-            localStorage.setItem("dc_default_driver", driver);
-            localStorage.setItem("dc_default_assistant", assistant);
-
-            if (driver && !document.getElementById('payroll-driver-name').value) {
-                document.getElementById('payroll-driver-name').value = driver;
-            }
-            if (assistant && !document.getElementById('payroll-asst-name').value) {
-                document.getElementById('payroll-asst-name').value = assistant;
-            }
-        }
-
-        function loadCrewPreferences() {
-            var savedDriver = localStorage.getItem("dc_default_driver");
-            var savedAsst = localStorage.getItem("dc_default_assistant");
-            if (savedDriver !== null) {
-                if (document.getElementById('tr-driver').value === '') document.getElementById('tr-driver').value = savedDriver;
-                if (document.getElementById('payroll-driver-name').value === '') document.getElementById('payroll-driver-name').value = savedDriver;
-            }
-            if (savedAsst !== null) {
-                if (document.getElementById('tr-assistant').value === '') document.getElementById('tr-assistant').value = savedAsst;
-                if (document.getElementById('payroll-asst-name').value === '') document.getElementById('payroll-asst-name').value = savedAsst;
-            }
-        }
-
-        function saveStaffProfile(role) {
-            var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
-            var name = document.getElementById(prefix + 'name').value.trim();
-            if (!name) {
-                alert("Please enter the staff member's name first.");
-                return;
-            }
-
-            var profile = {
-                name: name,
-                paynum: document.getElementById(prefix + 'paynum').value,
-                id: document.getElementById(prefix + 'id').value,
-                natid: document.getElementById(prefix + 'natid').value,
-                bankname: document.getElementById(prefix + 'bankname').value,
-                bankbranch: document.getElementById(prefix + 'bankbranch').value,
-                accnum: document.getElementById(prefix + 'accnum').value,
-                sortcode: document.getElementById(prefix + 'sortcode').value,
-                pos: document.getElementById(prefix + 'pos').value,
-                dept: document.getElementById(prefix + 'dept').value,
-                branch: document.getElementById(prefix + 'branch').value,
-                joined: document.getElementById(prefix + 'joined').value,
-                deduct: document.getElementById(prefix + 'deduct').value,
-                deductnote: document.getElementById(prefix + 'deductnote').value,
-                totalcharges: document.getElementById(prefix + 'totalcharges').value,
-                method: document.getElementById(prefix + 'method').value
-            };
-
-            localStorage.setItem("dc_staff_profile_" + name.toLowerCase(), JSON.stringify(profile));
-            alert("Staff profile saved for " + name + "! You can load it anytime by entering their name and clicking 'Load'.");
-        }
-
-        function loadStaffProfile(role) {
-            var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
-            var nameInput = document.getElementById(prefix + 'name');
-            var name = nameInput.value.trim().toLowerCase();
-            if (!name) {
-                alert("Please enter the staff member's name to load their profile.");
-                nameInput.focus();
-                return;
-            }
-
-            var saved = localStorage.getItem("dc_staff_profile_" + name);
-            if (saved) {
-                var profile = JSON.parse(saved);
-                document.getElementById(prefix + 'paynum').value = profile.paynum || '';
-                document.getElementById(prefix + 'id').value = profile.id || '';
-                document.getElementById(prefix + 'natid').value = profile.natid || '';
-                document.getElementById(prefix + 'bankname').value = profile.bankname || '';
-                document.getElementById(prefix + 'bankbranch').value = profile.bankbranch || '';
-                document.getElementById(prefix + 'accnum').value = profile.accnum || '';
-                document.getElementById(prefix + 'sortcode').value = profile.sortcode || '';
-                document.getElementById(prefix + 'pos').value = profile.pos || '';
-                document.getElementById(prefix + 'dept').value = profile.dept || '';
-                document.getElementById(prefix + 'branch').value = profile.branch || '';
-                document.getElementById(prefix + 'joined').value = profile.joined || '';
-                document.getElementById(prefix + 'deduct').value = profile.deduct || '0';
-                document.getElementById(prefix + 'deductnote').value = profile.deductnote || '';
-                document.getElementById(prefix + 'totalcharges').value = profile.totalcharges || '0';
-                document.getElementById(prefix + 'method').value = profile.method || 'Bank Transfer';
-                alert("Profile loaded successfully for " + profile.name + "!");
-            } else {
-                alert("No saved profile found for '" + nameInput.value + "'.");
-            }
-        }
-
-        function togglePaymentBoxes(type) {
-            var dep = document.getElementById('inv-deposit-paid');
-            var full = document.getElementById('inv-full-paid');
-            if (type === 'full' && full.checked) {
-                dep.checked = true; 
-            }
-        }
-
-        function selectDestinationZone() {
-            var select = document.getElementById('inv-destination');
-            var selectedOption = select.options[select.selectedIndex];
-            var price = selectedOption.getAttribute('data-price');
-            document.getElementById('inv-amount').value = price || 0;
-            
-            if (select.value) {
-                document.getElementById('inv-specific-dest').value = select.value;
-            }
-        }
-
-        function liveTypeAutoPrice() {
-            var typedVal = document.getElementById('inv-specific-dest').value.trim().toLowerCase();
-            if (!typedVal) return;
-
-            var select = document.getElementById('inv-destination');
-            var options = select.options;
-
-            for (var i = 1; i < options.length; i++) {
-                var zoneText = options[i].value.toLowerCase();
-                var price = options[i].getAttribute('data-price');
-
-                var towns = zoneText.split(',');
-                for (var j = 0; j < towns.length; j++) {
-                    var townName = towns[j].trim();
-                    if (townName.length >= 3 && (typedVal === townName || typedVal.includes(townName) || townName.includes(typedVal))) {
-                        document.getElementById('inv-amount').value = price;
-                        select.selectedIndex = i; 
-                        return;
-                    }
-                }
-            }
-        }
-
-        function trackerLiveAutoPrice() {
-            var typedVal = document.getElementById('tr-drop').value.trim().toLowerCase();
-            if (!typedVal) return;
-
-            var select = document.getElementById('inv-destination');
-            var options = select.options;
-
-            for (var i = 1; i < options.length; i++) {
-                var zoneText = options[i].value.toLowerCase();
-                var price = options[i].getAttribute('data-price');
-
-                var towns = zoneText.split(',');
-                for (var j = 0; j < towns.length; j++) {
-                    var townName = towns[j].trim();
-                    if (townName.length >= 3 && (typedVal === townName || typedVal.includes(townName) || townName.includes(typedVal))) {
-                        document.getElementById('tr-rate').value = price;
-                        updateLiveProfit();
-                        return;
-                    }
-                }
-            }
-        }
-
-        function updateLiveProfit() {
-            var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
-            var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
-            var driverPay = parseFloat(document.getElementById('tr-driver-pay').value) || 0;
-            var asstPay = parseFloat(document.getElementById('tr-asst-pay').value) || 0;
-            
-            var net = rate - (petrol + driverPay + asstPay);
-            document.getElementById('live-net-profit-display').innerText = '$' + net.toLocaleString() + ' JMD';
-        }
-
-        function saveClientProfile() {
-            var email = document.getElementById('inv-email').value;
-            var client = document.getElementById('inv-client').value;
-            var phone = document.getElementById('inv-phone').value;
-            var pickup = document.getElementById('inv-pickup').value;
-
-            if (!email) {
-                alert("Please enter an Email Address first so we can link your saved profile!");
-                return;
-            }
-
-            var profile = { client: client, phone: phone, pickup: pickup };
-            localStorage.setItem("dc_profile_" + email.toLowerCase().trim(), JSON.stringify(profile));
-            alert("Profile saved for " + email + "! Next time you visit, simply enter your email above to auto-fill your details.");
-        }
-
-        function lookupClientProfile() {
-            var email = document.getElementById('lookup-email').value.toLowerCase().trim();
-            if (!email) {
-                alert("Please enter your registered email address.");
-                return;
-            }
-
-            var saved = localStorage.getItem("dc_profile_" + email);
-            if (saved) {
-                var profile = JSON.parse(saved);
-                document.getElementById('inv-email').value = email;
-                document.getElementById('inv-client').value = profile.client || '';
-                document.getElementById('inv-phone').value = profile.phone || '';
-                document.getElementById('inv-pickup').value = profile.pickup || '';
-                alert("Welcome back! Your profile details have been loaded into the form.");
-            } else {
-                alert("No saved profile found for that email address. You can fill in the form and click 'Save My Info' to create one!");
-            }
-        }
-
-        function generateInvoice() {
-            var client = document.getElementById('inv-client').value || 'Valued Client';
-            var phone = document.getElementById('inv-phone').value || 'N/A';
-            var email = document.getElementById('inv-email').value || 'N/A';
-            var num = document.getElementById('inv-num').value || 'DC-1001';
-            var pickup = document.getElementById('inv-pickup').value || 'Kingston / Portmore Depot';
-            
-            var destInput = document.getElementById('inv-specific-dest').value.trim();
-            if (!destInput) {
-                destInput = 'Destination Hub';
-            }
-
-            var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
-            var deposit = totalAmount * 0.5;
-            var balance = totalAmount * 0.5;
-
-            var depositPaid = document.getElementById('inv-deposit-paid').checked;
-            var fullPaid = document.getElementById('inv-full-paid').checked;
-
-            document.getElementById('out-client').innerText = client;
-            document.getElementById('out-phone').innerText = phone;
-            document.getElementById('out-email').innerText = email;
-            document.getElementById('out-num').innerText = num;
-            
-            document.getElementById('out-pickup-text').innerText = pickup;
-            document.getElementById('out-dest-text').innerText = destInput;
-            document.getElementById('out-desc').innerText = 'Haulage Transport: ' + pickup + ' to ' + destInput;
-            
-            document.getElementById('out-amount').innerText = '$' + totalAmount.toLocaleString() + ' JMD';
-            document.getElementById('out-deposit').innerText = '$' + deposit.toLocaleString() + ' JMD';
-            document.getElementById('out-balance').innerText = '$' + balance.toLocaleString() + ' JMD';
-
-            if (fullPaid) {
-                document.getElementById('out-invoice-header-title').innerText = 'OFFICIAL RECEIPT / PAID IN FULL';
-                document.getElementById('out-deposit-label').innerHTML = '✅ 50% Deposit PAID ($' + deposit.toLocaleString() + ' JMD)';
-                document.getElementById('out-balance-label').innerHTML = '✅ Remaining 50% Balance PAID IN FULL ($' + balance.toLocaleString() + ' JMD)';
-                document.getElementById('out-balance-label').style.color = '#166534';
-                document.getElementById('out-balance').style.color = '#166534';
-                document.getElementById('out-footer-notice').innerText = '🎉 JOB FULLY PAID IN FULL. Thank you for your business!';
-            } else if (depositPaid) {
-                document.getElementById('out-invoice-header-title').innerText = 'DEPOSIT RECEIPT / BOOKING CONFIRMED';
-                document.getElementById('out-deposit-label').innerHTML = '✅ 50% Deposit PAID ($' + deposit.toLocaleString() + ' JMD)';
-                document.getElementById('out-balance-label').innerHTML = '🚚 Remaining 50% Balance Due Upon Pickup ($' + balance.toLocaleString() + ' JMD)';
-                document.getElementById('out-balance-label').style.color = '#dc2626';
-                document.getElementById('out-balance').style.color = '#dc2626';
-                document.getElementById('out-footer-notice').innerText = '* 50% deposit received. Booking locked in! Balance due upon pickup.';
-            } else {
-                document.getElementById('out-invoice-header-title').innerText = 'INVOICE / BOOKING QUOTE';
-                document.getElementById('out-deposit-label').innerHTML = '🔒 Required 50% Deposit (To Confirm Booking)';
-                document.getElementById('out-balance-label').innerHTML = '🚚 Remaining 50% Balance (Due Upon Pickup)';
-                document.getElementById('out-balance-label').style.color = '#dc2626';
-                document.getElementById('out-balance').style.color = '#dc2626';
-                document.getElementById('out-footer-notice').innerText = '* 50% deposit required to lock in your booking date. Balance due upon pickup.';
-            }
-            
-            document.getElementById('out-date').innerText = new Date().toLocaleDateString();
-
-            document.getElementById('invoice-preview').style.display = 'block';
-            document.getElementById('payslip-preview').style.display = 'none';
-        }
-
-        function generateWeeklyPayslip(roleType) {
-            var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
-            var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
-            var staffIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-id') : document.getElementById('payroll-asst-id');
-            var natIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-natid') : document.getElementById('payroll-asst-natid');
-            var bankNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankname') : document.getElementById('payroll-asst-bankname');
-            var bankBranchInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankbranch') : document.getElementById('payroll-asst-bankbranch');
-            var accNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-accnum') : document.getElementById('payroll-asst-accnum');
-            var sortCodeInput = roleType === 'driver' ? document.getElementById('payroll-driver-sortcode') : document.getElementById('payroll-asst-sortcode');
-            var posInput = roleType === 'driver' ? document.getElementById('payroll-driver-pos') : document.getElementById('payroll-asst-pos');
-            var deptInput = roleType === 'driver' ? document.getElementById('payroll-driver-dept') : document.getElementById('payroll-asst-dept');
-            var branchInput = roleType === 'driver' ? document.getElementById('payroll-driver-branch') : document.getElementById('payroll-asst-branch');
-            var joinedInput = roleType === 'driver' ? document.getElementById('payroll-driver-joined') : document.getElementById('payroll-asst-joined');
-            var deductInput = roleType === 'driver' ? document.getElementById('payroll-driver-deduct') : document.getElementById('payroll-asst-deduct');
-            var deductNoteInput = roleType === 'driver' ? document.getElementById('payroll-driver-deductnote') : document.getElementById('payroll-asst-deductnote');
-            var chargesInput = roleType === 'driver' ? document.getElementById('payroll-driver-totalcharges') : document.getElementById('payroll-asst-totalcharges');
-            var methodSelect = roleType === 'driver' ? document.getElementById('payroll-driver-method') : document.getElementById('payroll-asst-method');
-            var paydateInput = roleType === 'driver' ? document.getElementById('payroll-driver-paydate') : document.getElementById('payroll-asst-paydate');
-
-            var staffName = staffNameInput.value.trim();
-            var payNum = payNumInput.value.trim() || 'PAY-2026-001';
-            var staffId = staffIdInput.value.trim() || 'N/A';
-            var natId = natIdInput.value.trim() || 'N/A';
-            var bankName = bankNameInput.value.trim() || 'N/A';
-            var bankBranch = bankBranchInput.value.trim() || 'N/A';
-            var accNum = accNumInput.value.trim() || 'N/A';
-            var sortCode = sortCodeInput.value.trim() || 'N/A';
-            var position = posInput.value.trim() || (roleType === 'driver' ? 'Commercial Driver' : 'Truck Assistant');
-            var dept = deptInput.value.trim() || 'D&C Logistics';
-            var branch = branchInput.value.trim() || 'Kingston & Portmore Hub';
-            var joined = joinedInput.value || 'N/A';
-            var deduction = parseFloat(deductInput.value) || 0;
-            var deductionNoteText = deductNoteInput.value.trim() || 'Total Amount Of AR Charges Repayable';
-            var totalCharges = parseFloat(chargesInput.value) || 0;
-            var paymentMethod = methodSelect.value;
-            var payDate = paydateInput.value || new Date().toLocaleDateString();
-
-            if (!staffName) {
-                alert("Please enter the " + roleType + "'s name first.");
-                staffNameInput.focus();
-                return;
-            }
-
-            var allJobs = getStoredJobs();
-            var weekJobs = allJobs.filter(function(j) {
-                if (!isCurrentWeek(j.date)) return false;
-                if (roleType === 'driver') {
-                    return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
-                } else {
-                    return j.assistant && j.assistant.toLowerCase().includes(staffName.toLowerCase());
-                }
-            });
-
-            if (weekJobs.length === 0) {
-                alert("No logged operating runs found for " + staffName + " during the current active week. Log some jobs in the tracker first!");
-                return;
-            }
-
-            document.getElementById('slip-title-main').innerText = staffName.toUpperCase() + ' (Weekly)';
-            document.getElementById('slip-name').innerText = staffName;
-            document.getElementById('slip-paynum').innerText = payNum;
-            document.getElementById('slip-natid').innerText = natId;
-            document.getElementById('slip-bankname').innerText = bankName;
-            document.getElementById('slip-bankbranch').innerText = bankBranch;
-            document.getElementById('slip-accnum').innerText = accNum;
-            document.getElementById('slip-sortcode').innerText = sortCode;
-            document.getElementById('slip-position').innerText = position;
-            document.getElementById('slip-dept').innerText = dept;
-            document.getElementById('slip-branch').innerText = branch;
-            document.getElementById('slip-joined').innerText = joined;
-            document.getElementById('slip-method').innerText = paymentMethod;
-            document.getElementById('slip-paydate').innerText = payDate;
-            document.getElementById('slip-period').innerText = 'Weekly Operating Statement (' + new Date().toLocaleDateString() + ')';
-            document.getElementById('slip-deduct-note').innerText = deductionNoteText;
-
-            var tbody = document.getElementById('slip-runs-tbody');
-            tbody.innerHTML = '';
-
-            var grossEarnings = 0;
-
-            for (var i = 0; i < weekJobs.length; i++) {
-                var j = weekJobs[i];
-                var payout = roleType === 'driver' ? j.driverPay : j.asstPay;
-                grossEarnings += payout;
-
-                var tr = document.createElement('tr');
-                tr.innerHTML = '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;"><strong>' + j.day + '</strong><br><span style="font-size:0.78rem; color:#64748b;">' + j.date + '</span></td>' +
-                               '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd;">' + j.pickup + ' ➔ ' + j.drop + '</td>' +
-                               '<td style="padding: 6px 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
-                tbody.appendChild(tr);
-            }
-
-            var netPayable = grossEarnings - deduction;
-            if (netPayable < 0) netPayable = 0;
-
-            document.getElementById('slip-gross').innerText = '$' + grossEarnings.toLocaleString() + ' JMD';
-            document.getElementById('slip-deduct-amt').innerText = '$' + deduction.toLocaleString() + ' JMD';
-            document.getElementById('slip-total-charges').innerText = '$' + totalCharges.toLocaleString() + ' JMD';
-            document.getElementById('slip-total-amount').innerText = '$' + netPayable.toLocaleString() + ' JMD';
-
-            document.getElementById('invoice-preview').style.display = 'none';
-            document.getElementById('payslip-preview').style.display = 'block';
-            document.getElementById('payslip-preview').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function sendWhatsAppWeeklyPayslip() {
-            var name = document.getElementById('slip-name').innerText;
-            var paynum = document.getElementById('slip-paynum').innerText;
-            var natid = document.getElementById('slip-natid').innerText;
-            var bankname = document.getElementById('slip-bankname').innerText;
-            var bankbranch = document.getElementById('slip-bankbranch').innerText;
-            var accnum = document.getElementById('slip-accnum').innerText;
-            var sortcode = document.getElementById('slip-sortcode').innerText;
-            var position = document.getElementById('slip-position').innerText;
-            var dept = document.getElementById('slip-dept').innerText;
-            var branch = document.getElementById('slip-branch').innerText;
-            var method = document.getElementById('slip-method').innerText;
-            var paydate = document.getElementById('slip-paydate').innerText;
-            var gross = document.getElementById('slip-gross').innerText;
-            var deduct = document.getElementById('slip-deduct-amt').innerText;
-            var deductNote = document.getElementById('slip-deduct-note').innerText;
-            var charges = document.getElementById('slip-total-charges').innerText;
-            var net = document.getElementById('slip-total-amount').innerText;
-
-            var message = "D&C REFUSE TRUCKING - WEEKLY STATEMENT\n\n" +
-                          "Employee: " + name + " (Payroll #: " + paynum + ")\n" +
-                          "TRN / National ID: " + natid + "\n" +
-                          "Bank: " + bankname + " (" + bankbranch + ")\n" +
-                          "Acc #: " + accnum + " | Sort Code: " + sortcode + "\n" +
-                          "Position: " + position + " | Dept: " + dept + "\n" +
-                          "Payment Method: " + method + " (" + paydate + ")\n\n" +
-                          "Gross Earnings: " + gross + "\n" +
-                          "Deductions This Period: " + deduct + " (" + deductNote + ")\n" +
-                          "Total Outstanding Charges: " + charges + "\n" +
-                          "Amount Payable (Net): " + net + "\n\n" +
-                          "Thank you for your hard work!";
-
-            var whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(message);
-            window.open(whatsappUrl, "_blank");
-        }
-
-        function sendWhatsAppQuote() {
-            var client = document.getElementById('inv-client').value || 'Valued Client';
-            var phone = document.getElementById('inv-phone').value || 'N/A';
-            var email = document.getElementById('inv-email').value || 'N/A';
-            var num = document.getElementById('inv-num').value || 'DC-1001';
-            var pickup = document.getElementById('inv-pickup').value || 'Kingston Hub';
-            
-            var destInput = document.getElementById('inv-specific-dest').value.trim();
-            if (!destInput) {
-                destInput = 'Destination Hub';
-            }
-
-            var totalAmount = parseFloat(document.getElementById('inv-amount').value) || 0;
-            var deposit = totalAmount * 0.5;
-            var balance = totalAmount * 0.5;
-
-            var depositPaid = document.getElementById('inv-deposit-paid').checked;
-            var fullPaid = document.getElementById('inv-full-paid').checked;
-
-            var statusText = "";
-            if (fullPaid) {
-                statusText = "🎉 FULLY PAID IN FULL ($" + totalAmount.toLocaleString() + " JMD)";
-            } else if (depositPaid) {
-                statusText = "✅ 50% DEPOSIT PAID ($" + deposit.toLocaleString() + " JMD)\n🚚 BALANCE DUE UPON PICKUP: $" + balance.toLocaleString() + " JMD";
-            } else {
-                statusText = "🔴 REQUIRED 50% DEPOSIT: $" + deposit.toLocaleString() + " JMD (Payable to confirm booking)\n🚚 BALANCE DUE UPON PICKUP: $" + balance.toLocaleString() + " JMD";
-            }
-
-            var message = "Hello D&C Refuse Trucking, haulage booking details:\n\n" +
-                          "Invoice #: " + num + "\n" +
-                          "Client Name: " + client + "\n" +
+            var message = "Hello D&C Refuse Trucking, booking inquiry:\n\n" +
+                          "Name: " + client + "\n" +
                           "Phone: " + phone + "\n" +
-                          "Email: " + email + "\n" +
-                          "Pickup Point: " + pickup + "\n" +
-                          "Drop-off Destination: " + destInput + "\n\n" +
-                          "Total Rate: $" + totalAmount.toLocaleString() + " JMD\n" +
-                          statusText + "\n\n" +
-                          "Thank you!";
+                          "Pickup: " + pickup + "\n" +
+                          "Drop-off: " + dest + "\n\n" +
+                          "Please send quote/details.";
 
-            var whatsappUrl = "https://wa.me/18768628579?text=" + encodeURIComponent(message);
-            window.open(whatsappUrl, "_blank");
-        }
-
-        function getStoredJobs() {
-            var stored = localStorage.getItem("dc_corporate_jobs");
-            return stored ? JSON.parse(stored) : [];
-        }
-
-        function saveStoredJobs(jobs) {
-            localStorage.setItem("dc_corporate_jobs", JSON.stringify(jobs));
-        }
-
-        function addTrackerJob() {
-            var day = document.getElementById('tr-day').value;
-            var date = document.getElementById('tr-date').value || new Date().toISOString().split('T')[0];
-            var inv = document.getElementById('tr-inv').value;
-            var pickup = document.getElementById('tr-pickup').value;
-            var drop = document.getElementById('tr-drop').value;
-            var driver = document.getElementById('tr-driver').value || 'N/A';
-            var driverPay = parseFloat(document.getElementById('tr-driver-pay').value) || 0;
-            var assistant = document.getElementById('tr-assistant').value || 'N/A';
-            var asstPay = parseFloat(document.getElementById('tr-asst-pay').value) || 0;
-            var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
-            var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
-            var status = document.getElementById('tr-status').value;
-
-            if (!inv) {
-                alert("Please enter an Invoice Number.");
-                return;
-            }
-
-            var jobs = getStoredJobs();
-            jobs.push({ 
-                id: Date.now(), 
-                day: day, 
-                date: date,
-                inv: inv, 
-                pickup: pickup, 
-                drop: drop, 
-                driver: driver, 
-                driverPay: driverPay,
-                assistant: assistant, 
-                asstPay: asstPay,
-                petrol: petrol, 
-                rate: rate, 
-                status: status 
-            });
-            saveStoredJobs(jobs);
-
-            document.getElementById('tr-date').value = '';
-            document.getElementById('tr-inv').value = '';
-            document.getElementById('tr-pickup').value = '';
-            document.getElementById('tr-drop').value = '';
-            document.getElementById('tr-driver-pay').value = '';
-            document.getElementById('tr-asst-pay').value = '';
-            document.getElementById('tr-petrol').value = '';
-            document.getElementById('tr-rate').value = '';
-            updateLiveProfit();
-            
-            loadTrackerJobs();
-        }
-
-        function toggleJobStatus(id) {
-            var jobs = getStoredJobs();
-            for (var i = 0; i < jobs.length; i++) {
-                if (jobs[i].id === id) {
-                    jobs[i].status = jobs[i].status === 'PAID' ? 'UNPAID' : 'PAID';
-                    break;
-                }
-            }
-            saveStoredJobs(jobs);
-            loadTrackerJobs();
-        }
-
-        function deleteJob(id) {
-            if (!confirm("Are you sure you want to delete this job log?")) return;
-            var jobs = getStoredJobs();
-            var filtered = jobs.filter(function(j) { return j.id !== id; });
-            saveStoredJobs(filtered);
-            loadTrackerJobs();
-        }
-
-        function editJob(id) {
-            var jobs = getStoredJobs();
-            var job = null;
-            for (var i = 0; i < jobs.length; i++) {
-                if (jobs[i].id === id) {
-                    job = jobs[i];
-                    break;
-                }
-            }
-            if (!job) return;
-
-            var newDay = prompt("Edit Day of Week (Monday - Friday):", job.day);
-            if (newDay === null) return;
-            var newDate = prompt("Edit Exact Date (YYYY-MM-DD):", job.date);
-            if (newDate === null) return;
-            var newInv = prompt("Edit Invoice Number(s):", job.inv);
-            if (newInv === null) return;
-            var newDrop = prompt("Edit Drop-off Destination:", job.drop);
-            if (newDrop === null) return;
-            var newRate = prompt("Edit Total Rate (JMD):", job.rate);
-            if (newRate === null) return;
-
-            job.day = newDay.trim() || job.day;
-            job.date = newDate.trim() || job.date;
-            job.inv = newInv.trim() || job.inv;
-            job.drop = newDrop.trim() || job.drop;
-            job.rate = parseFloat(newRate) || job.rate;
-
-            saveStoredJobs(jobs);
-            loadTrackerJobs();
-        }
-
-        function getStoredMaintenance() {
-            var stored = localStorage.getItem("dc_truck_maintenance");
-            return stored ? JSON.parse(stored) : [];
-        }
-
-        function saveStoredMaintenance(maint) {
-            localStorage.setItem("dc_truck_maintenance", JSON.stringify(maint));
-        }
-
-        function addMaintenanceLog() {
-            var date = document.getElementById('maint-date').value || new Date().toISOString().split('T')[0];
-            var cat = document.getElementById('maint-cat').value;
-            var desc = document.getElementById('maint-desc').value.trim();
-            var cost = parseFloat(document.getElementById('maint-cost').value) || 0;
-            var vendor = document.getElementById('maint-vendor').value.trim() || 'N/A';
-
-            if (!desc || cost <= 0) {
-                alert("Please enter an Item Description and valid Cost.");
-                return;
-            }
-
-            var maint = getStoredMaintenance();
-            maint.push({
-                id: Date.now(),
-                date: date,
-                cat: cat,
-                desc: desc,
-                cost: cost,
-                vendor: vendor
-            });
-
-            saveStoredMaintenance(maint);
-
-            document.getElementById('maint-date').value = '';
-            document.getElementById('maint-desc').value = '';
-            document.getElementById('maint-cost').value = '';
-            document.getElementById('maint-vendor').value = '';
-
-            loadTrackerJobs();
-        }
-
-        function deleteMaintenanceLog(id) {
-            if (!confirm("Are you sure you want to delete this maintenance entry?")) return;
-            var maint = getStoredMaintenance();
-            var filtered = maint.filter(function(m) { return m.id !== id; });
-            saveStoredMaintenance(filtered);
-            loadTrackerJobs();
-        }
-
-        function loadMaintenanceLogs() {
-            var maint = getStoredMaintenance();
-            var tbody = document.getElementById('maint-table-body');
-            tbody.innerHTML = '';
-
-            if (maint.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#94a3b8;">No maintenance logs recorded yet.</td></tr>';
-                return;
-            }
-
-            for (var i = 0; i < maint.length; i++) {
-                var m = maint[i];
-                var tr = document.createElement('tr');
-                tr.innerHTML = '<td><strong>' + m.date + '</strong></td>' +
-                               '<td><span style="color:#fb7185; font-weight:800;">' + m.cat + '</span></td>' +
-                               '<td>' + m.desc + '</td>' +
-                               '<td>' + m.vendor + '</td>' +
-                               '<td style="font-weight:900; color:#f87171;">$' + m.cost.toLocaleString() + ' JMD</td>' +
-                               '<td><button style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMaintenanceLog(' + m.id + ')">🗑️</button></td>';
-                tbody.appendChild(tr);
-            }
-        }
-
-        function isCurrentWeek(dateString) {
-            if (!dateString || dateString === 'N/A') return true;
-            var jobDate = new Date(dateString);
-            var now = new Date();
-
-            var currentDay = now.getDay();
-            var diffToMonday = now.getDate() - currentDay + (currentDay === 0 ? -6 : 1);
-            var monday = new Date(now.setDate(diffToMonday));
-            monday.setHours(0, 0, 0, 0);
-
-            var friday = new Date(monday);
-            friday.setDate(monday.getDate() + 4);
-            friday.setHours(23, 59, 59, 999);
-
-            return jobDate >= monday && jobDate <= friday;
-        }
-
-        function loadTrackerJobs() {
-            var allJobs = getStoredJobs();
-            var allMaint = getStoredMaintenance();
-            var tbody = document.getElementById('tracker-table-body');
-            tbody.innerHTML = '';
-
-            var totalMaintCost = 0;
-            for (var m = 0; m < allMaint.length; m++) {
-                totalMaintCost += allMaint[m].cost;
-            }
-
-            var allTimeRev = 0;
-            var allTimeJobExp = 0;
-
-            for (var a = 0; a < allJobs.length; a++) {
-                var aj = allJobs[a];
-                var aExp = aj.driverPay + aj.asstPay + aj.petrol;
-                allTimeRev += aj.rate;
-                allTimeJobExp += aExp;
-            }
-
-            var grandTotalExpenses = allTimeJobExp + totalMaintCost;
-            var allTimeNetProfit = allTimeRev - grandTotalExpenses;
-
-            document.getElementById('all-revenue').innerText = '$' + allTimeRev.toLocaleString() + ' JMD';
-            document.getElementById('all-expenses').innerText = '$' + grandTotalExpenses.toLocaleString() + ' JMD';
-            document.getElementById('all-maint').innerText = '$' + totalMaintCost.toLocaleString() + ' JMD';
-            document.getElementById('all-profit').innerText = '$' + allTimeNetProfit.toLocaleString() + ' JMD';
-            document.getElementById('all-count').innerText = allJobs.length + (allJobs.length === 1 ? ' Job' : ' Jobs');
-
-            var tableJobs = showAllHistory ? allJobs : allJobs.filter(function(j) {
-                return isCurrentWeek(j.date);
-            });
-
-            var weekRev = 0;
-            var weekExp = 0;
-
-            var currentWeekJobs = allJobs.filter(function(j) { return isCurrentWeek(j.date); });
-            for (var w = 0; w < currentWeekJobs.length; w++) {
-                var wj = currentWeekJobs[w];
-                var wExp = wj.driverPay + wj.asstPay + wj.petrol;
-                weekRev += wj.rate;
-                weekExp += wExp;
-            }
-
-            document.getElementById('sum-revenue').innerText = '$' + weekRev.toLocaleString() + ' JMD';
-            document.getElementById('sum-expenses').innerText = '$' + weekExp.toLocaleString() + ' JMD';
-            document.getElementById('sum-profit').innerText = '$' + (weekRev - weekExp).toLocaleString() + ' JMD';
-            document.getElementById('sum-count').innerText = currentWeekJobs.length + (currentWeekJobs.length === 1 ? ' Job' : ' Jobs');
-
-            if (tableJobs.length === 0) {
-                var emptyMsg = showAllHistory ? "No corporate jobs logged yet." : "No operating week jobs logged yet. Ready to roll!";
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:#94a3b8;">' + emptyMsg + '</td></tr>';
-            } else {
-                for (var i = 0; i < tableJobs.length; i++) {
-                    var j = tableJobs[i];
-                    var expenses = j.driverPay + j.asstPay + j.petrol;
-                    var netProfit = j.rate - expenses;
-
-                    var invArray = (j.inv || '').split(',').map(function(item) { return item.trim(); }).filter(Boolean);
-                    var invHTML = '';
-                    if (invArray.length > 0) {
-                        for (var k = 0; k < invArray.length; k++) {
-                            invHTML += '<span class="inv-badge-pill">' + invArray[k] + '</span> ';
-                        }
-                    } else {
-                        invHTML = '<span class="inv-badge-pill">' + (j.inv || 'DC-1001') + '</span>';
-                    }
-
-                    var statusHTML = j.status === 'PAID' 
-                        ? '<span class="status-badge-paid" onclick="toggleJobStatus(' + j.id + ')">✅ PAID</span>' 
-                        : '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
-
-                    var tr = document.createElement('tr');
-                    tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.82rem;">' + j.date + '</span></td>' +
-                                   '<td>' + invHTML + '</td>' +
-                                   '<td>' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
-                                   '<td>' + j.driver + '<br><span style="color:#4ade80;">$' + j.driverPay.toLocaleString() + ' JMD</span></td>' +
-                                   '<td>' + j.assistant + '<br><span style="color:#4ade80;">$' + j.asstPay.toLocaleString() + ' JMD</span></td>' +
-                                   '<td style="color:#f87171;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
-                                   '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
-                                   '<td style="font-weight:900; color:#38bdf8;">$' + netProfit.toLocaleString() + ' JMD</td>' +
-                                   '<td>' + statusHTML + '</td>' +
-                                   '<td>' +
-                                      '<div class="action-btn-group">' +
-                                          '<button class="btn-table-edit" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
-                                          '<button class="btn-table-delete" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
-                                      '</div>' +
-                                   '</td>';
-                    tbody.appendChild(tr);
-                }
-            }
-
-            loadMaintenanceLogs();
+            var url = "https://wa.me/18768628579?text=" + encodeURIComponent(message);
+            window.open(url, "_blank");
         }
     </script>
 </body>
