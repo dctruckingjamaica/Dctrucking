@@ -1399,6 +1399,10 @@
                             <span id="all-expenses" style="color: #f87171;">$0 JMD</span>
                         </div>
                         <div class="alltime-box">
+                            <h6>All-Time Total Wages Paid</h6>
+                            <span id="all-wages" style="color: #4ade80;">$0 JMD</span>
+                        </div>
+                        <div class="alltime-box">
                             <h6>Truck Maintenance Spend</h6>
                             <span id="all-maint" style="color: #fb7185;">$0 JMD</span>
                         </div>
@@ -2739,12 +2743,15 @@
 
             var allTimeRev = 0;
             var allTimeJobExp = 0;
+            var allTimeWages = 0;
 
             for (var a = 0; a < allJobs.length; a++) {
                 var aj = allJobs[a];
-                var aExp = aj.driverPay + aj.asstPay + aj.petrol;
+                var wagesForJob = (aj.driverPay || 0) + (aj.asstPay || 0);
+                var aExp = wagesForJob + (aj.petrol || 0);
                 allTimeRev += aj.rate;
                 allTimeJobExp += aExp;
+                allTimeWages += wagesForJob;
             }
 
             var grandTotalExpenses = allTimeJobExp + totalMaintCost;
@@ -2752,6 +2759,7 @@
 
             document.getElementById('all-revenue').innerText = '$' + allTimeRev.toLocaleString() + ' JMD';
             document.getElementById('all-expenses').innerText = '$' + grandTotalExpenses.toLocaleString() + ' JMD';
+            document.getElementById('all-wages').innerText = '$' + allTimeWages.toLocaleString() + ' JMD';
             document.getElementById('all-maint').innerText = '$' + totalMaintCost.toLocaleString() + ' JMD';
             document.getElementById('all-profit').innerText = '$' + allTimeNetProfit.toLocaleString() + ' JMD';
             document.getElementById('all-count').innerText = allJobs.length + (allJobs.length === 1 ? ' Job' : ' Jobs');
