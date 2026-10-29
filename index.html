@@ -1220,6 +1220,17 @@
             display: inline-block;
         }
 
+        .status-badge-pending {
+            background: #d97706;
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: inline-block;
+        }
+
         .action-btn-group {
             display: flex;
             flex-direction: column;
@@ -1699,6 +1710,28 @@
                     </div>
                 </div>
 
+                <!-- ADDITION 1: UNPAID & PENDING COLLECTIONS SUMMARY BOX -->
+                <div style="background: #270f0f; border: 2px solid #ef4444; border-radius: 10px; padding: 14px; margin-bottom: 20px;">
+                    <h5 style="color: #f87171; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+                        <span>⚠️ Unpaid & Pending Collections</span>
+                        <span id="unpaid-job-count" style="font-size: 0.9rem; background: #7f1d1d; color: #fff; padding: 2px 8px; border-radius: 4px;">0 Jobs Pending</span>
+                    </h5>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
+                        <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
+                            <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Total Unpaid Outstanding</h6>
+                            <span id="sum-unpaid-total" style="color: #f87171; font-size: 1.3rem; font-weight: 900;">$0 JMD</span>
+                        </div>
+                        <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
+                            <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Unpaid Driver Payouts</h6>
+                            <span id="sum-unpaid-driver" style="color: #fbbf24; font-size: 1.2rem; font-weight: 900;">$0 JMD</span>
+                        </div>
+                        <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
+                            <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Unpaid Assistant Payouts</h6>
+                            <span id="sum-unpaid-asst" style="color: #fbbf24; font-size: 1.2rem; font-weight: 900;">$0 JMD</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="monthly-summary-container">
                     <h5 id="monthly-container-title">📅 Active Calendar Month Net Profit (October 2026)</h5>
                     <div class="monthly-grid">
@@ -2031,10 +2064,12 @@
                             <span id="live-net-profit-display">$0 JMD</span>
                         </div>
 
+                        <!-- ADDITION 2: STATUS DROPDOWN TOGGLE WITH UNPAID / PENDING COLLECTION / PAID -->
                         <div class="tracker-field-group" style="grid-column: 1 / -1; max-width: 300px;">
                             <label>Payment Status</label>
                             <select id="tr-status">
                                 <option value="UNPAID">🔴 UNPAID</option>
+                                <option value="PENDING COLLECTION">🟠 PENDING COLLECTION</option>
                                 <option value="PAID">✅ PAID</option>
                             </select>
                         </div>
@@ -3474,11 +3509,18 @@
             loadTrackerJobs();
         }
 
+        /* UPDATED TOGGLE FUNCTION TO CYCLE THROUGH UNPAID -> PENDING COLLECTION -> PAID */
         function toggleJobStatus(id) {
             var jobs = getStoredJobs();
             for (var i = 0; i < jobs.length; i++) {
                 if (jobs[i].id === id) {
-                    jobs[i].status = jobs[i].status === 'PAID' ? 'UNPAID' : 'PAID';
+                    if (jobs[i].status === 'UNPAID') {
+                        jobs[i].status = 'PENDING COLLECTION';
+                    } else if (jobs[i].status === 'PENDING COLLECTION') {
+                        jobs[i].status = 'PAID';
+                    } else {
+                        jobs[i].status = 'UNPAID';
+                    }
                     break;
                 }
             }
@@ -3781,6 +3823,12 @@
             var jobExp = 0;
             var wages = 0;
 
+            // UNPAID AND PENDING CALCULATIONS
+            var totalUnpaidRate = 0;
+            var totalUnpaidDriverPay = 0;
+            var totalUnpaidAsstPay = 0;
+            var unpaidJobCount = 0;
+
             for (var a = 0; a < filteredJobs.length; a++) {
                 var aj = filteredJobs[a];
                 var wagesForJob = (aj.driverPay || 0) + (aj.asstPay || 0);
@@ -3788,6 +3836,28 @@
                 rev += aj.rate;
                 jobExp += aExp;
                 wages += wagesForJob;
+
+                // CATCH UNPAID AND PENDING COLLECTION JOBS
+                if (aj.status === 'UNPAID' || aj.status === 'PENDING COLLECTION') {
+                    totalUnpaidRate += (aj.rate || 0);
+                    totalUnpaidDriverPay += (aj.driverPay || 0);
+                    totalUnpaidAsstPay += (aj.asstPay || 0);
+                    unpaidJobCount++;
+                }
+            }
+
+            // UPDATE UNPAID DASHBOARD BOX VALUES
+            if (document.getElementById('sum-unpaid-total')) {
+                document.getElementById('sum-unpaid-total').innerText = '$' + totalUnpaidRate.toLocaleString() + ' JMD';
+            }
+            if (document.getElementById('sum-unpaid-driver')) {
+                document.getElementById('sum-unpaid-driver').innerText = '$' + totalUnpaidDriverPay.toLocaleString() + ' JMD';
+            }
+            if (document.getElementById('sum-unpaid-asst')) {
+                document.getElementById('sum-unpaid-asst').innerText = '$' + totalUnpaidAsstPay.toLocaleString() + ' JMD';
+            }
+            if (document.getElementById('unpaid-job-count')) {
+                document.getElementById('unpaid-job-count').innerText = unpaidJobCount + (unpaidJobCount === 1 ? ' Job Pending' : ' Jobs Pending');
             }
 
             var grandTotalExpenses = jobExp + totalMaintCost;
@@ -3840,9 +3910,15 @@
                     }
                     invHTML += '</div>';
 
-                    var statusHTML = j.status === 'PAID' 
-                        ? '<span class="status-badge-paid" onclick="toggleJobStatus(' + j.id + ')">✅ PAID</span>' 
-                        : '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
+                    /* UPDATED STATUS BADGE DISPLAY TO HANDLE UNPAID, PENDING COLLECTION, AND PAID */
+                    var statusHTML = '';
+                    if (j.status === 'PAID') {
+                        statusHTML = '<span class="status-badge-paid" onclick="toggleJobStatus(' + j.id + ')">✅ PAID</span>';
+                    } else if (j.status === 'PENDING COLLECTION') {
+                        statusHTML = '<span class="status-badge-pending" onclick="toggleJobStatus(' + j.id + ')">🟠 PENDING</span>';
+                    } else {
+                        statusHTML = '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
+                    }
 
                     var tr = document.createElement('tr');
                     tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.82rem;">' + j.date + '</span></td>' +
