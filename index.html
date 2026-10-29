@@ -10,6 +10,9 @@
     <meta name="keywords" content="removal, haulage, private truck hire, box truck services, refuse management, trucking company Kingston, haulage Portmore, truck rental Jamaica, tail lift truck Jamaica, D&C Refuse Trucking, 7.5 ton truck, 20ft box truck">
     <meta name="author" content="D&C REFUSE TRUCKING & EQUIPMENT CO. LIMITED">
 
+    <!-- TESSERACT.JS OCR LIBRARY CDN (ADDED FOR AUTO-SCANNING) -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
     <style>
         :root {
             --primary-green: #00e676; /* Vibrant popping neon emerald */
@@ -883,10 +886,24 @@
             display: flex;
             gap: 6px;
             margin-top: 4px;
+            flex-wrap: wrap;
         }
 
         .btn-doc-save {
             background: #0284c7;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 900;
+            cursor: pointer;
+            flex: 1;
+            font-size: 0.88rem;
+        }
+
+        /* ADDED FOR OCR BUTTON */
+        .btn-doc-ocr {
+            background: #d97706;
             color: #fff;
             border: none;
             padding: 8px;
@@ -907,6 +924,13 @@
             cursor: pointer;
             flex: 1;
             font-size: 0.88rem;
+        }
+
+        .ocr-status-text {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #facc15;
+            margin-top: 2px;
         }
 
         /* WEEK VIEW TOGGLE BAR */
@@ -1921,8 +1945,8 @@
                             <input type="text" id="tr-pickup" placeholder="Pickup location">
                         </div>
                         <div class="tracker-field-group">
-                            <label>Drop-off Destination (Auto-Prompts & Prices)</label>
-                            <input type="text" id="tr-drop" list="jamaica-towns-list" placeholder="Type town (e.g. Negril)" oninput="trackerLiveAutoPrice()">
+                            <label>Drop-off Destination (Wisynco 7-Ton Auto-Lookup)</label>
+                            <input type="text" id="tr-drop" list="jamaica-towns-list" placeholder="Type town (e.g. Falmouth, Ocho Rios)" oninput="trackerLiveAutoPrice()">
                             <datalist id="jamaica-towns-list">
                                 <option value="Downtown">
                                 <option value="Kingston">
@@ -1976,7 +2000,7 @@
                             <input type="number" id="tr-petrol" placeholder="0" oninput="updateLiveProfit()">
                         </div>
                         <div class="tracker-field-group">
-                            <label>Total Rate (JMD) - Auto Filled</label>
+                            <label>7-Ton Contract Rate (JMD) - Auto Filled</label>
                             <input type="number" id="tr-rate" placeholder="0" oninput="updateLiveProfit()">
                         </div>
 
@@ -2121,10 +2145,10 @@
                     </div>
                 </div>
 
-                <!-- VEHICLE DOCUMENT VAULT SECTION (RELOCATED TO BOTTOM) -->
+                <!-- VEHICLE DOCUMENT VAULT SECTION (WITH INTEGRATED TESSERACT OCR SCANNER) -->
                 <div class="doc-vault-box">
-                    <h5>📑 Vehicle Document Vault & Expiry Reminders</h5>
-                    <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Store insurance policies, road licences, fitness certs, and titles in one spot. Share policy info instantly via WhatsApp!</p>
+                    <h5>📑 Vehicle Document Vault & OCR Auto-Scanner</h5>
+                    <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Store insurance policies, road licences, fitness certs, and titles. Select an image/screenshot and click "Auto-Scan (OCR)" to read expiry dates!</p>
                     
                     <div class="doc-grid">
                         <!-- ROAD LICENCE CARD -->
@@ -2138,11 +2162,13 @@
                             <label>Expiry Date:</label>
                             <input type="date" id="doc-roadlicence-expiry" onchange="updateDocBadges()">
                             <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-roadlicence-file" accept="image/*,application/pdf">
+                            <input type="file" id="doc-roadlicence-file" accept="image/*">
+                            <div id="ocr-status-roadlicence" class="ocr-status-text"></div>
                             <label>Notes / WhatsApp Text Copy:</label>
                             <textarea id="doc-roadlicence-text" rows="2" placeholder="Paste details or notes..."></textarea>
                             <div class="doc-btn-group">
                                 <button class="btn-doc-save" onclick="saveVehicleDoc('roadlicence')">💾 Save</button>
+                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('roadlicence')">📷 Auto-Scan (OCR)</button>
                                 <button class="btn-doc-share" onclick="shareVehicleDoc('roadlicence')">📱 WhatsApp</button>
                             </div>
                         </div>
@@ -2158,11 +2184,13 @@
                             <label>Expiry Date:</label>
                             <input type="date" id="doc-insurance-expiry" onchange="updateDocBadges()">
                             <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-insurance-file" accept="image/*,application/pdf">
+                            <input type="file" id="doc-insurance-file" accept="image/*">
+                            <div id="ocr-status-insurance" class="ocr-status-text"></div>
                             <label>Broker / Insurer Notes:</label>
                             <textarea id="doc-insurance-text" rows="2" placeholder="e.g. Chancellor Insurance / Agent details..."></textarea>
                             <div class="doc-btn-group">
                                 <button class="btn-doc-save" onclick="saveVehicleDoc('insurance')">💾 Save</button>
+                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('insurance')">📷 Auto-Scan (OCR)</button>
                                 <button class="btn-doc-share" onclick="shareVehicleDoc('insurance')">📱 WhatsApp</button>
                             </div>
                         </div>
@@ -2178,11 +2206,13 @@
                             <label>Expiry Date:</label>
                             <input type="date" id="doc-fitness-expiry" onchange="updateDocBadges()">
                             <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-fitness-file" accept="image/*,application/pdf">
+                            <input type="file" id="doc-fitness-file" accept="image/*">
+                            <div id="ocr-status-fitness" class="ocr-status-text"></div>
                             <label>Notes:</label>
                             <textarea id="doc-fitness-text" rows="2" placeholder="Depot or inspection notes..."></textarea>
                             <div class="doc-btn-group">
                                 <button class="btn-doc-save" onclick="saveVehicleDoc('fitness')">💾 Save</button>
+                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('fitness')">📷 Auto-Scan (OCR)</button>
                                 <button class="btn-doc-share" onclick="shareVehicleDoc('fitness')">📱 WhatsApp</button>
                             </div>
                         </div>
@@ -2198,11 +2228,13 @@
                             <label>Renewal Date / Date Issued:</label>
                             <input type="date" id="doc-registration-expiry" onchange="updateDocBadges()">
                             <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-registration-file" accept="image/*,application/pdf">
+                            <input type="file" id="doc-registration-file" accept="image/*">
+                            <div id="ocr-status-registration" class="ocr-status-text"></div>
                             <label>Notes:</label>
                             <textarea id="doc-registration-text" rows="2" placeholder="Chassis / Engine / VIN notes..."></textarea>
                             <div class="doc-btn-group">
                                 <button class="btn-doc-save" onclick="saveVehicleDoc('registration')">💾 Save</button>
+                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('registration')">📷 Auto-Scan (OCR)</button>
                                 <button class="btn-doc-share" onclick="shareVehicleDoc('registration')">📱 WhatsApp</button>
                             </div>
                         </div>
@@ -2391,6 +2423,43 @@
         var managerPin = "1234";
         var showAllHistory = false;
 
+        // VERIFIED WISYNCO 7-TON CONTRACT RATE DICTIONARY
+        const wisynco7TonRates = {
+            "downtown": 19493,
+            "kingston": 18743, "round town": 18743, "half way tree": 18743, "liguanea": 18743, "jacks hill": 18743,
+            "spanish town": 15271, "portmore": 15271, "ferry": 15271,
+            "old harbour": 18988, "old harbour bay": 18988, "stony hill": 18988, "port royal": 18988, "harbour view": 18988, "airport": 18988, "bogwalk": 18988, "linstead": 18988, "riversdale": 18988, "papine": 18988, "kitson town": 18988,
+            "may pen": 21465, "four paths": 21465, "ewarton": 21465, "new longsville": 21465, "gordon town": 21465, "red hills": 21465, "sligoville": 21465,
+            "tollgate": 27850, "clarendon park": 27850, "above rocks": 27850, "browns hall": 27850, "friendship gap": 27850,
+            "lionel town": 25743, "mitchell town": 25743, "rocky point": 25743, "race course": 25743, "worthy park": 25743, "lawrence tavern": 25743, "golden spring": 25743, "vere": 25743, "portland cottage": 25743, "irish town": 25743, "kemps hill": 25743,
+            "chapelton": 30036, "summerfield": 30036, "rock river": 30036, "alston": 30036, "aenon town": 30036, "macho": 30036, "croft hill": 30036, "mavis bank": 30036,
+            "porus": 34231, "williamsfield": 34231, "royal flat": 34231, "mandeville": 34231, "newport": 34231, "milk river": 34231, "kellits": 34231,
+            "wait-a-bit": 37766, "albert town": 37766,
+            "spaldings": 34231, "christiana": 34231, "coleyville": 34231, "troy": 34231, "frankfield": 34231, "thompson town": 34231,
+            "junction": 41539, "bull savannah": 41539, "top hill": 41539, "munroe": 41539, "watchwell": 41539, "mountain side": 41539, "ballards valley": 41539, "malvern": 41539, "new forest": 41539, "alligator pond": 41539,
+            "maggotty": 41539, "siloah": 41539, "balaclava": 41539, "lacovia": 41539, "newton": 41539,
+            "santa cruz": 38868, "gutters": 38868,
+            "black river": 43679, "new market": 43679, "springfield": 43679, "treasure beach": 43679, "southfield": 43679,
+            "sav-la-mar": 51703, "grange hill": 51703, "frome": 51703, "whithorn": 51703, "petersfield": 51703, "cornwall mountain": 51703, "bethel town": 51703, "whitehouse": 51703, "ginger hill": 51703, "seaford town": 51703,
+            "lucea": 55089, "kingsvale": 55089, "maroon town": 55089, "hopewell": 55089, "round hill": 55089,
+            "negril": 57054, "little london": 57054, "darliston": 57054, "delveland": 57054,
+            "green island": 60588, "orange bay": 60588,
+            "montego bay": 50701, "wakefield": 50701,
+            "cambridge": 53890, "lambs river": 53890, "anchovy": 53890,
+            "falmouth": 58213, "clarks town": 58213, "jackson town": 58213, "ulster spring": 58213, "cave valley": 58213, "alexandria": 58213,
+            "claremont": 52682, "bamboo": 52682, "browns town": 52682, "runaway bay": 52682, "james hill": 52682, "priory": 52682, "boscobel": 52682,
+            "st. ann's bay": 52682, "ocho rios": 52682, "retreat": 52682, "gayle": 52682, "oracabessa": 52682, "tower isle": 52682, "jacks river": 52682,
+            "discovery bay": 55583, "braco": 55583, "duncans": 55583,
+            "guys hill": 24390, "glengoffe": 24390, "polly ground": 24390,
+            "clonmel": 30099, "richmond": 30099, "highgate": 30099, "islington": 30099, "port maria": 30099, "carron hall": 30099,
+            "annotto bay": 28164, "windsor castle": 28164, "buff bay": 28164, "skibo": 28164,
+            "hope bay": 44652, "st. margaret's bay": 44652, "port antonio": 44652, "fellowship": 44652, "dragon bay": 44652,
+            "boston": 48472, "long bay": 48472,
+            "easington": 30992, "seaforth": 30992, "morant bay": 30992, "lyssons": 30992, "airy castle": 30992,
+            "stokes hall": 38683, "trinityville": 38683, "bath": 38683, "bowden": 38683, "golden grove": 38683,
+            "manchioneal": 42842, "hectors river": 42842
+        };
+
         // DYNAMIC CATEGORY PARTS LIST FOR COMMERCIAL TRUCKS
         var truckPartsCatalog = {
             "Tires": [
@@ -2548,6 +2617,52 @@
                 alert("Loaded mechanic details for " + profile.name + "!");
             } else {
                 alert("No saved profile found for '" + input.value + "'. You can enter details and click 'Save Profile'.");
+            }
+        }
+
+        /* TESSERACT OCR SCANNER INTEGRATION FOR DOCUMENT EXPIRY BADGES */
+        async function scanDocWithOCR(docType) {
+            var fileInput = document.getElementById('doc-' + docType + '-file');
+            var statusDiv = document.getElementById('ocr-status-' + docType);
+            var expiryInput = document.getElementById('doc-' + docType + '-expiry');
+            var notesText = document.getElementById('doc-' + docType + '-text');
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert("Please select an image or screenshot file first to scan.");
+                return;
+            }
+
+            var file = fileInput.files[0];
+            statusDiv.innerText = "⏳ Scanning document via OCR... Please wait.";
+
+            try {
+                var worker = await Tesseract.createWorker('eng');
+                var ret = await worker.recognize(file);
+                var text = ret.data.text;
+                await worker.terminate();
+
+                statusDiv.innerText = "✅ Scan complete!";
+
+                // Regex matching common date formats (YYYY-MM-DD or DD/MM/YYYY)
+                var dateMatch = text.match(/\b\d{4}[-/]\d{2}[-/]\d{2}\b|\b\d{2}[-/]\d{2}[-/]\d{4}\b/);
+                if (dateMatch) {
+                    var parsedDate = dateMatch[0].replace(/\//g, '-');
+                    if (parsedDate.split('-')[0].length === 2) {
+                        var parts = parsedDate.split('-');
+                        parsedDate = parts[2] + '-' + parts[1] + '-' + parts[0];
+                    }
+                    expiryInput.value = parsedDate;
+                }
+
+                if (notesText.value === '') {
+                    notesText.value = "Scanned Snippet: " + text.substring(0, 100).replace(/\n/g, ' ') + "...";
+                }
+
+                updateDocBadges();
+                saveVehicleDoc(docType);
+            } catch (err) {
+                console.error(err);
+                statusDiv.innerText = "❌ OCR scan failed. Enter date manually.";
             }
         }
 
@@ -2897,25 +3012,16 @@
             }
         }
 
+        /* UPDATED TRACKER LOOKUP ENGINE USING WISYNCO 7-TON CONTRACT RATES */
         function trackerLiveAutoPrice() {
             var typedVal = document.getElementById('tr-drop').value.trim().toLowerCase();
             if (!typedVal) return;
 
-            var select = document.getElementById('inv-destination');
-            var options = select.options;
-
-            for (var i = 1; i < options.length; i++) {
-                var zoneText = options[i].value.toLowerCase();
-                var price = options[i].getAttribute('data-price');
-
-                var towns = zoneText.split(',');
-                for (var j = 0; j < towns.length; j++) {
-                    var townName = towns[j].trim();
-                    if (townName.length >= 3 && (typedVal === townName || typedVal.includes(townName) || townName.includes(typedVal))) {
-                        document.getElementById('tr-rate').value = price;
-                        updateLiveProfit();
-                        return;
-                    }
+            for (var place in wisynco7TonRates) {
+                if (typedVal.includes(place) || place.includes(typedVal)) {
+                    document.getElementById('tr-rate').value = wisynco7TonRates[place];
+                    updateLiveProfit();
+                    return;
                 }
             }
         }
