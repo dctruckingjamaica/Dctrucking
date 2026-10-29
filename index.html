@@ -804,7 +804,7 @@
             font-weight: 900;
         }
 
-        /* VEHICLE DOCUMENT VAULT SECTION */
+        /* VEHICLE DOCUMENT VAULT SECTION (MOBILE-OPTIMIZED FLUSH ALIGNMENT) */
         .doc-vault-box {
             background: #0a1f2e;
             border: 2px solid #0284c7;
@@ -831,11 +831,13 @@
         .doc-card {
             background: #04121d;
             border: 1px solid #0369a1;
-            padding: 12px;
+            padding: 14px 12px;
             border-radius: 8px;
             display: flex;
             flex-direction: column;
             gap: 8px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .doc-card-header {
@@ -872,14 +874,38 @@
         }
 
         .doc-card input, .doc-card select, .doc-card textarea {
-            padding: 8px;
-            background: #000;
-            color: #fff;
-            border: 1px solid #333;
+            padding: 10px;
+            background: #000000;
+            color: #ffffff;
+            border: 1.5px solid #0369a1;
             border-radius: 6px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            width: 100%;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            margin: 0 0 6px 0;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .doc-card input[type="file"] {
+            padding: 6px;
+            background: #000000;
+            border: 1.5px solid #0369a1;
+            color: #94a3b8;
+            height: auto;
+        }
+
+        .doc-card input[type="file"]::file-selector-button {
+            background: #0284c7;
+            color: #ffffff;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-right: 8px;
         }
 
         .doc-btn-group {
@@ -1930,7 +1956,7 @@
                             <input type="text" id="tr-pickup" placeholder="Pickup location">
                         </div>
 
-                        <!-- RATE SHEET MODE TOGGLER ADDED HERE -->
+                        <!-- RATE SHEET MODE TOGGLER -->
                         <div class="tracker-field-group">
                             <label>Rate Sheet Mode</label>
                             <div style="display: flex; gap: 6px;">
