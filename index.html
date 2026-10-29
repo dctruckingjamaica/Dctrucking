@@ -658,6 +658,87 @@
             font-weight: 900;
         }
 
+        /* CURRENT MONTH NET PROFIT & WEEKLY BREAKDOWN CONTAINER */
+        .monthly-summary-container {
+            background: #062612;
+            border: 2px solid #facc15;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 20px;
+        }
+
+        .monthly-summary-container h5 {
+            color: #facc15;
+            font-size: 1.1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .monthly-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .monthly-box {
+            background: #03180b;
+            border: 1px solid #32501a;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .monthly-box h6 {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .monthly-box span {
+            color: #facc15;
+            font-size: 1.25rem;
+            font-weight: 900;
+        }
+
+        .weeks-breakdown-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 8px;
+            background: #021208;
+            border: 1px solid #1b4526;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .week-chip {
+            background: #052410;
+            border: 1px solid #166534;
+            border-radius: 4px;
+            padding: 6px;
+            text-align: center;
+        }
+
+        .week-chip h7 {
+            display: block;
+            color: #a7f3d0;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .week-chip span {
+            color: #38bdf8;
+            font-size: 1rem;
+            font-weight: 900;
+        }
+
         /* ALL-TIME / YEARLY HISTORY DASHBOARD */
         .alltime-summary-container {
             background: #051b10;
@@ -675,7 +756,20 @@
             margin-bottom: 10px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .month-filter-dropdown {
+            background: #000;
+            color: #38bdf8;
+            border: 1.5px solid #38bdf8;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
         }
 
         .alltime-grid {
@@ -704,6 +798,113 @@
             color: #38bdf8;
             font-size: 1.15rem;
             font-weight: 900;
+        }
+
+        /* VEHICLE DOCUMENT VAULT SECTION */
+        .doc-vault-box {
+            background: #0a1f2e;
+            border: 2px solid #0284c7;
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .doc-vault-box h5 {
+            color: #38bdf8;
+            font-size: 1.15rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .doc-card {
+            background: #04121d;
+            border: 1px solid #0369a1;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .doc-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1e3a5f;
+            padding-bottom: 6px;
+        }
+
+        .doc-card-header h6 {
+            color: #38bdf8;
+            font-weight: 900;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+        }
+
+        .badge-status {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 900;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+        }
+
+        .badge-active { background: #166534; color: #ffffff; }
+        .badge-expiring { background: #d97706; color: #ffffff; }
+        .badge-expired { background: #dc2626; color: #ffffff; }
+
+        .doc-card label {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: #94a3b8;
+        }
+
+        .doc-card input, .doc-card select, .doc-card textarea {
+            padding: 8px;
+            background: #000;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            width: 100%;
+        }
+
+        .doc-btn-group {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .btn-doc-save {
+            background: #0284c7;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 900;
+            cursor: pointer;
+            flex: 1;
+            font-size: 0.88rem;
+        }
+
+        .btn-doc-share {
+            background: #25d366;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 900;
+            cursor: pointer;
+            flex: 1;
+            font-size: 0.88rem;
         }
 
         /* WEEK VIEW TOGGLE BAR */
@@ -1450,20 +1651,61 @@
                     </div>
                 </div>
 
-                <!-- ALL-TIME / YEARLY HISTORY DASHBOARD -->
+                <!-- CURRENT MONTH NET PROFIT & WEEKLY BREAKDOWN CONTAINER -->
+                <div class="monthly-summary-container">
+                    <h5 id="monthly-container-title">📅 Active Calendar Month Net Profit (October 2026)</h5>
+                    <div class="monthly-grid">
+                        <div class="monthly-box" style="grid-column: 1 / -1;">
+                            <h6>Current Month Net Profit</h6>
+                            <span id="month-profit">$0 JMD</span>
+                        </div>
+                    </div>
+
+                    <h6 style="color:#a7f3d0; font-size:0.82rem; text-transform:uppercase; font-weight:800; margin-bottom:6px;">Current Month Profit Breakdown By Week:</h6>
+                    <div class="weeks-breakdown-bar">
+                        <div class="week-chip">
+                            <h7>Week 1</h7>
+                            <span id="m-w1">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 2</h7>
+                            <span id="m-w2">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 3</h7>
+                            <span id="m-w3">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 4</h7>
+                            <span id="m-w4">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 5</h7>
+                            <span id="m-w5">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ALL-TIME / YEARLY HISTORY DASHBOARD WITH MONTH FILTER -->
                 <div class="alltime-summary-container">
-                    <h5>📈 All-Time & Yearly Business History</h5>
+                    <h5>
+                        <span>📈 All-Time & Yearly Business History</span>
+                        <select class="month-filter-dropdown" id="history-month-filter" onchange="loadTrackerJobs()">
+                            <option value="ALL">🗓️ All-Time Summary</option>
+                            <!-- Dynamic Months Populated Here -->
+                        </select>
+                    </h5>
                     <div class="alltime-grid">
                         <div class="alltime-box">
-                            <h6>All-Time Revenue</h6>
+                            <h6>Revenue</h6>
                             <span id="all-revenue">$0 JMD</span>
                         </div>
                         <div class="alltime-box">
-                            <h6>All-Time Total Expenses</h6>
+                            <h6>Total Expenses</h6>
                             <span id="all-expenses" style="color: #f87171;">$0 JMD</span>
                         </div>
                         <div class="alltime-box">
-                            <h6>All-Time Total Wages Paid</h6>
+                            <h6>Wages Paid</h6>
                             <span id="all-wages" style="color: #4ade80;">$0 JMD</span>
                         </div>
                         <div class="alltime-box">
@@ -1471,12 +1713,100 @@
                             <span id="all-maint" style="color: #fb7185;">$0 JMD</span>
                         </div>
                         <div class="alltime-box">
-                            <h6>All-Time Net Profit</h6>
+                            <h6>Net Profit</h6>
                             <span id="all-profit" style="color: #38bdf8;">$0 JMD</span>
                         </div>
                         <div class="alltime-box" style="grid-column: 1 / -1;">
                             <h6>Total Logged Runs</h6>
                             <span id="all-count" style="color: #fbbf24;">0 Jobs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VEHICLE DOCUMENT VAULT SECTION -->
+                <div class="doc-vault-box">
+                    <h5>📑 Vehicle Document Vault & Expiry Reminders</h5>
+                    <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Store insurance policies, road licences, fitness certs, and titles in one spot. Share policy info instantly via WhatsApp!</p>
+                    
+                    <div class="doc-grid">
+                        <!-- ROAD LICENCE CARD -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <h6>📄 Public Carrier Road Licence</h6>
+                                <span class="badge-status" id="badge-roadlicence">ACTIVE</span>
+                            </div>
+                            <label>Licence / Certificate Number:</label>
+                            <input type="text" id="doc-roadlicence-num" placeholder="Licence #">
+                            <label>Expiry Date:</label>
+                            <input type="date" id="doc-roadlicence-expiry" onchange="updateDocBadges()">
+                            <label>Attach File / Photo / PDF:</label>
+                            <input type="file" id="doc-roadlicence-file" accept="image/*,application/pdf">
+                            <label>Notes / WhatsApp Text Copy:</label>
+                            <textarea id="doc-roadlicence-text" rows="2" placeholder="Paste details or notes..."></textarea>
+                            <div class="doc-btn-group">
+                                <button class="btn-doc-save" onclick="saveVehicleDoc('roadlicence')">💾 Save</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDoc('roadlicence')">📱 WhatsApp</button>
+                            </div>
+                        </div>
+
+                        <!-- INSURANCE CERTIFICATE CARD -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <h6>🛡️ Insurance Certificate</h6>
+                                <span class="badge-status" id="badge-insurance">ACTIVE</span>
+                            </div>
+                            <label>Policy / Cover Note Number:</label>
+                            <input type="text" id="doc-insurance-num" placeholder="Policy #">
+                            <label>Expiry Date:</label>
+                            <input type="date" id="doc-insurance-expiry" onchange="updateDocBadges()">
+                            <label>Attach File / Photo / PDF:</label>
+                            <input type="file" id="doc-insurance-file" accept="image/*,application/pdf">
+                            <label>Broker / Insurer Notes:</label>
+                            <textarea id="doc-insurance-text" rows="2" placeholder="e.g. Chancellor Insurance / Agent details..."></textarea>
+                            <div class="doc-btn-group">
+                                <button class="btn-doc-save" onclick="saveVehicleDoc('insurance')">💾 Save</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDoc('insurance')">📱 WhatsApp</button>
+                            </div>
+                        </div>
+
+                        <!-- FITNESS CERTIFICATE CARD -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <h6>📋 Certificate of Fitness</h6>
+                                <span class="badge-status" id="badge-fitness">ACTIVE</span>
+                            </div>
+                            <label>Fitness Sticker / Cert Number:</label>
+                            <input type="text" id="doc-fitness-num" placeholder="Fitness Cert #">
+                            <label>Expiry Date:</label>
+                            <input type="date" id="doc-fitness-expiry" onchange="updateDocBadges()">
+                            <label>Attach File / Photo / PDF:</label>
+                            <input type="file" id="doc-fitness-file" accept="image/*,application/pdf">
+                            <label>Notes:</label>
+                            <textarea id="doc-fitness-text" rows="2" placeholder="Depot or inspection notes..."></textarea>
+                            <div class="doc-btn-group">
+                                <button class="btn-doc-save" onclick="saveVehicleDoc('fitness')">💾 Save</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDoc('fitness')">📱 WhatsApp</button>
+                            </div>
+                        </div>
+
+                        <!-- VEHICLE REGISTRATION TITLE CARD -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <h6>📑 Registration Title / C88 / V5</h6>
+                                <span class="badge-status" id="badge-registration">ACTIVE</span>
+                            </div>
+                            <label>Registration Title Number:</label>
+                            <input type="text" id="doc-registration-num" placeholder="Registration #">
+                            <label>Renewal Date / Date Issued:</label>
+                            <input type="date" id="doc-registration-expiry" onchange="updateDocBadges()">
+                            <label>Attach File / Photo / PDF:</label>
+                            <input type="file" id="doc-registration-file" accept="image/*,application/pdf">
+                            <label>Notes:</label>
+                            <textarea id="doc-registration-text" rows="2" placeholder="Chassis / Engine / VIN notes..."></textarea>
+                            <div class="doc-btn-group">
+                                <button class="btn-doc-save" onclick="saveVehicleDoc('registration')">💾 Save</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDoc('registration')">📱 WhatsApp</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1783,10 +2113,10 @@
                     </table>
                 </div>
 
-                <!-- TRUCK MAINTENANCE & PARTS LOG SHEET -->
+                <!-- TRUCK MAINTENANCE & PARTS LOG SHEET WITH DYNAMIC OEM PARTS DATALIST -->
                 <div style="margin-top: 30px; border-top: 2px dashed #1e4626; padding-top: 20px;">
                     <h5 style="color: #fb7185; font-weight: 900; margin-bottom: 8px; text-transform: uppercase;">🔧 Fleet & Truck Maintenance Log</h5>
-                    <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log tires, full services, headlights, parts, and mechanical expenses to keep track of total truck maintenance costs!</p>
+                    <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log tires, full services, headlights, parts, receipts, and mechanic profiles to keep track of total truck expenses!</p>
 
                     <div class="tracker-form-container" style="background: #1a0f12; border-color: #5c1d28;">
                         <div class="tracker-form-grid">
@@ -1795,40 +2125,71 @@
                                 <input type="date" id="maint-date">
                             </div>
                             <div class="tracker-field-group">
-                                <label style="color: #fb7185;">Category</label>
-                                <select id="maint-cat">
-                                    <option value="Tires">🛞 Tires</option>
-                                    <option value="Service">🛢️ Service / Oil Change</option>
-                                    <option value="Parts">💡 Headlights / Parts</option>
-                                    <option value="Electrical">⚡ Electrical / Battery</option>
-                                    <option value="Mechanical">⚙️ Engine / Mechanical</option>
-                                    <option value="General Repair">🛠️ General Repair</option>
+                                <label style="color: #fb7185;">Category (Selects OEM Parts List)</label>
+                                <select id="maint-cat" onchange="updateDynamicPartsDatalist()">
+                                    <option value="Tires">🛞 Tires & Wheels</option>
+                                    <option value="Service">🛢️ Service / Oil & Filters</option>
+                                    <option value="Tail Lift">🚚 Hydraulic Tail Lift Parts</option>
+                                    <option value="Brakes">🛑 Suspension & Brakes</option>
+                                    <option value="Parts">💡 Headlights / Lights & Body</option>
+                                    <option value="Electrical">⚡ Electrical & Battery</option>
+                                    <option value="Mechanical">⚙️ Engine & Transmission</option>
+                                    <option value="General Repair">🛠️ General Repair / Supplies</option>
                                 </select>
                             </div>
                             <div class="tracker-field-group">
-                                <label style="color: #fb7185;">Item Description / Notes</label>
-                                <input type="text" id="maint-desc" placeholder="e.g. Bought 2 New Front Tires / Changed Headlight Bulbs">
+                                <label style="color: #fb7185;">Item Description / OEM Part Dropdown</label>
+                                <input type="text" id="maint-desc" list="dynamic-truck-parts-list" placeholder="Select part or type custom description...">
+                                <datalist id="dynamic-truck-parts-list">
+                                    <!-- Dynamic Category Parts Load Here -->
+                                </datalist>
                             </div>
                             <div class="tracker-field-group">
                                 <label style="color: #fb7185;">Cost Spent (JMD)</label>
                                 <input type="number" id="maint-cost" placeholder="e.g. 45000">
                             </div>
+
+                            <!-- MECHANIC & VENDOR PROFILE FIELDS -->
                             <div class="tracker-field-group">
-                                <label style="color: #fb7185;">Vendor / Mechanic (Optional)</label>
-                                <input type="text" id="maint-vendor" placeholder="e.g. Kingston Tire Shop">
+                                <label style="color: #38bdf8;">Mechanic / Vendor Name</label>
+                                <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
+                                    <input type="text" id="maint-vendor-name" placeholder="e.g. Kingston Tire Shop / Dave Mechanic">
+                                    <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadMechanicProfile()">🔍 Load</button>
+                                </div>
+                            </div>
+                            <div class="tracker-field-group">
+                                <label style="color: #38bdf8;">Mechanic Shop Address / Location</label>
+                                <input type="text" id="maint-vendor-address" placeholder="e.g. Spanish Town Road, Kingston">
+                            </div>
+                            <div class="tracker-field-group">
+                                <label style="color: #38bdf8;">Mechanic Phone Number</label>
+                                <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
+                                    <input type="tel" id="maint-vendor-phone" placeholder="e.g. 876-555-0199">
+                                    <button type="button" style="background:#059669; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="saveMechanicProfile()">💾 Save Profile</button>
+                                </div>
+                            </div>
+
+                            <!-- RECEIPT / PROOF UPLOAD OR PASTED TEXT -->
+                            <div class="tracker-field-group" style="grid-column: 1 / -1;">
+                                <label style="color: #facc15;">📎 Attach Receipt (Upload Photo/PDF or Paste WhatsApp/Email Text):</label>
+                                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                                    <input type="file" id="maint-receipt-file" accept="image/*,application/pdf" style="padding: 8px; background:#000; color:#fff; border:1px solid #333; border-radius:6px;">
+                                    <textarea id="maint-receipt-text" rows="2" placeholder="Or paste WhatsApp / email receipt details text here..." style="background:#000; color:#fff; border:1px solid #333; border-radius:6px; padding:8px; font-size:0.9rem;"></textarea>
+                                </div>
                             </div>
                         </div>
-                        <button class="btn-add-job" style="background: #fb7185; color: #000;" onclick="addMaintenanceLog()">🔧 Log Maintenance Expense</button>
+                        <button class="btn-add-job" style="background: #fb7185; color: #000;" onclick="addMaintenanceLog()">🔧 Log Maintenance Expense & Receipt</button>
                     </div>
 
                     <div class="table-scroll">
-                        <table class="tracker-table" style="min-width: 850px; table-layout: auto;">
+                        <table class="tracker-table" style="min-width: 950px; table-layout: auto;">
                             <thead>
                                 <tr style="background: #3b1219;">
                                     <th style="color: #fb7185;">Date</th>
                                     <th style="color: #fb7185;">Category</th>
                                     <th style="color: #fb7185;">Description / Part Details</th>
-                                    <th style="color: #fb7185;">Vendor / Mechanic</th>
+                                    <th style="color: #fb7185;">Vendor / Mechanic Info</th>
+                                    <th style="color: #fb7185;">Receipt / Proof</th>
                                     <th style="color: #fb7185;">Cost (JMD)</th>
                                     <th style="color: #fb7185;">Actions</th>
                                 </tr>
@@ -2022,6 +2383,91 @@
         var managerPin = "1234";
         var showAllHistory = false;
 
+        // DYNAMIC CATEGORY PARTS LIST FOR COMMERCIAL TRUCKS
+        var truckPartsCatalog = {
+            "Tires": [
+                "215/75R17.5 Commercial Front Steer Tire",
+                "215/75R17.5 Heavy Duty Rear Traction Tire",
+                "17.5-Inch Steel Rim / Wheel Replacement",
+                "Wheel Alignment & Balancing Service",
+                "Heavy-Duty Tyre Valve Stem & Cap Replacement",
+                "Wheel Nut / Lug Bolt Set (10-Stud)"
+            ],
+            "Service": [
+                "Full Synthetic 10W-40 Engine Oil (15L Service)",
+                "Heavy Duty Oil Filter Element (4HK1/Isz OEM)",
+                "Primary Fuel Filter & Water Separator Element",
+                "Secondary High-Pressure Fuel Filter",
+                "Engine Air Intake Filter Element",
+                "Cab Air / Pollen Filter",
+                "Grease Chassis Lubrication & Tail Lift Service"
+            ],
+            "Tail Lift": [
+                "Hydraulic Tail Lift Cylinder Seal Kit",
+                "Tail Lift Hydraulic Fluid / ISO VG 46 Oil (5L)",
+                "Tail Lift Control Switch / Pendant Cable",
+                "12V/24V Tail Lift Electric Motor Assembly",
+                "Tail Lift Main Power Fuse & Solenoid Relay",
+                "Heavy Duty Platform Rollers & Hinge Pins",
+                "Safety Warning Flag & LED Flasher Kit"
+            ],
+            "Brakes": [
+                "Front Heavy Duty Brake Pads Set",
+                "Rear Heavy Duty Brake Shoes Set",
+                "Front Brake Disc Rotors (Pair)",
+                "Rear Brake Drum Assembly",
+                "Brake Master Cylinder & Fluid Reservoir",
+                "Air Brake / Hydraulic Booster Hose Line",
+                "ABS Wheel Speed Sensor Replacement"
+            ],
+            "Parts": [
+                "Front Headlight Assembly (Left / Passenger)",
+                "Front Headlight Assembly (Right / Driver)",
+                "H4 Heavy Duty Headlight Bulb (12V/24V)",
+                "Rear LED Tail Light & Reverse Light Assembly",
+                "Side Marker Indicator Light Lens",
+                "Commercial Side View Mirror Assembly",
+                "Heavy Duty Windscreen Wiper Blades (Pair)"
+            ],
+            "Electrical": [
+                "Heavy Duty Commercial Battery (12V 100Ah / 120Ah)",
+                "Starter Motor Assembly (High Torque Diesel)",
+                "Heavy Duty Alternator (80A/100A)",
+                "Main Battery Disconnect / Isolator Switch",
+                "Ignition Switch & Lock Cylinder Set",
+                "Reverse Warning Alarm Beeper (12V-24V)"
+            ],
+            "Mechanical": [
+                "Drive Belt / Fan & Alternator Belt Set",
+                "Water Pump & Gasket Assembly",
+                "Thermostat & O-Ring Seal Kit",
+                "Clutch Kit (Pressure Plate, Friction Disc & Bearing)",
+                "Transmission Fluid / 80W-90 Gear Oil",
+                "Propshaft Universal Joint (U-Joint)",
+                "Engine Mount Bushings Set"
+            ],
+            "General Repair": [
+                "Coolant / Radiator Antifreeze (5L Ready-Mix)",
+                "Heavy Duty Exhaust Clamp & Gasket",
+                "Hydraulic Fluid Hose Assembly",
+                "Body Box Door Latch & Hinge Lock",
+                "Reflective Safety Tape Strip (3M Commercial)"
+            ]
+        };
+
+        function updateDynamicPartsDatalist() {
+            var cat = document.getElementById('maint-cat').value;
+            var list = document.getElementById('dynamic-truck-parts-list');
+            list.innerHTML = '';
+
+            var parts = truckPartsCatalog[cat] || truckPartsCatalog["General Repair"];
+            for (var i = 0; i < parts.length; i++) {
+                var opt = document.createElement('option');
+                opt.value = parts[i];
+                list.appendChild(opt);
+            }
+        }
+
         function toggleManagerPanel() {
             var panel = document.getElementById('manager-panel');
             if (panel.style.display === 'block') {
@@ -2033,10 +2479,135 @@
                     loadTrackerJobs();
                     loadMaintenanceLogs();
                     loadCrewPreferences();
+                    loadVehicleDocs();
+                    updateDynamicPartsDatalist();
                 } else if (entered !== null) {
                     alert("Incorrect PIN. Access denied.");
                 }
             }
+        }
+
+        /* MECHANIC & VENDOR PROFILE SAVE & LOAD LOGIC */
+        function saveMechanicProfile() {
+            var name = document.getElementById('maint-vendor-name').value.trim();
+            var address = document.getElementById('maint-vendor-address').value.trim();
+            var phone = document.getElementById('maint-vendor-phone').value.trim();
+
+            if (!name) {
+                alert("Please enter the Mechanic or Vendor Name first.");
+                return;
+            }
+
+            var profile = { name: name, address: address, phone: phone };
+            localStorage.setItem("dc_mechanic_" + name.toLowerCase(), JSON.stringify(profile));
+            alert("Mechanic Profile saved for " + name + "!");
+        }
+
+        function loadMechanicProfile() {
+            var input = document.getElementById('maint-vendor-name');
+            var name = input.value.trim().toLowerCase();
+            if (!name) {
+                alert("Please type a mechanic or shop name to search.");
+                input.focus();
+                return;
+            }
+
+            var saved = localStorage.getItem("dc_mechanic_" + name);
+            if (saved) {
+                var profile = JSON.parse(saved);
+                document.getElementById('maint-vendor-name').value = profile.name;
+                document.getElementById('maint-vendor-address').value = profile.address || '';
+                document.getElementById('maint-vendor-phone').value = profile.phone || '';
+                alert("Loaded mechanic details for " + profile.name + "!");
+            } else {
+                alert("No saved profile found for '" + input.value + "'. You can enter details and click 'Save Profile'.");
+            }
+        }
+
+        /* VEHICLE DOCUMENT VAULT MANAGEMENT & EXPIRY STATUS BADGES */
+        function saveVehicleDoc(docType) {
+            var num = document.getElementById('doc-' + docType + '-num').value;
+            var expiry = document.getElementById('doc-' + docType + '-expiry').value;
+            var text = document.getElementById('doc-' + docType + '-text').value;
+
+            var docData = { num: num, expiry: expiry, text: text };
+            localStorage.setItem("dc_doc_" + docType, JSON.stringify(docData));
+
+            updateDocBadges();
+            alert("Vehicle document (" + docType.toUpperCase() + ") updated and saved to vault!");
+        }
+
+        function loadVehicleDocs() {
+            var types = ['roadlicence', 'insurance', 'fitness', 'registration'];
+            for (var i = 0; i < types.length; i++) {
+                var type = types[i];
+                var saved = localStorage.getItem("dc_doc_" + type);
+                if (saved) {
+                    var data = JSON.parse(saved);
+                    if (document.getElementById('doc-' + type + '-num')) document.getElementById('doc-' + type + '-num').value = data.num || '';
+                    if (document.getElementById('doc-' + type + '-expiry')) document.getElementById('doc-' + type + '-expiry').value = data.expiry || '';
+                    if (document.getElementById('doc-' + type + '-text')) document.getElementById('doc-' + type + '-text').value = data.text || '';
+                }
+            }
+            updateDocBadges();
+        }
+
+        function updateDocBadges() {
+            var types = ['roadlicence', 'insurance', 'fitness', 'registration'];
+            var today = new Date();
+
+            for (var i = 0; i < types.length; i++) {
+                var type = types[i];
+                var badge = document.getElementById('badge-' + type);
+                var expiryInput = document.getElementById('doc-' + type + '-expiry');
+
+                if (!badge || !expiryInput) continue;
+
+                if (!expiryInput.value) {
+                    badge.innerText = 'NO DATE';
+                    badge.className = 'badge-status badge-expiring';
+                    continue;
+                }
+
+                var expiryDate = new Date(expiryInput.value);
+                var diffDays = Math.ceil((expiryDate - today) / (1000 * 60 * 60 * 24));
+
+                if (diffDays < 0) {
+                    badge.innerText = 'EXPIRED';
+                    badge.className = 'badge-status badge-expired';
+                } else if (diffDays <= 30) {
+                    badge.innerText = 'EXPIRING SOON (' + diffDays + 'd)';
+                    badge.className = 'badge-status badge-expiring';
+                } else {
+                    badge.innerText = 'ACTIVE';
+                    badge.className = 'badge-status badge-active';
+                }
+            }
+        }
+
+        function shareVehicleDoc(docType) {
+            var num = document.getElementById('doc-' + docType + '-num').value || 'N/A';
+            var expiry = document.getElementById('doc-' + docType + '-expiry').value || 'N/A';
+            var text = document.getElementById('doc-' + docType + '-text').value || '';
+
+            var titleMap = {
+                'roadlicence': 'Public Carrier Road Licence',
+                'insurance': 'Insurance Certificate / Cover Note',
+                'fitness': 'Certificate of Fitness',
+                'registration': 'Vehicle Registration Title'
+            };
+
+            var title = titleMap[docType] || docType.toUpperCase();
+
+            var message = "D&C REFUSE TRUCKING - VEHICLE DOCUMENT RECORD\n\n" +
+                          "Document: " + title + "\n" +
+                          "Licence/Policy #: " + num + "\n" +
+                          "Expiry Date: " + expiry + "\n" +
+                          (text ? "Notes: " + text + "\n" : "") + "\n" +
+                          "Kingston & Portmore Hub, Jamaica.";
+
+            var url = "https://wa.me/?text=" + encodeURIComponent(message);
+            window.open(url, "_blank");
         }
 
         /* BACKUP & RESTORE DATA FUNCTIONS FOR CHANGING PHONES */
@@ -2088,10 +2659,11 @@
                         localStorage.setItem(keys[k], importedData[keys[k]]);
                     }
 
-                    alert("🎉 Backup Restored Successfully!\nAll job trackers, maintenance logs, and staff profiles have been loaded.");
+                    alert("🎉 Backup Restored Successfully!\nAll job trackers, maintenance logs, vehicle documents, and staff profiles have been loaded.");
                     loadTrackerJobs();
                     loadMaintenanceLogs();
                     loadCrewPreferences();
+                    loadVehicleDocs();
                 } catch (err) {
                     alert("Error reading backup file. Please make sure it is a valid backup .json file.");
                 }
@@ -2542,8 +3114,6 @@
             var proofContent = document.getElementById('slip-proof-content');
             proofContent.innerHTML = '';
 
-            var hasContent = false;
-
             if (proofFileInput.files && proofFileInput.files[0]) {
                 var file = proofFileInput.files[0];
                 var reader = new FileReader();
@@ -2559,11 +3129,9 @@
                     proofContainer.style.display = 'block';
                 };
                 reader.readAsDataURL(file);
-                hasContent = true;
             } else if (proofTextVal) {
                 proofContent.innerHTML = '<p style="font-size: 0.88rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left;">' + proofTextVal + '</p>';
                 proofContainer.style.display = 'block';
-                hasContent = true;
             } else {
                 proofContainer.style.display = 'none';
             }
@@ -2584,7 +3152,6 @@
             var sortcode = document.getElementById('slip-sortcode').innerText;
             var position = document.getElementById('slip-position').innerText;
             var dept = document.getElementById('slip-dept').innerText;
-            var branch = document.getElementById('slip-branch').innerText;
             var method = document.getElementById('slip-method').innerText;
             var paydate = document.getElementById('slip-paydate').innerText;
             var gross = document.getElementById('slip-gross').innerText;
@@ -2778,31 +3345,58 @@
             var cat = document.getElementById('maint-cat').value;
             var desc = document.getElementById('maint-desc').value.trim();
             var cost = parseFloat(document.getElementById('maint-cost').value) || 0;
-            var vendor = document.getElementById('maint-vendor').value.trim() || 'N/A';
+            
+            var vendorName = document.getElementById('maint-vendor-name').value.trim() || 'N/A';
+            var vendorAddress = document.getElementById('maint-vendor-address').value.trim();
+            var vendorPhone = document.getElementById('maint-vendor-phone').value.trim();
+
+            var receiptFileInput = document.getElementById('maint-receipt-file');
+            var receiptText = document.getElementById('maint-receipt-text').value.trim();
 
             if (!desc || cost <= 0) {
                 alert("Please enter an Item Description and valid Cost.");
                 return;
             }
 
-            var maint = getStoredMaintenance();
-            maint.push({
-                id: Date.now(),
-                date: date,
-                cat: cat,
-                desc: desc,
-                cost: cost,
-                vendor: vendor
-            });
+            var vendorCombined = vendorName;
+            if (vendorAddress || vendorPhone) {
+                vendorCombined += '<br><span style="font-size:0.78rem; color:#94a3b8;">' + (vendorAddress ? vendorAddress + ' ' : '') + (vendorPhone ? '📞 ' + vendorPhone : '') + '</span>';
+            }
 
-            saveStoredMaintenance(maint);
+            var processAndSave = function(receiptData) {
+                var maint = getStoredMaintenance();
+                maint.push({
+                    id: Date.now(),
+                    date: date,
+                    cat: cat,
+                    desc: desc,
+                    cost: cost,
+                    vendor: vendorCombined,
+                    receipt: receiptData || receiptText
+                });
 
-            document.getElementById('maint-date').value = '';
-            document.getElementById('maint-desc').value = '';
-            document.getElementById('maint-cost').value = '';
-            document.getElementById('maint-vendor').value = '';
+                saveStoredMaintenance(maint);
 
-            loadTrackerJobs();
+                document.getElementById('maint-date').value = '';
+                document.getElementById('maint-desc').value = '';
+                document.getElementById('maint-cost').value = '';
+                document.getElementById('maint-receipt-text').value = '';
+                document.getElementById('maint-receipt-file').value = '';
+
+                loadTrackerJobs();
+            };
+
+            if (receiptFileInput.files && receiptFileInput.files[0]) {
+                var file = receiptFileInput.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var dataUrl = e.target.result;
+                    processAndSave(dataUrl);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                processAndSave(null);
+            }
         }
 
         function deleteMaintenanceLog(id) {
@@ -2819,17 +3413,30 @@
             tbody.innerHTML = '';
 
             if (maint.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#94a3b8;">No maintenance logs recorded yet.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#94a3b8;">No maintenance logs recorded yet.</td></tr>';
                 return;
             }
 
             for (var i = 0; i < maint.length; i++) {
                 var m = maint[i];
+
+                var proofHTML = 'N/A';
+                if (m.receipt) {
+                    if (m.receipt.startsWith('data:image/')) {
+                        proofHTML = '<a href="' + m.receipt + '" target="_blank" style="color:#38bdf8; font-weight:800; text-decoration:none;">📷 View Receipt</a>';
+                    } else if (m.receipt.startsWith('data:application/pdf')) {
+                        proofHTML = '<a href="' + m.receipt + '" target="_blank" style="color:#38bdf8; font-weight:800; text-decoration:none;">📄 View PDF</a>';
+                    } else {
+                        proofHTML = '<span style="font-size:0.8rem; color:#cbd5e1;" title="' + m.receipt + '">📝 Note Saved</span>';
+                    }
+                }
+
                 var tr = document.createElement('tr');
                 tr.innerHTML = '<td><strong>' + m.date + '</strong></td>' +
                                '<td><span style="color:#fb7185; font-weight:800;">' + m.cat + '</span></td>' +
                                '<td>' + m.desc + '</td>' +
                                '<td>' + m.vendor + '</td>' +
+                               '<td>' + proofHTML + '</td>' +
                                '<td style="font-weight:900; color:#f87171;">$' + m.cost.toLocaleString() + ' JMD</td>' +
                                '<td><button style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMaintenanceLog(' + m.id + ')">🗑️</button></td>';
                 tbody.appendChild(tr);
@@ -2854,39 +3461,143 @@
             return jobDate >= monday && jobDate <= friday;
         }
 
+        function populateHistoryMonthDropdown(jobs) {
+            var filterSelect = document.getElementById('history-month-filter');
+            var selectedVal = filterSelect.value;
+            filterSelect.innerHTML = '<option value="ALL">🗓️ All-Time Summary</option>';
+
+            var monthSet = {};
+            for (var i = 0; i < jobs.length; i++) {
+                if (jobs[i].date) {
+                    var d = new Date(jobs[i].date);
+                    var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+                    var label = d.toLocaleString('default', { month: 'long', year: 'numeric' });
+                    monthSet[key] = label;
+                }
+            }
+
+            var sortedKeys = Object.keys(monthSet).sort().reverse();
+            for (var k = 0; k < sortedKeys.length; k++) {
+                var opt = document.createElement('option');
+                opt.value = sortedKeys[k];
+                opt.innerText = '📅 ' + monthSet[sortedKeys[k]];
+                filterSelect.appendChild(opt);
+            }
+
+            filterSelect.value = selectedVal;
+        }
+
+        function calculateMonthlyProfitAndWeeks(allJobs, allMaint) {
+            var now = new Date();
+            var currentYear = now.getFullYear();
+            var currentMonth = now.getMonth();
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            document.getElementById('monthly-container-title').innerText = "📅 Active Calendar Month Net Profit (" + monthNames[currentMonth] + " " + currentYear + ")";
+
+            var monthJobs = allJobs.filter(function(j) {
+                if (!j.date) return false;
+                var d = new Date(j.date);
+                return d.getFullYear() === currentYear && d.getMonth() === currentMonth;
+            });
+
+            var monthMaint = allMaint.filter(function(m) {
+                if (!m.date) return false;
+                var d = new Date(m.date);
+                return d.getFullYear() === currentYear && d.getMonth() === currentMonth;
+            });
+
+            var monthRev = 0;
+            var monthJobExp = 0;
+            var weekProfits = [0, 0, 0, 0, 0];
+
+            for (var i = 0; i < monthJobs.length; i++) {
+                var j = monthJobs[i];
+                var exp = (j.driverPay || 0) + (j.asstPay || 0) + (j.petrol || 0);
+                var net = j.rate - exp;
+
+                monthRev += j.rate;
+                monthJobExp += exp;
+
+                var d = new Date(j.date);
+                var dayOfMonth = d.getDate();
+                var weekIdx = Math.floor((dayOfMonth - 1) / 7);
+                if (weekIdx > 4) weekIdx = 4;
+                weekProfits[weekIdx] += net;
+            }
+
+            var monthMaintCost = 0;
+            for (var k = 0; k < monthMaint.length; k++) {
+                monthMaintCost += monthMaint[k].cost;
+            }
+
+            var currentMonthNet = monthRev - (monthJobExp + monthMaintCost);
+            document.getElementById('month-profit').innerText = '$' + currentMonthNet.toLocaleString() + ' JMD';
+
+            document.getElementById('m-w1').innerText = '$' + weekProfits[0].toLocaleString();
+            document.getElementById('m-w2').innerText = '$' + weekProfits[1].toLocaleString();
+            document.getElementById('m-w3').innerText = '$' + weekProfits[2].toLocaleString();
+            document.getElementById('m-w4').innerText = '$' + weekProfits[3].toLocaleString();
+            document.getElementById('m-w5').innerText = '$' + weekProfits[4].toLocaleString();
+        }
+
         function loadTrackerJobs() {
             var allJobs = getStoredJobs();
             var allMaint = getStoredMaintenance();
             var tbody = document.getElementById('tracker-table-body');
             tbody.innerHTML = '';
 
-            var totalMaintCost = 0;
-            for (var m = 0; m < allMaint.length; m++) {
-                totalMaintCost += allMaint[m].cost;
+            populateHistoryMonthDropdown(allJobs);
+            calculateMonthlyProfitAndWeeks(allJobs, allMaint);
+
+            var filterMonthVal = document.getElementById('history-month-filter').value;
+
+            var filteredJobs = allJobs;
+            var filteredMaint = allMaint;
+
+            if (filterMonthVal !== 'ALL') {
+                filteredJobs = allJobs.filter(function(j) {
+                    if (!j.date) return false;
+                    var d = new Date(j.date);
+                    var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+                    return key === filterMonthVal;
+                });
+
+                filteredMaint = allMaint.filter(function(m) {
+                    if (!m.date) return false;
+                    var d = new Date(m.date);
+                    var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+                    return key === filterMonthVal;
+                });
             }
 
-            var allTimeRev = 0;
-            var allTimeJobExp = 0;
-            var allTimeWages = 0;
+            var totalMaintCost = 0;
+            for (var m = 0; m < filteredMaint.length; m++) {
+                totalMaintCost += filteredMaint[m].cost;
+            }
 
-            for (var a = 0; a < allJobs.length; a++) {
-                var aj = allJobs[a];
+            var rev = 0;
+            var jobExp = 0;
+            var wages = 0;
+
+            for (var a = 0; a < filteredJobs.length; a++) {
+                var aj = filteredJobs[a];
                 var wagesForJob = (aj.driverPay || 0) + (aj.asstPay || 0);
                 var aExp = wagesForJob + (aj.petrol || 0);
-                allTimeRev += aj.rate;
-                allTimeJobExp += aExp;
-                allTimeWages += wagesForJob;
+                rev += aj.rate;
+                jobExp += aExp;
+                wages += wagesForJob;
             }
 
-            var grandTotalExpenses = allTimeJobExp + totalMaintCost;
-            var allTimeNetProfit = allTimeRev - grandTotalExpenses;
+            var grandTotalExpenses = jobExp + totalMaintCost;
+            var netProfit = rev - grandTotalExpenses;
 
-            document.getElementById('all-revenue').innerText = '$' + allTimeRev.toLocaleString() + ' JMD';
+            document.getElementById('all-revenue').innerText = '$' + rev.toLocaleString() + ' JMD';
             document.getElementById('all-expenses').innerText = '$' + grandTotalExpenses.toLocaleString() + ' JMD';
-            document.getElementById('all-wages').innerText = '$' + allTimeWages.toLocaleString() + ' JMD';
+            document.getElementById('all-wages').innerText = '$' + wages.toLocaleString() + ' JMD';
             document.getElementById('all-maint').innerText = '$' + totalMaintCost.toLocaleString() + ' JMD';
-            document.getElementById('all-profit').innerText = '$' + allTimeNetProfit.toLocaleString() + ' JMD';
-            document.getElementById('all-count').innerText = allJobs.length + (allJobs.length === 1 ? ' Job' : ' Jobs');
+            document.getElementById('all-profit').innerText = '$' + netProfit.toLocaleString() + ' JMD';
+            document.getElementById('all-count').innerText = filteredJobs.length + (filteredJobs.length === 1 ? ' Job' : ' Jobs');
 
             var tableJobs = showAllHistory ? allJobs : allJobs.filter(function(j) {
                 return isCurrentWeek(j.date);
@@ -2915,7 +3626,7 @@
                 for (var i = 0; i < tableJobs.length; i++) {
                     var j = tableJobs[i];
                     var expenses = j.driverPay + j.asstPay + j.petrol;
-                    var netProfit = j.rate - expenses;
+                    var jobNetProfit = j.rate - expenses;
 
                     var invArray = (j.inv || '').split(/[\s,]+/).map(function(item) { return item.trim(); }).filter(Boolean);
                     var invHTML = '<div class="inv-badge-container">';
@@ -2940,7 +3651,7 @@
                                    '<td>' + j.assistant + '<br><span style="color:#4ade80;">$' + j.asstPay.toLocaleString() + ' JMD</span></td>' +
                                    '<td style="color:#f87171;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
-                                   '<td style="font-weight:900; color:#38bdf8;">$' + netProfit.toLocaleString() + ' JMD</td>' +
+                                   '<td style="font-weight:900; color:#38bdf8;">$' + jobNetProfit.toLocaleString() + ' JMD</td>' +
                                    '<td>' + statusHTML + '</td>' +
                                    '<td>' +
                                       '<div class="action-btn-group">' +
