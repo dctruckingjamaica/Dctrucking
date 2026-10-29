@@ -3115,7 +3115,7 @@
                 var towns = zoneText.split(',');
                 for (var j = 0; j < towns.length; j++) {
                     var townName = towns[j].trim();
-                    if (townName.length >= 3 && (typedVal === townName || typedVal.includes(townName) || townName.includes(typedVal))) {
+                    if (townName.length >= 3 && (typedVal === townName || typedVal.includes(townName) || townName.includes(townName))) {
                         document.getElementById('inv-amount').value = price;
                         select.selectedIndex = i; 
                         return;
@@ -3509,7 +3509,7 @@
             loadTrackerJobs();
         }
 
-        /* UPDATED TOGGLE FUNCTION TO CYCLE THROUGH UNPAID -> PENDING COLLECTION -> PAID */
+        /* UPDATED STATUS BADGE DISPLAY TO HANDLE UNPAID, PENDING COLLECTION, AND PAID */
         function toggleJobStatus(id) {
             var jobs = getStoredJobs();
             for (var i = 0; i < jobs.length; i++) {
@@ -3837,12 +3837,25 @@
                 jobExp += aExp;
                 wages += wagesForJob;
 
-                // CATCH UNPAID AND PENDING COLLECTION JOBS
-                if (aj.status === 'UNPAID' || aj.status === 'PENDING COLLECTION') {
+                // STRICT: ONLY include PAID jobs in net profit calculations. Exclude UNPAID and PENDING COLLECTION jobs from revenue/profit calculations.
+                if (aj.status === 'PAID') {
+                    // Paid jobs contribute fully to calculations
+                } else {
                     totalUnpaidRate += (aj.rate || 0);
                     totalUnpaidDriverPay += (aj.driverPay || 0);
                     totalUnpaidAsstPay += (aj.asstPay || 0);
                     unpaidJobCount++;
+                }
+            }
+
+            // Recalculate filtered revenue and job expenses strictly for PAID jobs
+            var paidRev = 0;
+            var paidJobExp = 0;
+            for (var a = 0; a < filteredJobs.length; a++) {
+                var aj = filteredJobs[a];
+                if (aj.status === 'PAID') {
+                    paidRev += aj.rate;
+                    paidJobExp += (aj.driverPay || 0) + (aj.asstPay || 0) + (aj.petrol || 0);
                 }
             }
 
@@ -3860,10 +3873,10 @@
                 document.getElementById('unpaid-job-count').innerText = unpaidJobCount + (unpaidJobCount === 1 ? ' Job Pending' : ' Jobs Pending');
             }
 
-            var grandTotalExpenses = jobExp + totalMaintCost;
-            var netProfit = rev - grandTotalExpenses;
+            var grandTotalExpenses = paidJobExp + totalMaintCost;
+            var netProfit = paidRev - grandTotalExpenses;
 
-            document.getElementById('all-revenue').innerText = '$' + rev.toLocaleString() + ' JMD';
+            document.getElementById('all-revenue').innerText = '$' + paidRev.toLocaleString() + ' JMD (Paid)';
             document.getElementById('all-expenses').innerText = '$' + grandTotalExpenses.toLocaleString() + ' JMD';
             document.getElementById('all-wages').innerText = '$' + wages.toLocaleString() + ' JMD';
             document.getElementById('all-maint').innerText = '$' + totalMaintCost.toLocaleString() + ' JMD';
@@ -3880,9 +3893,11 @@
             var currentWeekJobs = allJobs.filter(function(j) { return isCurrentWeek(j.date); });
             for (var w = 0; w < currentWeekJobs.length; w++) {
                 var wj = currentWeekJobs[w];
-                var wExp = wj.driverPay + wj.asstPay + wj.petrol;
-                weekRev += wj.rate;
-                weekExp += wExp;
+                if (wj.status === 'PAID') {
+                    var wExp = wj.driverPay + wj.asstPay + wj.petrol;
+                    weekRev += wj.rate;
+                    weekExp += wExp;
+                }
             }
 
             document.getElementById('sum-revenue').innerText = '$' + weekRev.toLocaleString() + ' JMD';
