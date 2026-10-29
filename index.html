@@ -525,6 +525,7 @@
             padding: 18px;
             margin-top: 20px;
             margin-bottom: 20px;
+            overflow: hidden; /* Ensures contents stay strictly inside */
         }
 
         .manager-panel h4 {
@@ -806,6 +807,7 @@
             border: 2px solid #0284c7;
             padding: 16px;
             border-radius: 10px;
+            margin-top: 30px;
             margin-bottom: 25px;
         }
 
@@ -1025,6 +1027,7 @@
             padding: 14px;
             border-radius: 8px;
             margin-bottom: 15px;
+            overflow: hidden; /* Keeps inputs and buttons strictly inside container */
         }
 
         .tracker-form-grid {
@@ -1038,6 +1041,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            width: 100%;
         }
 
         .tracker-field-group label {
@@ -1054,6 +1058,7 @@
             color: #fff;
             font-size: 1rem;
             font-weight: 700;
+            width: 100%;
         }
 
         .live-profit-preview-box {
@@ -1723,94 +1728,6 @@
                     </div>
                 </div>
 
-                <!-- VEHICLE DOCUMENT VAULT SECTION -->
-                <div class="doc-vault-box">
-                    <h5>📑 Vehicle Document Vault & Expiry Reminders</h5>
-                    <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Store insurance policies, road licences, fitness certs, and titles in one spot. Share policy info instantly via WhatsApp!</p>
-                    
-                    <div class="doc-grid">
-                        <!-- ROAD LICENCE CARD -->
-                        <div class="doc-card">
-                            <div class="doc-card-header">
-                                <h6>📄 Public Carrier Road Licence</h6>
-                                <span class="badge-status" id="badge-roadlicence">ACTIVE</span>
-                            </div>
-                            <label>Licence / Certificate Number:</label>
-                            <input type="text" id="doc-roadlicence-num" placeholder="Licence #">
-                            <label>Expiry Date:</label>
-                            <input type="date" id="doc-roadlicence-expiry" onchange="updateDocBadges()">
-                            <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-roadlicence-file" accept="image/*,application/pdf">
-                            <label>Notes / WhatsApp Text Copy:</label>
-                            <textarea id="doc-roadlicence-text" rows="2" placeholder="Paste details or notes..."></textarea>
-                            <div class="doc-btn-group">
-                                <button class="btn-doc-save" onclick="saveVehicleDoc('roadlicence')">💾 Save</button>
-                                <button class="btn-doc-share" onclick="shareVehicleDoc('roadlicence')">📱 WhatsApp</button>
-                            </div>
-                        </div>
-
-                        <!-- INSURANCE CERTIFICATE CARD -->
-                        <div class="doc-card">
-                            <div class="doc-card-header">
-                                <h6>🛡️ Insurance Certificate</h6>
-                                <span class="badge-status" id="badge-insurance">ACTIVE</span>
-                            </div>
-                            <label>Policy / Cover Note Number:</label>
-                            <input type="text" id="doc-insurance-num" placeholder="Policy #">
-                            <label>Expiry Date:</label>
-                            <input type="date" id="doc-insurance-expiry" onchange="updateDocBadges()">
-                            <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-insurance-file" accept="image/*,application/pdf">
-                            <label>Broker / Insurer Notes:</label>
-                            <textarea id="doc-insurance-text" rows="2" placeholder="e.g. Chancellor Insurance / Agent details..."></textarea>
-                            <div class="doc-btn-group">
-                                <button class="btn-doc-save" onclick="saveVehicleDoc('insurance')">💾 Save</button>
-                                <button class="btn-doc-share" onclick="shareVehicleDoc('insurance')">📱 WhatsApp</button>
-                            </div>
-                        </div>
-
-                        <!-- FITNESS CERTIFICATE CARD -->
-                        <div class="doc-card">
-                            <div class="doc-card-header">
-                                <h6>📋 Certificate of Fitness</h6>
-                                <span class="badge-status" id="badge-fitness">ACTIVE</span>
-                            </div>
-                            <label>Fitness Sticker / Cert Number:</label>
-                            <input type="text" id="doc-fitness-num" placeholder="Fitness Cert #">
-                            <label>Expiry Date:</label>
-                            <input type="date" id="doc-fitness-expiry" onchange="updateDocBadges()">
-                            <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-fitness-file" accept="image/*,application/pdf">
-                            <label>Notes:</label>
-                            <textarea id="doc-fitness-text" rows="2" placeholder="Depot or inspection notes..."></textarea>
-                            <div class="doc-btn-group">
-                                <button class="btn-doc-save" onclick="saveVehicleDoc('fitness')">💾 Save</button>
-                                <button class="btn-doc-share" onclick="shareVehicleDoc('fitness')">📱 WhatsApp</button>
-                            </div>
-                        </div>
-
-                        <!-- VEHICLE REGISTRATION TITLE CARD -->
-                        <div class="doc-card">
-                            <div class="doc-card-header">
-                                <h6>📑 Registration Title / C88 / V5</h6>
-                                <span class="badge-status" id="badge-registration">ACTIVE</span>
-                            </div>
-                            <label>Registration Title Number:</label>
-                            <input type="text" id="doc-registration-num" placeholder="Registration #">
-                            <label>Renewal Date / Date Issued:</label>
-                            <input type="date" id="doc-registration-expiry" onchange="updateDocBadges()">
-                            <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-registration-file" accept="image/*,application/pdf">
-                            <label>Notes:</label>
-                            <textarea id="doc-registration-text" rows="2" placeholder="Chassis / Engine / VIN notes..."></textarea>
-                            <div class="doc-btn-group">
-                                <button class="btn-doc-save" onclick="saveVehicleDoc('registration')">💾 Save</button>
-                                <button class="btn-doc-share" onclick="shareVehicleDoc('registration')">📱 WhatsApp</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- CREW PAYROLL GENERATOR WITH DEDUCTIONS & OPTIONAL PROOF UPLOAD -->
                 <div class="payroll-section-box">
                     <h5>👥 Crew Payroll & Corporate Payslips</h5>
@@ -1876,7 +1793,7 @@
 
                             <label style="margin-top:6px; color:#facc15;">📎 Attach Charge Proof (Optional: Screenshot, WhatsApp Image, PDF, or Email Text):</label>
                             <input type="file" id="payroll-driver-proof-file" accept="image/*,application/pdf" style="padding: 6px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; font-size:0.9rem; width:100%; margin-bottom: 6px;">
-                            <textarea id="payroll-driver-proof-text" rows="2" placeholder="Or paste WhatsApp / email charge details text here..." style="font-size:0.88rem;"></textarea>
+                            <textarea id="payroll-driver-proof-text" rows="2" placeholder="Or paste WhatsApp / email charge details text here..." style="font-size:0.88rem; width:100%;"></textarea>
 
                             <label style="margin-top:8px;">Payment Method & Date:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -1951,7 +1868,7 @@
 
                             <label style="margin-top:6px; color:#facc15;">📎 Attach Charge Proof (Optional: Screenshot, WhatsApp Image, PDF, or Email Text):</label>
                             <input type="file" id="payroll-asst-proof-file" accept="image/*,application/pdf" style="padding: 6px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; font-size:0.9rem; width:100%; margin-bottom: 6px;">
-                            <textarea id="payroll-asst-proof-text" rows="2" placeholder="Or paste WhatsApp / email charge details text here..." style="font-size:0.88rem;"></textarea>
+                            <textarea id="payroll-asst-proof-text" rows="2" placeholder="Or paste WhatsApp / email charge details text here..." style="font-size:0.88rem; width:100%;"></textarea>
 
                             <label style="margin-top:8px;">Payment Method & Date:</label>
                             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -2113,7 +2030,7 @@
                     </table>
                 </div>
 
-                <!-- TRUCK MAINTENANCE & PARTS LOG SHEET WITH DYNAMIC OEM PARTS DATALIST -->
+                <!-- TRUCK MAINTENANCE & PARTS LOG SHEET WITH NATIVE SELECT DROPDOWN -->
                 <div style="margin-top: 30px; border-top: 2px dashed #1e4626; padding-top: 20px;">
                     <h5 style="color: #fb7185; font-weight: 900; margin-bottom: 8px; text-transform: uppercase;">🔧 Fleet & Truck Maintenance Log</h5>
                     <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log tires, full services, headlights, parts, receipts, and mechanic profiles to keep track of total truck expenses!</p>
@@ -2139,10 +2056,13 @@
                             </div>
                             <div class="tracker-field-group">
                                 <label style="color: #fb7185;">Item Description / OEM Part Dropdown</label>
-                                <input type="text" id="maint-desc" list="dynamic-truck-parts-list" placeholder="Select part or type custom description...">
-                                <datalist id="dynamic-truck-parts-list">
-                                    <!-- Dynamic Category Parts Load Here -->
-                                </datalist>
+                                <select id="maint-desc" onchange="handlePartSelectChange()" style="padding: 10px; border-radius: 6px; border: 1px solid #333; background: #000; color: #fff; font-size: 1rem; font-weight: 700; width: 100%;">
+                                    <!-- Dynamic Category Parts Loaded Here as Native Options -->
+                                </select>
+                            </div>
+                            <div class="tracker-field-group" id="maint-custom-desc-group" style="display: none;">
+                                <label style="color: #facc15;">Custom Item Description / Notes</label>
+                                <input type="text" id="maint-custom-desc" placeholder="Type custom part description or notes...">
                             </div>
                             <div class="tracker-field-group">
                                 <label style="color: #fb7185;">Cost Spent (JMD)</label>
@@ -2152,9 +2072,9 @@
                             <!-- MECHANIC & VENDOR PROFILE FIELDS -->
                             <div class="tracker-field-group">
                                 <label style="color: #38bdf8;">Mechanic / Vendor Name</label>
-                                <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
-                                    <input type="text" id="maint-vendor-name" placeholder="e.g. Kingston Tire Shop / Dave Mechanic">
-                                    <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadMechanicProfile()">🔍 Load</button>
+                                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                    <input type="text" id="maint-vendor-name" placeholder="e.g. Kingston Tire Shop" style="flex: 1; min-width: 140px;">
+                                    <button type="button" style="background:#0284c7; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadMechanicProfile()">🔍 Load</button>
                                 </div>
                             </div>
                             <div class="tracker-field-group">
@@ -2163,22 +2083,22 @@
                             </div>
                             <div class="tracker-field-group">
                                 <label style="color: #38bdf8;">Mechanic Phone Number</label>
-                                <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
-                                    <input type="tel" id="maint-vendor-phone" placeholder="e.g. 876-555-0199">
-                                    <button type="button" style="background:#059669; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="saveMechanicProfile()">💾 Save Profile</button>
+                                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                    <input type="tel" id="maint-vendor-phone" placeholder="e.g. 876-555-0199" style="flex: 1; min-width: 140px;">
+                                    <button type="button" style="background:#059669; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="saveMechanicProfile()">💾 Save Profile</button>
                                 </div>
                             </div>
 
                             <!-- RECEIPT / PROOF UPLOAD OR PASTED TEXT -->
                             <div class="tracker-field-group" style="grid-column: 1 / -1;">
                                 <label style="color: #facc15;">📎 Attach Receipt (Upload Photo/PDF or Paste WhatsApp/Email Text):</label>
-                                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                                    <input type="file" id="maint-receipt-file" accept="image/*,application/pdf" style="padding: 8px; background:#000; color:#fff; border:1px solid #333; border-radius:6px;">
-                                    <textarea id="maint-receipt-text" rows="2" placeholder="Or paste WhatsApp / email receipt details text here..." style="background:#000; color:#fff; border:1px solid #333; border-radius:6px; padding:8px; font-size:0.9rem;"></textarea>
+                                <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                                    <input type="file" id="maint-receipt-file" accept="image/*,application/pdf" style="padding: 8px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; width: 100%;">
+                                    <textarea id="maint-receipt-text" rows="2" placeholder="Or paste WhatsApp / email receipt details text here..." style="background:#000; color:#fff; border:1px solid #333; border-radius:6px; padding:8px; font-size:0.9rem; width: 100%;"></textarea>
                                 </div>
                             </div>
                         </div>
-                        <button class="btn-add-job" style="background: #fb7185; color: #000;" onclick="addMaintenanceLog()">🔧 Log Maintenance Expense & Receipt</button>
+                        <button class="btn-add-job" style="background: #fb7185; color: #000; margin-top: 10px;" onclick="addMaintenanceLog()">🔧 Log Maintenance Expense & Receipt</button>
                     </div>
 
                     <div class="table-scroll">
@@ -2198,6 +2118,94 @@
                                 <!-- Dynamic Maintenance Log Entries Render Here -->
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <!-- VEHICLE DOCUMENT VAULT SECTION (RELOCATED TO BOTTOM) -->
+                <div class="doc-vault-box">
+                    <h5>📑 Vehicle Document Vault & Expiry Reminders</h5>
+                    <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Store insurance policies, road licences, fitness certs, and titles in one spot. Share policy info instantly via WhatsApp!</p>
+                    
+                    <div class="doc-grid">
+                        <!-- ROAD LICENCE CARD -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <h6>📄 Public Carrier Road Licence</h6>
+                                <span class="badge-status" id="badge-roadlicence">ACTIVE</span>
+                            </div>
+                            <label>Licence / Certificate Number:</label>
+                            <input type="text" id="doc-roadlicence-num" placeholder="Licence #">
+                            <label>Expiry Date:</label>
+                            <input type="date" id="doc-roadlicence-expiry" onchange="updateDocBadges()">
+                            <label>Attach File / Photo / PDF:</label>
+                            <input type="file" id="doc-roadlicence-file" accept="image/*,application/pdf">
+                            <label>Notes / WhatsApp Text Copy:</label>
+                            <textarea id="doc-roadlicence-text" rows="2" placeholder="Paste details or notes..."></textarea>
+                            <div class="doc-btn-group">
+                                <button class="btn-doc-save" onclick="saveVehicleDoc('roadlicence')">💾 Save</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDoc('roadlicence')">📱 WhatsApp</button>
+                            </div>
+                        </div>
+
+                        <!-- INSURANCE CERTIFICATE CARD -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <h6>🛡️ Insurance Certificate</h6>
+                                <span class="badge-status" id="badge-insurance">ACTIVE</span>
+                            </div>
+                            <label>Policy / Cover Note Number:</label>
+                            <input type="text" id="doc-insurance-num" placeholder="Policy #">
+                            <label>Expiry Date:</label>
+                            <input type="date" id="doc-insurance-expiry" onchange="updateDocBadges()">
+                            <label>Attach File / Photo / PDF:</label>
+                            <input type="file" id="doc-insurance-file" accept="image/*,application/pdf">
+                            <label>Broker / Insurer Notes:</label>
+                            <textarea id="doc-insurance-text" rows="2" placeholder="e.g. Chancellor Insurance / Agent details..."></textarea>
+                            <div class="doc-btn-group">
+                                <button class="btn-doc-save" onclick="saveVehicleDoc('insurance')">💾 Save</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDoc('insurance')">📱 WhatsApp</button>
+                            </div>
+                        </div>
+
+                        <!-- FITNESS CERTIFICATE CARD -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <h6>📋 Certificate of Fitness</h6>
+                                <span class="badge-status" id="badge-fitness">ACTIVE</span>
+                            </div>
+                            <label>Fitness Sticker / Cert Number:</label>
+                            <input type="text" id="doc-fitness-num" placeholder="Fitness Cert #">
+                            <label>Expiry Date:</label>
+                            <input type="date" id="doc-fitness-expiry" onchange="updateDocBadges()">
+                            <label>Attach File / Photo / PDF:</label>
+                            <input type="file" id="doc-fitness-file" accept="image/*,application/pdf">
+                            <label>Notes:</label>
+                            <textarea id="doc-fitness-text" rows="2" placeholder="Depot or inspection notes..."></textarea>
+                            <div class="doc-btn-group">
+                                <button class="btn-doc-save" onclick="saveVehicleDoc('fitness')">💾 Save</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDoc('fitness')">📱 WhatsApp</button>
+                            </div>
+                        </div>
+
+                        <!-- VEHICLE REGISTRATION TITLE CARD -->
+                        <div class="doc-card">
+                            <div class="doc-card-header">
+                                <h6>📑 Registration Title / C88 / V5</h6>
+                                <span class="badge-status" id="badge-registration">ACTIVE</span>
+                            </div>
+                            <label>Registration Title Number:</label>
+                            <input type="text" id="doc-registration-num" placeholder="Registration #">
+                            <label>Renewal Date / Date Issued:</label>
+                            <input type="date" id="doc-registration-expiry" onchange="updateDocBadges()">
+                            <label>Attach File / Photo / PDF:</label>
+                            <input type="file" id="doc-registration-file" accept="image/*,application/pdf">
+                            <label>Notes:</label>
+                            <textarea id="doc-registration-text" rows="2" placeholder="Chassis / Engine / VIN notes..."></textarea>
+                            <div class="doc-btn-group">
+                                <button class="btn-doc-save" onclick="saveVehicleDoc('registration')">💾 Save</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDoc('registration')">📱 WhatsApp</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -2457,14 +2465,33 @@
 
         function updateDynamicPartsDatalist() {
             var cat = document.getElementById('maint-cat').value;
-            var list = document.getElementById('dynamic-truck-parts-list');
-            list.innerHTML = '';
+            var select = document.getElementById('maint-desc');
+            select.innerHTML = '';
 
             var parts = truckPartsCatalog[cat] || truckPartsCatalog["General Repair"];
             for (var i = 0; i < parts.length; i++) {
                 var opt = document.createElement('option');
                 opt.value = parts[i];
-                list.appendChild(opt);
+                opt.innerText = parts[i];
+                select.appendChild(opt);
+            }
+
+            var customOpt = document.createElement('option');
+            customOpt.value = "CUSTOM_PART_INPUT";
+            customOpt.innerText = "✍️ Type Custom Part Description...";
+            select.appendChild(customOpt);
+
+            handlePartSelectChange();
+        }
+
+        function handlePartSelectChange() {
+            var selectVal = document.getElementById('maint-desc').value;
+            var customGroup = document.getElementById('maint-custom-desc-group');
+            if (selectVal === "CUSTOM_PART_INPUT") {
+                customGroup.style.display = 'flex';
+                document.getElementById('maint-custom-desc').focus();
+            } else {
+                customGroup.style.display = 'none';
             }
         }
 
@@ -3343,7 +3370,13 @@
         function addMaintenanceLog() {
             var date = document.getElementById('maint-date').value || new Date().toISOString().split('T')[0];
             var cat = document.getElementById('maint-cat').value;
-            var desc = document.getElementById('maint-desc').value.trim();
+            
+            var descSelect = document.getElementById('maint-desc').value;
+            var desc = descSelect;
+            if (descSelect === "CUSTOM_PART_INPUT") {
+                desc = document.getElementById('maint-custom-desc').value.trim() || "Custom Repair / Part";
+            }
+
             var cost = parseFloat(document.getElementById('maint-cost').value) || 0;
             
             var vendorName = document.getElementById('maint-vendor-name').value.trim() || 'N/A';
@@ -3354,7 +3387,7 @@
             var receiptText = document.getElementById('maint-receipt-text').value.trim();
 
             if (!desc || cost <= 0) {
-                alert("Please enter an Item Description and valid Cost.");
+                alert("Please select or enter an Item Description and valid Cost.");
                 return;
             }
 
@@ -3378,7 +3411,7 @@
                 saveStoredMaintenance(maint);
 
                 document.getElementById('maint-date').value = '';
-                document.getElementById('maint-desc').value = '';
+                document.getElementById('maint-custom-desc').value = '';
                 document.getElementById('maint-cost').value = '';
                 document.getElementById('maint-receipt-text').value = '';
                 document.getElementById('maint-receipt-file').value = '';
