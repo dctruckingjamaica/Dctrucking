@@ -2410,9 +2410,8 @@
                     </div>
                 </div>
 
-                <!-- AUTO-CONVERTED PHOTO PROOF BLOCK -->
-                <div id="slip-proof-container" style="display: none; background: #fffbeb; border: 2px dashed #d97706; padding: 8px 10px; border-radius: 6px; margin-bottom: 8px;">
-                    <p style="font-weight: 900; color: #b45309; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 4px;">📎 Attached Charge Proof (Converted to Photo):</p>
+                <!-- PHOTO PROOF SITS DIRECTLY BELOW TOTAL OUTSTANDING CHARGES / BALANCE -->
+                <div id="slip-proof-container" style="display: none; margin-bottom: 8px;">
                     <div id="slip-proof-content" style="text-align: center;">
                     </div>
                 </div>
@@ -3231,7 +3230,7 @@
             document.getElementById('invoice-preview').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // GENERATE WEEKLY PAYSLIP WITH AUTOMATIC PDF-TO-IMAGE CONVERSION
+        // GENERATE WEEKLY PAYSLIP WITH COMPACT PHOTO PROOF SCALING
         async function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
@@ -3349,9 +3348,9 @@
                 var file = proofFileInput.files[0];
                 
                 if (file.type === 'application/pdf') {
-                    // AUTOMATIC PDF-TO-IMAGE CONVERTER ENGINE
+                    // AUTOMATIC PDF-TO-IMAGE CONVERTER ENGINE (COMPACT FIT)
                     try {
-                        proofContent.innerHTML = '<p style="color: #b45309; font-weight: 800; font-size: 0.9rem;">⏳ Converting PDF proof to photograph... Please wait.</p>';
+                        proofContent.innerHTML = '<p style="color: #1a531f; font-weight: 800; font-size: 0.85rem;">⏳ Loading proof photo...</p>';
                         proofContainer.style.display = 'block';
 
                         var fileReader = new FileReader();
@@ -3360,7 +3359,7 @@
                             var pdf = await pdfjsLib.getDocument(typedarray).promise;
                             var page = await pdf.getPage(1);
                             
-                            var scale = 2.0; // High resolution rendering to prevent quality loss
+                            var scale = 1.5; 
                             var viewport = page.getViewport({ scale: scale });
                             
                             var canvas = document.createElement('canvas');
@@ -3369,12 +3368,12 @@
                             canvas.width = viewport.width;
 
                             await page.render({ canvasContext: context, viewport: viewport }).promise;
-                            var imageUrl = canvas.toDataURL('image/jpeg', 0.95);
+                            var imageUrl = canvas.toDataURL('image/jpeg', 0.90);
 
-                            let htmlMarkup = '<div style="margin: 10px 0; text-align: center;"><img src="' + imageUrl + '" alt="Converted Proof Photograph" style="max-width: 100%; max-height: 400px; border-radius: 6px; border: 2px solid #1a531f; display: block; margin: 0 auto;"></div>';
+                            let htmlMarkup = '<div style="margin: 4px 0; text-align: center;"><img src="' + imageUrl + '" alt="Attached Proof" style="max-width: 100%; max-height: 280px; border-radius: 4px; border: 1.5px solid #1a531f; display: block; margin: 0 auto;"></div>';
                             
                             if (proofTextVal) {
-                                htmlMarkup += '<p style="font-size: 0.88rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left; margin-top: 6px;">' + proofTextVal + '</p>';
+                                htmlMarkup += '<p style="font-size: 0.82rem; color: #334155; white-space: pre-wrap; background: #f8fafc; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left; margin-top: 4px;">' + proofTextVal + '</p>';
                             }
                             
                             proofContent.innerHTML = htmlMarkup;
@@ -3382,17 +3381,17 @@
                         fileReader.readAsArrayBuffer(file);
                     } catch (err) {
                         console.error(err);
-                        proofContent.innerHTML = '<p style="color: #dc2626; font-weight: 800;">❌ Could not auto-convert PDF. Please upload a direct photo/screenshot.</p>';
+                        proofContent.innerHTML = '<p style="color: #dc2626; font-weight: 800; font-size: 0.85rem;">❌ Could not convert PDF.</p>';
                     }
                 } else {
                     // NORMAL IMAGE FILE (JPEG/PNG)
                     var reader = new FileReader();
                     reader.onload = function(e) {
                         var fileUrl = e.target.result;
-                        let htmlMarkup = '<div style="margin: 10px 0; text-align: center;"><img src="' + fileUrl + '" alt="Attached Proof Photograph" style="max-width: 100%; max-height: 400px; border-radius: 6px; border: 2px solid #1a531f; display: block; margin: 0 auto;"></div>';
+                        let htmlMarkup = '<div style="margin: 4px 0; text-align: center;"><img src="' + fileUrl + '" alt="Attached Proof" style="max-width: 100%; max-height: 280px; border-radius: 4px; border: 1.5px solid #1a531f; display: block; margin: 0 auto;"></div>';
                         
                         if (proofTextVal) {
-                            htmlMarkup += '<p style="font-size: 0.88rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left; margin-top: 6px;">' + proofTextVal + '</p>';
+                            htmlMarkup += '<p style="font-size: 0.82rem; color: #334155; white-space: pre-wrap; background: #f8fafc; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left; margin-top: 4px;">' + proofTextVal + '</p>';
                         }
                         
                         proofContent.innerHTML = htmlMarkup;
@@ -3402,7 +3401,7 @@
                 }
                 proofContainer.style.display = 'block';
             } else if (proofTextVal) {
-                proofContent.innerHTML = '<p style="font-size: 0.88rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left;">' + proofTextVal + '</p>';
+                proofContent.innerHTML = '<p style="font-size: 0.82rem; color: #334155; white-space: pre-wrap; background: #f8fafc; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left;">' + proofTextVal + '</p>';
                 proofContainer.style.display = 'block';
             } else {
                 proofContainer.style.display = 'none';
