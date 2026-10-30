@@ -1309,12 +1309,11 @@
         #invoice-preview, #payslip-preview {
             display: none;
             border: 3px solid #1a531f;
-            padding: 16px 20px;
+            padding: 20px;
             background: #ffffff;
             color: #111111;
             margin-top: 25px;
             border-radius: 8px;
-            font-size: 1.02rem; 
         }
 
         .editable-preview-field {
@@ -1331,15 +1330,15 @@
 
         .inv-header {
             display: grid;
-            grid-template-columns: 220px 1fr; 
+            grid-template-columns: 180px 1fr; 
             align-items: center;
-            border-bottom: 2.5px solid #1a531f;
-            padding-bottom: 6px; 
+            border-bottom: 2px solid #1a531f;
+            padding-bottom: 8px; 
             margin-bottom: 10px;  
         }
 
         .inv-logo-box {
-            width: 220px;
+            width: 180px;
             background: transparent !important; 
             border: none !important;             
             box-shadow: none !important;
@@ -1349,7 +1348,7 @@
 
         .inv-logo-box img {
             width: 100%;
-            max-height: 120px; 
+            max-height: 90px; 
             object-fit: contain;
             display: block;
             background: transparent !important;
@@ -1362,7 +1361,7 @@
         .inv-title-box {
             min-width: 0;
             text-align: left;
-            margin-left: -15px; 
+            margin-left: -10px; 
         }
 
         .inv-title-main {
@@ -1376,7 +1375,7 @@
         }
 
         .inv-title-sub {
-            font-size: 1.02rem; 
+            font-size: 0.98rem; 
             font-weight: 900; 
             color: #111111;
             text-transform: uppercase;
@@ -1385,7 +1384,7 @@
         }
 
         .inv-title-loc {
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
             font-weight: 800;
             color: #334155;
         }
@@ -1393,7 +1392,7 @@
         .inv-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 10px;
             color: #111827;
             font-size: 0.95rem;
@@ -1402,28 +1401,28 @@
         .inv-bank-box {
             background: #f8fafc;
             border: 1px solid #cbd5e1;
-            padding: 6px 10px;
+            padding: 8px 12px;
             border-radius: 6px;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-size: 0.88rem;
         }
 
         .inv-bank-box h5 {
             color: #1a531f;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             font-weight: 900;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
             text-transform: uppercase;
         }
 
         .inv-footer {
-            margin-top: 8px;
-            padding-top: 6px;
+            margin-top: 10px;
+            padding-top: 8px;
             border-top: 1.5px solid #ddd;
             text-align: center;
             font-style: italic;
             color: #111827;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
         }
 
         @media print {
@@ -2293,27 +2292,27 @@
                     </div>
                 </div>
 
-                <p style="margin-bottom: 6px; color: #111827; font-size: 0.98rem;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800; color: #111827;"></span> at <span id="out-pickup-time-text" style="font-weight: 800; color: #0284c7;"></span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800; color: #111827;"></span></p>
+                <p style="margin-bottom: 10px; color: #111827;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800; color: #111827;"></span> at <span id="out-pickup-time-text" style="font-weight: 800; color: #0284c7;"></span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800; color: #111827;"></span></p>
                 
-                <table style="margin-bottom: 6px; width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+                <table style="margin-bottom: 12px; width: 100%; border-collapse: collapse;">
                     <thead>
                         <tr style="background-color: #1a531f; color: #ffffff;">
-                            <th style="padding: 5px 8px; text-align: left;">Description</th>
-                            <th style="padding: 5px 8px; text-align: right;">Amount (JMD)</th>
+                            <th style="padding: 8px 12px; text-align: left;">Description</th>
+                            <th style="padding: 8px 12px; text-align: right;">Amount (JMD)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="padding: 5px 8px; border-bottom: 1px solid #ddd; font-weight: 700; color: #111827;" id="out-desc">Haulage Transport: Kingston to Zone</td>
-                            <td style="padding: 5px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #111827;" id="out-amount">$0 JMD</td>
+                            <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; font-weight: 700; color: #111827;" id="out-desc">Haulage Transport: Kingston to Zone</td>
+                            <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #111827;" id="out-amount">$0 JMD</td>
                         </tr>
                         <tr style="background-color: #f0fdf4;">
-                            <td style="padding: 5px 8px; border-bottom: 1px solid #ddd; color: #166534; font-weight: 800;" id="out-deposit-label">🔒 Required 50% Deposit (To Confirm Booking)</td>
-                            <td style="padding: 5px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #166534;" id="out-deposit">$0 JMD</td>
+                            <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; color: #166534; font-weight: 800;" id="out-deposit-label">🔒 Required 50% Deposit (To Confirm Booking)</td>
+                            <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #166534;" id="out-deposit">$0 JMD</td>
                         </tr>
                         <tr>
-                            <td style="padding: 5px 8px; border-bottom: 1px solid #ddd; font-weight: 700; color: #dc2626;" id="out-balance-label">🚚 Remaining 50% Balance (Due Upon Pickup)</td>
-                            <td style="padding: 5px 8px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #dc2626;" id="out-balance">$0 JMD</td>
+                            <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; font-weight: 700; color: #dc2626;" id="out-balance-label">🚚 Remaining 50% Balance (Due Upon Pickup)</td>
+                            <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #dc2626;" id="out-balance">$0 JMD</td>
                         </tr>
                     </tbody>
                 </table>
@@ -2326,8 +2325,8 @@
                 </div>
 
                 <div class="inv-footer">
-                    <p style="margin-bottom: 2px; font-weight: bold; color: #b91c1c;" id="out-footer-notice">* 50% deposit required to lock in your booking date. Balance due upon pickup.</p>
-                    <p style="margin-bottom: 3px; font-weight: bold; color: #b91c1c;">⚠️ Cancellations under 72 hours are non-refundable.</p>
+                    <p style="margin-bottom: 3px; font-weight: bold; color: #b91c1c;" id="out-footer-notice">* 50% deposit required to lock in your booking date. Balance due upon pickup.</p>
+                    <p style="margin-bottom: 5px; font-weight: bold; color: #b91c1c;">⚠️ Cancellations under 72 hours are non-refundable.</p>
                     <p><strong>Thank you for choosing D&C Refuse Trucking & Equipment Co. Limited!</strong></p>
                 </div>
                 <br>
@@ -2346,82 +2345,80 @@
                     </div>
                 </div>
 
-                <div style="background: #f1f5f9; padding: 6px 10px; border-radius: 6px; margin-bottom: 8px; font-size: 0.9rem; border-left: 4px solid #1a531f; color: #1e293b;">
+                <div style="background: #f1f5f9; padding: 8px 12px; border-radius: 6px; margin-bottom: 10px; font-size: 0.9rem; border-left: 4px solid #1a531f; color: #1e293b;">
                     <p><strong>Statement Period:</strong> <span id="slip-period" class="editable-preview-field" contenteditable="true">Weekly Operating Period</span></p>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; font-size: 0.9rem; background: #fafafa; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0; color: #0f172a;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; font-size: 0.9rem; background: #fafafa; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0; color: #0f172a;">
                     <div>
                         <p style="margin-bottom: 2px; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Employee Name & Payroll #</p>
                         <p><span id="slip-name" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #0f172a;"></span> (<span id="slip-paynum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span>)</p>
                         
-                        <p style="margin: 4px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">National ID / TRN</p>
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">National ID / TRN</p>
                         <p><span id="slip-natid" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
 
-                        <p style="margin: 4px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Bank Name & Branch</p>
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Bank Name & Branch</p>
                         <p><span id="slip-bankname" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span> — <span id="slip-bankbranch" class="editable-preview-field" contenteditable="true"></span></p>
 
-                        <p style="margin: 4px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Account # & Sort Code</p>
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Account # & Sort Code</p>
                         <p>Acc: <span id="slip-accnum" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> | Sort: <span id="slip-sortcode" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
                     </div>
                     <div>
                         <p style="margin-bottom: 2px; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Job Position</p>
                         <p><span id="slip-position" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
 
-                        <p style="margin: 4px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Department</p>
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Department</p>
                         <p><span id="slip-dept" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
 
-                        <p style="margin: 4px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Branch / Location</p>
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Branch / Location</p>
                         <p><span id="slip-branch" class="editable-preview-field" contenteditable="true" style="font-weight: 800;"></span></p>
 
-                        <p style="margin: 4px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Payment Method & Date</p>
+                        <p style="margin: 6px 0 2px 0; color: #64748b; font-size: 0.78rem; text-transform: uppercase; font-weight: 800;">Payment Method & Date</p>
                         <p><span id="slip-method" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #0284c7;"></span> (<span id="slip-paydate" class="editable-preview-field" contenteditable="true" style="font-weight: 800; color: #166534;"></span>)</p>
                     </div>
                 </div>
 
-                <p style="margin-bottom: 4px; color: #0f172a; font-size: 0.9rem; font-weight: 900; text-transform: uppercase;">Itemized Operating Runs & Earnings:</p>
-                <table style="margin-bottom: 8px; width: 100%; border-collapse: collapse; font-size: 0.88rem; color: #0f172a;">
+                <p style="margin-bottom: 6px; color: #0f172a; font-size: 0.95rem; font-weight: 900; text-transform: uppercase;">Itemized Operating Runs & Earnings:</p>
+                <table style="margin-bottom: 12px; width: 100%; border-collapse: collapse; font-size: 0.9rem; color: #0f172a;">
                     <thead>
                         <tr style="background-color: #1a531f; color: #ffffff;">
-                            <th style="padding: 5px 8px; text-align: left;">Date / Day</th>
-                            <th style="padding: 5px 8px; text-align: left;">Route</th>
-                            <th style="padding: 5px 8px; text-align: right;">Earnings (JMD)</th>
+                            <th style="padding: 6px 10px; text-align: left;">Date / Day</th>
+                            <th style="padding: 6px 10px; text-align: left;">Route</th>
+                            <th style="padding: 6px 10px; text-align: right;">Earnings (JMD)</th>
                         </tr>
                     </thead>
                     <tbody id="slip-runs-tbody">
                     </tbody>
                 </table>
 
-                <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 8px 10px; border-radius: 6px; margin-bottom: 8px; font-size: 0.9rem; color: #0f172a;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center;">
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; font-size: 0.9rem; color: #0f172a;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center;">
                         <span style="font-weight: 700;">Gross Earnings:</span>
                         <strong id="slip-gross" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #dc2626; align-items: center;">
-                        <div style="flex: 1; padding-right: 10px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; color: #dc2626; align-items: center;">
+                        <div style="flex: 1; padding-right: 15px;">
                             <span style="font-weight: 700;">Deductions This Period:</span>
-                            <div id="slip-deduct-note" class="editable-preview-field" contenteditable="true" style="font-size: 0.8rem; color: #64748b; margin-top: 1px; width: 100%;">Total Amount Of AR Charges Repayable</div>
+                            <div id="slip-deduct-note" class="editable-preview-field" contenteditable="true" style="font-size: 0.8rem; color: #64748b; margin-top: 2px; width: 100%;">Total Amount Of AR Charges Repayable</div>
                         </div>
                         <strong id="slip-deduct-amt" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
                     </div>
-                    <div style="display: flex; justify-content: space-between; color: #b45309; align-items: center; margin-top: 4px; border-top: 1px dashed #cbd5e1; padding-top: 4px;">
+                    <div style="display: flex; justify-content: space-between; color: #b45309; align-items: center; margin-top: 6px; border-top: 1px dashed #cbd5e1; padding-top: 6px;">
                         <span style="font-weight: 700;">Total Outstanding Charges / Balance:</span>
                         <strong id="slip-total-charges" class="editable-preview-field" contenteditable="true">$0 JMD</strong>
                     </div>
                 </div>
 
-                <!-- PHOTO PROOF SITS DIRECTLY BELOW TOTAL OUTSTANDING CHARGES / BALANCE -->
-                <div id="slip-proof-container" style="display: none; margin-bottom: 8px;">
-                    <div id="slip-proof-content" style="text-align: center;">
-                    </div>
-                </div>
-
-                <div style="background: #f0fdf4; border: 2px solid #166534; padding: 8px 10px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <div style="background: #f0fdf4; border: 2px solid #166534; padding: 10px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <span style="font-weight: 900; color: #166534; font-size: 1rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
                     <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.15rem;">$0 JMD</span>
                 </div>
 
-                <div class="inv-footer">
+                <!-- PAGE 2: FORCED PAGE BREAK FOR AR CHARGES & EVIDENCE -->
+                <div id="slip-proof-container" style="display: none;">
+                </div>
+
+                <div class="inv-footer" style="margin-top: 20px;">
                     <p style="margin-bottom: 3px; font-weight: bold; color: #1a531f;">✅ Official Corporation Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
                     <p>Authorized Dispatcher Sign-off: ___________________________</p>
                 </div>
@@ -3230,7 +3227,7 @@
             document.getElementById('invoice-preview').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // GENERATE WEEKLY PAYSLIP WITH COMPACT PHOTO PROOF SCALING
+        // GENERATE WEEKLY PAYSLIP WITH 2-PAGE SPLIT: PAYSLIP ON PAGE 1, AR CHARGES & EVIDENCE ON PAGE 2
         async function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
@@ -3326,9 +3323,9 @@
                 grossEarnings += payout;
 
                 var tr = document.createElement('tr');
-                tr.innerHTML = '<td style="padding: 5px 8px; border-bottom: 1px solid #ddd;"><strong>' + (j.day || 'Day') + '</strong><br><span style="font-size:0.75rem; color:#64748b;">' + (j.date || '') + '</span></td>' +
-                               '<td style="padding: 5px 8px; border-bottom: 1px solid #ddd;">' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
-                               '<td style="padding: 5px 8px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
+                tr.innerHTML = '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;"><strong>' + (j.day || 'Day') + '</strong> <span style="font-size:0.75rem; color:#64748b;">(' + (j.date || '') + ')</span></td>' +
+                               '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;">' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
+                               '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
                 tbody.appendChild(tr);
             }
 
@@ -3340,69 +3337,68 @@
             document.getElementById('slip-total-charges').innerText = '$' + totalCharges.toLocaleString() + ' JMD';
             document.getElementById('slip-total-amount').innerText = '$' + netPayable.toLocaleString() + ' JMD';
 
+            // PAGE 2: AR CHARGES & PROOF SECTION WITH FORCED PAGE BREAK
             var proofContainer = document.getElementById('slip-proof-container');
-            var proofContent = document.getElementById('slip-proof-content');
-            proofContent.innerHTML = '';
+            proofContainer.innerHTML = '';
 
-            if (proofFileInput.files && proofFileInput.files[0]) {
-                var file = proofFileInput.files[0];
-                
-                if (file.type === 'application/pdf') {
-                    // AUTOMATIC PDF-TO-IMAGE CONVERTER ENGINE (COMPACT FIT)
-                    try {
-                        proofContent.innerHTML = '<p style="color: #1a531f; font-weight: 800; font-size: 0.85rem;">⏳ Loading proof photo...</p>';
-                        proofContainer.style.display = 'block';
+            var hasProofFile = proofFileInput.files && proofFileInput.files[0];
 
-                        var fileReader = new FileReader();
-                        fileReader.onload = async function() {
-                            var typedarray = new Uint8Array(this.result);
-                            var pdf = await pdfjsLib.getDocument(typedarray).promise;
-                            var page = await pdf.getPage(1);
-                            
-                            var scale = 1.5; 
-                            var viewport = page.getViewport({ scale: scale });
-                            
-                            var canvas = document.createElement('canvas');
-                            var context = canvas.getContext('2d');
-                            canvas.height = viewport.height;
-                            canvas.width = viewport.width;
+            if (hasProofFile || proofTextVal) {
+                var sectionMarkup = '<div style="break-before: page; page-break-before: always; padding-top: 15px;">';
+                sectionMarkup += '<div style="background: #0a2412; color: #00e676; border: 2px solid #00e676; padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: center;">';
+                sectionMarkup += '<h4 style="font-size: 1.15rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px;">📋 AR Charges & Deduction Proof</h4>';
+                sectionMarkup += '<p style="font-size: 0.9rem; color: #ffffff; font-weight: 700;">Supporting document and itemized balance details for ' + staffName + '</p>';
+                sectionMarkup += '</div>';
 
-                            await page.render({ canvasContext: context, viewport: viewport }).promise;
-                            var imageUrl = canvas.toDataURL('image/jpeg', 0.90);
-
-                            let htmlMarkup = '<div style="margin: 4px 0; text-align: center;"><img src="' + imageUrl + '" alt="Attached Proof" style="max-width: 100%; max-height: 280px; border-radius: 4px; border: 1.5px solid #1a531f; display: block; margin: 0 auto;"></div>';
-                            
-                            if (proofTextVal) {
-                                htmlMarkup += '<p style="font-size: 0.82rem; color: #334155; white-space: pre-wrap; background: #f8fafc; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left; margin-top: 4px;">' + proofTextVal + '</p>';
-                            }
-                            
-                            proofContent.innerHTML = htmlMarkup;
-                        };
-                        fileReader.readAsArrayBuffer(file);
-                    } catch (err) {
-                        console.error(err);
-                        proofContent.innerHTML = '<p style="color: #dc2626; font-weight: 800; font-size: 0.85rem;">❌ Could not convert PDF.</p>';
-                    }
-                } else {
-                    // NORMAL IMAGE FILE (JPEG/PNG)
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        var fileUrl = e.target.result;
-                        let htmlMarkup = '<div style="margin: 4px 0; text-align: center;"><img src="' + fileUrl + '" alt="Attached Proof" style="max-width: 100%; max-height: 280px; border-radius: 4px; border: 1.5px solid #1a531f; display: block; margin: 0 auto;"></div>';
-                        
-                        if (proofTextVal) {
-                            htmlMarkup += '<p style="font-size: 0.82rem; color: #334155; white-space: pre-wrap; background: #f8fafc; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left; margin-top: 4px;">' + proofTextVal + '</p>';
-                        }
-                        
-                        proofContent.innerHTML = htmlMarkup;
-                        proofContainer.style.display = 'block';
-                    };
-                    reader.readAsDataURL(file);
+                if (proofTextVal) {
+                    sectionMarkup += '<div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 8px; margin-bottom: 15px; color: #0f172a; font-size: 0.95rem; white-space: pre-wrap;">' + proofTextVal + '</div>';
                 }
+
+                sectionMarkup += '<div id="slip-proof-image-box" style="text-align: center;"></div>';
+                sectionMarkup += '</div>';
+
+                proofContainer.innerHTML = sectionMarkup;
                 proofContainer.style.display = 'block';
-            } else if (proofTextVal) {
-                proofContent.innerHTML = '<p style="font-size: 0.82rem; color: #334155; white-space: pre-wrap; background: #f8fafc; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left;">' + proofTextVal + '</p>';
-                proofContainer.style.display = 'block';
+
+                if (hasProofFile) {
+                    var file = proofFileInput.files[0];
+                    var imgBox = document.getElementById('slip-proof-image-box');
+
+                    if (file.type === 'application/pdf') {
+                        try {
+                            imgBox.innerHTML = '<p style="color: #1a531f; font-weight: 800;">⏳ Converting PDF proof to full-size image...</p>';
+                            var fileReader = new FileReader();
+                            fileReader.onload = async function() {
+                                var typedarray = new Uint8Array(this.result);
+                                var pdf = await pdfjsLib.getDocument(typedarray).promise;
+                                var page = await pdf.getPage(1);
+                                
+                                var scale = 2.0; 
+                                var viewport = page.getViewport({ scale: scale });
+                                
+                                var canvas = document.createElement('canvas');
+                                var context = canvas.getContext('2d');
+                                canvas.height = viewport.height;
+                                canvas.width = viewport.width;
+
+                                await page.render({ canvasContext: context, viewport: viewport }).promise;
+                                var imageUrl = canvas.toDataURL('image/jpeg', 0.95);
+
+                                imgBox.innerHTML = '<img src="' + imageUrl + '" alt="AR Charges Proof" style="max-width: 100%; height: auto; border-radius: 8px; border: 2px solid #1a531f; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: block; margin: 0 auto;">';
+                            };
+                            fileReader.readAsArrayBuffer(file);
+                        } catch (err) {
+                            console.error(err);
+                            imgBox.innerHTML = '<p style="color: #dc2626; font-weight: 800;">❌ Could not render PDF preview.</p>';
+                        }
+                    } else {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            imgBox.innerHTML = '<img src="' + e.target.result + '" alt="AR Charges Proof" style="max-width: 100%; height: auto; border-radius: 8px; border: 2px solid #1a531f; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: block; margin: 0 auto;">';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
             } else {
                 proofContainer.style.display = 'none';
             }
