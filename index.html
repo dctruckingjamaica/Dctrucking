@@ -2073,6 +2073,14 @@
                                 <option value="PAID">✅ PAID</option>
                             </select>
                         </div>
+
+                        <!-- CREW PAID OUT-OF-POCKET CHECKBOX -->
+                        <div class="tracker-field-group" style="grid-column: 1 / -1; display: flex; gap: 12px; align-items: center; margin-top: 4px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #4ade80; font-weight: 800; font-size: 1rem;">
+                                <input type="checkbox" id="tr-staff-paid" style="width: 20px; height: 20px; accent-color: #4ade80; cursor: pointer;">
+                                <span>✅ Crew Paid Out-of-Pocket (Driver & Assistant Wages Settled)</span>
+                            </label>
+                        </div>
                     </div>
                     <button class="btn-add-job" onclick="addTrackerJob()">➕ Log Corporate Job</button>
                 </div>
@@ -3472,6 +3480,7 @@
             var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
             var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
             var status = document.getElementById('tr-status').value;
+            var staffPaid = document.getElementById('tr-staff-paid').checked;
 
             if (!inv) {
                 alert("Please enter an Invoice Number.");
@@ -3492,7 +3501,8 @@
                 asstPay: asstPay,
                 petrol: petrol, 
                 rate: rate, 
-                status: status 
+                status: status,
+                staffPaid: staffPaid
             });
             saveStoredJobs(jobs);
 
@@ -3504,6 +3514,7 @@
             document.getElementById('tr-asst-pay').value = '';
             document.getElementById('tr-petrol').value = '';
             document.getElementById('tr-rate').value = '';
+            document.getElementById('tr-staff-paid').checked = false;
             updateLiveProfit();
             
             loadTrackerJobs();
@@ -3935,12 +3946,14 @@
                         statusHTML = '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
                     }
 
+                    var staffPaidBadge = j.staffPaid ? '<br><span style="color: #4ade80; font-size: 0.75rem; font-weight: 900;">✅ Crew Wages Settled</span>' : '<br><span style="color: #f87171; font-size: 0.75rem; font-weight: 800;">⏳ Wages Pending</span>';
+
                     var tr = document.createElement('tr');
                     tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.82rem;">' + j.date + '</span></td>' +
                                    '<td>' + invHTML + '</td>' +
                                    '<td>' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
-                                   '<td>' + j.driver + '<br><span style="color:#4ade80;">$' + j.driverPay.toLocaleString() + ' JMD</span></td>' +
-                                   '<td>' + j.assistant + '<br><span style="color:#4ade80;">$' + j.asstPay.toLocaleString() + ' JMD</span></td>' +
+                                   '<td>' + j.driver + '<br><span style="color:#4ade80;">$' + j.driverPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
+                                   '<td>' + j.assistant + '<br><span style="color:#4ade80;">$' + j.asstPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
                                    '<td style="color:#f87171;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#38bdf8;">$' + jobNetProfit.toLocaleString() + ' JMD</td>' +
