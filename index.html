@@ -13,6 +13,12 @@
     <!-- TESSERACT.JS OCR LIBRARY CDN -->
     <script src="https://cdn.jsdelivr.net/npm/tesseract.min.js@5/dist/tesseract.min.js"></script>
 
+    <!-- PDF.JS LIBRARY CDN FOR AUTOMATIC PDF-TO-IMAGE CONVERSION -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+
     <style>
         :root {
             --primary-green: #00e676;
@@ -1592,7 +1598,7 @@
                     <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
                 </div>
 
-                <!-- NEW: REQUESTED PICKUP TIME FIELD -->
+                <!-- REQUESTED PICKUP TIME FIELD -->
                 <div class="input-group">
                     <label>Requested Pickup Time</label>
                     <select id="inv-pickup-time">
@@ -1857,7 +1863,7 @@
                                 <button type="button" style="background:#b91c1c; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="addNewChargeToBalance('driver')">➕ Add Charge</button>
                             </div>
 
-                            <label style="margin-top:6px; color:#facc15;">📎 Attach Charge Proof (Optional: Screenshot, WhatsApp Image, PDF, or Email Text):</label>
+                            <label style="margin-top:6px; color:#facc15;">📎 Attach Charge Proof (Auto-Converts PDF to Photo):</label>
                             <input type="file" id="payroll-driver-proof-file" accept="image/*,application/pdf" style="padding: 6px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; font-size:0.9rem; width:100%; margin-bottom: 6px;">
                             <textarea id="payroll-driver-proof-text" rows="2" placeholder="Or paste WhatsApp / email charge details text here..." style="font-size:0.88rem; width:100%;"></textarea>
 
@@ -1931,7 +1937,7 @@
                                 <button type="button" style="background:#b91c1c; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="addNewChargeToBalance('assistant')">➕ Add Charge</button>
                             </div>
 
-                            <label style="margin-top:6px; color:#facc15;">📎 Attach Charge Proof (Optional: Screenshot, WhatsApp Image, PDF, or Email Text):</label>
+                            <label style="margin-top:6px; color:#facc15;">📎 Attach Charge Proof (Auto-Converts PDF to Photo):</label>
                             <input type="file" id="payroll-asst-proof-file" accept="image/*,application/pdf" style="padding: 6px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; font-size:0.9rem; width:100%; margin-bottom: 6px;">
                             <textarea id="payroll-asst-proof-text" rows="2" placeholder="Or paste WhatsApp / email charge details text here..." style="font-size:0.88rem; width:100%;"></textarea>
 
@@ -1984,7 +1990,7 @@
                             <input type="text" id="tr-pickup" placeholder="Pickup location">
                         </div>
 
-                        <!-- RATE SHEET MODE TOGGLER (UPDATED: D&C TRUCKING MODE) -->
+                        <!-- RATE SHEET MODE TOGGLER -->
                         <div class="tracker-field-group">
                             <label>Rate Sheet Mode</label>
                             <div style="display: flex; gap: 6px;">
@@ -2404,9 +2410,9 @@
                     </div>
                 </div>
 
-                <!-- CLEAN PAYSLIP ATTACHMENT PROOF BLOCK (BAKED IMAGE) -->
+                <!-- AUTO-CONVERTED PHOTO PROOF BLOCK -->
                 <div id="slip-proof-container" style="display: none; background: #fffbeb; border: 2px dashed #d97706; padding: 8px 10px; border-radius: 6px; margin-bottom: 8px;">
-                    <p style="font-weight: 900; color: #b45309; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 4px;">📎 Attached Charge Proof:</p>
+                    <p style="font-weight: 900; color: #b45309; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 4px;">📎 Attached Charge Proof (Converted to Photo):</p>
                     <div id="slip-proof-content" style="text-align: center;">
                     </div>
                 </div>
@@ -2552,7 +2558,7 @@
             }
         }
 
-        // RATE SHEET MODE SWITCHER (UPDATED: D&C MODE)
+        // RATE SHEET MODE SWITCHER
         function setTrackerRateMode(mode) {
             document.getElementById('tr-active-mode').value = mode;
             var btnWisynco = document.getElementById('mode-btn-wisynco');
@@ -3225,8 +3231,8 @@
             document.getElementById('invoice-preview').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // GENERATE WEEKLY PAYSLIP WITH BAKED IMAGE PROOF FOR WHATSAPP COMPATIBILITY
-        function generateWeeklyPayslip(roleType) {
+        // GENERATE WEEKLY PAYSLIP WITH AUTOMATIC PDF-TO-IMAGE CONVERSION
+        async function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
             var natIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-natid') : document.getElementById('payroll-asst-natid');
@@ -3341,22 +3347,60 @@
 
             if (proofFileInput.files && proofFileInput.files[0]) {
                 var file = proofFileInput.files[0];
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var fileUrl = e.target.result;
-                    let htmlMarkup = '';
-                    
-                    // Renders the uploaded PDF/image file directly as a visual image block on the payslip document
-                    htmlMarkup = '<div style="margin: 10px 0; text-align: center;"><img src="' + fileUrl + '" alt="Attached Proof Document" style="max-width: 100%; max-height: 350px; border-radius: 6px; border: 2px solid #1a531f; display: block; margin: 0 auto;"></div>';
-                    
-                    if (proofTextVal) {
-                        htmlMarkup += '<p style="font-size: 0.88rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left; margin-top: 6px;">' + proofTextVal + '</p>';
+                
+                if (file.type === 'application/pdf') {
+                    // AUTOMATIC PDF-TO-IMAGE CONVERTER ENGINE
+                    try {
+                        proofContent.innerHTML = '<p style="color: #b45309; font-weight: 800; font-size: 0.9rem;">⏳ Converting PDF proof to photograph... Please wait.</p>';
+                        proofContainer.style.display = 'block';
+
+                        var fileReader = new FileReader();
+                        fileReader.onload = async function() {
+                            var typedarray = new Uint8Array(this.result);
+                            var pdf = await pdfjsLib.getDocument(typedarray).promise;
+                            var page = await pdf.getPage(1);
+                            
+                            var scale = 2.0; // High resolution rendering to prevent quality loss
+                            var viewport = page.getViewport({ scale: scale });
+                            
+                            var canvas = document.createElement('canvas');
+                            var context = canvas.getContext('2d');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+
+                            await page.render({ canvasContext: context, viewport: viewport }).promise;
+                            var imageUrl = canvas.toDataURL('image/jpeg', 0.95);
+
+                            let htmlMarkup = '<div style="margin: 10px 0; text-align: center;"><img src="' + imageUrl + '" alt="Converted Proof Photograph" style="max-width: 100%; max-height: 400px; border-radius: 6px; border: 2px solid #1a531f; display: block; margin: 0 auto;"></div>';
+                            
+                            if (proofTextVal) {
+                                htmlMarkup += '<p style="font-size: 0.88rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left; margin-top: 6px;">' + proofTextVal + '</p>';
+                            }
+                            
+                            proofContent.innerHTML = htmlMarkup;
+                        };
+                        fileReader.readAsArrayBuffer(file);
+                    } catch (err) {
+                        console.error(err);
+                        proofContent.innerHTML = '<p style="color: #dc2626; font-weight: 800;">❌ Could not auto-convert PDF. Please upload a direct photo/screenshot.</p>';
                     }
-                    
-                    proofContent.innerHTML = htmlMarkup;
-                    proofContainer.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
+                } else {
+                    // NORMAL IMAGE FILE (JPEG/PNG)
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var fileUrl = e.target.result;
+                        let htmlMarkup = '<div style="margin: 10px 0; text-align: center;"><img src="' + fileUrl + '" alt="Attached Proof Photograph" style="max-width: 100%; max-height: 400px; border-radius: 6px; border: 2px solid #1a531f; display: block; margin: 0 auto;"></div>';
+                        
+                        if (proofTextVal) {
+                            htmlMarkup += '<p style="font-size: 0.88rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left; margin-top: 6px;">' + proofTextVal + '</p>';
+                        }
+                        
+                        proofContent.innerHTML = htmlMarkup;
+                        proofContainer.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+                proofContainer.style.display = 'block';
             } else if (proofTextVal) {
                 proofContent.innerHTML = '<p style="font-size: 0.88rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left;">' + proofTextVal + '</p>';
                 proofContainer.style.display = 'block';
