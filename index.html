@@ -509,7 +509,6 @@
             transform: scale(0.98);
         }
 
-        /* SECURE MANAGER LOCK PANEL */
         .admin-toggle-bar {
             margin-top: 15px;
             text-align: right;
@@ -638,7 +637,6 @@
             margin-bottom: 0;
         }
 
-        /* WEEKLY TOTALS SUMMARY DASHBOARD */
         .weekly-summary-bar {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -668,7 +666,6 @@
             font-weight: 900;
         }
 
-        /* MONTHLY BREAKDOWN */
         .monthly-summary-container {
             background: #062612;
             border: 2px solid #facc15;
@@ -749,7 +746,6 @@
             font-weight: 900;
         }
 
-        /* ALL-TIME SUMMARY */
         .alltime-summary-container {
             background: #051b10;
             border: 2px solid #38bdf8;
@@ -810,7 +806,7 @@
             font-weight: 900;
         }
 
-        /* VEHICLE DOCUMENT VAULT SECTION (MOBILE-OPTIMIZED FLUSH ALIGNMENT) */
+        /* VEHICLE DOCUMENT VAULT SECTION (MOBILE OPTIMIZED + INLINE IMAGE DISPLAY) */
         .doc-vault-box {
             background: #0a1f2e;
             border: 2px solid #0284c7;
@@ -914,6 +910,17 @@
             margin-right: 8px;
         }
 
+        .doc-preview-img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border: 2px solid #0284c7;
+            border-radius: 6px;
+            margin-top: 4px;
+            background: #000;
+            display: none;
+        }
+
         .doc-btn-group {
             display: flex;
             gap: 6px;
@@ -930,7 +937,7 @@
             font-weight: 900;
             cursor: pointer;
             flex: 1;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
         }
 
         .btn-doc-ocr {
@@ -942,7 +949,7 @@
             font-weight: 900;
             cursor: pointer;
             flex: 1;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
         }
 
         .btn-doc-share {
@@ -954,7 +961,19 @@
             font-weight: 900;
             cursor: pointer;
             flex: 1;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-doc-email {
+            background: #ea4335;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 900;
+            cursor: pointer;
+            flex: 1;
+            font-size: 0.85rem;
         }
 
         .ocr-status-text {
@@ -994,7 +1013,6 @@
             font-size: 0.9rem;
         }
 
-        /* CREW PAYROLL GENERATOR */
         .payroll-section-box {
             background: #0a2914;
             border: 2px solid var(--primary-green);
@@ -1305,7 +1323,6 @@
             min-width: 220px;
         }
 
-        /* PRINTABLE INVOICES & PAYSLIPS */
         #invoice-preview, #payslip-preview {
             display: none;
             border: 3px solid #1a531f;
@@ -1362,6 +1379,43 @@
             min-width: 0;
             text-align: left;
             margin-left: -10px; 
+        }
+
+        /* ISOLATED PAYSLIP HEADER STYLING FOR ENLARGED LOGO & PULLED-IN TEXT */
+        #payslip-preview .inv-header {
+            display: grid;
+            grid-template-columns: 210px 1fr;
+            align-items: center;
+            border-bottom: 2px solid #1a531f;
+            padding-bottom: 6px; 
+            margin-bottom: 8px;  
+        }
+
+        #payslip-preview .inv-logo-box {
+            width: 210px;
+            background: transparent !important; 
+            border: none !important;             
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        #payslip-preview .inv-logo-box img {
+            width: 100%;
+            max-height: 115px; /* Slightly larger logo */
+            object-fit: contain;
+            display: block;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            mix-blend-mode: multiply; 
+        }
+
+        #payslip-preview .inv-title-box {
+            min-width: 0;
+            text-align: left;
+            margin-left: -25px; /* Pulls header text closer to the logo */
         }
 
         .inv-title-main {
@@ -1597,11 +1651,13 @@
                     <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
                 </div>
 
-                <!-- REQUESTED PICKUP TIME FIELD -->
                 <div class="input-group">
                     <label>Requested Pickup Time</label>
                     <select id="inv-pickup-time">
+                        <option value="07:00 AM">07:00 AM</option>
+                        <option value="07:30 AM">07:30 AM</option>
                         <option value="08:00 AM">08:00 AM</option>
+                        <option value="08:30 AM">08:30 AM</option>
                         <option value="09:00 AM" selected>09:00 AM</option>
                         <option value="10:00 AM">10:00 AM</option>
                         <option value="11:00 AM">11:00 AM</option>
@@ -1611,11 +1667,13 @@
                         <option value="03:00 PM">03:00 PM</option>
                         <option value="04:00 PM">04:00 PM</option>
                         <option value="05:00 PM">05:00 PM</option>
+                        <option value="06:00 PM">06:00 PM</option>
+                        <option value="07:00 PM">07:00 PM</option>
+                        <option value="08:00 PM">08:00 PM</option>
                         <option value="Flexible / As Agreed">Flexible / As Agreed</option>
                     </select>
                 </div>
 
-                <!-- INDIVIDUAL TOWN SELECTION & AUTOCOMPLETE SEARCH -->
                 <div class="input-group">
                     <label>Select / Type Destination Town</label>
                     <input type="text" id="inv-destination" list="public-jamaica-towns-list" placeholder="Type town name (e.g. Sav-La-Mar, Montego Bay)" oninput="handlePublicTownSearch()">
@@ -1643,21 +1701,17 @@
                 </div>
             </div>
 
-            <!-- PUBLIC ACTION BUTTON: ONLY WHATSAPP REQUEST -->
             <div class="btn-action-group">
                 <button class="btn-whatsapp" onclick="sendWhatsAppQuote()">📱 Send Request via WhatsApp</button>
             </div>
 
-            <!-- PIN-LOCKED MANAGER ACCESS BUTTON -->
             <div class="admin-toggle-bar">
                 <button class="btn-admin-login" onclick="toggleManagerPanel()">🔐 Dispatcher / Manager Login</button>
             </div>
 
-            <!-- PRIVATE PIN-PROTECTED MANAGER PANEL -->
             <div id="manager-panel" class="manager-panel">
                 <h4>🔐 Dispatcher Control Panel (Private)</h4>
 
-                <!-- MOVED PRIVATE INVOICE GENERATION BUTTON INSIDE MANAGER PANEL -->
                 <div style="background: #03140b; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                     <div>
                         <h5 style="color: var(--primary-green); font-size: 1rem; font-weight: 900; text-transform: uppercase;">📄 Official Invoice Generation</h5>
@@ -1710,7 +1764,6 @@
                     </div>
                 </div>
 
-                <!-- UNPAID & PENDING COLLECTIONS SUMMARY BOX -->
                 <div style="background: #270f0f; border: 2px solid #ef4444; border-radius: 10px; padding: 14px; margin-bottom: 20px;">
                     <h5 style="color: #f87171; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
                         <span>⚠️ Unpaid & Pending Collections</span>
@@ -1989,7 +2042,6 @@
                             <input type="text" id="tr-pickup" placeholder="Pickup location">
                         </div>
 
-                        <!-- RATE SHEET MODE TOGGLER -->
                         <div class="tracker-field-group">
                             <label>Rate Sheet Mode</label>
                             <div style="display: flex; gap: 6px;">
@@ -2035,7 +2087,6 @@
                             <span id="live-net-profit-display">$0 JMD</span>
                         </div>
 
-                        <!-- STATUS DROPDOWN TOGGLE -->
                         <div class="tracker-field-group" style="grid-column: 1 / -1; max-width: 300px;">
                             <label>Payment Status</label>
                             <select id="tr-status">
@@ -2045,7 +2096,6 @@
                             </select>
                         </div>
 
-                        <!-- CREW PAID OUT-OF-POCKET CHECKBOX -->
                         <div class="tracker-field-group" style="grid-column: 1 / -1; display: flex; gap: 12px; align-items: center; margin-top: 4px;">
                             <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #4ade80; font-weight: 800; font-size: 1rem;">
                                 <input type="checkbox" id="tr-staff-paid" style="width: 20px; height: 20px; accent-color: #4ade80; cursor: pointer;">
@@ -2175,11 +2225,13 @@
                     </div>
                 </div>
 
+                <!-- VEHICLE DOCUMENT VAULT WITH AUTO-SAVE & OCR LINKED -->
                 <div class="doc-vault-box">
                     <h5>📑 Vehicle Document Vault & OCR Auto-Scanner</h5>
-                    <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Store insurance policies, road licences, fitness certs, and titles. Select an image/screenshot and click "Auto-Scan (OCR)" to read expiry dates!</p>
+                    <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Choose file, press <strong>Save</strong> to store your picture, then press <strong>Auto-Scan</strong> to fill out the blanks automatically. Share directly via WhatsApp or Email anytime!</p>
                     
                     <div class="doc-grid">
+                        <!-- ROAD LICENCE CARD -->
                         <div class="doc-card">
                             <div class="doc-card-header">
                                 <h6>📄 Public Carrier Road Licence</h6>
@@ -2189,18 +2241,21 @@
                             <input type="text" id="doc-roadlicence-num" placeholder="Licence #">
                             <label>Expiry Date:</label>
                             <input type="date" id="doc-roadlicence-expiry" onchange="updateDocBadges()">
-                            <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-roadlicence-file" accept="image/*">
+                            <label>Attach Official Document Photo:</label>
+                            <input type="file" id="doc-roadlicence-file" accept="image/*" onchange="handleDocFileSelect('roadlicence')">
+                            <img id="doc-roadlicence-img-preview" class="doc-preview-img" alt="Road Licence Preview">
                             <div id="ocr-status-roadlicence" class="ocr-status-text"></div>
-                            <label>Notes / WhatsApp Text Copy:</label>
+                            <label>Notes / Details:</label>
                             <textarea id="doc-roadlicence-text" rows="2" placeholder="Paste details or notes..."></textarea>
                             <div class="doc-btn-group">
                                 <button class="btn-doc-save" onclick="saveVehicleDoc('roadlicence')">💾 Save</button>
-                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('roadlicence')">📷 Auto-Scan (OCR)</button>
-                                <button class="btn-doc-share" onclick="shareVehicleDoc('roadlicence')">📱 WhatsApp</button>
+                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('roadlicence')">🔍 Auto-Scan</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDocNative('roadlicence')">📱 WhatsApp</button>
+                                <button class="btn-doc-email" onclick="emailVehicleDoc('roadlicence')">✉️ Email</button>
                             </div>
                         </div>
 
+                        <!-- INSURANCE CARD -->
                         <div class="doc-card">
                             <div class="doc-card-header">
                                 <h6>🛡️ Insurance Certificate</h6>
@@ -2210,18 +2265,21 @@
                             <input type="text" id="doc-insurance-num" placeholder="Policy #">
                             <label>Expiry Date:</label>
                             <input type="date" id="doc-insurance-expiry" onchange="updateDocBadges()">
-                            <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-insurance-file" accept="image/*">
+                            <label>Attach Official Document Photo:</label>
+                            <input type="file" id="doc-insurance-file" accept="image/*" onchange="handleDocFileSelect('insurance')">
+                            <img id="doc-insurance-img-preview" class="doc-preview-img" alt="Insurance Preview">
                             <div id="ocr-status-insurance" class="ocr-status-text"></div>
                             <label>Broker / Insurer Notes:</label>
                             <textarea id="doc-insurance-text" rows="2" placeholder="e.g. Chancellor Insurance / Agent details..."></textarea>
                             <div class="doc-btn-group">
                                 <button class="btn-doc-save" onclick="saveVehicleDoc('insurance')">💾 Save</button>
-                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('insurance')">📷 Auto-Scan (OCR)</button>
-                                <button class="btn-doc-share" onclick="shareVehicleDoc('insurance')">📱 WhatsApp</button>
+                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('insurance')">🔍 Auto-Scan</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDocNative('insurance')">📱 WhatsApp</button>
+                                <button class="btn-doc-email" onclick="emailVehicleDoc('insurance')">✉️ Email</button>
                             </div>
                         </div>
 
+                        <!-- FITNESS CARD -->
                         <div class="doc-card">
                             <div class="doc-card-header">
                                 <h6>📋 Certificate of Fitness</h6>
@@ -2231,18 +2289,21 @@
                             <input type="text" id="doc-fitness-num" placeholder="Fitness Cert #">
                             <label>Expiry Date:</label>
                             <input type="date" id="doc-fitness-expiry" onchange="updateDocBadges()">
-                            <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-fitness-file" accept="image/*">
+                            <label>Attach Official Document Photo:</label>
+                            <input type="file" id="doc-fitness-file" accept="image/*" onchange="handleDocFileSelect('fitness')">
+                            <img id="doc-fitness-img-preview" class="doc-preview-img" alt="Fitness Preview">
                             <div id="ocr-status-fitness" class="ocr-status-text"></div>
                             <label>Notes:</label>
                             <textarea id="doc-fitness-text" rows="2" placeholder="Depot or inspection notes..."></textarea>
                             <div class="doc-btn-group">
                                 <button class="btn-doc-save" onclick="saveVehicleDoc('fitness')">💾 Save</button>
-                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('fitness')">📷 Auto-Scan (OCR)</button>
-                                <button class="btn-doc-share" onclick="shareVehicleDoc('fitness')">📱 WhatsApp</button>
+                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('fitness')">🔍 Auto-Scan</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDocNative('fitness')">📱 WhatsApp</button>
+                                <button class="btn-doc-email" onclick="emailVehicleDoc('fitness')">✉️ Email</button>
                             </div>
                         </div>
 
+                        <!-- REGISTRATION TITLE CARD -->
                         <div class="doc-card">
                             <div class="doc-card-header">
                                 <h6>📑 Registration Title / C88 / V5</h6>
@@ -2252,15 +2313,17 @@
                             <input type="text" id="doc-registration-num" placeholder="Registration #">
                             <label>Renewal Date / Date Issued:</label>
                             <input type="date" id="doc-registration-expiry" onchange="updateDocBadges()">
-                            <label>Attach File / Photo / PDF:</label>
-                            <input type="file" id="doc-registration-file" accept="image/*">
+                            <label>Attach Official Document Photo:</label>
+                            <input type="file" id="doc-registration-file" accept="image/*" onchange="handleDocFileSelect('registration')">
+                            <img id="doc-registration-img-preview" class="doc-preview-img" alt="Registration Title Preview">
                             <div id="ocr-status-registration" class="ocr-status-text"></div>
                             <label>Notes:</label>
                             <textarea id="doc-registration-text" rows="2" placeholder="Chassis / Engine / VIN notes..."></textarea>
                             <div class="doc-btn-group">
                                 <button class="btn-doc-save" onclick="saveVehicleDoc('registration')">💾 Save</button>
-                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('registration')">📷 Auto-Scan (OCR)</button>
-                                <button class="btn-doc-share" onclick="shareVehicleDoc('registration')">📱 WhatsApp</button>
+                                <button class="btn-doc-ocr" onclick="scanDocWithOCR('registration')">🔍 Auto-Scan</button>
+                                <button class="btn-doc-share" onclick="shareVehicleDocNative('registration')">📱 WhatsApp</button>
+                                <button class="btn-doc-email" onclick="emailVehicleDoc('registration')">✉️ Email</button>
                             </div>
                         </div>
                     </div>
@@ -2409,19 +2472,16 @@
                     </div>
                 </div>
 
-                <!-- AMOUNT PAYABLE & NET PAYOUT RIGHT UNDER THE BALANCE -->
                 <div style="background: #f0fdf4; border: 2px solid #166534; padding: 10px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <span style="font-weight: 900; color: #166534; font-size: 1rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
                     <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.15rem;">$0 JMD</span>
                 </div>
 
-                <!-- OFFICIAL CORPORATION PAYROLL STATEMENT FOOTER UNDERNEATH -->
                 <div class="inv-footer" style="margin-top: 15px; border-top: 1.5px solid #ddd; padding-top: 8px;">
                     <p style="margin-bottom: 3px; font-weight: bold; color: #1a531f;">✅ Official Corporation Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
                     <p>Authorized Dispatcher Sign-off: ___________________________</p>
                 </div>
 
-                <!-- PAGE 2: STRICTLY FORCED PAGE BREAK AND IMAGE ALONE -->
                 <div id="slip-proof-container" style="display: none;">
                 </div>
 
@@ -2443,7 +2503,6 @@
         var managerPin = "1234";
         var showAllHistory = false;
 
-        // WISYNCO 7-TON CONTRACT RATE DICTIONARY
         const wisynco7TonRates = {
             "downtown": 19493,
             "kingston": 18743, "round town": 18743, "half way tree": 18743, "liguanea": 18743, "jacks hill": 18743,
@@ -2478,7 +2537,6 @@
             "stokes hall": 38683, "trinityville": 38683, "bath": 38683, "bowden": 38683, "golden grove": 38683, "manchioneal": 42842, "hectors river": 42842
         };
 
-        // PRIVATE RETAIL CUSTOMER RATES DICTIONARY
         const privateCustomerRates = {
             "downtown": 26000,
             "kingston": 25000, "round town": 25000, "half way tree": 25000, "liguanea": 25000, "jacks hill": 25000,
@@ -2514,7 +2572,6 @@
             "manchioneal": 59000, "hectors river": 59000
         };
 
-        // POPULATE INDIVIDUAL DATALISTS FOR PUBLIC & TRACKER AUTOCOMPLETE
         function populateTownDatalists() {
             var publicDatalist = document.getElementById('public-jamaica-towns-list');
             var trackerDatalist = document.getElementById('jamaica-towns-list');
@@ -2541,7 +2598,6 @@
             }
         }
 
-        // PUBLIC AUTOCOMPLETE TOWN SEARCH & RATE LOOKUP
         function handlePublicTownSearch() {
             var typedVal = document.getElementById('inv-destination').value.trim().toLowerCase();
             if (!typedVal) {
@@ -2557,7 +2613,6 @@
             }
         }
 
-        // RATE SHEET MODE SWITCHER
         function setTrackerRateMode(mode) {
             document.getElementById('tr-active-mode').value = mode;
             var btnWisynco = document.getElementById('mode-btn-wisynco');
@@ -2758,27 +2813,36 @@
             }
         }
 
+        // SAVE FIRST, THEN AUTO-SCAN TO FILL BLANKS
         async function scanDocWithOCR(docType) {
+            saveVehicleDoc(docType); // Save current state first
+
             var fileInput = document.getElementById('doc-' + docType + '-file');
             var statusDiv = document.getElementById('ocr-status-' + docType);
             var expiryInput = document.getElementById('doc-' + docType + '-expiry');
             var notesText = document.getElementById('doc-' + docType + '-text');
 
             if (!fileInput.files || fileInput.files.length === 0) {
-                alert("Please select an image or screenshot file first to scan.");
-                return;
+                // Check if already saved in storage
+                var saved = localStorage.getItem("dc_doc_" + docType);
+                if (!saved) {
+                    alert("Please choose an image file first, press Save, then press Auto-Scan.");
+                    return;
+                }
             }
 
-            var file = fileInput.files[0];
-            statusDiv.innerText = "⏳ Scanning document via OCR... Please wait.";
+            statusDiv.innerText = "⏳ Scanning saved document via OCR... Please wait.";
 
             try {
+                // Use file from input or fallback to saved image preview source
+                var fileToScan = (fileInput.files && fileInput.files[0]) ? fileInput.files[0] : document.getElementById('doc-' + docType + '-img-preview').src;
+                
                 var worker = await Tesseract.createWorker('eng');
-                var ret = await worker.recognize(file);
+                var ret = await worker.recognize(fileToScan);
                 var text = ret.data.text;
                 await worker.terminate();
 
-                statusDiv.innerText = "✅ Scan complete!";
+                statusDiv.innerText = "✅ Scan complete! Blanks filled.";
 
                 var dateMatch = text.match(/\b\d{4}[-/]\d{2}[-/]\d{2}\b|\b\d{2}[-/]\d{2}[-/]\d{4}\b/);
                 if (dateMatch) {
@@ -2795,10 +2859,25 @@
                 }
 
                 updateDocBadges();
-                saveVehicleDoc(docType);
+                saveVehicleDoc(docType); // Save again with auto-filled data
             } catch (err) {
                 console.error(err);
                 statusDiv.innerText = "❌ OCR scan failed. Enter date manually.";
+            }
+        }
+
+        // READ & DISPLAY SELECTED FILE IMAGE DIRECTLY
+        function handleDocFileSelect(docType) {
+            var fileInput = document.getElementById('doc-' + docType + '-file');
+            var imgPreview = document.getElementById('doc-' + docType + '-img-preview');
+
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    imgPreview.src = e.target.result;
+                    imgPreview.style.display = 'block';
+                };
+                reader.readAsDataURL(fileInput.files[0]);
             }
         }
 
@@ -2806,12 +2885,14 @@
             var num = document.getElementById('doc-' + docType + '-num').value;
             var expiry = document.getElementById('doc-' + docType + '-expiry').value;
             var text = document.getElementById('doc-' + docType + '-text').value;
+            var imgPreview = document.getElementById('doc-' + docType + '-img-preview');
+            var imgData = (imgPreview.style.display !== 'none' && imgPreview.src) ? imgPreview.src : '';
 
-            var docData = { num: num, expiry: expiry, text: text };
+            var docData = { num: num, expiry: expiry, text: text, imgData: imgData };
             localStorage.setItem("dc_doc_" + docType, JSON.stringify(docData));
 
             updateDocBadges();
-            alert("Vehicle document (" + docType.toUpperCase() + ") updated and saved to vault!");
+            alert("Vehicle document (" + docType.toUpperCase() + ") saved successfully!");
         }
 
         function loadVehicleDocs() {
@@ -2824,6 +2905,12 @@
                     if (document.getElementById('doc-' + type + '-num')) document.getElementById('doc-' + type + '-num').value = data.num || '';
                     if (document.getElementById('doc-' + type + '-expiry')) document.getElementById('doc-' + type + '-expiry').value = data.expiry || '';
                     if (document.getElementById('doc-' + type + '-text')) document.getElementById('doc-' + type + '-text').value = data.text || '';
+                    
+                    var imgPreview = document.getElementById('doc-' + type + '-img-preview');
+                    if (data.imgData) {
+                        imgPreview.src = data.imgData;
+                        imgPreview.style.display = 'block';
+                    }
                 }
             }
             updateDocBadges();
@@ -2862,7 +2949,54 @@
             }
         }
 
-        function shareVehicleDoc(docType) {
+        // NATIVE FILE SHARE VIA WHATSAPP (SENDS REAL PHOTO FILE)
+        async function shareVehicleDocNative(docType) {
+            var num = document.getElementById('doc-' + docType + '-num').value || 'N/A';
+            var expiry = document.getElementById('doc-' + docType + '-expiry').value || 'N/A';
+            var text = document.getElementById('doc-' + docType + '-text').value || '';
+            var imgPreview = document.getElementById('doc-' + docType + '-img-preview');
+
+            var titleMap = {
+                'roadlicence': 'Public Carrier Road Licence',
+                'insurance': 'Insurance Certificate / Cover Note',
+                'fitness': 'Certificate of Fitness',
+                'registration': 'Vehicle Registration Title'
+            };
+            var title = titleMap[docType] || docType.toUpperCase();
+
+            var messageText = "D&C REFUSE TRUCKING - VEHICLE DOCUMENT RECORD\n\n" +
+                              "Document: " + title + "\n" +
+                              "Licence/Policy #: " + num + "\n" +
+                              "Expiry Date: " + expiry + "\n" +
+                              (text ? "Notes: " + text + "\n" : "") + "\n" +
+                              "Kingston & Portmore Hub, Jamaica.";
+
+            // IF IMAGE DATA EXISTS AND NAVIGATOR SHARE CAN HANDLE FILES
+            if (imgPreview.src && imgPreview.style.display !== 'none' && navigator.canShare) {
+                try {
+                    var blob = await (await fetch(imgPreview.src)).blob();
+                    var file = new File([blob], docType + "_document.jpg", { type: "image/jpeg" });
+
+                    if (navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: title,
+                            text: messageText
+                        });
+                        return;
+                    }
+                } catch (err) {
+                    console.log("Native share fallback to text", err);
+                }
+            }
+
+            // FALLBACK TO REGULAR WHATSAPP WEB TEXT LINK IF FILE CANNOT BE ATTACHED DIRECTLY
+            var url = "https://wa.me/?text=" + encodeURIComponent(messageText);
+            window.open(url, "_blank");
+        }
+
+        // DIRECT EMAIL DOCUMENT SHARE WITH TEXT AND ATTACHMENT PROMPT
+        function emailVehicleDoc(docType) {
             var num = document.getElementById('doc-' + docType + '-num').value || 'N/A';
             var expiry = document.getElementById('doc-' + docType + '-expiry').value || 'N/A';
             var text = document.getElementById('doc-' + docType + '-text').value || '';
@@ -2873,18 +3007,17 @@
                 'fitness': 'Certificate of Fitness',
                 'registration': 'Vehicle Registration Title'
             };
-
             var title = titleMap[docType] || docType.toUpperCase();
 
-            var message = "D&C REFUSE TRUCKING - VEHICLE DOCUMENT RECORD\n\n" +
-                          "Document: " + title + "\n" +
-                          "Licence/Policy #: " + num + "\n" +
-                          "Expiry Date: " + expiry + "\n" +
-                          (text ? "Notes: " + text + "\n" : "") + "\n" +
-                          "Kingston & Portmore Hub, Jamaica.";
+            var bodyText = "D&C REFUSE TRUCKING - OFFICIAL VEHICLE DOCUMENT STATEMENT\n\n" +
+                           "Document Type: " + title + "\n" +
+                           "Licence/Policy Number: " + num + "\n" +
+                           "Expiry Date: " + expiry + "\n" +
+                           (text ? "Notes / Details: " + text + "\n" : "") + "\n\n" +
+                           "D&C Refuse Trucking & Equipment Co. Limited\nKingston & Portmore Hub, Jamaica.";
 
-            var url = "https://wa.me/?text=" + encodeURIComponent(message);
-            window.open(url, "_blank");
+            var mailtoUrl = "mailto:?subject=" + encodeURIComponent("Official Document: " + title) + "&body=" + encodeURIComponent(bodyText);
+            window.open(mailtoUrl, "_blank");
         }
 
         function exportDataBackup() {
@@ -3230,11 +3363,6 @@
             document.getElementById('invoice-preview').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // GENERATE WEEKLY PAYSLIP WITH EXACT REQUESTED ORDER:
-        // 1. Gross Earnings, Deductions, Total Outstanding Charges / Balance
-        // 2. Amount Payable (Net Payout) right underneath balance
-        // 3. Official Corporation Payroll Statement sign-off footer underneath that
-        // 4. Strictly page break -> AR charges proof image alone on page 2.
         async function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
@@ -3344,7 +3472,6 @@
             document.getElementById('slip-total-charges').innerText = '$' + totalCharges.toLocaleString() + ' JMD';
             document.getElementById('slip-total-amount').innerText = '$' + netPayable.toLocaleString() + ' JMD';
 
-            // PAGE 2: FORCED PAGE BREAK AND IMAGE ALONE ON SECOND LINE
             var proofContainer = document.getElementById('slip-proof-container');
             proofContainer.innerHTML = '';
 
@@ -4007,9 +4134,12 @@
             loadMaintenanceLogs();
         }
 
-        // INITIALIZE DATALISTS UPON LOAD
         window.addEventListener('DOMContentLoaded', function() {
             populateTownDatalists();
+            loadVehicleDocs();
+            loadTrackerJobs();
+            loadMaintenanceLogs();
+            loadCrewPreferences();
         });
     </script>
 </body>
