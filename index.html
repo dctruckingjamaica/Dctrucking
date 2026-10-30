@@ -1592,6 +1592,24 @@
                     <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
                 </div>
 
+                <!-- NEW: REQUESTED PICKUP TIME FIELD -->
+                <div class="input-group">
+                    <label>Requested Pickup Time</label>
+                    <select id="inv-pickup-time">
+                        <option value="08:00 AM">08:00 AM</option>
+                        <option value="09:00 AM" selected>09:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="12:00 PM">12:00 PM (Midday)</option>
+                        <option value="01:00 PM">01:00 PM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="03:00 PM">03:00 PM</option>
+                        <option value="04:00 PM">04:00 PM</option>
+                        <option value="05:00 PM">05:00 PM</option>
+                        <option value="Flexible / As Agreed">Flexible / As Agreed</option>
+                    </select>
+                </div>
+
                 <!-- INDIVIDUAL TOWN SELECTION & AUTOCOMPLETE SEARCH -->
                 <div class="input-group">
                     <label>Select / Type Destination Town</label>
@@ -2269,7 +2287,7 @@
                     </div>
                 </div>
 
-                <p style="margin-bottom: 6px; color: #111827; font-size: 0.98rem;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800; color: #111827;"></span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800; color: #111827;"></span></p>
+                <p style="margin-bottom: 6px; color: #111827; font-size: 0.98rem;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800; color: #111827;"></span> at <span id="out-pickup-time-text" style="font-weight: 800; color: #0284c7;"></span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800; color: #111827;"></span></p>
                 
                 <table style="margin-bottom: 6px; width: 100%; border-collapse: collapse; font-size: 0.95rem;">
                     <thead>
@@ -2386,7 +2404,7 @@
                     </div>
                 </div>
 
-                <!-- CLEAN PAYSLIP ATTACHMENT PROOF BLOCK -->
+                <!-- CLEAN PAYSLIP ATTACHMENT PROOF BLOCK (BAKED IMAGE) -->
                 <div id="slip-proof-container" style="display: none; background: #fffbeb; border: 2px dashed #d97706; padding: 8px 10px; border-radius: 6px; margin-bottom: 8px;">
                     <p style="font-weight: 900; color: #b45309; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 4px;">📎 Attached Charge Proof:</p>
                     <div id="slip-proof-content" style="text-align: center;">
@@ -3102,13 +3120,14 @@
             var client = document.getElementById('inv-client').value;
             var phone = document.getElementById('inv-phone').value;
             var pickup = document.getElementById('inv-pickup').value;
+            var pickupTime = document.getElementById('inv-pickup-time').value;
 
             if (!email) {
                 alert("Please enter an Email Address first so we can link your saved profile!");
                 return;
             }
 
-            var profile = { client: client, phone: phone, pickup: pickup };
+            var profile = { client: client, phone: phone, pickup: pickup, pickupTime: pickupTime };
             localStorage.setItem("dc_profile_" + email.toLowerCase().trim(), JSON.stringify(profile));
             alert("Profile saved for " + email + "! Next time you visit, simply enter your email above to auto-fill your details.");
         }
@@ -3127,6 +3146,9 @@
                 document.getElementById('inv-client').value = profile.client || '';
                 document.getElementById('inv-phone').value = profile.phone || '';
                 document.getElementById('inv-pickup').value = profile.pickup || '';
+                if (profile.pickupTime && document.getElementById('inv-pickup-time')) {
+                    document.getElementById('inv-pickup-time').value = profile.pickupTime;
+                }
                 alert("Welcome back! Your profile details have been loaded into the form.");
             } else {
                 alert("No saved profile found for that email address. You can fill in the form and click 'Save My Info' to create one!");
@@ -3139,6 +3161,7 @@
             var email = document.getElementById('inv-email').value || 'N/A';
             var num = document.getElementById('inv-num').value || 'DC-1001';
             var pickup = document.getElementById('inv-pickup').value || 'Kingston / Portmore Depot';
+            var pickupTime = document.getElementById('inv-pickup-time').value || '09:00 AM';
             
             var mainDest = document.getElementById('inv-destination').value.trim();
             var specificDest = document.getElementById('inv-specific-dest').value.trim();
@@ -3164,8 +3187,9 @@
             document.getElementById('out-num').innerText = num;
             
             document.getElementById('out-pickup-text').innerText = pickup;
+            document.getElementById('out-pickup-time-text').innerText = pickupTime;
             document.getElementById('out-dest-text').innerText = destInput;
-            document.getElementById('out-desc').innerText = 'Haulage Transport: ' + pickup + ' to ' + destInput;
+            document.getElementById('out-desc').innerText = 'Haulage Transport: ' + pickup + ' (' + pickupTime + ') to ' + destInput;
             
             document.getElementById('out-amount').innerText = '$' + totalAmount.toLocaleString() + ' JMD';
             document.getElementById('out-deposit').innerText = '$' + deposit.toLocaleString() + ' JMD';
@@ -3201,7 +3225,7 @@
             document.getElementById('invoice-preview').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // GENERATE WEEKLY PAYSLIP WITH EMBEDDED CLICKABLE DATA LINK FOR ATTACHED PROOF
+        // GENERATE WEEKLY PAYSLIP WITH BAKED IMAGE PROOF FOR WHATSAPP COMPATIBILITY
         function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
@@ -3320,20 +3344,21 @@
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     var fileUrl = e.target.result;
-                    if (file.type.startsWith('image/')) {
-                        proofContent.innerHTML += '<img src="' + fileUrl + '" alt="Charge Proof Screenshot" style="max-width: 100%; max-height: 200px; border-radius: 6px; border: 1px solid #cbd5e1; display: block; margin: 0 auto 6px auto;">';
-                    } else {
-                        // ENCODED DATA URI FOR FULLY FUNCTIONAL EMBEDDED PDF LINK ACROSS DEVICES
-                        proofContent.innerHTML += '<a href="' + fileUrl + '" download="' + file.name + '" target="_blank" style="display: inline-block; background: #0284c7; color: #ffffff; padding: 10px 18px; border-radius: 6px; font-weight: 900; text-decoration: none; margin-bottom: 6px; cursor: pointer;">📄 Click Here to Open / Download Attached Proof (' + file.name + ')</a>';
-                    }
+                    let htmlMarkup = '';
+                    
+                    // Renders the uploaded PDF/image file directly as a visual image block on the payslip document
+                    htmlMarkup = '<div style="margin: 10px 0; text-align: center;"><img src="' + fileUrl + '" alt="Attached Proof Document" style="max-width: 100%; max-height: 350px; border-radius: 6px; border: 2px solid #1a531f; display: block; margin: 0 auto;"></div>';
+                    
                     if (proofTextVal) {
-                        proofContent.innerHTML += '<p style="font-size: 0.85rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left;">' + proofTextVal + '</p>';
+                        htmlMarkup += '<p style="font-size: 0.88rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left; margin-top: 6px;">' + proofTextVal + '</p>';
                     }
+                    
+                    proofContent.innerHTML = htmlMarkup;
                     proofContainer.style.display = 'block';
                 };
                 reader.readAsDataURL(file);
             } else if (proofTextVal) {
-                proofContent.innerHTML = '<p style="font-size: 0.88rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left;">' + proofTextVal + '</p>';
+                proofContent.innerHTML = '<p style="font-size: 0.88rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 8px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left;">' + proofTextVal + '</p>';
                 proofContainer.style.display = 'block';
             } else {
                 proofContainer.style.display = 'none';
@@ -3386,6 +3411,7 @@
             var email = document.getElementById('inv-email').value || 'N/A';
             var num = document.getElementById('inv-num').value || 'DC-1001';
             var pickup = document.getElementById('inv-pickup').value || 'Kingston Hub';
+            var pickupTime = document.getElementById('inv-pickup-time').value || '09:00 AM';
             
             var mainDest = document.getElementById('inv-destination').value.trim();
             var specificDest = document.getElementById('inv-specific-dest').value.trim();
@@ -3419,7 +3445,7 @@
                           "Client Name: " + client + "\n" +
                           "Phone: " + phone + "\n" +
                           "Email: " + email + "\n" +
-                          "Pickup Point: " + pickup + "\n" +
+                          "Pickup Point: " + pickup + " at " + pickupTime + "\n" +
                           "Drop-off Destination: " + destInput + "\n\n" +
                           "Total Rate: $" + totalAmount.toLocaleString() + " JMD\n" +
                           statusText + "\n\n" +
