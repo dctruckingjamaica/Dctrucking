@@ -1592,49 +1592,17 @@
                     <input type="text" id="inv-pickup" placeholder="e.g. Kingston / Portmore Depot">
                 </div>
 
+                <!-- INDIVIDUAL TOWN SELECTION & AUTOCOMPLETE SEARCH -->
                 <div class="input-group">
-                    <label>Select Destination Zone (Auto-Fills All Towns)</label>
-                    <select id="inv-destination" onchange="selectDestinationZone()">
-                        <option value="" data-price="0">-- Click Arrow to Select Destination --</option>
-                        <option value="Downtown" data-price="26000">📍 Downtown — $26,000 JMD</option>
-                        <option value="Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill" data-price="25000">📍 Kingston, Round Town, Half Way Tree, Liguanea, Jacks Hill — $25,000 JMD</option>
-                        <option value="Spanish Town, Portmore, Ferry" data-price="20000">📍 Spanish Town, Portmore, Ferry — $20,000 JMD</option>
-                        <option value="Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town" data-price="27000">📍 Old Harbour, Old Harbour Bay, Stony Hill, Port Royal, Harbour View, Airport, Bogwalk, Linstead, Riversdale, Papine, Kitson Town — $27,000 JMD</option>
-                        <option value="May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville" data-price="31000">📍 May Pen, Four Paths, Ewarton, New Longsville, Gordon Town, Red Hills, Sligoville — $31,000 JMD</option>
-                        <option value="Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap" data-price="39000">📍 Tollgate, Clarendon Park, Above Rocks, Browns Hall, Friendship Gap — $39,000 JMD</option>
-                        <option value="Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill" data-price="35000">📍 Lionel Town, Mitchell Town, Rocky Point, Race Course, Worthy Park, Lawrence Tavern, Golden Spring, Vere, Portland Cottage, Irish Town, Kemps Hill — $35,000 JMD</option>
-                        <option value="Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank" data-price="42000">📍 Chapelton, Summerfield, Rock River, Alston, Aenon Town, Mocho, Croft Hill, Mavis Bank — $42,000 JMD</option>
-                        <option value="Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits" data-price="47000">📍 Porus, Williamsfield, Royal Flat, Mandeville, Newport, Milk River, Kellits — $47,000 JMD</option>
-                        <option value="Wait-A-Bit, Albert Town" data-price="51000">📍 Wait-A-Bit, Albert Town — $51,000 JMD</option>
-                        <option value="Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town" data-price="47000">📍 Spaldings, Christiana, Coleyville, Troy, Frankfield, Thompson Town — $47,000 JMD</option>
-                        <option value="Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond" data-price="57000">📍 Junction, Bull Savannah, Top Hill, Munroe, Watchwell, Mountain Side, Ballards Valley, Malvern, New Forest, Alligator Pond — $57,000 JMD</option>
-                        <option value="Maggotty, Siloah, Balaclava, Lacovia, Newton" data-price="57000">📍 Maggotty, Siloah, Balaclava, Lacovia, Newton — $57,000 JMD</option>
-                        <option value="Santa Cruz, Gutters" data-price="54000">📍 Santa Cruz, Gutters — $54,000 JMD</option>
-                        <option value="Black River, New Market, Springfield, Treasure Beach, Southfield" data-price="60000">📍 Black River, New Market, Springfield, Treasure Beach, Southfield — $60,000 JMD</option>
-                        <option value="Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town" data-price="71000">📍 Sav-La-Mar, Grange Hill, Frome, Whithorn, Petersfield, Cornwall Mountain, Bethel Town, Whitehouse, Ginger Hill, Seaford Town — $71,000 JMD</option>
-                        <option value="Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill" data-price="76000">📍 Lucea, Kingsvale, Maroon Town, Hopewell, Round Hill — $76,000 JMD</option>
-                        <option value="Negril, Little London, Darliston, Delveland" data-price="78000">📍 Negril, Little London, Darliston, Delveland — $78,000 JMD</option>
-                        <option value="Green Island, Orange Bay" data-price="82000">📍 Green Island, Orange Bay — $82,000 JMD</option>
-                        <option value="Montego Bay, Wakefield" data-price="67000">📍 Montego Bay, Wakefield — $67,000 JMD</option>
-                        <option value="Cambridge, Lambs River, Anchovy" data-price="70000">📍 Cambridge, Lambs River, Anchovy — $70,000 JMD</option>
-                        <option value="Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria" data-price="59000">📍 Falmouth, Clarks Town, Jackson Town, Ulster Spring, Cave Valley, Alexandria — $59,000 JMD</option>
-                        <option value="Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel" data-price="53000">📍 Claremont, Bamboo, Browns Town, Runaway Bay, James Hill, Priory, Boscobel — $53,000 JMD</option>
-                        <option value="St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River" data-price="53000">📍 St. Ann's Bay, Ocho Rios, Retreat, Gayle, Oracabessa, Tower Isle, Jacks River — $53,000 JMD</option>
-                        <option value="Discovery Bay, Braco, Duncans" data-price="56000">📍 Discovery Bay, Braco, Duncans — $56,000 JMD</option>
-                        <option value="Guys Hill, Glengoffe, Polly Ground" data-price="32000">📍 Guys Hill, Glengoffe, Polly Ground — $32,000 JMD</option>
-                        <option value="Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall" data-price="42000">📍 Clonmel, Richmond, Highgate, Islington, Port Maria, Carron Hall — $42,000 JMD</option>
-                        <option value="Annotto Bay, Windsor Castle, Buff Bay, Skibo" data-price="39000">📍 Annotto Bay, Windsor Castle, Buff Bay, Skibo — $39,000 JMD</option>
-                        <option value="Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay" data-price="59000">📍 Hope Bay, St Margarets Bay, Port Antonio, Fellowship, Dragon Bay — $59,000 JMD</option>
-                        <option value="Boston, Long Bay" data-price="64000">📍 Boston, Long Bay — $64,000 JMD</option>
-                        <option value="Easington, Seaforth, Morant Bay, Lyssons, Airy Castle" data-price="42000">📍 Easington, Seaforth, Morant Bay, Lyssons, Airy Castle — $42,000 JMD</option>
-                        <option value="Stokes Hall, Trinityville, Bath, Bowden, Golden Grove" data-price="53000">📍 Stokes Hall, Trinityville, Bath, Bowden, Golden Grove — $53,000 JMD</option>
-                        <option value="Manchioneal, Hectors River" data-price="59000">📍 Manchioneal, Hectors River — $59,000 JMD</option>
-                    </select>
+                    <label>Select / Type Destination Town</label>
+                    <input type="text" id="inv-destination" list="public-jamaica-towns-list" placeholder="Type town name (e.g. Sav-La-Mar, Montego Bay)" oninput="handlePublicTownSearch()">
+                    <datalist id="public-jamaica-towns-list">
+                    </datalist>
                 </div>
 
                 <div class="input-group">
-                    <label>Specific Drop-off Town / Zone List</label>
-                    <input type="text" id="inv-specific-dest" placeholder="e.g. Little London or Select Zone above" oninput="liveTypeAutoPrice()">
+                    <label>Specific Drop-off Town / Address Pinpoint</label>
+                    <input type="text" id="inv-specific-dest" placeholder="e.g. Little London, Main Street or exact depot location">
                 </div>
 
                 <div class="input-group" style="grid-column: 1 / -1;">
@@ -1652,8 +1620,8 @@
                 </div>
             </div>
 
+            <!-- PUBLIC ACTION BUTTON: ONLY WHATSAPP REQUEST -->
             <div class="btn-action-group">
-                <button class="btn-gen" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
                 <button class="btn-whatsapp" onclick="sendWhatsAppQuote()">📱 Send Request via WhatsApp</button>
             </div>
 
@@ -1665,6 +1633,15 @@
             <!-- PRIVATE PIN-PROTECTED MANAGER PANEL -->
             <div id="manager-panel" class="manager-panel">
                 <h4>🔐 Dispatcher Control Panel (Private)</h4>
+
+                <!-- MOVED PRIVATE INVOICE GENERATION BUTTON INSIDE MANAGER PANEL -->
+                <div style="background: #03140b; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h5 style="color: var(--primary-green); font-size: 1rem; font-weight: 900; text-transform: uppercase;">📄 Official Invoice Generation</h5>
+                        <p style="color: #cbd5e1; font-size: 0.85rem;">Generate formal printable corporate quote or bill statement for the active client above.</p>
+                    </div>
+                    <button class="btn-gen" style="min-width: 180px; padding: 10px 16px; font-size: 0.95rem;" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
+                </div>
                 
                 <div class="backup-data-box">
                     <h5>📱 Device Backup & Transfer System</h5>
@@ -1710,7 +1687,7 @@
                     </div>
                 </div>
 
-                <!-- ADDITION 1: UNPAID & PENDING COLLECTIONS SUMMARY BOX -->
+                <!-- UNPAID & PENDING COLLECTIONS SUMMARY BOX -->
                 <div style="background: #270f0f; border: 2px solid #ef4444; border-radius: 10px; padding: 14px; margin-bottom: 20px;">
                     <h5 style="color: #f87171; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
                         <span>⚠️ Unpaid & Pending Collections</span>
@@ -1989,12 +1966,12 @@
                             <input type="text" id="tr-pickup" placeholder="Pickup location">
                         </div>
 
-                        <!-- RATE SHEET MODE TOGGLER -->
+                        <!-- RATE SHEET MODE TOGGLER (UPDATED: D&C TRUCKING MODE) -->
                         <div class="tracker-field-group">
                             <label>Rate Sheet Mode</label>
                             <div style="display: flex; gap: 6px;">
                                 <button type="button" id="mode-btn-wisynco" onclick="setTrackerRateMode('wisynco')" style="flex: 1; padding: 10px; background: #0284c7; color: #fff; font-weight: 900; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">🏢 Wisynco Mode</button>
-                                <button type="button" id="mode-btn-private" onclick="setTrackerRateMode('private')" style="flex: 1; padding: 10px; background: #1e293b; color: #38bdf8; font-weight: 900; border: 1px solid #38bdf8; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">🏷️ Private Mode</button>
+                                <button type="button" id="mode-btn-private" onclick="setTrackerRateMode('private')" style="flex: 1; padding: 10px; background: #1e293b; color: #38bdf8; font-weight: 900; border: 1px solid #38bdf8; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">🏷️ D&C Mode</button>
                             </div>
                             <input type="hidden" id="tr-active-mode" value="wisynco">
                         </div>
@@ -2003,35 +1980,6 @@
                             <label>Drop-off Destination (Auto-Lookup)</label>
                             <input type="text" id="tr-drop" list="jamaica-towns-list" placeholder="Type town (e.g. Sav-La-Mar, Falmouth)" oninput="trackerLiveAutoPrice()">
                             <datalist id="jamaica-towns-list">
-                                <option value="Downtown">
-                                <option value="Kingston">
-                                <option value="Half Way Tree">
-                                <option value="Liguanea">
-                                <option value="Spanish Town">
-                                <option value="Portmore">
-                                <option value="Old Harbour">
-                                <option value="Stony Hill">
-                                <option value="May Pen">
-                                <option value="Mandeville">
-                                <option value="Montego Bay">
-                                <option value="Negril">
-                                <option value="Sav-La-Mar">
-                                <option value="Ocho Rios">
-                                <option value="Port Antonio">
-                                <option value="Morant Bay">
-                                <option value="Falmouth">
-                                <option value="Santa Cruz">
-                                <option value="Black River">
-                                <option value="Lucea">
-                                <option value="Spaldings">
-                                <option value="Linstead">
-                                <option value="Bogwalk">
-                                <option value="Papine">
-                                <option value="Red Hills">
-                                <option value="Claremont">
-                                <option value="Annotto Bay">
-                                <option value="Bath">
-                                <option value="Junction">
                             </datalist>
                         </div>
                         <div class="tracker-field-group">
@@ -2064,7 +2012,7 @@
                             <span id="live-net-profit-display">$0 JMD</span>
                         </div>
 
-                        <!-- ADDITION 2: STATUS DROPDOWN TOGGLE WITH UNPAID / PENDING COLLECTION / PAID -->
+                        <!-- STATUS DROPDOWN TOGGLE -->
                         <div class="tracker-field-group" style="grid-column: 1 / -1; max-width: 300px;">
                             <label>Payment Status</label>
                             <select id="tr-status">
@@ -2438,8 +2386,9 @@
                     </div>
                 </div>
 
+                <!-- CLEAN PAYSLIP ATTACHMENT PROOF BLOCK -->
                 <div id="slip-proof-container" style="display: none; background: #fffbeb; border: 2px dashed #d97706; padding: 8px 10px; border-radius: 6px; margin-bottom: 8px;">
-                    <p style="font-weight: 900; color: #b45309; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 4px;">📎 Attached Proof / Screenshot / Email Charge Record:</p>
+                    <p style="font-weight: 900; color: #b45309; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 4px;">📎 Attached Charge Proof:</p>
                     <div id="slip-proof-content" style="text-align: center;">
                     </div>
                 </div>
@@ -2503,8 +2452,7 @@
             "annotto bay": 28164, "windsor castle": 28164, "buff bay": 28164, "skibo": 28164, "hope bay": 44652, "st. margaret's bay": 44652, "port antonio": 44652, "fellowship": 44652, "dragon bay": 44652,
             "boston": 48472, "long bay": 48472,
             "easington": 30992, "seaforth": 30992, "morant bay": 30992, "lyssons": 30992, "airy castle": 30992,
-            "stokes hall": 38683, "trinityville": 38683, "bath": 38683, "bowden": 38683, "golden grove": 38683,
-            "manchioneal": 42842, "hectors river": 42842
+            "stokes hall": 38683, "trinityville": 38683, "bath": 38683, "bowden": 38683, "golden grove": 38683, "manchioneal": 42842, "hectors river": 42842
         };
 
         // PRIVATE RETAIL CUSTOMER RATES DICTIONARY
@@ -2527,8 +2475,7 @@
             "sav-la-mar": 71000, "grange hill": 71000, "frome": 71000, "whithorn": 71000, "petersfield": 71000, "cornwall mountain": 71000, "bethel town": 71000, "whitehouse": 71000, "ginger hill": 71000, "seaford town": 71000,
             "lucea": 76000, "kingsvale": 76000, "maroon town": 76000, "hopewell": 76000, "round hill": 76000,
             "negril": 78000, "little london": 78000, "darliston": 78000, "delveland": 78000,
-            "green island": 82000, "orange bay": 82000,
-            "montego bay": 67000, "wakefield": 67000,
+            "green island": 82000, "orange bay": 82000, "montego bay": 67000, "wakefield": 67000,
             "cambridge": 70000, "lambs river": 70000, "anchovy": 70000,
             "falmouth": 59000, "clarks town": 59000, "jackson town": 59000, "ulster spring": 59000, "cave valley": 59000, "alexandria": 59000,
             "claremont": 53000, "bamboo": 53000, "browns town": 53000, "runaway bay": 53000, "james hill": 53000, "priory": 53000, "boscobel": 53000,
@@ -2544,7 +2491,50 @@
             "manchioneal": 59000, "hectors river": 59000
         };
 
-        // TRACKER RATE MODE SWITCHER
+        // POPULATE INDIVIDUAL DATALISTS FOR PUBLIC & TRACKER AUTOCOMPLETE
+        function populateTownDatalists() {
+            var publicDatalist = document.getElementById('public-jamaica-towns-list');
+            var trackerDatalist = document.getElementById('jamaica-towns-list');
+            
+            if (publicDatalist) publicDatalist.innerHTML = '';
+            if (trackerDatalist) trackerDatalist.innerHTML = '';
+
+            var sortedTowns = Object.keys(privateCustomerRates).sort();
+            for (var i = 0; i < sortedTowns.length; i++) {
+                var town = sortedTowns[i];
+                var capitalizedTown = town.replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+
+                if (publicDatalist) {
+                    var opt1 = document.createElement('option');
+                    opt1.value = capitalizedTown;
+                    publicDatalist.appendChild(opt1);
+                }
+
+                if (trackerDatalist) {
+                    var opt2 = document.createElement('option');
+                    opt2.value = capitalizedTown;
+                    trackerDatalist.appendChild(opt2);
+                }
+            }
+        }
+
+        // PUBLIC AUTOCOMPLETE TOWN SEARCH & RATE LOOKUP
+        function handlePublicTownSearch() {
+            var typedVal = document.getElementById('inv-destination').value.trim().toLowerCase();
+            if (!typedVal) {
+                document.getElementById('inv-amount').value = 0;
+                return;
+            }
+
+            for (var town in privateCustomerRates) {
+                if (typedVal === town || typedVal.includes(town) || town.includes(typedVal)) {
+                    document.getElementById('inv-amount').value = privateCustomerRates[town];
+                    return;
+                }
+            }
+        }
+
+        // RATE SHEET MODE SWITCHER (UPDATED: D&C MODE)
         function setTrackerRateMode(mode) {
             document.getElementById('tr-active-mode').value = mode;
             var btnWisynco = document.getElementById('mode-btn-wisynco');
@@ -2571,7 +2561,6 @@
             trackerLiveAutoPrice();
         }
 
-        // UPDATED AUTO-LOOKUP TO RESPECT THE TOGGLE BUTTON
         function trackerLiveAutoPrice() {
             var typedVal = document.getElementById('tr-drop').value.trim().toLowerCase();
             var activeMode = document.getElementById('tr-active-mode') ? document.getElementById('tr-active-mode').value : 'wisynco';
@@ -3098,40 +3087,6 @@
             }
         }
 
-        function selectDestinationZone() {
-            var select = document.getElementById('inv-destination');
-            var selectedOption = select.options[select.selectedIndex];
-            var price = selectedOption.getAttribute('data-price');
-            document.getElementById('inv-amount').value = price || 0;
-            
-            if (select.value) {
-                document.getElementById('inv-specific-dest').value = select.value;
-            }
-        }
-
-        function liveTypeAutoPrice() {
-            var typedVal = document.getElementById('inv-specific-dest').value.trim().toLowerCase();
-            if (!typedVal) return;
-
-            var select = document.getElementById('inv-destination');
-            var options = select.options;
-
-            for (var i = 1; i < options.length; i++) {
-                var zoneText = options[i].value.toLowerCase();
-                var price = options[i].getAttribute('data-price');
-
-                var towns = zoneText.split(',');
-                for (var j = 0; j < towns.length; j++) {
-                    var townName = towns[j].trim();
-                    if (townName.length >= 3 && (typedVal === townName || typedVal.includes(townName) || townName.includes(townName))) {
-                        document.getElementById('inv-amount').value = price;
-                        select.selectedIndex = i; 
-                        return;
-                    }
-                }
-            }
-        }
-
         function updateLiveProfit() {
             var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
             var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
@@ -3185,7 +3140,13 @@
             var num = document.getElementById('inv-num').value || 'DC-1001';
             var pickup = document.getElementById('inv-pickup').value || 'Kingston / Portmore Depot';
             
-            var destInput = document.getElementById('inv-specific-dest').value.trim();
+            var mainDest = document.getElementById('inv-destination').value.trim();
+            var specificDest = document.getElementById('inv-specific-dest').value.trim();
+            
+            var destInput = mainDest;
+            if (specificDest) {
+                destInput = mainDest ? mainDest + ' (' + specificDest + ')' : specificDest;
+            }
             if (!destInput) {
                 destInput = 'Destination Hub';
             }
@@ -3237,8 +3198,10 @@
 
             document.getElementById('invoice-preview').style.display = 'block';
             document.getElementById('payslip-preview').style.display = 'none';
+            document.getElementById('invoice-preview').scrollIntoView({ behavior: 'smooth' });
         }
 
+        // GENERATE WEEKLY PAYSLIP WITH CLICKABLE PDF PROOF LINK
         function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
@@ -3356,10 +3319,13 @@
                 var file = proofFileInput.files[0];
                 var reader = new FileReader();
                 reader.onload = function(e) {
+                    var fileUrl = e.target.result;
                     if (file.type.startsWith('image/')) {
-                        proofContent.innerHTML += '<img src="' + e.target.result + '" alt="Charge Proof Screenshot" style="max-width: 100%; max-height: 200px; border-radius: 6px; border: 1px solid #cbd5e1; display: block; margin: 0 auto 6px auto;">';
+                        proofContent.innerHTML += '<img src="' + fileUrl + '" alt="Charge Proof Screenshot" style="max-width: 100%; max-height: 200px; border-radius: 6px; border: 1px solid #cbd5e1; display: block; margin: 0 auto 6px auto;">';
+                    } else if (file.type === 'application/pdf') {
+                        proofContent.innerHTML += '<a href="' + fileUrl + '" target="_blank" style="display: inline-block; background: #0284c7; color: #ffffff; padding: 8px 16px; border-radius: 6px; font-weight: 900; text-decoration: none; margin-bottom: 6px;">📄 Click to View Attached PDF Proof (' + file.name + ')</a>';
                     } else {
-                        proofContent.innerHTML += '<p style="font-weight: 800; color: #1e293b; margin-bottom: 4px;">📄 Attached Proof File: ' + file.name + ' (PDF Document)</p>';
+                        proofContent.innerHTML += '<p style="font-weight: 800; color: #1e293b; margin-bottom: 4px;">📄 Attached File: ' + file.name + '</p>';
                     }
                     if (proofTextVal) {
                         proofContent.innerHTML += '<p style="font-size: 0.85rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left;">' + proofTextVal + '</p>';
@@ -3422,7 +3388,13 @@
             var num = document.getElementById('inv-num').value || 'DC-1001';
             var pickup = document.getElementById('inv-pickup').value || 'Kingston Hub';
             
-            var destInput = document.getElementById('inv-specific-dest').value.trim();
+            var mainDest = document.getElementById('inv-destination').value.trim();
+            var specificDest = document.getElementById('inv-specific-dest').value.trim();
+            
+            var destInput = mainDest;
+            if (specificDest) {
+                destInput = mainDest ? mainDest + ' (' + specificDest + ')' : specificDest;
+            }
             if (!destInput) {
                 destInput = 'Destination Hub';
             }
@@ -3520,7 +3492,6 @@
             loadTrackerJobs();
         }
 
-        /* UPDATED STATUS BADGE DISPLAY TO HANDLE UNPAID, PENDING COLLECTION, AND PAID */
         function toggleJobStatus(id) {
             var jobs = getStoredJobs();
             for (var i = 0; i < jobs.length; i++) {
@@ -3834,7 +3805,6 @@
             var jobExp = 0;
             var wages = 0;
 
-            // UNPAID AND PENDING CALCULATIONS
             var totalUnpaidRate = 0;
             var totalUnpaidDriverPay = 0;
             var totalUnpaidAsstPay = 0;
@@ -3848,9 +3818,7 @@
                 jobExp += aExp;
                 wages += wagesForJob;
 
-                // STRICT: ONLY include PAID jobs in net profit calculations. Exclude UNPAID and PENDING COLLECTION jobs from revenue/profit calculations.
                 if (aj.status === 'PAID') {
-                    // Paid jobs contribute fully to calculations
                 } else {
                     totalUnpaidRate += (aj.rate || 0);
                     totalUnpaidDriverPay += (aj.driverPay || 0);
@@ -3859,7 +3827,6 @@
                 }
             }
 
-            // Recalculate filtered revenue and job expenses strictly for PAID jobs
             var paidRev = 0;
             var paidJobExp = 0;
             for (var a = 0; a < filteredJobs.length; a++) {
@@ -3870,7 +3837,6 @@
                 }
             }
 
-            // UPDATE UNPAID DASHBOARD BOX VALUES
             if (document.getElementById('sum-unpaid-total')) {
                 document.getElementById('sum-unpaid-total').innerText = '$' + totalUnpaidRate.toLocaleString() + ' JMD';
             }
@@ -3936,7 +3902,6 @@
                     }
                     invHTML += '</div>';
 
-                    /* UPDATED STATUS BADGE DISPLAY TO HANDLE UNPAID, PENDING COLLECTION, AND PAID */
                     var statusHTML = '';
                     if (j.status === 'PAID') {
                         statusHTML = '<span class="status-badge-paid" onclick="toggleJobStatus(' + j.id + ')">✅ PAID</span>';
@@ -3970,6 +3935,11 @@
 
             loadMaintenanceLogs();
         }
+
+        // INITIALIZE DATALISTS UPON LOAD
+        window.addEventListener('DOMContentLoaded', function() {
+            populateTownDatalists();
+        });
     </script>
 </body>
 </html>
