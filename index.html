@@ -3201,7 +3201,7 @@
             document.getElementById('invoice-preview').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // GENERATE WEEKLY PAYSLIP WITH CLICKABLE PDF PROOF LINK
+        // GENERATE WEEKLY PAYSLIP WITH EMBEDDED CLICKABLE DATA LINK FOR ATTACHED PROOF
         function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
@@ -3322,10 +3322,9 @@
                     var fileUrl = e.target.result;
                     if (file.type.startsWith('image/')) {
                         proofContent.innerHTML += '<img src="' + fileUrl + '" alt="Charge Proof Screenshot" style="max-width: 100%; max-height: 200px; border-radius: 6px; border: 1px solid #cbd5e1; display: block; margin: 0 auto 6px auto;">';
-                    } else if (file.type === 'application/pdf') {
-                        proofContent.innerHTML += '<a href="' + fileUrl + '" target="_blank" style="display: inline-block; background: #0284c7; color: #ffffff; padding: 8px 16px; border-radius: 6px; font-weight: 900; text-decoration: none; margin-bottom: 6px;">📄 Click to View Attached PDF Proof (' + file.name + ')</a>';
                     } else {
-                        proofContent.innerHTML += '<p style="font-weight: 800; color: #1e293b; margin-bottom: 4px;">📄 Attached File: ' + file.name + '</p>';
+                        // ENCODED DATA URI FOR FULLY FUNCTIONAL EMBEDDED PDF LINK ACROSS DEVICES
+                        proofContent.innerHTML += '<a href="' + fileUrl + '" download="' + file.name + '" target="_blank" style="display: inline-block; background: #0284c7; color: #ffffff; padding: 10px 18px; border-radius: 6px; font-weight: 900; text-decoration: none; margin-bottom: 6px; cursor: pointer;">📄 Click Here to Open / Download Attached Proof (' + file.name + ')</a>';
                     }
                     if (proofTextVal) {
                         proofContent.innerHTML += '<p style="font-size: 0.85rem; color: #334155; white-space: pre-wrap; background: #fff; padding: 6px; border-radius: 4px; border: 1px solid #e2e8f0; text-align: left;">' + proofTextVal + '</p>';
