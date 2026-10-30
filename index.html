@@ -2409,19 +2409,22 @@
                     </div>
                 </div>
 
+                <!-- AMOUNT PAYABLE & NET PAYOUT RIGHT UNDER THE BALANCE -->
                 <div style="background: #f0fdf4; border: 2px solid #166534; padding: 10px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <span style="font-weight: 900; color: #166534; font-size: 1rem; text-transform: uppercase;">Amount Payable (Net Payout):</span>
                     <span id="slip-total-amount" class="editable-preview-field" contenteditable="true" style="font-weight: 900; color: #166534; font-size: 1.15rem;">$0 JMD</span>
                 </div>
 
-                <!-- PAGE 2: FORCED PAGE BREAK FOR AR CHARGES & EVIDENCE -->
-                <div id="slip-proof-container" style="display: none;">
-                </div>
-
-                <div class="inv-footer" style="margin-top: 20px;">
+                <!-- OFFICIAL CORPORATION PAYROLL STATEMENT FOOTER UNDERNEATH -->
+                <div class="inv-footer" style="margin-top: 15px; border-top: 1.5px solid #ddd; padding-top: 8px;">
                     <p style="margin-bottom: 3px; font-weight: bold; color: #1a531f;">✅ Official Corporation Payroll Statement - D&C Refuse Trucking & Equipment Co. Ltd</p>
                     <p>Authorized Dispatcher Sign-off: ___________________________</p>
                 </div>
+
+                <!-- PAGE 2: STRICTLY FORCED PAGE BREAK AND IMAGE ALONE -->
+                <div id="slip-proof-container" style="display: none;">
+                </div>
+
                 <br>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff; flex: 1; min-width: 200px;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
@@ -3227,7 +3230,11 @@
             document.getElementById('invoice-preview').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // GENERATE WEEKLY PAYSLIP WITH 2-PAGE SPLIT: PAYSLIP ON PAGE 1, AR CHARGES & EVIDENCE ON PAGE 2
+        // GENERATE WEEKLY PAYSLIP WITH EXACT REQUESTED ORDER:
+        // 1. Gross Earnings, Deductions, Total Outstanding Charges / Balance
+        // 2. Amount Payable (Net Payout) right underneath balance
+        // 3. Official Corporation Payroll Statement sign-off footer underneath that
+        // 4. Strictly page break -> AR charges proof image alone on page 2.
         async function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
@@ -3337,7 +3344,7 @@
             document.getElementById('slip-total-charges').innerText = '$' + totalCharges.toLocaleString() + ' JMD';
             document.getElementById('slip-total-amount').innerText = '$' + netPayable.toLocaleString() + ' JMD';
 
-            // PAGE 2: AR CHARGES & PROOF SECTION WITH FORCED PAGE BREAK
+            // PAGE 2: FORCED PAGE BREAK AND IMAGE ALONE ON SECOND LINE
             var proofContainer = document.getElementById('slip-proof-container');
             proofContainer.innerHTML = '';
 
