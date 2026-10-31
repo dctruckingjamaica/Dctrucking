@@ -1188,7 +1188,7 @@
                 <!-- OPTION B: PASTE WHATSAPP TEXT BOX -->
                 <div style="background: #052410; border: 1px solid #1c4d28; padding: 12px; border-radius: 8px; margin-bottom: 14px;">
                     <label style="color: #38bdf8; font-weight: 800; font-size: 0.88rem; display: block; margin-bottom: 6px;">📱 Or Paste Copied WhatsApp Customer Request Text Here:</label>
-                    <textarea id="inv-whatsapp-text-paste" rows="2" placeholder="Paste WhatsApp message here (e.g. 'Hey Dale, need truck from Kingston to Mandeville. John Brown, 876-555-0199')..." style="width: 100%; padding: 10px; background: #000; color: #fff; border: 1px solid #38bdf8; border-radius: 6px; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;"></textarea>
+                    <textarea id="inv-whatsapp-text-paste" rows="3" placeholder="Paste WhatsApp message here (e.g. 'Client Name: Colette Stewart, Phone: 876-555-0199, Destination: Negril')..." style="width: 100%; padding: 10px; background: #000; color: #fff; border: 1px solid #38bdf8; border-radius: 6px; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;"></textarea>
                     
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                         <button type="button" class="btn-gen" style="background: #0284c7; color: #fff; flex: 1; min-width: 180px; padding: 10px; font-size: 0.95rem;" onclick="parseWhatsAppTextToInvoice()">⚡ Auto-Parse Pasted WhatsApp Text</button>
@@ -1221,11 +1221,48 @@
                         <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Total Haulage Rate (JMD):</label>
                         <input type="number" id="manual-inv-amount" placeholder="0" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
                     </div>
+                    <div>
+                        <label style="color: #38bdf8; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Scheduled Pickup Date:</label>
+                        <input type="date" id="manual-inv-date" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1.5px solid #38bdf8; border-radius: 6px; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="color: #38bdf8; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Scheduled Pickup Time:</label>
+                        <input type="text" id="manual-inv-time" value="09:00 AM" placeholder="e.g. 09:00 AM" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1.5px solid #38bdf8; border-radius: 6px; font-weight: 700;">
+                    </div>
                 </div>
 
                 <button class="btn-gen" style="width: 100%; padding: 12px; font-size: 1rem;" onclick="generateInvoice()">📄 Generate Printable Invoice / Deposit Quote</button>
             </div>
             
+            <!-- FUTURE ADVANCE BOOKINGS & DEPOSIT QUEUE -->
+            <div style="background: #120a24; border: 2px solid #a855f7; padding: 16px; border-radius: 10px; margin-bottom: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h5 style="color: #c084fc; font-size: 1.15rem; font-weight: 900; text-transform: uppercase;">⏳ Future Advance Bookings & Deposit Queue</h5>
+                        <p style="color: #cbd5e1; font-size: 0.88rem;">Private bookings with paid deposits waiting for future run dates. Move them straight to your Private Daily Log on run day!</p>
+                    </div>
+                    <div id="upcoming-alert-badge" style="background: #7e22ce; color: #fff; padding: 6px 12px; border-radius: 6px; font-weight: 900; font-size: 0.85rem; display: none;">
+                        ⚠️ Upcoming Job Alert!
+                    </div>
+                </div>
+                
+                <div class="table-scroll">
+                    <table class="tracker-table" style="min-width: 900px;">
+                        <thead>
+                            <tr style="background: #3b1248;">
+                                <th style="color: #c084fc;">Pickup Date & Time</th>
+                                <th style="color: #c084fc;">Client Name & Phone</th>
+                                <th style="color: #c084fc;">Route (Pickup ➔ Destination)</th>
+                                <th style="color: #c084fc;">Total Rate & Deposit</th>
+                                <th style="color: #c084fc;">Action / Send to Log</th>
+                            </tr>
+                        </thead>
+                        <tbody id="future-queue-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="backup-data-box">
                 <h5>📱 Device Backup & Transfer System</h5>
                 <p style="color: #cbd5e1; font-size: 0.9rem;">Export all job history, staff profiles, and maintenance logs to easily transfer to a new phone or backup to Google Drive.</p>
@@ -2119,6 +2156,7 @@
             loadVehicleDocs();
             updateDynamicPartsDatalist();
             loadVaultReceiptGallery();
+            loadFutureBookingsQueue();
             
             resetIdleTimer();
         }
@@ -2381,6 +2419,7 @@
             document.getElementById('inv-whatsapp-text-paste').value = '';
         }
 
+        // UPGRADED PRECISION-MAPPING PARSER (DOES NOT TOUCH INVOICE TEMPLATE)
         function parseWhatsAppTextToInvoice() {
             var text = document.getElementById('inv-whatsapp-text-paste').value.trim();
             if (!text) {
@@ -2388,32 +2427,81 @@
                 return;
             }
 
-            var phoneMatch = text.match(/(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})|(\+?\d{10,13})/);
-            if (phoneMatch) {
-                document.getElementById('manual-inv-phone').value = phoneMatch[0];
+            var lines = text.split('\n');
+            var clientName = "";
+            var phoneNum = "";
+            var emailAddr = "";
+            var pickupPoint = "";
+            var destTown = "";
+            var totalCost = "";
+
+            // Parse line-by-line to extract exact fields
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i].trim();
+                var lowerLine = line.toLowerCase();
+
+                if (lowerLine.includes("client name:") || (lowerLine.includes("client:") && !clientName)) {
+                    clientName = line.replace(/client\s*name[:\s]*/i, '').replace(/client[:\s]*/i, '').trim();
+                } else if (lowerLine.includes("phone:") || lowerLine.includes("whatsapp:") || lowerLine.includes("tel:") || lowerLine.includes("mobile:")) {
+                    phoneNum = line.replace(/(phone|whatsapp|tel|mobile)[:\s]*/i, '').trim();
+                } else if (lowerLine.includes("email:")) {
+                    emailAddr = line.replace(/email[:\s]*/i, '').trim();
+                } else if (lowerLine.includes("pick up:") || lowerLine.includes("pickup:")) {
+                    pickupPoint = line.replace(/(pick\s*up|pickup)[:\s]*/i, '').trim();
+                } else if (lowerLine.includes("destination:") || lowerLine.includes("drop-off:") || lowerLine.includes("drop off:") || lowerLine.includes("town:")) {
+                    destTown = line.replace(/(destination|drop-off|drop off|town)[:\s]*/i, '').trim();
+                } else if (lowerLine.includes("total cost:") || lowerLine.includes("haulage rate:") || lowerLine.includes("amount:") || lowerLine.includes("total:")) {
+                    var costStr = line.replace(/(total\s*cost|haulage\s*rate|amount|total)[:\s]*\$?/i, '').replace(/jmd|,/gi, '').trim();
+                    var parsedCost = parseFloat(costStr);
+                    if (!isNaN(parsedCost)) {
+                        totalCost = parsedCost;
+                    }
+                }
             }
 
-            var emailMatch = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
-            if (emailMatch) {
-                document.getElementById('manual-inv-email').value = emailMatch[0];
+            // Fallback matchers if explicit label formats vary
+            if (!clientName) {
+                var nameMatch = text.match(/Client Name[:\s]*([^\n]+)/i);
+                if (nameMatch) clientName = nameMatch[1].trim();
+            }
+            if (!phoneNum) {
+                var phoneMatch = text.match(/(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})|(\+?\d{10,13})/);
+                if (phoneMatch) phoneNum = phoneMatch[0].trim();
+            }
+            if (!emailAddr) {
+                var emailMatch = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+                if (emailMatch) emailAddr = emailMatch[0].trim();
             }
 
-            var textLower = text.toLowerCase();
+            // Populate form fields cleanly
+            if (clientName) document.getElementById('manual-inv-client').value = clientName;
+            if (phoneNum) document.getElementById('manual-inv-phone').value = phoneNum;
+            if (emailAddr) document.getElementById('manual-inv-email').value = emailAddr;
+            if (pickupPoint) document.getElementById('manual-inv-pickup').value = pickupPoint;
+
+            // Match destination town and apply rate table or parsed cost
+            var targetTown = destTown ? destTown.toLowerCase() : text.toLowerCase();
+            var matchedRateFound = false;
+
             for (var place in privateCustomerRates) {
-                if (textLower.includes(place)) {
+                if (targetTown.includes(place)) {
                     var capitalizedPlace = place.replace(/\b\w/g, function(l) { return l.toUpperCase(); });
                     document.getElementById('manual-inv-dest').value = capitalizedPlace;
-                    document.getElementById('manual-inv-amount').value = privateCustomerRates[place];
+                    if (!totalCost) {
+                        document.getElementById('manual-inv-amount').value = privateCustomerRates[place];
+                    }
+                    matchedRateFound = true;
                     break;
                 }
             }
 
-            var lines = text.split('\n').filter(Boolean);
-            if (lines.length > 0) {
-                document.getElementById('manual-inv-client').value = lines[0].substring(0, 35);
+            if (totalCost) {
+                document.getElementById('manual-inv-amount').value = totalCost;
+            } else if (!matchedRateFound && destTown) {
+                document.getElementById('manual-inv-dest').value = destTown;
             }
 
-            alert("⚡ WhatsApp Text Parsed Successfully! Fields auto-filled below.");
+            alert("⚡ WhatsApp Text Successfully Parsed & Aligned with Invoice Fields!");
         }
 
         var truckPartsCatalog = {
@@ -2526,6 +2614,7 @@
             loadMaintenanceLogs();
             loadVehicleDocs();
             loadVaultReceiptGallery();
+            loadFutureBookingsQueue();
             alert("🔄 Panel refreshed and preview screens cleared! All saved data remains securely stored.");
         }
 
@@ -3082,6 +3171,7 @@
                     loadCrewPreferences();
                     loadVehicleDocs();
                     loadVaultReceiptGallery();
+                    loadFutureBookingsQueue();
                 } catch (err) {
                     alert("Error reading backup file. Please make sure it is a valid backup .json file.");
                 }
@@ -3262,6 +3352,15 @@
             document.getElementById('live-net-profit-display').innerText = '$' + net.toLocaleString() + ' JMD';
         }
 
+        function getStoredFutureBookings() {
+            var stored = localStorage.getItem("dc_future_bookings");
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function saveStoredFutureBookings(bookings) {
+            localStorage.setItem("dc_future_bookings", JSON.stringify(bookings));
+        }
+
         function generateInvoice() {
             var client = document.getElementById('manual-inv-client').value.trim() || 'Valued Client';
             var phone = document.getElementById('manual-inv-phone').value.trim() || 'N/A';
@@ -3269,6 +3368,8 @@
             var num = 'DC-' + Math.floor(1000 + Math.random() * 9000);
             var pickup = document.getElementById('manual-inv-pickup').value.trim() || 'Kingston & Portmore Depot';
             var destInput = document.getElementById('manual-inv-dest').value.trim() || 'Destination Hub';
+            var pDate = document.getElementById('manual-inv-date').value || new Date().toISOString().split('T')[0];
+            var pTime = document.getElementById('manual-inv-time').value || '09:00 AM';
 
             var totalAmount = parseFloat(document.getElementById('manual-inv-amount').value) || 0;
             var deposit = totalAmount * 0.5;
@@ -3284,6 +3385,7 @@
             
             document.getElementById('out-pickup-text').innerText = pickup;
             document.getElementById('out-dest-text').innerText = destInput;
+            document.getElementById('out-pickup-time-text').innerText = pTime;
             document.getElementById('out-desc').innerText = 'Haulage Transport: ' + pickup + ' to ' + destInput;
             
             document.getElementById('out-amount').innerText = '$' + totalAmount.toLocaleString() + ' JMD';
@@ -3304,6 +3406,24 @@
                 document.getElementById('out-balance-label').style.color = '#dc2626';
                 document.getElementById('out-balance').style.color = '#dc2626';
                 document.getElementById('out-footer-notice').innerText = '* 50% deposit received. Booking locked in! Balance due upon pickup.';
+
+                // AUTOMATICALLY LOG TO FUTURE ADVANCE BOOKINGS QUEUE
+                var futureBookings = getStoredFutureBookings();
+                futureBookings.push({
+                    id: Date.now(),
+                    client: client,
+                    phone: phone,
+                    email: email,
+                    inv: num,
+                    pickup: pickup,
+                    dest: destInput,
+                    date: pDate,
+                    time: pTime,
+                    rate: totalAmount,
+                    deposit: deposit
+                });
+                saveStoredFutureBookings(futureBookings);
+                loadFutureBookingsQueue();
             } else {
                 document.getElementById('out-invoice-header-title').innerText = 'INVOICE / BOOKING QUOTE';
                 document.getElementById('out-deposit-label').innerHTML = '🔒 Required 50% Deposit (To Confirm Booking)';
@@ -3318,6 +3438,97 @@
             document.getElementById('invoice-preview').style.display = 'block';
             document.getElementById('payslip-preview').style.display = 'none';
             document.getElementById('invoice-preview').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function loadFutureBookingsQueue() {
+            var bookings = getStoredFutureBookings();
+            var tbody = document.getElementById('future-queue-table-body');
+            var alertBadge = document.getElementById('upcoming-alert-badge');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            if (bookings.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#94a3b8;">No future advance bookings waiting in queue.</td></tr>';
+                if (alertBadge) alertBadge.style.display = 'none';
+                return;
+            }
+
+            var today = new Date();
+            today.setHours(0,0,0,0);
+            var upcomingCount = 0;
+
+            for (var i = 0; i < bookings.length; i++) {
+                var b = bookings[i];
+                var jobDate = new Date(b.date);
+                jobDate.setHours(0,0,0,0);
+                var diffDays = Math.ceil((jobDate - today) / (1000 * 60 * 60 * 24));
+
+                var urgencyStyle = "";
+                var badgeText = "📅 " + b.date + " at " + b.time;
+                if (diffDays >= 0 && diffDays <= 3) {
+                    urgencyStyle = "background: rgba(220, 38, 38, 0.2); border-left: 4px solid #dc2626;";
+                    badgeText += '<br><span style="color:#f87171; font-weight:900;">⚠️ Coming up in ' + (diffDays === 0 ? 'TODAY!' : diffDays + ' days') + '</span>';
+                    upcomingCount++;
+                }
+
+                var tr = document.createElement('tr');
+                tr.setAttribute('style', urgencyStyle);
+                tr.innerHTML = '<td><strong>' + badgeText + '</strong></td>' +
+                               '<td><strong>' + b.client + '</strong><br><span style="color:#38bdf8; font-size:0.85rem;">📞 ' + b.phone + '</span></td>' +
+                               '<td>' + b.pickup + ' ➔ <strong>' + b.dest + '</strong><br><span style="font-size:0.78rem; color:#94a3b8;">Inv: ' + b.inv + '</span></td>' +
+                               '<td><strong style="color:#ffffff;">$' + (b.rate || 0).toLocaleString() + ' JMD</strong><br><span style="color:#4ade80; font-weight:800;">Deposit: $' + (b.deposit || 0).toLocaleString() + ' JMD</span></td>' +
+                               '<td>' +
+                               '<div style="display:flex; gap:6px;">' +
+                               '<button style="background:#059669; color:#fff; border:none; padding:8px 10px; border-radius:6px; font-weight:900; cursor:pointer; font-size:0.85rem;" onclick="transferBookingToDailyLog(' + b.id + ')">🚀 Send to Daily Log</button>' +
+                               '<button style="background:#dc2626; color:#fff; border:none; padding:8px 10px; border-radius:6px; font-weight:900; cursor:pointer; font-size:0.85rem;" onclick="deleteFutureBooking(' + b.id + ')">🗑️</button>' +
+                               '</div>' +
+                               '</td>';
+                tbody.appendChild(tr);
+            }
+
+            if (alertBadge) {
+                if (upcomingCount > 0) {
+                    alertBadge.style.display = 'block';
+                    alertBadge.innerText = '⚠️ ' + upcomingCount + ' Pickup(s) Due Within 3 Days!';
+                } else {
+                    alertBadge.style.display = 'none';
+                }
+            }
+        }
+
+        function transferBookingToDailyLog(id) {
+            var bookings = getStoredFutureBookings();
+            var b = bookings.find(function(item) { return item.id === id; });
+            if (!b) return;
+
+            // Pre-fill the daily tracker form
+            document.getElementById('tr-date').value = b.date;
+            document.getElementById('tr-inv').value = b.inv;
+            document.getElementById('tr-pickup').value = b.pickup;
+            document.getElementById('tr-drop').value = b.dest;
+            document.getElementById('tr-rate').value = b.rate;
+            document.getElementById('tr-status').value = 'PENDING COLLECTION';
+
+            // Switch tracker to D&C Private Mode automatically
+            setTrackerRateMode('private');
+
+            // Scroll down to the daily log form
+            document.querySelector('.tracker-form-container').scrollIntoView({ behavior: 'smooth' });
+
+            // Remove from future queue
+            var filtered = bookings.filter(function(item) { return item.id !== id; });
+            saveStoredFutureBookings(filtered);
+            loadFutureBookingsQueue();
+
+            alert("🚀 Booking transferred to Private Daily Log form!\nPlease enter today's petrol, driver payout, and assistant payout, then click 'Log Corporate Job'.");
+        }
+
+        function deleteFutureBooking(id) {
+            if (!confirm("Are you sure you want to remove this future booking from the queue?")) return;
+            var bookings = getStoredFutureBookings();
+            var filtered = bookings.filter(function(item) { return item.id !== id; });
+            saveStoredFutureBookings(filtered);
+            loadFutureBookingsQueue();
         }
 
         function sendWhatsAppInvoice() {
