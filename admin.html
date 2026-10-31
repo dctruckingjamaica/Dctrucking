@@ -44,6 +44,37 @@
             margin: 0 auto;
         }
 
+        /* ADMIN DISPATCHER HEADER BADGE */
+        .admin-header-badge {
+            background: #161616;
+            border: 1px solid var(--primary-green);
+            border-left: 5px solid var(--primary-green);
+            border-radius: 8px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.15);
+            margin-bottom: 15px;
+        }
+
+        .admin-header-title {
+            color: var(--primary-green);
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-header-sub {
+            color: #b0bec5;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
         .manager-panel {
             background: #091a10;
             border: 2px solid var(--primary-green);
@@ -1099,13 +1130,23 @@
             <p style="color:#fff; font-size:13px; margin-bottom:15px;">Enter PIN to unlock dispatch controls:</p>
             <input type="password" id="managerPinInput" maxlength="6" pattern="[0-9]*" inputmode="numeric" placeholder="****" style="font-size:24px; padding:10px; text-align:center; background:#000; color:#00ff66; border:1px solid #00ff66; border-radius:5px; width:100%; margin-bottom:15px;">
             <button onclick="submitManagerPin()" style="background:#00ff66; color:#000; font-weight:bold; padding:12px; border:none; border-radius:5px; cursor:pointer; width:100%; margin-bottom:10px;">Unlock Panel</button>
-            <a href="index.html" style="color:#888; text-decoration:none; font-size:12px;">← Return to Public Website</a>
+            <a href="index.html" onclick="sessionStorage.removeItem('dnc_unlocked');" style="color:#888; text-decoration:none; font-size:12px;">← Return to Public Website</a>
             <p id="managerPinError" style="color:#ff3333; font-size:12px; margin-top:10px; display:none;">Incorrect PIN Code</p>
         </div>
     </div>
 
     <div class="container">
         <div id="manager-panel" class="manager-panel" style="display:none;">
+
+            <!-- ADMIN DISPATCHER TOP HEADER BOX -->
+            <div class="admin-header-badge">
+                <div class="admin-header-title">
+                    ⚙️ ADMIN DISPATCHER
+                </div>
+                <div class="admin-header-sub">
+                    Internal Operations Hub
+                </div>
+            </div>
             
             <!-- ONLINE / OFFLINE TOGGLE SESSION BAR AT THE VERY TOP OF PANEL -->
             <div style="background: #1b261d; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -1122,7 +1163,7 @@
                 <h4 style="margin-bottom: 0; border-bottom: none; padding-bottom: 0;">🔐 Dispatcher Control Panel (Private)</h4>
                 <div style="display: flex; gap: 8px;">
                     <button type="button" onclick="clearAndRefreshPanel()" style="background: #0284c7; color: #fff; border: 1.5px solid #38bdf8; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.9rem;">🔄 Clear & Refresh</button>
-                    <a href="index.html" style="background:#1e293b; color:#38bdf8; border: 1.5px solid #38bdf8; padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:900; font-size:0.9rem;">🏠 Public Site</a>
+                    <a href="index.html" onclick="sessionStorage.removeItem('dnc_unlocked');" style="background:#1e293b; color:#38bdf8; border: 1.5px solid #38bdf8; padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:900; font-size:0.9rem;">🏠 Public Site</a>
                 </div>
             </div>
 
