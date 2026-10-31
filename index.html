@@ -2712,6 +2712,7 @@
 
             if (isOnlineMode) {
                 clearTimeout(idleTimer);
+                window.onpopstate = null;
                 btn.style.background = "#00ff66";
                 btn.style.color = "#000";
                 btn.innerText = "🟢 ONLINE (Stay Awake)";
@@ -2763,15 +2764,18 @@
                 btn.innerText = "🔴 Toggle ONLINE";
             }
             if (statusLabel) {
-                statusLabel.innerText = "🔴 OFFLINE (Auto-Lock: 3 Min)";
+                statusLabel.innerText = "🔴 OFFLINE (Auto-Lock Active)";
                 statusLabel.style.color = "#ff3333";
             }
 
-            // ANTI-BACK BUTTON TRAP
-            window.history.pushState(null, "", window.location.href);
+            // AGGRESSIVE ANTI-BACK BUTTON TRAP
+            history.pushState(null, "", location.href);
+            history.pushState(null, "", location.href);
+            
             window.onpopstate = function () {
                 if (!isOnlineMode && !sessionStorage.getItem('dnc_unlocked')) {
-                    window.history.pushState(null, "", window.location.href);
+                    history.pushState(null, "", location.href);
+                    alert("🔒 Security Lock Active: Enter your 6-digit PIN to unlock dispatcher controls.");
                 }
             };
         }
