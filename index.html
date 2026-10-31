@@ -639,7 +639,7 @@
 
         .weekly-summary-bar {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 12px;
             margin-bottom: 15px;
         }
@@ -654,7 +654,7 @@
 
         .summary-box h6 {
             color: #94a3b8;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 800;
             text-transform: uppercase;
             margin-bottom: 4px;
@@ -780,7 +780,7 @@
 
         .alltime-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 10px;
         }
 
@@ -806,7 +806,92 @@
             font-weight: 900;
         }
 
-        /* VEHICLE DOCUMENT VAULT SECTION (MOBILE OPTIMIZED + INLINE IMAGE DISPLAY) */
+        /* 3-CATEGORY RECEIPT VAULT & OCR STYLING */
+        .receipt-uploader-box {
+            background: #160d24;
+            border: 2px solid #a855f7;
+            padding: 18px;
+            border-radius: 12px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        .receipt-uploader-box h5 {
+            color: #c084fc;
+            font-size: 1.15rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .receipt-category-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn-receipt-cat {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #a855f7;
+            background: #0f071a;
+            color: #e9d5ff;
+            font-weight: 900;
+            font-size: 0.98rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .btn-receipt-cat.active-cat {
+            background: #a855f7;
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+        }
+
+        .receipt-vault-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .receipt-card {
+            background: #0d0617;
+            border: 1px solid #7e22ce;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .receipt-card img {
+            width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+            border-radius: 6px;
+            border: 1px solid #a855f7;
+            background: #000;
+        }
+
+        .receipt-tag-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            align-self: flex-start;
+        }
+
+        .tag-petrol { background: #15803d; color: #fff; }
+        .tag-maintenance { background: #b91c1c; color: #fff; }
+        .tag-parts { background: #0284c7; color: #fff; }
+
         .doc-vault-box {
             background: #0a1f2e;
             border: 2px solid #0284c7;
@@ -1381,7 +1466,7 @@
             margin-left: -10px; 
         }
 
-        /* ISOLATED PAYSLIP HEADER STYLING FOR ENLARGED LOGO & PULLED-IN TEXT */
+        /* ISOLATED PAYSLIP HEADER STYLING */
         #payslip-preview .inv-header {
             display: grid;
             grid-template-columns: 230px 1fr;
@@ -1402,7 +1487,7 @@
 
         #payslip-preview .inv-logo-box img {
             width: 100%;
-            max-height: 135px; /* Noticeably larger logo box height */
+            max-height: 135px;
             object-fit: contain;
             display: block;
             background: transparent !important;
@@ -1415,7 +1500,7 @@
         #payslip-preview .inv-title-box {
             min-width: 0;
             text-align: left;
-            margin-left: -20px; /* Kept header text close to logo without touching lower layout */
+            margin-left: -20px;
         }
 
         .inv-title-main {
@@ -1507,6 +1592,18 @@
     </style>
 </head>
 <body>
+
+    <!-- SECURITY PIN LOGIN MODAL OVERLAY -->
+    <div id="managerLoginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; justify-content:center; align-items:center; flex-direction:column; font-family:monospace;">
+        <div style="background:#111; padding:25px; border:2px solid #00ff66; border-radius:10px; text-align:center; width:85%; max-width:320px;">
+            <h3 style="color:#00ff66; margin-bottom:15px;">D&C MANAGER ACCESS</h3>
+            <p style="color:#fff; font-size:13px; margin-bottom:15px;">Enter PIN to unlock dispatch controls:</p>
+            <input type="password" id="managerPinInput" maxlength="6" pattern="[0-9]*" inputmode="numeric" placeholder="****" style="font-size:24px; padding:10px; text-align:center; background:#000; color:#00ff66; border:1px solid #00ff66; border-radius:5px; width:100%; margin-bottom:15px;">
+            <button onclick="submitManagerPin()" style="background:#00ff66; color:#000; font-weight:bold; padding:12px; border:none; border-radius:5px; cursor:pointer; width:100%; margin-bottom:10px;">Unlock Panel</button>
+            <button onclick="closeLoginModal()" style="background:transparent; color:#888; border:none; cursor:pointer; font-size:12px;">Cancel</button>
+            <p id="managerPinError" style="color:#ff3333; font-size:12px; margin-top:10px; display:none;">Incorrect PIN Code</p>
+        </div>
+    </div>
 
     <header>
         <h1>D&C REFUSE TRUCKING & EQUIPMENT</h1>
@@ -1706,10 +1803,22 @@
             </div>
 
             <div class="admin-toggle-bar">
-                <button class="btn-admin-login" onclick="toggleManagerPanel()">🔐 Dispatcher / Manager Login</button>
+                <button class="btn-admin-login" onclick="promptForManagerPin()">🔐 Dispatcher / Manager Login</button>
             </div>
 
             <div id="manager-panel" class="manager-panel">
+                
+                <!-- ONLINE / OFFLINE TOGGLE SESSION BAR AT THE VERY TOP OF PANEL -->
+                <div style="background: #1b261d; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <strong style="color: #fff; display: block; font-size: 13px; text-transform: uppercase;">Session Mode:</strong>
+                        <span id="sessionStatusLabel" style="color: #ff3333; font-weight: bold; font-size: 13px;">🔴 OFFLINE (Auto-Lock: 3 Min)</span>
+                    </div>
+                    <button id="toggleOnlineBtn" onclick="toggleOnlineStatus()" style="background: #222; color: #fff; border: 2px solid var(--primary-green); padding: 10px 14px; border-radius: 20px; font-weight: bold; cursor: pointer;">
+                        🔴 Toggle ONLINE
+                    </button>
+                </div>
+
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1c4d28; padding-bottom: 6px; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
                     <h4 style="margin-bottom: 0; border-bottom: none; padding-bottom: 0;">🔐 Dispatcher Control Panel (Private)</h4>
                     <button type="button" onclick="clearAndRefreshPanel()" style="background: #0284c7; color: #fff; border: 1.5px solid #38bdf8; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.9rem;">🔄 Clear & Refresh</button>
@@ -1748,14 +1857,20 @@
                 </div>
 
                 <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📅 Current Active Operating Week (Monday – Friday)</h5>
+                
+                <!-- SEPARATED PETROL & CREW WAGES TRACKING BAR -->
                 <div class="weekly-summary-bar">
                     <div class="summary-box">
                         <h6>M-F Revenue</h6>
                         <span id="sum-revenue">$0 JMD</span>
                     </div>
-                    <div class="summary-box">
-                        <h6>M-F Expenses (Petrol+Crew)</h6>
-                        <span id="sum-expenses" style="color: #f87171;">$0 JMD</span>
+                    <div class="summary-box" style="border-color: #f87171;">
+                        <h6>M-F Petrol Spend</h6>
+                        <span id="sum-petrol-cost" style="color: #f87171;">$0 JMD</span>
+                    </div>
+                    <div class="summary-box" style="border-color: #fb7185;">
+                        <h6>M-F Crew Wages Paid</h6>
+                        <span id="sum-crew-wages" style="color: #fb7185;">$0 JMD</span>
                     </div>
                     <div class="summary-box">
                         <h6>M-F Net Profit</h6>
@@ -1822,6 +1937,7 @@
                     </div>
                 </div>
 
+                <!-- ALL-TIME YEARLY SUMMARY CONTAINER -->
                 <div class="alltime-summary-container">
                     <h5>
                         <span>📈 All-Time & Yearly Business History</span>
@@ -1835,11 +1951,11 @@
                             <span id="all-revenue">$0 JMD</span>
                         </div>
                         <div class="alltime-box">
-                            <h6>Total Expenses</h6>
-                            <span id="all-expenses" style="color: #f87171;">$0 JMD</span>
+                            <h6>Total Petrol Spend</h6>
+                            <span id="all-petrol" style="color: #f87171;">$0 JMD</span>
                         </div>
                         <div class="alltime-box">
-                            <h6>Wages Paid</h6>
+                            <h6>Total Crew Wages Paid</h6>
                             <span id="all-wages" style="color: #4ade80;">$0 JMD</span>
                         </div>
                         <div class="alltime-box">
@@ -2228,7 +2344,61 @@
                     </div>
                 </div>
 
-                <!-- VEHICLE DOCUMENT VAULT WITH AUTOMATIC PDF CONVERSION SUPPORT -->
+                <!-- 3-CATEGORY RECEIPT VAULT & OCR AUTO-SCANNER SECTION (POSITIONED AFTER MAINTENANCE & BEFORE DOCUMENTS) -->
+                <div class="receipt-uploader-box">
+                    <h5>🧾 3-Category Smart Receipt Vault & OCR Scanner</h5>
+                    <p style="color: #e9d5ff; font-size: 0.92rem; margin-bottom: 12px;">Select category below, upload photo or PDF (from My Files, WhatsApp, or Email), auto-scan with OCR, and store in your digital vault gallery!</p>
+                    
+                    <div class="receipt-category-selector">
+                        <button type="button" class="btn-receipt-cat active-cat" id="cat-btn-petrol" onclick="setReceiptCategory('Petrol')">⛽ Petrol Receipt</button>
+                        <button type="button" class="btn-receipt-cat" id="cat-btn-maint" onclick="setReceiptCategory('Maintenance')">🛠️ Maintenance Receipt</button>
+                        <button type="button" class="btn-receipt-cat" id="cat-btn-parts" onclick="setReceiptCategory('Parts')">💡 Parts Receipt</button>
+                    </div>
+
+                    <input type="hidden" id="active-receipt-cat" value="Petrol">
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 12px;">
+                        <div>
+                            <label style="color:#c084fc; font-weight:800; font-size:0.88rem; display:block; margin-bottom:4px;">Date Spent / Uploaded:</label>
+                            <input type="date" id="vault-receipt-date" style="width:100%; padding:10px; background:#000; color:#fff; border:1px solid #a855f7; border-radius:6px; font-weight:700;">
+                        </div>
+                        <div>
+                            <label style="color:#c084fc; font-weight:800; font-size:0.88rem; display:block; margin-bottom:4px;">Vendor / Station / Shop Name:</label>
+                            <input type="text" id="vault-receipt-vendor" placeholder="e.g. Total Station / Opie Oils" style="width:100%; padding:10px; background:#000; color:#fff; border:1px solid #a855f7; border-radius:6px; font-weight:700;">
+                        </div>
+                        <div>
+                            <label style="color:#c084fc; font-weight:800; font-size:0.88rem; display:block; margin-bottom:4px;">Total Amount Paid (JMD):</label>
+                            <input type="number" id="vault-receipt-amount" placeholder="0" style="width:100%; padding:10px; background:#000; color:#fff; border:1px solid #a855f7; border-radius:6px; font-weight:700;">
+                        </div>
+                    </div>
+
+                    <label style="color:#facc15; font-weight:800; font-size:0.9rem; display:block; margin-bottom:4px;">📎 Choose Receipt File (Photo or PDF from My Files / WhatsApp / Email):</label>
+                    <input type="file" id="vault-receipt-file" accept="image/*,application/pdf" style="padding: 8px; background:#000; color:#fff; border:1px solid #a855f7; border-radius:6px; width:100%; margin-bottom:10px;" onchange="handleVaultReceiptFileSelect()">
+
+                    <div id="vault-ocr-status" class="ocr-status-text" style="margin-bottom: 8px;"></div>
+                    
+                    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom: 15px;">
+                        <button type="button" style="background:#a855f7; color:#fff; font-weight:900; border:none; padding:12px; border-radius:6px; cursor:pointer; flex:1; min-width:160px; font-size:0.95rem;" onclick="scanVaultReceiptOCR()">🔍 Auto-Scan Receipt OCR</button>
+                        <button type="button" style="background:#059669; color:#fff; font-weight:900; border:none; padding:12px; border-radius:6px; cursor:pointer; flex:1; min-width:160px; font-size:0.95rem;" onclick="saveVaultReceipt()">💾 Save to Receipt Gallery</button>
+                    </div>
+
+                    <!-- SEARCH & FILTER BAR FOR RECEIPT VAULT -->
+                    <div style="background:#090412; border:1px solid #7e22ce; padding:10px; border-radius:8px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                        <span style="color:#c084fc; font-weight:900; font-size:0.9rem;">🔍 Filter Vault:</span>
+                        <input type="text" id="vault-search-query" placeholder="Search by vendor or notes..." style="padding:6px 10px; background:#000; color:#fff; border:1px solid #a855f7; border-radius:4px; font-size:0.88rem; flex:1; min-width:160px;" oninput="loadVaultReceiptGallery()">
+                        <select id="vault-search-cat" style="padding:6px 10px; background:#000; color:#c084fc; border:1px solid #a855f7; border-radius:4px; font-size:0.88rem; font-weight:800;" onchange="loadVaultReceiptGallery()">
+                            <option value="ALL">All Categories</option>
+                            <option value="Petrol">⛽ Petrol Only</option>
+                            <option value="Maintenance">🛠️ Maintenance Only</option>
+                            <option value="Parts">💡 Parts Only</option>
+                        </select>
+                    </div>
+
+                    <div class="receipt-vault-gallery" id="receipt-gallery-container">
+                    </div>
+                </div>
+
+                <!-- VEHICLE DOCUMENT VAULT SECTION -->
                 <div class="doc-vault-box">
                     <h5>📑 Vehicle Document Vault & OCR Auto-Scanner</h5>
                     <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Choose file (Photo or PDF Document), press <strong>Save</strong> to store your document, then press <strong>Auto-Scan</strong> to fill out the blanks automatically. Share directly via WhatsApp or Email anytime!</p>
@@ -2506,6 +2676,110 @@
         var managerPin = "197922";
         var showAllHistory = false;
 
+        /* SECURITY & SESSION CONTROL VARIABLES */
+        const AUTO_LOCK_MS = 3 * 60 * 1000; // 3 Minutes Timeout
+        let isOnlineMode = false;
+        let idleTimer = null;
+
+        function promptForManagerPin() {
+            document.getElementById('managerLoginModal').style.display = 'flex';
+            document.getElementById('managerPinInput').focus();
+        }
+
+        function closeLoginModal() {
+            document.getElementById('managerLoginModal').style.display = 'none';
+            document.getElementById('managerPinInput').value = '';
+            document.getElementById('managerPinError').style.display = 'none';
+        }
+
+        function submitManagerPin() {
+            var entered = document.getElementById('managerPinInput').value;
+            if (entered === managerPin) {
+                sessionStorage.setItem('dnc_unlocked', 'true');
+                closeLoginModal();
+                unlockSystemUI();
+            } else {
+                document.getElementById('managerPinError').style.display = 'block';
+                document.getElementById('managerPinInput').value = '';
+            }
+        }
+
+        function toggleOnlineStatus() {
+            var btn = document.getElementById('toggleOnlineBtn');
+            var statusLabel = document.getElementById('sessionStatusLabel');
+
+            isOnlineMode = !isOnlineMode;
+
+            if (isOnlineMode) {
+                clearTimeout(idleTimer);
+                btn.style.background = "#00ff66";
+                btn.style.color = "#000";
+                btn.innerText = "🟢 ONLINE (Stay Awake)";
+                statusLabel.innerText = "🟢 ONLINE (Always Active & Open)";
+                statusLabel.style.color = "#00ff66";
+                sessionStorage.setItem('dnc_keep_online', 'true');
+            } else {
+                sessionStorage.removeItem('dnc_keep_online');
+                lockSystemAndTrap();
+            }
+        }
+
+        function resetIdleTimer() {
+            if (!isOnlineMode && sessionStorage.getItem('dnc_unlocked') === 'true') {
+                clearTimeout(idleTimer);
+                idleTimer = setTimeout(function() {
+                    alert("Session timed out after 3 minutes. System locked.");
+                    lockSystemAndTrap();
+                }, AUTO_LOCK_MS);
+            }
+        }
+
+        function unlockSystemUI() {
+            var panel = document.getElementById('manager-panel');
+            if (panel) panel.style.display = 'block';
+            loadTrackerJobs();
+            loadMaintenanceLogs();
+            loadCrewPreferences();
+            loadVehicleDocs();
+            updateDynamicPartsDatalist();
+            loadVaultReceiptGallery();
+            resetIdleTimer();
+        }
+
+        function lockSystemAndTrap() {
+            isOnlineMode = false;
+            clearTimeout(idleTimer);
+            sessionStorage.removeItem('dnc_unlocked');
+            sessionStorage.removeItem('dnc_keep_online');
+
+            var panel = document.getElementById('manager-panel');
+            if (panel) panel.style.display = 'none';
+
+            var btn = document.getElementById('toggleOnlineBtn');
+            var statusLabel = document.getElementById('sessionStatusLabel');
+            if (btn) {
+                btn.style.background = "#222";
+                btn.style.color = "#fff";
+                btn.innerText = "🔴 Toggle ONLINE";
+            }
+            if (statusLabel) {
+                statusLabel.innerText = "🔴 OFFLINE (Auto-Lock: 3 Min)";
+                statusLabel.style.color = "#ff3333";
+            }
+
+            // ANTI-BACK BUTTON TRAP
+            window.history.pushState(null, "", window.location.href);
+            window.onpopstate = function () {
+                if (!isOnlineMode && !sessionStorage.getItem('dnc_unlocked')) {
+                    window.history.pushState(null, "", window.location.href);
+                }
+            };
+        }
+
+        ['click', 'touchstart', 'mousemove', 'keypress'].forEach(function(evt) {
+            document.addEventListener(evt, resetIdleTimer, true);
+        });
+
         const wisynco7TonRates = {
             "downtown": 19493,
             "kingston": 18743, "round town": 18743, "half way tree": 18743, "liguanea": 18743, "jacks hill": 18743,
@@ -2761,33 +3035,255 @@
             }
         }
 
-        function toggleManagerPanel() {
-            var panel = document.getElementById('manager-panel');
-            if (panel.style.display === 'block') {
-                panel.style.display = 'none';
-            } else {
-                var entered = prompt("Enter Manager PIN to access payment controls & corporate tracker:");
-                if (entered === managerPin) {
-                    panel.style.display = 'block';
-                    loadTrackerJobs();
-                    loadMaintenanceLogs();
-                    loadCrewPreferences();
-                    loadVehicleDocs();
-                    updateDynamicPartsDatalist();
-                } else if (entered !== null) {
-                    alert("Incorrect PIN. Access denied.");
-                }
-            }
-        }
-
-        // QUICK CLEAR & REFRESH MANAGER VIEW WITHOUT LOSING SAVED DATA OR RESETTING PIN
         function clearAndRefreshPanel() {
             document.getElementById('invoice-preview').style.display = 'none';
             document.getElementById('payslip-preview').style.display = 'none';
             loadTrackerJobs();
             loadMaintenanceLogs();
             loadVehicleDocs();
+            loadVaultReceiptGallery();
             alert("🔄 Panel refreshed and preview screens cleared! All saved data remains securely stored.");
+        }
+
+        // 3-CATEGORY RECEIPT VAULT & OCR LOGIC (WITH AUTOMATIC DATE & TIME STAMP)
+        function setReceiptCategory(cat) {
+            document.getElementById('active-receipt-cat').value = cat;
+            document.getElementById('cat-btn-petrol').className = 'btn-receipt-cat' + (cat === 'Petrol' ? ' active-cat' : '');
+            document.getElementById('cat-btn-maint').className = 'btn-receipt-cat' + (cat === 'Maintenance' ? ' active-cat' : '');
+            document.getElementById('cat-btn-parts').className = 'btn-receipt-cat' + (cat === 'Parts' ? ' active-cat' : '');
+        }
+
+        var currentVaultFileConverted = null;
+
+        function handleVaultReceiptFileSelect() {
+            var fileInput = document.getElementById('vault-receipt-file');
+            var statusDiv = document.getElementById('vault-ocr-status');
+
+            if (fileInput.files && fileInput.files[0]) {
+                var file = fileInput.files[0];
+                if (file.type === 'application/pdf') {
+                    statusDiv.innerText = "⏳ Converting PDF receipt from My Files to photo preview...";
+                    var fileReader = new FileReader();
+                    fileReader.onload = async function() {
+                        try {
+                            var typedarray = new Uint8Array(this.result);
+                            var pdf = await pdfjsLib.getDocument(typedarray).promise;
+                            var page = await pdf.getPage(1);
+                            var viewport = page.getViewport({ scale: 1.8 });
+                            var canvas = document.createElement('canvas');
+                            var context = canvas.getContext('2d');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+                            await page.render({ canvasContext: context, viewport: viewport }).promise;
+                            currentVaultFileConverted = canvas.toDataURL('image/jpeg', 0.95);
+                            statusDiv.innerText = "✅ PDF converted to image successfully!";
+                        } catch(e) {
+                            statusDiv.innerText = "❌ PDF conversion failed.";
+                        }
+                    };
+                    fileReader.readAsArrayBuffer(file);
+                } else {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        currentVaultFileConverted = e.target.result;
+                        statusDiv.innerText = "";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        async function scanVaultReceiptOCR() {
+            var statusDiv = document.getElementById('vault-ocr-status');
+            if (!currentVaultFileConverted) {
+                alert("Please select a photo or PDF receipt file first.");
+                return;
+            }
+
+            statusDiv.innerText = "⏳ Scanning receipt text via OCR... Please wait.";
+
+            try {
+                var worker = await Tesseract.createWorker('eng');
+                var ret = await worker.recognize(currentVaultFileConverted);
+                var text = ret.data.text;
+                await worker.terminate();
+
+                statusDiv.innerText = "✅ OCR Scan Complete!";
+
+                // Extract Amount
+                var amountMatch = text.match(/Total[:\s]*\$?\s*([\d,]+(\.\d{2})?)/i) || text.match(/\$?\s*([\d,]+\.\d{2})/);
+                if (amountMatch) {
+                    var cleanAmt = amountMatch[1].replace(/,/g, '');
+                    document.getElementById('vault-receipt-amount').value = cleanAmt;
+                }
+
+                // Extract Date
+                var dateMatch = text.match(/\b\d{4}[-/]\d{2}[-/]\d{2}\b|\b\d{2}[-/]\d{2}[-/]\d{4}\b/);
+                if (dateMatch) {
+                    var parsedDate = dateMatch[0].replace(/\//g, '-');
+                    if (parsedDate.split('-')[0].length === 2) {
+                        var parts = parsedDate.split('-');
+                        parsedDate = parts[2] + '-' + parts[1] + '-' + parts[0];
+                    }
+                    document.getElementById('vault-receipt-date').value = parsedDate;
+                } else if (!document.getElementById('vault-receipt-date').value) {
+                    document.getElementById('vault-receipt-date').value = new Date().toISOString().split('T')[0];
+                }
+
+                // Vendor Extract Fallback
+                if (!document.getElementById('vault-receipt-vendor').value) {
+                    var firstLines = text.split('\n').filter(Boolean);
+                    if (firstLines.length > 0) {
+                        document.getElementById('vault-receipt-vendor').value = firstLines[0].substring(0, 30);
+                    }
+                }
+            } catch (err) {
+                statusDiv.innerText = "❌ OCR scan failed. Please enter details manually.";
+            }
+        }
+
+        function getStoredVaultReceipts() {
+            var stored = localStorage.getItem("dc_vault_receipts");
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function saveStoredVaultReceipts(receipts) {
+            localStorage.setItem("dc_vault_receipts", JSON.stringify(receipts));
+        }
+
+        function saveVaultReceipt() {
+            var cat = document.getElementById('active-receipt-cat').value;
+            var date = document.getElementById('vault-receipt-date').value || new Date().toISOString().split('T')[0];
+            var currentTimeStamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            var vendor = document.getElementById('vault-receipt-vendor').value.trim() || 'General Vendor';
+            var amount = parseFloat(document.getElementById('vault-receipt-amount').value) || 0;
+
+            if (!currentVaultFileConverted && amount <= 0) {
+                alert("Please select a file or enter an amount.");
+                return;
+            }
+
+            var receipts = getStoredVaultReceipts();
+            receipts.push({
+                id: Date.now(),
+                cat: cat,
+                date: date,
+                time: currentTimeStamp,
+                vendor: vendor,
+                amount: amount,
+                imgData: currentVaultFileConverted || ''
+            });
+
+            saveStoredVaultReceipts(receipts);
+
+            if (cat === 'Petrol' && amount > 0) {
+                var currentWeekPetrolInput = document.getElementById('tr-petrol');
+                if (currentWeekPetrolInput) currentWeekPetrolInput.value = amount;
+            }
+
+            document.getElementById('vault-receipt-amount').value = '';
+            document.getElementById('vault-receipt-vendor').value = '';
+            document.getElementById('vault-receipt-file').value = '';
+            currentVaultFileConverted = null;
+            document.getElementById('vault-ocr-status').innerText = '';
+
+            loadVaultReceiptGallery();
+            loadTrackerJobs();
+            alert("Receipt saved to Vault under category: " + cat + " at " + currentTimeStamp + "!");
+        }
+
+        function deleteVaultReceipt(id) {
+            if (!confirm("Are you sure you want to delete this receipt from your vault?")) return;
+            var receipts = getStoredVaultReceipts();
+            var filtered = receipts.filter(function(r) { return r.id !== id; });
+            saveStoredVaultReceipts(filtered);
+            loadVaultReceiptGallery();
+            loadTrackerJobs();
+        }
+
+        function loadVaultReceiptGallery() {
+            var receipts = getStoredVaultReceipts();
+            var container = document.getElementById('receipt-gallery-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            var query = document.getElementById('vault-search-query') ? document.getElementById('vault-search-query').value.trim().toLowerCase() : '';
+            var catFilter = document.getElementById('vault-search-cat') ? document.getElementById('vault-search-cat').value : 'ALL';
+
+            var filtered = receipts.filter(function(r) {
+                var matchesCat = (catFilter === 'ALL' || r.cat === catFilter);
+                var matchesQuery = !query || r.vendor.toLowerCase().includes(query) || r.date.includes(query);
+                return matchesCat && matchesQuery;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<p style="color:#c084fc; font-size:0.9rem; text-align:center; grid-column: 1 / -1;">No receipts found in vault matching filter criteria.</p>';
+                return;
+            }
+
+            for (var i = 0; i < filtered.length; i++) {
+                var r = filtered[i];
+                var badgeClass = 'tag-petrol';
+                if (r.cat === 'Maintenance') badgeClass = 'tag-maintenance';
+                if (r.cat === 'Parts') badgeClass = 'tag-parts';
+
+                var card = document.createElement('div');
+                card.className = 'receipt-card';
+                card.innerHTML = '<div style="display:flex; justify-space-between; align-items:center;">' +
+                                 '<span class="receipt-tag-badge ' + badgeClass + '">' + r.cat + '</span>' +
+                                 '<span style="color:#94a3b8; font-size:0.75rem; font-weight:800;">📅 ' + r.date + ' ⏰ ' + (r.time || '') + '</span>' +
+                                 '</div>' +
+                                 (r.imgData ? '<img src="' + r.imgData + '" alt="Receipt Image">' : '<div style="height:100px; background:#000; border-radius:6px; display:flex; align-items:center; justify-content:center; color:#64748b; font-size:0.85rem;">No Photo Attached</div>') +
+                                 '<div style="font-weight:800; color:#ffffff; font-size:0.95rem;">' + r.vendor + '</div>' +
+                                 '<div style="font-weight:900; color:#38bdf8; font-size:1.1rem;">$' + (r.amount || 0).toLocaleString() + ' JMD</div>' +
+                                 '<div style="display:flex; gap:4px; margin-top:4px;">' +
+                                 '<button style="background:#25d366; color:#fff; border:none; padding:6px; border-radius:4px; font-weight:800; cursor:pointer; flex:1; font-size:0.78rem;" onclick="shareVaultReceiptWhatsApp(' + r.id + ')">📱 WhatsApp</button>' +
+                                 '<button style="background:#ea4335; color:#fff; border:none; padding:6px; border-radius:4px; font-weight:800; cursor:pointer; flex:1; font-size:0.78rem;" onclick="emailVaultReceipt(' + r.id + ')">✉️ Email</button>' +
+                                 '<button style="background:#dc2626; color:#fff; border:none; padding:6px; border-radius:4px; font-weight:800; cursor:pointer; flex:1; font-size:0.78rem;" onclick="deleteVaultReceipt(' + r.id + ')">🗑️</button>' +
+                                 '</div>';
+                container.appendChild(card);
+            }
+        }
+
+        async function shareVaultReceiptWhatsApp(id) {
+            var receipts = getStoredVaultReceipts();
+            var r = receipts.find(function(item) { return item.id === id; });
+            if (!r) return;
+
+            var msg = "D&C REFUSE TRUCKING - RECEIPT RECORD\n\n" +
+                      "Category: " + r.cat + "\n" +
+                      "Date & Time: " + r.date + " at " + (r.time || '') + "\n" +
+                      "Vendor: " + r.vendor + "\n" +
+                      "Amount Paid: $" + (r.amount || 0).toLocaleString() + " JMD\n\n" +
+                      "Kingston & Portmore Hub, Jamaica.";
+
+            if (r.imgData && navigator.canShare) {
+                try {
+                    var blob = await (await fetch(r.imgData)).blob();
+                    var file = new File([blob], r.cat + "_receipt.jpg", { type: "image/jpeg" });
+                    if (navigator.canShare({ files: [file] })) {
+                        await navigator.share({ files: [file], title: "Receipt Record", text: msg });
+                        return;
+                    }
+                } catch(e) {}
+            }
+
+            window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+        }
+
+        function emailVaultReceipt(id) {
+            var receipts = getStoredVaultReceipts();
+            var r = receipts.find(function(item) { return item.id === id; });
+            if (!r) return;
+
+            var body = "D&C REFUSE TRUCKING - OFFICIAL RECEIPT STATEMENT\n\n" +
+                       "Category: " + r.cat + "\n" +
+                       "Date & Time: " + r.date + " at " + (r.time || '') + "\n" +
+                       "Vendor: " + r.vendor + "\n" +
+                       "Amount Paid: $" + (r.amount || 0).toLocaleString() + " JMD\n\n" +
+                       "D&C Refuse Trucking & Equipment Co. Limited";
+
+            window.open("mailto:?subject=" + encodeURIComponent("Receipt Record: " + r.vendor) + "&body=" + encodeURIComponent(body), "_blank");
         }
 
         function saveMechanicProfile() {
@@ -2826,9 +3322,8 @@
             }
         }
 
-        // SAVE FIRST, THEN AUTO-SCAN TO FILL BLANKS
         async function scanDocWithOCR(docType) {
-            saveVehicleDoc(docType); // Save current state first
+            saveVehicleDoc(docType);
 
             var fileInput = document.getElementById('doc-' + docType + '-file');
             var statusDiv = document.getElementById('ocr-status-' + docType);
@@ -2836,7 +3331,6 @@
             var notesText = document.getElementById('doc-' + docType + '-text');
 
             if (!fileInput.files || fileInput.files.length === 0) {
-                // Check if already saved in storage
                 var saved = localStorage.getItem("dc_doc_" + docType);
                 if (!saved) {
                     alert("Please choose a file first, press Save, then press Auto-Scan.");
@@ -2847,9 +3341,7 @@
             statusDiv.innerText = "⏳ Scanning saved document via OCR... Please wait.";
 
             try {
-                // Use file from input or fallback to saved image preview source
                 var fileToScan = (fileInput.files && fileInput.files[0]) ? fileInput.files[0] : document.getElementById('doc-' + docType + '-img-preview').src;
-                
                 var worker = await Tesseract.createWorker('eng');
                 var ret = await worker.recognize(fileToScan);
                 var text = ret.data.text;
@@ -2872,14 +3364,13 @@
                 }
 
                 updateDocBadges();
-                saveVehicleDoc(docType); // Save again with auto-filled data
+                saveVehicleDoc(docType);
             } catch (err) {
                 console.error(err);
                 statusDiv.innerText = "❌ OCR scan failed. Enter date manually.";
             }
         }
 
-        // READ & DISPLAY SELECTED FILE IMAGE DIRECTLY WITH PDF CONVERSION
         function handleDocFileSelect(docType) {
             var fileInput = document.getElementById('doc-' + docType + '-file');
             var imgPreview = document.getElementById('doc-' + docType + '-img-preview');
@@ -2896,10 +3387,7 @@
                             var typedarray = new Uint8Array(this.result);
                             var pdf = await pdfjsLib.getDocument(typedarray).promise;
                             var page = await pdf.getPage(1);
-                            
-                            var scale = 1.8; 
-                            var viewport = page.getViewport({ scale: scale });
-                            
+                            var viewport = page.getViewport({ scale: 1.8 });
                             var canvas = document.createElement('canvas');
                             var context = canvas.getContext('2d');
                             canvas.height = viewport.height;
@@ -2997,7 +3485,6 @@
             }
         }
 
-        // NATIVE FILE SHARE VIA WHATSAPP (SENDS REAL PHOTO FILE)
         async function shareVehicleDocNative(docType) {
             var num = document.getElementById('doc-' + docType + '-num').value || 'N/A';
             var expiry = document.getElementById('doc-' + docType + '-expiry').value || 'N/A';
@@ -3019,18 +3506,13 @@
                               (text ? "Notes: " + text + "\n" : "") + "\n" +
                               "Kingston & Portmore Hub, Jamaica.";
 
-            // IF IMAGE DATA EXISTS AND NAVIGATOR SHARE CAN HANDLE FILES
             if (imgPreview.src && imgPreview.style.display !== 'none' && navigator.canShare) {
                 try {
                     var blob = await (await fetch(imgPreview.src)).blob();
                     var file = new File([blob], docType + "_document.jpg", { type: "image/jpeg" });
 
                     if (navigator.canShare({ files: [file] })) {
-                        await navigator.share({
-                            files: [file],
-                            title: title,
-                            text: messageText
-                        });
+                        await navigator.share({ files: [file], title: title, text: messageText });
                         return;
                     }
                 } catch (err) {
@@ -3038,12 +3520,10 @@
                 }
             }
 
-            // FALLBACK TO REGULAR WHATSAPP WEB TEXT LINK IF FILE CANNOT BE ATTACHED DIRECTLY
             var url = "https://wa.me/?text=" + encodeURIComponent(messageText);
             window.open(url, "_blank");
         }
 
-        // DIRECT EMAIL DOCUMENT SHARE WITH TEXT AND ATTACHMENT PROMPT
         function emailVehicleDoc(docType) {
             var num = document.getElementById('doc-' + docType + '-num').value || 'N/A';
             var expiry = document.getElementById('doc-' + docType + '-expiry').value || 'N/A';
@@ -3121,6 +3601,7 @@
                     loadMaintenanceLogs();
                     loadCrewPreferences();
                     loadVehicleDocs();
+                    loadVaultReceiptGallery();
                 } catch (err) {
                     alert("Error reading backup file. Please make sure it is a valid backup .json file.");
                 }
@@ -3554,10 +4035,7 @@
                                 var typedarray = new Uint8Array(this.result);
                                 var pdf = await pdfjsLib.getDocument(typedarray).promise;
                                 var page = await pdf.getPage(1);
-                                
-                                var scale = 2.0; 
-                                var viewport = page.getViewport({ scale: scale });
-                                
+                                var viewport = page.getViewport({ scale: 2.0 });
                                 var canvas = document.createElement('canvas');
                                 var context = canvas.getContext('2d');
                                 canvas.height = viewport.height;
@@ -4048,8 +4526,8 @@
             }
 
             var rev = 0;
-            var jobExp = 0;
-            var wages = 0;
+            var totalPetrolSpend = 0;
+            var totalCrewWages = 0;
 
             var totalUnpaidRate = 0;
             var totalUnpaidDriverPay = 0;
@@ -4059,13 +4537,11 @@
             for (var a = 0; a < filteredJobs.length; a++) {
                 var aj = filteredJobs[a];
                 var wagesForJob = (aj.driverPay || 0) + (aj.asstPay || 0);
-                var aExp = wagesForJob + (aj.petrol || 0);
                 rev += aj.rate;
-                jobExp += aExp;
-                wages += wagesForJob;
+                totalPetrolSpend += (aj.petrol || 0);
+                totalCrewWages += wagesForJob;
 
-                if (aj.status === 'PAID') {
-                } else {
+                if (aj.status !== 'PAID') {
                     totalUnpaidRate += (aj.rate || 0);
                     totalUnpaidDriverPay += (aj.driverPay || 0);
                     totalUnpaidAsstPay += (aj.asstPay || 0);
@@ -4100,8 +4576,8 @@
             var netProfit = paidRev - grandTotalExpenses;
 
             document.getElementById('all-revenue').innerText = '$' + paidRev.toLocaleString() + ' JMD (Paid)';
-            document.getElementById('all-expenses').innerText = '$' + grandTotalExpenses.toLocaleString() + ' JMD';
-            document.getElementById('all-wages').innerText = '$' + wages.toLocaleString() + ' JMD';
+            if (document.getElementById('all-petrol')) document.getElementById('all-petrol').innerText = '$' + totalPetrolSpend.toLocaleString() + ' JMD';
+            document.getElementById('all-wages').innerText = '$' + totalCrewWages.toLocaleString() + ' JMD';
             document.getElementById('all-maint').innerText = '$' + totalMaintCost.toLocaleString() + ' JMD';
             document.getElementById('all-profit').innerText = '$' + netProfit.toLocaleString() + ' JMD';
             document.getElementById('all-count').innerText = filteredJobs.length + (filteredJobs.length === 1 ? ' Job' : ' Jobs');
@@ -4111,21 +4587,25 @@
             });
 
             var weekRev = 0;
-            var weekExp = 0;
+            var weekPetrol = 0;
+            var weekWages = 0;
 
             var currentWeekJobs = allJobs.filter(function(j) { return isCurrentWeek(j.date); });
             for (var w = 0; w < currentWeekJobs.length; w++) {
                 var wj = currentWeekJobs[w];
                 if (wj.status === 'PAID') {
-                    var wExp = wj.driverPay + wj.asstPay + wj.petrol;
                     weekRev += wj.rate;
-                    weekExp += wExp;
+                    weekPetrol += (wj.petrol || 0);
+                    weekWages += (wj.driverPay || 0) + (wj.asstPay || 0);
                 }
             }
 
+            var weekTotalExp = weekPetrol + weekWages;
+
             document.getElementById('sum-revenue').innerText = '$' + weekRev.toLocaleString() + ' JMD';
-            document.getElementById('sum-expenses').innerText = '$' + weekExp.toLocaleString() + ' JMD';
-            document.getElementById('sum-profit').innerText = '$' + (weekRev - weekExp).toLocaleString() + ' JMD';
+            if (document.getElementById('sum-petrol-cost')) document.getElementById('sum-petrol-cost').innerText = '$' + weekPetrol.toLocaleString() + ' JMD';
+            if (document.getElementById('sum-crew-wages')) document.getElementById('sum-crew-wages').innerText = '$' + weekWages.toLocaleString() + ' JMD';
+            document.getElementById('sum-profit').innerText = '$' + (weekRev - weekTotalExp).toLocaleString() + ' JMD';
             document.getElementById('sum-count').innerText = currentWeekJobs.length + (currentWeekJobs.length === 1 ? ' Job' : ' Jobs');
 
             if (tableJobs.length === 0) {
@@ -4184,10 +4664,15 @@
 
         window.addEventListener('DOMContentLoaded', function() {
             populateTownDatalists();
-            loadVehicleDocs();
-            loadTrackerJobs();
-            loadMaintenanceLogs();
-            loadCrewPreferences();
+            
+            if (sessionStorage.getItem('dnc_unlocked') === 'true') {
+                unlockSystemUI();
+                if (sessionStorage.getItem('dnc_keep_online') === 'true') {
+                    toggleOnlineStatus();
+                }
+            } else {
+                lockSystemAndTrap();
+            }
         });
     </script>
 </body>
