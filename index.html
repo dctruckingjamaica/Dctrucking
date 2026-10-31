@@ -2712,8 +2712,6 @@
 
             if (isOnlineMode) {
                 clearTimeout(idleTimer);
-                // When ONLINE, lift the back button block so normal navigation works
-                window.onpopstate = null;
                 btn.style.background = "#00ff66";
                 btn.style.color = "#000";
                 btn.innerText = "🟢 ONLINE (Stay Awake)";
@@ -2755,6 +2753,7 @@
             sessionStorage.removeItem('dnc_unlocked');
             sessionStorage.removeItem('dnc_keep_online');
 
+            // HARD SHIELD: Instantly hide the private manager panel from view
             var panel = document.getElementById('manager-panel');
             if (panel) panel.style.display = 'none';
 
@@ -2766,31 +2765,9 @@
                 btn.innerText = "🔴 Toggle ONLINE";
             }
             if (statusLabel) {
-                statusLabel.innerText = "🔴 OFFLINE (Locked Down)";
+                statusLabel.innerText = "🔴 OFFLINE (Hard Locked)";
                 statusLabel.style.color = "#ff3333";
             }
-
-            // WHEN OFFLINE: Force multiple history entries so back button stays trapped securely
-            for (let i = 0; i < 5; i++) {
-                history.pushState({ locked: true }, "", location.href);
-            }
-            
-            window.onpopstate = function (event) {
-                if (!isOnlineMode && !sessionStorage.getItem('dnc_unlocked')) {
-                    history.pushState({ locked: true }, "", location.href);
-                    
-                    // Show banner warning instead of dismissible alert box loophole
-                    let warningBanner = document.getElementById('lockdownWarningBanner');
-                    if (!warningBanner) {
-                        warningBanner = document.createElement('div');
-                        warningBanner.id = 'lockdownWarningBanner';
-                        warningBanner.style.cssText = "position:fixed; top:0; left:0; width:100%; background:#991b1b; color:#fff; text-align:center; padding:12px; font-weight:900; z-index:99999; font-size:14px; box-shadow:0 4px 15px rgba(0,0,0,0.5);";
-                        warningBanner.innerHTML = "🔒 SECURITY LOCK ACTIVE: Manager panel is offline and protected.";
-                        document.body.prepend(warningBanner);
-                        setTimeout(() => { warningBanner.remove(); }, 3500);
-                    }
-                }
-            };
         }
 
         ['click', 'touchstart', 'mousemove', 'keypress'].forEach(function(evt) {
@@ -4690,11 +4667,10 @@
                     lockSystemAndTrap();
                 }
             } else {
-                // Public visitor mode: Normal browsing, no back-button restriction
+                // Public visitor mode: Normal browsing, manager panel hidden
                 var panel = document.getElementById('manager-panel');
                 if (panel) panel.style.display = 'none';
                 isOnlineMode = false;
-                window.onpopstate = null;
             }
         });
     </script>
