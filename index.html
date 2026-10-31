@@ -2344,7 +2344,7 @@
                     </div>
                 </div>
 
-                <!-- 3-CATEGORY RECEIPT VAULT & OCR AUTO-SCANNER SECTION (POSITIONED AFTER MAINTENANCE & BEFORE DOCUMENTS) -->
+                <!-- 3-CATEGORY RECEIPT VAULT & OCR AUTO-SCANNER SECTION -->
                 <div class="receipt-uploader-box">
                     <h5>🧾 3-Category Smart Receipt Vault & OCR Scanner</h5>
                     <p style="color: #e9d5ff; font-size: 0.92rem; margin-bottom: 12px;">Select category below, upload photo or PDF (from My Files, WhatsApp, or Email), auto-scan with OCR, and store in your digital vault gallery!</p>
@@ -2766,19 +2766,29 @@
                 btn.innerText = "🔴 Toggle ONLINE";
             }
             if (statusLabel) {
-                statusLabel.innerText = "🔴 OFFLINE (Auto-Lock Active)";
+                statusLabel.innerText = "🔴 OFFLINE (Locked Down)";
                 statusLabel.style.color = "#ff3333";
             }
 
-            // WHEN OFFLINE: Engage strict history replacement barrier & trap back button
-            history.replaceState({ locked: true }, "", location.href);
-            history.pushState({ locked: true }, "", location.href);
-            history.pushState({ locked: true }, "", location.href);
+            // WHEN OFFLINE: Force multiple history entries so back button stays trapped securely
+            for (let i = 0; i < 5; i++) {
+                history.pushState({ locked: true }, "", location.href);
+            }
             
             window.onpopstate = function (event) {
                 if (!isOnlineMode && !sessionStorage.getItem('dnc_unlocked')) {
                     history.pushState({ locked: true }, "", location.href);
-                    alert("🔒 Security Lock Active: Enter your 6-digit PIN to unlock dispatcher controls.");
+                    
+                    // Show banner warning instead of dismissible alert box loophole
+                    let warningBanner = document.getElementById('lockdownWarningBanner');
+                    if (!warningBanner) {
+                        warningBanner = document.createElement('div');
+                        warningBanner.id = 'lockdownWarningBanner';
+                        warningBanner.style.cssText = "position:fixed; top:0; left:0; width:100%; background:#991b1b; color:#fff; text-align:center; padding:12px; font-weight:900; z-index:99999; font-size:14px; box-shadow:0 4px 15px rgba(0,0,0,0.5);";
+                        warningBanner.innerHTML = "🔒 SECURITY LOCK ACTIVE: Manager panel is offline and protected.";
+                        document.body.prepend(warningBanner);
+                        setTimeout(() => { warningBanner.remove(); }, 3500);
+                    }
                 }
             };
         }
@@ -4672,7 +4682,6 @@
         window.addEventListener('DOMContentLoaded', function() {
             populateTownDatalists();
             
-            // CORRECTED INITIALIZATION: Start completely open and normal for public visitors
             if (sessionStorage.getItem('dnc_unlocked') === 'true') {
                 unlockSystemUI();
                 if (sessionStorage.getItem('dnc_keep_online') === 'true') {
