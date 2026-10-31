@@ -2712,6 +2712,7 @@
 
             if (isOnlineMode) {
                 clearTimeout(idleTimer);
+                // When ONLINE, lift the back button block so normal navigation works
                 window.onpopstate = null;
                 btn.style.background = "#00ff66";
                 btn.style.color = "#000";
@@ -2744,6 +2745,7 @@
             loadVehicleDocs();
             updateDynamicPartsDatalist();
             loadVaultReceiptGallery();
+            
             resetIdleTimer();
         }
 
@@ -2768,13 +2770,14 @@
                 statusLabel.style.color = "#ff3333";
             }
 
-            // AGGRESSIVE ANTI-BACK BUTTON TRAP
-            history.pushState(null, "", location.href);
-            history.pushState(null, "", location.href);
+            // WHEN OFFLINE: Engage strict history replacement barrier & trap back button
+            history.replaceState({ locked: true }, "", location.href);
+            history.pushState({ locked: true }, "", location.href);
+            history.pushState({ locked: true }, "", location.href);
             
-            window.onpopstate = function () {
+            window.onpopstate = function (event) {
                 if (!isOnlineMode && !sessionStorage.getItem('dnc_unlocked')) {
-                    history.pushState(null, "", location.href);
+                    history.pushState({ locked: true }, "", location.href);
                     alert("🔒 Security Lock Active: Enter your 6-digit PIN to unlock dispatcher controls.");
                 }
             };
@@ -4669,13 +4672,20 @@
         window.addEventListener('DOMContentLoaded', function() {
             populateTownDatalists();
             
+            // CORRECTED INITIALIZATION: Start completely open and normal for public visitors
             if (sessionStorage.getItem('dnc_unlocked') === 'true') {
                 unlockSystemUI();
                 if (sessionStorage.getItem('dnc_keep_online') === 'true') {
                     toggleOnlineStatus();
+                } else {
+                    lockSystemAndTrap();
                 }
             } else {
-                lockSystemAndTrap();
+                // Public visitor mode: Normal browsing, no back-button restriction
+                var panel = document.getElementById('manager-panel');
+                if (panel) panel.style.display = 'none';
+                isOnlineMode = false;
+                window.onpopstate = null;
             }
         });
     </script>
