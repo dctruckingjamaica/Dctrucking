@@ -1384,7 +1384,7 @@
         /* ISOLATED PAYSLIP HEADER STYLING FOR ENLARGED LOGO & PULLED-IN TEXT */
         #payslip-preview .inv-header {
             display: grid;
-            grid-template-columns: 210px 1fr;
+            grid-template-columns: 230px 1fr;
             align-items: center;
             border-bottom: 2px solid #1a531f;
             padding-bottom: 6px; 
@@ -1392,7 +1392,7 @@
         }
 
         #payslip-preview .inv-logo-box {
-            width: 210px;
+            width: 230px;
             background: transparent !important; 
             border: none !important;             
             box-shadow: none !important;
@@ -1402,7 +1402,7 @@
 
         #payslip-preview .inv-logo-box img {
             width: 100%;
-            max-height: 115px; /* Slightly larger logo */
+            max-height: 135px; /* Noticeably larger logo box height */
             object-fit: contain;
             display: block;
             background: transparent !important;
@@ -1415,7 +1415,7 @@
         #payslip-preview .inv-title-box {
             min-width: 0;
             text-align: left;
-            margin-left: -25px; /* Pulls header text closer to the logo */
+            margin-left: -20px; /* Kept header text close to logo without touching lower layout */
         }
 
         .inv-title-main {
@@ -2225,10 +2225,10 @@
                     </div>
                 </div>
 
-                <!-- VEHICLE DOCUMENT VAULT WITH AUTO-SAVE & OCR LINKED -->
+                <!-- VEHICLE DOCUMENT VAULT WITH AUTOMATIC PDF CONVERSION SUPPORT -->
                 <div class="doc-vault-box">
                     <h5>📑 Vehicle Document Vault & OCR Auto-Scanner</h5>
-                    <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Choose file, press <strong>Save</strong> to store your picture, then press <strong>Auto-Scan</strong> to fill out the blanks automatically. Share directly via WhatsApp or Email anytime!</p>
+                    <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Choose file (Photo or PDF Document), press <strong>Save</strong> to store your document, then press <strong>Auto-Scan</strong> to fill out the blanks automatically. Share directly via WhatsApp or Email anytime!</p>
                     
                     <div class="doc-grid">
                         <!-- ROAD LICENCE CARD -->
@@ -2241,8 +2241,8 @@
                             <input type="text" id="doc-roadlicence-num" placeholder="Licence #">
                             <label>Expiry Date:</label>
                             <input type="date" id="doc-roadlicence-expiry" onchange="updateDocBadges()">
-                            <label>Attach Official Document Photo:</label>
-                            <input type="file" id="doc-roadlicence-file" accept="image/*" onchange="handleDocFileSelect('roadlicence')">
+                            <label>Attach Official Document (Photo or PDF):</label>
+                            <input type="file" id="doc-roadlicence-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('roadlicence')">
                             <img id="doc-roadlicence-img-preview" class="doc-preview-img" alt="Road Licence Preview">
                             <div id="ocr-status-roadlicence" class="ocr-status-text"></div>
                             <label>Notes / Details:</label>
@@ -2265,8 +2265,8 @@
                             <input type="text" id="doc-insurance-num" placeholder="Policy #">
                             <label>Expiry Date:</label>
                             <input type="date" id="doc-insurance-expiry" onchange="updateDocBadges()">
-                            <label>Attach Official Document Photo:</label>
-                            <input type="file" id="doc-insurance-file" accept="image/*" onchange="handleDocFileSelect('insurance')">
+                            <label>Attach Official Document (Photo or PDF):</label>
+                            <input type="file" id="doc-insurance-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('insurance')">
                             <img id="doc-insurance-img-preview" class="doc-preview-img" alt="Insurance Preview">
                             <div id="ocr-status-insurance" class="ocr-status-text"></div>
                             <label>Broker / Insurer Notes:</label>
@@ -2289,8 +2289,8 @@
                             <input type="text" id="doc-fitness-num" placeholder="Fitness Cert #">
                             <label>Expiry Date:</label>
                             <input type="date" id="doc-fitness-expiry" onchange="updateDocBadges()">
-                            <label>Attach Official Document Photo:</label>
-                            <input type="file" id="doc-fitness-file" accept="image/*" onchange="handleDocFileSelect('fitness')">
+                            <label>Attach Official Document (Photo or PDF):</label>
+                            <input type="file" id="doc-fitness-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('fitness')">
                             <img id="doc-fitness-img-preview" class="doc-preview-img" alt="Fitness Preview">
                             <div id="ocr-status-fitness" class="ocr-status-text"></div>
                             <label>Notes:</label>
@@ -2313,8 +2313,8 @@
                             <input type="text" id="doc-registration-num" placeholder="Registration #">
                             <label>Renewal Date / Date Issued:</label>
                             <input type="date" id="doc-registration-expiry" onchange="updateDocBadges()">
-                            <label>Attach Official Document Photo:</label>
-                            <input type="file" id="doc-registration-file" accept="image/*" onchange="handleDocFileSelect('registration')">
+                            <label>Attach Official Document (Photo or PDF):</label>
+                            <input type="file" id="doc-registration-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('registration')">
                             <img id="doc-registration-img-preview" class="doc-preview-img" alt="Registration Title Preview">
                             <div id="ocr-status-registration" class="ocr-status-text"></div>
                             <label>Notes:</label>
@@ -2826,7 +2826,7 @@
                 // Check if already saved in storage
                 var saved = localStorage.getItem("dc_doc_" + docType);
                 if (!saved) {
-                    alert("Please choose an image file first, press Save, then press Auto-Scan.");
+                    alert("Please choose a file first, press Save, then press Auto-Scan.");
                     return;
                 }
             }
@@ -2866,18 +2866,53 @@
             }
         }
 
-        // READ & DISPLAY SELECTED FILE IMAGE DIRECTLY
+        // READ & DISPLAY SELECTED FILE IMAGE DIRECTLY WITH PDF CONVERSION
         function handleDocFileSelect(docType) {
             var fileInput = document.getElementById('doc-' + docType + '-file');
             var imgPreview = document.getElementById('doc-' + docType + '-img-preview');
+            var statusDiv = document.getElementById('ocr-status-' + docType);
 
             if (fileInput.files && fileInput.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    imgPreview.src = e.target.result;
-                    imgPreview.style.display = 'block';
-                };
-                reader.readAsDataURL(fileInput.files[0]);
+                var file = fileInput.files[0];
+
+                if (file.type === 'application/pdf') {
+                    if (statusDiv) statusDiv.innerText = "⏳ Converting PDF document to photo preview...";
+                    var fileReader = new FileReader();
+                    fileReader.onload = async function() {
+                        try {
+                            var typedarray = new Uint8Array(this.result);
+                            var pdf = await pdfjsLib.getDocument(typedarray).promise;
+                            var page = await pdf.getPage(1);
+                            
+                            var scale = 1.8; 
+                            var viewport = page.getViewport({ scale: scale });
+                            
+                            var canvas = document.createElement('canvas');
+                            var context = canvas.getContext('2d');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+
+                            await page.render({ canvasContext: context, viewport: viewport }).promise;
+                            var imageUrl = canvas.toDataURL('image/jpeg', 0.95);
+
+                            imgPreview.src = imageUrl;
+                            imgPreview.style.display = 'block';
+                            if (statusDiv) statusDiv.innerText = "✅ PDF converted to picture successfully!";
+                        } catch (err) {
+                            console.error(err);
+                            if (statusDiv) statusDiv.innerText = "❌ PDF conversion failed.";
+                        }
+                    };
+                    fileReader.readAsArrayBuffer(file);
+                } else {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        imgPreview.src = e.target.result;
+                        imgPreview.style.display = 'block';
+                        if (statusDiv) statusDiv.innerText = "";
+                    };
+                    reader.readAsDataURL(file);
+                }
             }
         }
 
