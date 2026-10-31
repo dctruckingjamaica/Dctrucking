@@ -1168,18 +1168,32 @@
                 </div>
             </div>
 
-            <!-- OFFICIAL INVOICE GENERATION SECTION WITH WHATSAPP/FILES OCR SCANNER -->
+            <!-- OFFICIAL INVOICE GENERATION SECTION WITH FILE PICKER & WHATSAPP TEXT PASTE BOX -->
             <div style="background: #03140b; border: 1.5px solid var(--primary-green); padding: 16px; border-radius: 10px; margin-bottom: 20px;">
                 <div style="margin-bottom: 12px;">
                     <h5 style="color: var(--primary-green); font-size: 1.1rem; font-weight: 900; text-transform: uppercase;">📄 Official Invoice & WhatsApp Request Auto-Scanner</h5>
-                    <p style="color: #cbd5e1; font-size: 0.88rem;">Upload a customer's WhatsApp screenshot, quote request, or PDF from My Files to auto-fill details, or type/adjust them manually below.</p>
+                    <p style="color: #cbd5e1; font-size: 0.88rem;">Upload a screenshot/PDF file or paste a copied WhatsApp message below to auto-fill details instantly!</p>
                 </div>
 
+                <!-- OPTION A: FILE UPLOADER (GALLERY / MY FILES / DRIVE) -->
+                <div style="background: #052410; border: 1px solid #1c4d28; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                    <label style="color: var(--primary-green); font-weight: 800; font-size: 0.88rem; display: block; margin-bottom: 6px;">📁 Choose File / Screenshot (Gallery, My Files, Drive, Photos):</label>
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <input type="file" id="inv-whatsapp-file" accept="image/*,application/pdf" style="padding: 8px; background: #000; color: #fff; border: 1px solid #22c55e; border-radius: 6px; flex: 1; min-width: 220px;" onchange="handleInvoiceFileSelect()">
+                        <button type="button" class="btn-gen" style="background: #059669; color: #fff; padding: 10px 16px; font-size: 0.95rem; min-width: 160px;" onclick="scanInvoiceFileOCR()">🔍 Auto-Scan File OCR</button>
+                    </div>
+                    <div id="inv-file-ocr-status" class="ocr-status-text" style="margin-top: 4px;"></div>
+                </div>
+
+                <!-- OPTION B: PASTE WHATSAPP TEXT BOX -->
                 <div style="background: #052410; border: 1px solid #1c4d28; padding: 12px; border-radius: 8px; margin-bottom: 14px;">
-                    <label style="color: #38bdf8; font-weight: 800; font-size: 0.88rem; display: block; margin-bottom: 6px;">📱 Attach Customer WhatsApp Request / Screenshot / PDF:</label>
-                    <input type="file" id="inv-whatsapp-file" accept="image/*,application/pdf" style="padding: 8px; background: #000; color: #fff; border: 1px solid #38bdf8; border-radius: 6px; width: 100%; margin-bottom: 8px;" onchange="handleInvoiceFileSelect()">
-                    <div id="inv-ocr-status" class="ocr-status-text" style="margin-bottom: 8px;"></div>
-                    <button type="button" class="btn-gen" style="background: #0284c7; color: #fff; width: 100%; padding: 10px; font-size: 0.95rem;" onclick="scanInvoiceRequestOCR()">🔍 Auto-Scan WhatsApp Request & Fill Invoice</button>
+                    <label style="color: #38bdf8; font-weight: 800; font-size: 0.88rem; display: block; margin-bottom: 6px;">📱 Or Paste Copied WhatsApp Customer Request Text Here:</label>
+                    <textarea id="inv-whatsapp-text-paste" rows="2" placeholder="Paste WhatsApp message here (e.g. 'Hey Dale, need truck from Kingston to Mandeville. John Brown, 876-555-0199')..." style="width: 100%; padding: 10px; background: #000; color: #fff; border: 1px solid #38bdf8; border-radius: 6px; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;"></textarea>
+                    
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn-gen" style="background: #0284c7; color: #fff; flex: 1; min-width: 180px; padding: 10px; font-size: 0.95rem;" onclick="parseWhatsAppTextToInvoice()">⚡ Auto-Parse Pasted WhatsApp Text</button>
+                        <button type="button" class="btn-gen" style="background: #a855f7; color: #fff; flex: 1; min-width: 180px; padding: 10px; font-size: 0.95rem;" onclick="clearPasteBox()">🗑️ Clear Box</button>
+                    </div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 14px;">
@@ -2281,12 +2295,12 @@
 
         function handleInvoiceFileSelect() {
             var fileInput = document.getElementById('inv-whatsapp-file');
-            var statusDiv = document.getElementById('inv-ocr-status');
+            var statusDiv = document.getElementById('inv-file-ocr-status');
 
             if (fileInput.files && fileInput.files[0]) {
                 var file = fileInput.files[0];
                 if (file.type === 'application/pdf') {
-                    statusDiv.innerText = "⏳ Converting PDF request to preview...";
+                    statusDiv.innerText = "⏳ Converting PDF file from My Files to photo preview...";
                     var fileReader = new FileReader();
                     fileReader.onload = async function() {
                         try {
@@ -2300,7 +2314,7 @@
                             canvas.width = viewport.width;
                             await page.render({ canvasContext: context, viewport: viewport }).promise;
                             currentInvoiceFileConverted = canvas.toDataURL('image/jpeg', 0.95);
-                            statusDiv.innerText = "✅ PDF request converted successfully!";
+                            statusDiv.innerText = "✅ PDF file converted successfully!";
                         } catch(e) {
                             statusDiv.innerText = "❌ PDF conversion failed.";
                         }
@@ -2310,21 +2324,21 @@
                     var reader = new FileReader();
                     reader.onload = function(e) {
                         currentInvoiceFileConverted = e.target.result;
-                        statusDiv.innerText = "✅ File attached successfully!";
+                        statusDiv.innerText = "✅ File selected from Gallery/Files!";
                     };
                     reader.readAsDataURL(file);
                 }
             }
         }
 
-        async function scanInvoiceRequestOCR() {
-            var statusDiv = document.getElementById('inv-ocr-status');
+        async function scanInvoiceFileOCR() {
+            var statusDiv = document.getElementById('inv-file-ocr-status');
             if (!currentInvoiceFileConverted) {
-                alert("Please select a WhatsApp screenshot, photo, or PDF request file first.");
+                alert("Please select a photo or PDF file first.");
                 return;
             }
 
-            statusDiv.innerText = "⏳ Scanning request text via OCR... Please wait.";
+            statusDiv.innerText = "⏳ Scanning file text via OCR... Please wait.";
 
             try {
                 var worker = await Tesseract.createWorker('eng');
@@ -2332,7 +2346,7 @@
                 var text = ret.data.text;
                 await worker.terminate();
 
-                statusDiv.innerText = "✅ WhatsApp Request OCR Scan Complete!";
+                statusDiv.innerText = "✅ OCR Scan Complete! Fields filled.";
 
                 var phoneMatch = text.match(/(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})|(\+?\d{10,13})/);
                 if (phoneMatch) {
@@ -2355,12 +2369,51 @@
                 }
 
                 var lines = text.split('\n').filter(Boolean);
-                if (lines.length > 0 && !document.getElementById('manual-inv-client').value) {
-                    document.getElementById('manual-inv-client').value = lines[0].substring(0, 30);
+                if (lines.length > 0) {
+                    document.getElementById('manual-inv-client').value = lines[0].substring(0, 35);
                 }
             } catch (err) {
-                statusDiv.innerText = "❌ OCR scan failed. You can enter details manually.";
+                statusDiv.innerText = "❌ OCR scan failed. Please enter details manually.";
             }
+        }
+
+        function clearPasteBox() {
+            document.getElementById('inv-whatsapp-text-paste').value = '';
+        }
+
+        function parseWhatsAppTextToInvoice() {
+            var text = document.getElementById('inv-whatsapp-text-paste').value.trim();
+            if (!text) {
+                alert("Please paste the WhatsApp customer request text into the box first.");
+                return;
+            }
+
+            var phoneMatch = text.match(/(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})|(\+?\d{10,13})/);
+            if (phoneMatch) {
+                document.getElementById('manual-inv-phone').value = phoneMatch[0];
+            }
+
+            var emailMatch = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+            if (emailMatch) {
+                document.getElementById('manual-inv-email').value = emailMatch[0];
+            }
+
+            var textLower = text.toLowerCase();
+            for (var place in privateCustomerRates) {
+                if (textLower.includes(place)) {
+                    var capitalizedPlace = place.replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+                    document.getElementById('manual-inv-dest').value = capitalizedPlace;
+                    document.getElementById('manual-inv-amount').value = privateCustomerRates[place];
+                    break;
+                }
+            }
+
+            var lines = text.split('\n').filter(Boolean);
+            if (lines.length > 0) {
+                document.getElementById('manual-inv-client').value = lines[0].substring(0, 35);
+            }
+
+            alert("⚡ WhatsApp Text Parsed Successfully! Fields auto-filled below.");
         }
 
         var truckPartsCatalog = {
@@ -3269,6 +3322,7 @@
 
         function sendWhatsAppInvoice() {
             var client = document.getElementById('out-client').innerText;
+            var phone = document.getElementById('manual-inv-phone').value.trim().replace(/[^0-9]/g, '');
             var num = document.getElementById('out-num').innerText;
             var total = document.getElementById('out-amount').innerText;
             var deposit = document.getElementById('out-deposit').innerText;
@@ -3285,7 +3339,8 @@
                       "Balance Due: " + balance + "\n\n" +
                       "Kingston & Portmore Hub, Jamaica.";
 
-            window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+            var whatsappUrl = phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg) : "https://wa.me/?text=" + encodeURIComponent(msg);
+            window.open(whatsappUrl, "_blank");
         }
 
         function emailInvoice() {
