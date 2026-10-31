@@ -1168,12 +1168,48 @@
                 </div>
             </div>
 
-            <div style="background: #03140b; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                <div>
-                    <h5 style="color: var(--primary-green); font-size: 1rem; font-weight: 900; text-transform: uppercase;">📄 Official Invoice Generation</h5>
-                    <p style="color: #cbd5e1; font-size: 0.85rem;">Generate formal printable corporate quote or bill statement for the active client.</p>
+            <!-- OFFICIAL INVOICE GENERATION SECTION WITH WHATSAPP/FILES OCR SCANNER -->
+            <div style="background: #03140b; border: 1.5px solid var(--primary-green); padding: 16px; border-radius: 10px; margin-bottom: 20px;">
+                <div style="margin-bottom: 12px;">
+                    <h5 style="color: var(--primary-green); font-size: 1.1rem; font-weight: 900; text-transform: uppercase;">📄 Official Invoice & WhatsApp Request Auto-Scanner</h5>
+                    <p style="color: #cbd5e1; font-size: 0.88rem;">Upload a customer's WhatsApp screenshot, quote request, or PDF from My Files to auto-fill details, or type/adjust them manually below.</p>
                 </div>
-                <button class="btn-gen" style="min-width: 180px; padding: 10px 16px; font-size: 0.95rem;" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
+
+                <div style="background: #052410; border: 1px solid #1c4d28; padding: 12px; border-radius: 8px; margin-bottom: 14px;">
+                    <label style="color: #38bdf8; font-weight: 800; font-size: 0.88rem; display: block; margin-bottom: 6px;">📱 Attach Customer WhatsApp Request / Screenshot / PDF:</label>
+                    <input type="file" id="inv-whatsapp-file" accept="image/*,application/pdf" style="padding: 8px; background: #000; color: #fff; border: 1px solid #38bdf8; border-radius: 6px; width: 100%; margin-bottom: 8px;" onchange="handleInvoiceFileSelect()">
+                    <div id="inv-ocr-status" class="ocr-status-text" style="margin-bottom: 8px;"></div>
+                    <button type="button" class="btn-gen" style="background: #0284c7; color: #fff; width: 100%; padding: 10px; font-size: 0.95rem;" onclick="scanInvoiceRequestOCR()">🔍 Auto-Scan WhatsApp Request & Fill Invoice</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 14px;">
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Customer Name:</label>
+                        <input type="text" id="manual-inv-client" placeholder="e.g. John Brown" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Customer Phone / WhatsApp #:</label>
+                        <input type="text" id="manual-inv-phone" placeholder="e.g. 876-555-0199" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Customer Email:</label>
+                        <input type="text" id="manual-inv-email" placeholder="e.g. client@email.com" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Pickup Location:</label>
+                        <input type="text" id="manual-inv-pickup" value="Kingston & Portmore Depot" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Drop-off Town / Destination:</label>
+                        <input type="text" id="manual-inv-dest" list="jamaica-towns-list" placeholder="Type town (e.g. Mandeville)" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;" oninput="invoiceLiveAutoPrice()">
+                    </div>
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Total Haulage Rate (JMD):</label>
+                        <input type="number" id="manual-inv-amount" placeholder="0" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                    </div>
+                </div>
+
+                <button class="btn-gen" style="width: 100%; padding: 12px; font-size: 1rem;" onclick="generateInvoice()">📄 Generate Printable Invoice / Deposit Quote</button>
             </div>
             
             <div class="backup-data-box">
@@ -1861,7 +1897,7 @@
                     </div>
                 </div>
 
-                <p style="margin-bottom: 10px; color: #111827;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800; color: #111827;"></span> at <span id="out-pickup-time-text" style="font-weight: 800; color: #0284c7;"></span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800; color: #111827;"></span></p>
+                <p style="margin-bottom: 10px; color: #111827;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800; color: #111827;"></span> at <span id="out-pickup-time-text" style="font-weight: 800; color: #0284c7;">09:00 AM</span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800; color: #111827;"></span></p>
                 
                 <table style="margin-bottom: 12px; width: 100%; border-collapse: collapse;">
                     <thead>
@@ -1899,7 +1935,11 @@
                     <p><strong>Thank you for choosing D&C Refuse Trucking & Equipment Co. Limited!</strong></p>
                 </div>
                 <br>
-                <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff;" onclick="window.print()">🖨️ Print / Save as PDF</button>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff; flex: 1; min-width: 200px;" onclick="window.print()">🖨️ Print / Save PDF</button>
+                    <button class="btn-whatsapp btn-print" style="flex: 1; min-width: 200px;" onclick="sendWhatsAppInvoice()">📱 Send via WhatsApp</button>
+                    <button class="btn-doc-email btn-print" style="flex: 1; min-width: 200px;" onclick="emailInvoice()">✉️ Send via Email</button>
+                </div>
             </div>
 
             <div id="payslip-preview">
@@ -2222,6 +2262,104 @@
                     updateLiveProfit();
                     return;
                 }
+            }
+        }
+
+        function invoiceLiveAutoPrice() {
+            var typedVal = document.getElementById('manual-inv-dest').value.trim().toLowerCase();
+            if (!typedVal) return;
+
+            for (var place in privateCustomerRates) {
+                if (typedVal.includes(place) || place.includes(typedVal)) {
+                    document.getElementById('manual-inv-amount').value = privateCustomerRates[place];
+                    return;
+                }
+            }
+        }
+
+        var currentInvoiceFileConverted = null;
+
+        function handleInvoiceFileSelect() {
+            var fileInput = document.getElementById('inv-whatsapp-file');
+            var statusDiv = document.getElementById('inv-ocr-status');
+
+            if (fileInput.files && fileInput.files[0]) {
+                var file = fileInput.files[0];
+                if (file.type === 'application/pdf') {
+                    statusDiv.innerText = "⏳ Converting PDF request to preview...";
+                    var fileReader = new FileReader();
+                    fileReader.onload = async function() {
+                        try {
+                            var typedarray = new Uint8Array(this.result);
+                            var pdf = await pdfjsLib.getDocument(typedarray).promise;
+                            var page = await pdf.getPage(1);
+                            var viewport = page.getViewport({ scale: 1.8 });
+                            var canvas = document.createElement('canvas');
+                            var context = canvas.getContext('2d');
+                            canvas.height = viewport.height;
+                            canvas.width = viewport.width;
+                            await page.render({ canvasContext: context, viewport: viewport }).promise;
+                            currentInvoiceFileConverted = canvas.toDataURL('image/jpeg', 0.95);
+                            statusDiv.innerText = "✅ PDF request converted successfully!";
+                        } catch(e) {
+                            statusDiv.innerText = "❌ PDF conversion failed.";
+                        }
+                    };
+                    fileReader.readAsArrayBuffer(file);
+                } else {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        currentInvoiceFileConverted = e.target.result;
+                        statusDiv.innerText = "✅ File attached successfully!";
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        async function scanInvoiceRequestOCR() {
+            var statusDiv = document.getElementById('inv-ocr-status');
+            if (!currentInvoiceFileConverted) {
+                alert("Please select a WhatsApp screenshot, photo, or PDF request file first.");
+                return;
+            }
+
+            statusDiv.innerText = "⏳ Scanning request text via OCR... Please wait.";
+
+            try {
+                var worker = await Tesseract.createWorker('eng');
+                var ret = await worker.recognize(currentInvoiceFileConverted);
+                var text = ret.data.text;
+                await worker.terminate();
+
+                statusDiv.innerText = "✅ WhatsApp Request OCR Scan Complete!";
+
+                var phoneMatch = text.match(/(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})|(\+?\d{10,13})/);
+                if (phoneMatch) {
+                    document.getElementById('manual-inv-phone').value = phoneMatch[0];
+                }
+
+                var emailMatch = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+                if (emailMatch) {
+                    document.getElementById('manual-inv-email').value = emailMatch[0];
+                }
+
+                var textLower = text.toLowerCase();
+                for (var place in privateCustomerRates) {
+                    if (textLower.includes(place)) {
+                        var capitalizedPlace = place.replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+                        document.getElementById('manual-inv-dest').value = capitalizedPlace;
+                        document.getElementById('manual-inv-amount').value = privateCustomerRates[place];
+                        break;
+                    }
+                }
+
+                var lines = text.split('\n').filter(Boolean);
+                if (lines.length > 0 && !document.getElementById('manual-inv-client').value) {
+                    document.getElementById('manual-inv-client').value = lines[0].substring(0, 30);
+                }
+            } catch (err) {
+                statusDiv.innerText = "❌ OCR scan failed. You can enter details manually.";
             }
         }
 
@@ -3072,15 +3210,14 @@
         }
 
         function generateInvoice() {
-            var client = 'Valued Client';
-            var phone = 'N/A';
-            var email = 'N/A';
-            var num = 'DC-1001';
-            var pickup = 'Kingston / Portmore Depot';
-            var pickupTime = '09:00 AM';
-            var destInput = 'Destination Hub';
+            var client = document.getElementById('manual-inv-client').value.trim() || 'Valued Client';
+            var phone = document.getElementById('manual-inv-phone').value.trim() || 'N/A';
+            var email = document.getElementById('manual-inv-email').value.trim() || 'N/A';
+            var num = 'DC-' + Math.floor(1000 + Math.random() * 9000);
+            var pickup = document.getElementById('manual-inv-pickup').value.trim() || 'Kingston & Portmore Depot';
+            var destInput = document.getElementById('manual-inv-dest').value.trim() || 'Destination Hub';
 
-            var totalAmount = 0;
+            var totalAmount = parseFloat(document.getElementById('manual-inv-amount').value) || 0;
             var deposit = totalAmount * 0.5;
             var balance = totalAmount * 0.5;
 
@@ -3093,9 +3230,8 @@
             document.getElementById('out-num').innerText = num;
             
             document.getElementById('out-pickup-text').innerText = pickup;
-            document.getElementById('out-pickup-time-text').innerText = pickupTime;
             document.getElementById('out-dest-text').innerText = destInput;
-            document.getElementById('out-desc').innerText = 'Haulage Transport: ' + pickup + ' (' + pickupTime + ') to ' + destInput;
+            document.getElementById('out-desc').innerText = 'Haulage Transport: ' + pickup + ' to ' + destInput;
             
             document.getElementById('out-amount').innerText = '$' + totalAmount.toLocaleString() + ' JMD';
             document.getElementById('out-deposit').innerText = '$' + deposit.toLocaleString() + ' JMD';
@@ -3129,6 +3265,49 @@
             document.getElementById('invoice-preview').style.display = 'block';
             document.getElementById('payslip-preview').style.display = 'none';
             document.getElementById('invoice-preview').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function sendWhatsAppInvoice() {
+            var client = document.getElementById('out-client').innerText;
+            var num = document.getElementById('out-num').innerText;
+            var total = document.getElementById('out-amount').innerText;
+            var deposit = document.getElementById('out-deposit').innerText;
+            var balance = document.getElementById('out-balance').innerText;
+            var route = document.getElementById('out-desc').innerText;
+            var title = document.getElementById('out-invoice-header-title').innerText;
+
+            var msg = "D&C REFUSE TRUCKING - " + title + "\n\n" +
+                      "Invoice #: " + num + "\n" +
+                      "Client: " + client + "\n" +
+                      "Route: " + route + "\n" +
+                      "Total Amount: " + total + "\n" +
+                      "Required Deposit (50%): " + deposit + "\n" +
+                      "Balance Due: " + balance + "\n\n" +
+                      "Kingston & Portmore Hub, Jamaica.";
+
+            window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+        }
+
+        function emailInvoice() {
+            var client = document.getElementById('out-client').innerText;
+            var num = document.getElementById('out-num').innerText;
+            var total = document.getElementById('out-amount').innerText;
+            var deposit = document.getElementById('out-deposit').innerText;
+            var balance = document.getElementById('out-balance').innerText;
+            var route = document.getElementById('out-desc').innerText;
+            var title = document.getElementById('out-invoice-header-title').innerText;
+
+            var subject = title + " - " + num + " (" + client + ")";
+            var body = "D&C REFUSE TRUCKING & EQUIPMENT CO. LTD\n" +
+                       "Official Statement / Quote\n\n" +
+                       "Invoice #: " + num + "\n" +
+                       "Route: " + route + "\n" +
+                       "Total Amount: " + total + "\n" +
+                       "50% Deposit: " + deposit + "\n" +
+                       "Balance Due: " + balance + "\n\n" +
+                       "Thank you for choosing D&C Refuse Trucking!";
+
+            window.open("mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body), "_blank");
         }
 
         async function generateWeeklyPayslip(roleType) {
