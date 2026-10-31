@@ -1710,7 +1710,10 @@
             </div>
 
             <div id="manager-panel" class="manager-panel">
-                <h4>🔐 Dispatcher Control Panel (Private)</h4>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1c4d28; padding-bottom: 6px; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                    <h4 style="margin-bottom: 0; border-bottom: none; padding-bottom: 0;">🔐 Dispatcher Control Panel (Private)</h4>
+                    <button type="button" onclick="clearAndRefreshPanel()" style="background: #0284c7; color: #fff; border: 1.5px solid #38bdf8; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.9rem;">🔄 Clear & Refresh</button>
+                </div>
 
                 <div style="background: #03140b; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                     <div>
@@ -2775,6 +2778,16 @@
                     alert("Incorrect PIN. Access denied.");
                 }
             }
+        }
+
+        // QUICK CLEAR & REFRESH MANAGER VIEW WITHOUT LOSING SAVED DATA OR RESETTING PIN
+        function clearAndRefreshPanel() {
+            document.getElementById('invoice-preview').style.display = 'none';
+            document.getElementById('payslip-preview').style.display = 'none';
+            loadTrackerJobs();
+            loadMaintenanceLogs();
+            loadVehicleDocs();
+            alert("🔄 Panel refreshed and preview screens cleared! All saved data remains securely stored.");
         }
 
         function saveMechanicProfile() {
