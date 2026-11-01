@@ -614,7 +614,56 @@
             font-weight: 800;
             color: #facc15;
             margin-top: 2px;
+        }        /* ----------------------------------------- */
+        /* PAYSLIP ARCHIVE & WATERMARK STYLES        */
+        /* ----------------------------------------- */
+        .payslip-archive-container {
+            background: #091a10;
+            border: 2px solid #a855f7;
+            padding: 18px;
+            border-radius: 12px;
+            margin-top: 25px;
+            margin-bottom: 25px;
         }
+
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+            margin-top: 15px;
+        }
+
+        .archive-card {
+            background: #04121d;
+            border: 1px solid #7e22ce;
+            border-radius: 8px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* WATERMARK STYLES */
+        .payslip-watermark {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-25deg);
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.18;
+            border: 5px solid currentColor;
+            padding: 5px 20px;
+            border-radius: 10px;
+        }
+        .watermark-paid { color: #166534; }
+        .watermark-unpaid { color: #dc2626; }
 
         .week-filter-bar {
             display: flex;
