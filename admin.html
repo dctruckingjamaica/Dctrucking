@@ -13,7 +13,40 @@
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     </script>
+<script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBFNs8KRCgEkCkNY0J8doDqLcLlFpuJygE",
+      authDomain: "dnc-dispatch-sync.firebaseapp.com",
+      databaseURL: "https://dnc-dispatch-sync-default-rtdb.firebaseio.com",
+      projectId: "dnc-dispatch-sync",
+      storageBucket: "dnc-dispatch-sync.firebasestorage.app",
+      messagingSenderId: "1065655953186",
+      appId: "1:1065655953186:web:dc1549727488d48356677b"
+    };
 
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    let cachedJobs = [];
+
+    function getStoredJobs() {
+        return cachedJobs;
+    }
+
+    function saveStoredJobs(jobs) {
+        cachedJobs = jobs;
+        database.ref('dc_corporate_jobs').set(jobs);
+    }
+
+    database.ref('dc_corporate_jobs').on('value', function(snapshot) {
+        const data = snapshot.val();
+        cachedJobs = data ? data : [];
+        if (typeof loadTrackerJobs === 'function') {
+            loadTrackerJobs();
+        }
+    });
+</script>
     <style>
         :root {
             --primary-green: #00e676;
