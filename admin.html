@@ -1144,8 +1144,9 @@
                 <div class="admin-header-title">
                     ⚙️ ADMIN DISPATCHER
                 </div>
-                <div class="admin-header-sub">
-                    Internal Operations Hub
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <div class="admin-header-sub">Internal Operations Hub</div>
+                    <button type="button" onclick="clearAndRefreshPanel()" style="background: #0284c7; color: #fff; border: 1.5px solid #38bdf8; padding: 4px 10px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.8rem;">🔄 Refresh</button>
                 </div>
             </div>
             
@@ -1287,7 +1288,20 @@
                 </div>
             </div>
 
-            <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📅 Current Active Operating Week (Monday – Friday)</h5>
+            <!-- MODE SELECTOR & REFRESH BAR -->
+            <div style="background: #0e2216; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <span style="color: #a7f3d0; font-size: 0.85rem; font-weight: 800; display: block; text-transform: uppercase;">Active Operating Mode (Day Selector):</span>
+                    <strong id="modeIndicatorLabel" style="color: var(--primary-green); font-size: 1rem;">D&C Mode (Monday – Sunday 7 Days)</strong>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" id="btnModeWestco" onclick="switchOperatingMode('westco')" style="background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.85rem;">🏢 Westco Mode (Mon-Fri)</button>
+                    <button type="button" id="btnModeDnc" onclick="switchOperatingMode('dnc')" style="background: var(--primary-green); color: #000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.85rem;">🚛 D&C Mode (Mon-Sun)</button>
+                    <button type="button" onclick="clearAndRefreshPanel()" style="background: #0284c7; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.85rem;">🔄 Refresh Page</button>
+                </div>
+            </div>
+
+            <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📅 Current Active Operating Week</h5>
             
             <div class="weekly-summary-bar">
                 <div class="summary-box">
@@ -1575,6 +1589,8 @@
                             <option value="Wednesday">Wednesday</option>
                             <option value="Thursday">Thursday</option>
                             <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
                         </select>
                     </div>
                     <div class="tracker-field-group">
@@ -1583,7 +1599,7 @@
                     </div>
                     <div class="tracker-field-group">
                         <label>Invoice Number(s)</label>
-                        <input type="text" id="tr-inv" placeholder="e.g. 76567/87648/095425">
+                        <input type="text" id="tr-inv" placeholder="e.g. DC001, DC002">
                     </div>
                     <div class="tracker-field-group">
                         <label>Pickup Town</label>
@@ -1685,6 +1701,11 @@
                     <tbody id="tracker-table-body">
                     </tbody>
                 </table>
+            </div>
+
+            <!-- MID-PAGE REFRESH BUTTON BAR -->
+            <div style="display: flex; justify-content: flex-end; margin-top: 15px; margin-bottom: 15px;">
+                <button type="button" onclick="clearAndRefreshPanel()" style="background: #0284c7; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.9rem;">🔄 Refresh Page & Sync Records</button>
             </div>
 
             <div style="margin-top: 30px; border-top: 2px dashed #1e4626; padding-top: 20px;">
@@ -2099,6 +2120,7 @@
         const AUTO_LOCK_MS = 3 * 60 * 1000;
         let isOnlineMode = false;
         let idleTimer = null;
+        let currentOperatingMode = localStorage.getItem('dc_operating_mode') || 'dnc'; // 'dnc' or 'westco'
 
         function promptForManagerPin() {
             document.getElementById('managerLoginModal').style.display = 'flex';
@@ -2157,8 +2179,71 @@
             updateDynamicPartsDatalist();
             loadVaultReceiptGallery();
             loadFutureBookingsQueue();
+            applyOperatingModeUI();
             
             resetIdleTimer();
+        }
+
+        function switchOperatingMode(mode) {
+            currentOperatingMode = mode;
+            localStorage.setItem('dc_operating_mode', mode);
+            applyOperatingModeUI();
+        }
+
+        function applyOperatingModeUI() {
+            var btnWestco = document.getElementById('btnModeWestco');
+            var btnDnc = document.getElementById('btnModeDnc');
+            var modeIndicator = document.getElementById('modeIndicatorLabel');
+            var daySelect = document.getElementById('tr-day');
+
+            if (!btnWestco || !btnDnc || !daySelect) return;
+
+            var currentDayVal = daySelect.value;
+            daySelect.innerHTML = '';
+
+            if (currentOperatingMode === 'westco') {
+                btnWestco.style.background = '#00e676';
+                btnWestco.style.color = '#000';
+                btnWestco.style.border = 'none';
+
+                btnDnc.style.background = '#1e293b';
+                btnDnc.style.color = '#38bdf8';
+                btnDnc.style.border = '1px solid #38bdf8';
+
+                if (modeIndicator) modeIndicator.innerText = "Westco Mode (Monday – Friday 5 Days)";
+
+                ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach(function(d) {
+                    var opt = document.createElement('option');
+                    opt.value = d;
+                    opt.innerText = d;
+                    daySelect.appendChild(opt);
+                });
+            } else {
+                btnDnc.style.background = '#00e676';
+                btnDnc.style.color = '#000';
+                btnDnc.style.border = 'none';
+
+                btnWestco.style.background = '#1e293b';
+                btnWestco.style.color = '#38bdf8';
+                btnWestco.style.border = '1px solid #38bdf8';
+
+                if (modeIndicator) modeIndicator.innerText = "D&C Mode (Monday – Sunday 7 Days)";
+
+                ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].forEach(function(d) {
+                    var opt = document.createElement('option');
+                    opt.value = d;
+                    opt.innerText = d;
+                    daySelect.appendChild(opt);
+                });
+            }
+
+            if (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].includes(currentDayVal)) {
+                if (currentOperatingMode === 'westco' && ['Saturday', 'Sunday'].includes(currentDayVal)) {
+                    daySelect.value = 'Friday';
+                } else {
+                    daySelect.value = currentDayVal;
+                }
+            }
         }
 
         function lockSystemAndTrap() {
@@ -2419,7 +2504,6 @@
             document.getElementById('inv-whatsapp-text-paste').value = '';
         }
 
-        // UPGRADED PRECISION-MAPPING PARSER (DOES NOT TOUCH INVOICE TEMPLATE)
         function parseWhatsAppTextToInvoice() {
             var text = document.getElementById('inv-whatsapp-text-paste').value.trim();
             if (!text) {
@@ -2435,7 +2519,6 @@
             var destTown = "";
             var totalCost = "";
 
-            // Parse line-by-line to extract exact fields
             for (var i = 0; i < lines.length; i++) {
                 var line = lines[i].trim();
                 var lowerLine = line.toLowerCase();
@@ -2459,7 +2542,6 @@
                 }
             }
 
-            // Fallback matchers if explicit label formats vary
             if (!clientName) {
                 var nameMatch = text.match(/Client Name[:\s]*([^\n]+)/i);
                 if (nameMatch) clientName = nameMatch[1].trim();
@@ -2473,13 +2555,11 @@
                 if (emailMatch) emailAddr = emailMatch[0].trim();
             }
 
-            // Populate form fields cleanly
             if (clientName) document.getElementById('manual-inv-client').value = clientName;
             if (phoneNum) document.getElementById('manual-inv-phone').value = phoneNum;
             if (emailAddr) document.getElementById('manual-inv-email').value = emailAddr;
             if (pickupPoint) document.getElementById('manual-inv-pickup').value = pickupPoint;
 
-            // Match destination town and apply rate table or parsed cost
             var targetTown = destTown ? destTown.toLowerCase() : text.toLowerCase();
             var matchedRateFound = false;
 
@@ -3365,7 +3445,12 @@
             var client = document.getElementById('manual-inv-client').value.trim() || 'Valued Client';
             var phone = document.getElementById('manual-inv-phone').value.trim() || 'N/A';
             var email = document.getElementById('manual-inv-email').value.trim() || 'N/A';
-            var num = 'DC-' + Math.floor(1000 + Math.random() * 9000);
+            
+            // SEQUENTIAL INVOICE NUMBER GENERATOR (DC001, DC002, ...)
+            var currentSeq = parseInt(localStorage.getItem('dc_invoice_counter') || '1', 10);
+            var num = 'DC' + String(currentSeq).padStart(3, '0');
+            localStorage.setItem('dc_invoice_counter', currentSeq + 1);
+
             var pickup = document.getElementById('manual-inv-pickup').value.trim() || 'Kingston & Portmore Depot';
             var destInput = document.getElementById('manual-inv-dest').value.trim() || 'Destination Hub';
             var pDate = document.getElementById('manual-inv-date').value || new Date().toISOString().split('T')[0];
@@ -3407,7 +3492,6 @@
                 document.getElementById('out-balance').style.color = '#dc2626';
                 document.getElementById('out-footer-notice').innerText = '* 50% deposit received. Booking locked in! Balance due upon pickup.';
 
-                // AUTOMATICALLY LOG TO FUTURE ADVANCE BOOKINGS QUEUE
                 var futureBookings = getStoredFutureBookings();
                 futureBookings.push({
                     id: Date.now(),
@@ -3501,7 +3585,6 @@
             var b = bookings.find(function(item) { return item.id === id; });
             if (!b) return;
 
-            // Pre-fill the daily tracker form
             document.getElementById('tr-date').value = b.date;
             document.getElementById('tr-inv').value = b.inv;
             document.getElementById('tr-pickup').value = b.pickup;
@@ -3509,13 +3592,10 @@
             document.getElementById('tr-rate').value = b.rate;
             document.getElementById('tr-status').value = 'PENDING COLLECTION';
 
-            // Switch tracker to D&C Private Mode automatically
             setTrackerRateMode('private');
 
-            // Scroll down to the daily log form
             document.querySelector('.tracker-form-container').scrollIntoView({ behavior: 'smooth' });
 
-            // Remove from future queue
             var filtered = bookings.filter(function(item) { return item.id !== id; });
             saveStoredFutureBookings(filtered);
             loadFutureBookingsQueue();
@@ -3887,7 +3967,7 @@
             }
             if (!job) return;
 
-            var newDay = prompt("Edit Day of Week (Monday - Friday):", job.day);
+            var newDay = prompt("Edit Day of Week:", job.day);
             if (newDay === null) return;
             var newDate = prompt("Edit Exact Date (YYYY-MM-DD):", job.date);
             if (newDate === null) return;
@@ -4038,7 +4118,7 @@
             monday.setHours(0, 0, 0, 0);
 
             var friday = new Date(monday.getTime());
-            friday.setDate(monday.getDate() + 4);
+            friday.setDate(monday.getDate() + (currentOperatingMode === 'westco' ? 4 : 6));
             friday.setHours(23, 59, 59, 999);
 
             return jobDate >= monday && jobDate <= friday;
@@ -4258,7 +4338,7 @@
                             invHTML += '<span class="inv-badge-pill">' + invArray[k] + '</span>';
                         }
                     } else {
-                        invHTML += '<span class="inv-badge-pill">DC-1001</span>';
+                        invHTML += '<span class="inv-badge-pill">DC001</span>';
                     }
                     invHTML += '</div>';
 
