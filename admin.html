@@ -1486,17 +1486,6 @@
                 </div>
             </div>
 
-            <!-- TABLE EDIT PIN CONTROL BAR -->
-            <div style="background: #061826; border: 1.5px solid #38bdf8; padding: 10px 14px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                <div>
-                    <strong style="color: #38bdf8; font-size: 0.95rem; text-transform: uppercase; display: block;">Table Edit Mode:</strong>
-                    <span id="editModeStatusLabel" style="color: #f87171; font-weight: bold; font-size: 0.88rem;">🔒 Locked (PIN Required for Edits)</span>
-                </div>
-                <div id="editModeBtnContainer">
-                    <button type="button" onclick="openEditPinModal()" style="background: #0284c7; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.88rem;">🔑 Unlock Table Edits</button>
-                </div>
-            </div>
-
             <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
             <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log operational runs, track crew payouts, and view invoice numbers instantly below!</p>
 
@@ -1591,6 +1580,17 @@
                     </div>
                 </div>
                 <button class="btn-add-job" onclick="addTrackerJob()">➕ Log Corporate Job</button>
+            </div>
+
+            <!-- TABLE EDIT PIN CONTROL BAR (MOVED RIGHT UNDER LOG CORPORATE JOB) -->
+            <div style="background: #061826; border: 1.5px solid #38bdf8; padding: 10px 14px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <strong style="color: #38bdf8; font-size: 0.95rem; text-transform: uppercase; display: block;">Table Edit Mode:</strong>
+                    <span id="editModeStatusLabel" style="color: #f87171; font-weight: bold; font-size: 0.88rem;">🔒 Locked (PIN Required for Edits)</span>
+                </div>
+                <div id="editModeBtnContainer">
+                    <button type="button" onclick="openEditPinModal()" style="background: #0284c7; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.88rem;">🔑 Unlock Table Edits</button>
+                </div>
             </div>
 
             <div class="table-scroll">
@@ -4013,6 +4013,12 @@
         }
 
         function toggleJobStatus(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first before changing payment status.");
+                openEditPinModal();
+                return;
+            }
+
             var jobs = getStoredJobs();
             for (var i = 0; i < jobs.length; i++) {
                 if (jobs[i].id === id) {
