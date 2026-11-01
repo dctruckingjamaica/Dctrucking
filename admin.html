@@ -1444,36 +1444,6 @@
                 </div>
             </div>
 
-            <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📅 Current Active Operating Week</h5>
-            
-            <div class="weekly-summary-bar">
-                <div class="summary-box">
-                    <h6>M-F Revenue</h6>
-                    <span id="sum-revenue">$0 JMD</span>
-                </div>
-                <div class="summary-box" style="border-color: #f87171;">
-                    <h6>M-F Petrol Spend</h6>
-                    <span id="sum-petrol-cost" style="color: #f87171;">$0 JMD</span>
-                </div>
-                <div class="summary-box" style="border-color: #fb7185;">
-                    <h6>M-F Crew Wages Paid</h6>
-                    <span id="sum-crew-wages" style="color: #fb7185;">$0 JMD</span>
-                </div>
-                <div class="summary-box">
-                    <h6>M-F Net Profit</h6>
-                    <span id="sum-profit" style="color: #38bdf8;">$0 JMD</span>
-                </div>
-                <div class="summary-box">
-                    <h6>M-F Runs</h6>
-                    <span id="sum-count" style="color: #fbbf24;">0 Jobs</span>
-                </div>
-            </div>
-
-            <div class="week-filter-bar">
-                <span id="current-view-label">📅 Showing: Current M-F Operating Week</span>
-                <button class="btn-week-toggle" onclick="toggleViewMode()">🔄 Switch to View All History Table</button>
-            </div>
-
             <!-- MODE SELECTOR & REFRESH BAR -->
             <div style="background: #0e2216; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                 <div>
@@ -1626,8 +1596,38 @@
                 </table>
             </div>
 
-            <!-- REPOSITIONED BOXES: UNPAID/PENDING, MONTHLY PROFITS, ALL-TIME HISTORY (PLACED RIGHT BEFORE FLEET & TRUCK MAINTENANCE) -->
+            <!-- REPOSITIONED BOXES: WEEKLY SUMMARY BAR PLACED RIGHT BEFORE UNPAID & PENDING COLLECTIONS -->
             <div style="margin-top: 30px;">
+                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📅 Current Active Operating Week</h5>
+                
+                <div class="weekly-summary-bar">
+                    <div class="summary-box">
+                        <h6>M-F Revenue</h6>
+                        <span id="sum-revenue">$0 JMD</span>
+                    </div>
+                    <div class="summary-box" style="border-color: #f87171;">
+                        <h6>M-F Petrol Spend</h6>
+                        <span id="sum-petrol-cost" style="color: #f87171;">$0 JMD</span>
+                    </div>
+                    <div class="summary-box" style="border-color: #fb7185;">
+                        <h6>M-F Crew Wages Paid</h6>
+                        <span id="sum-crew-wages" style="color: #fb7185;">$0 JMD</span>
+                    </div>
+                    <div class="summary-box">
+                        <h6>M-F Net Profit</h6>
+                        <span id="sum-profit" style="color: #38bdf8;">$0 JMD</span>
+                    </div>
+                    <div class="summary-box">
+                        <h6>M-F Runs</h6>
+                        <span id="sum-count" style="color: #fbbf24;">0 Jobs</span>
+                    </div>
+                </div>
+
+                <div class="week-filter-bar">
+                    <span id="current-view-label">📅 Showing: Current M-F Operating Week</span>
+                    <button class="btn-week-toggle" onclick="toggleViewMode()">🔄 Switch to View All History Table</button>
+                </div>
+
                 <div style="background: #270f0f; border: 2px solid #ef4444; border-radius: 10px; padding: 14px; margin-bottom: 20px;">
                     <h5 style="color: #f87171; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
                         <span>⚠️ Unpaid & Pending Collections</span>
@@ -3517,6 +3517,15 @@
         }
 
         function generateInvoice() {
+            var depositPaid = document.getElementById('inv-deposit-paid').checked;
+            var fullPaid = document.getElementById('inv-full-paid').checked;
+
+            if (!depositPaid && !fullPaid) {
+                alert("⚠️ Please toggle and select either 'Mark 50% Deposit as PAID' or 'Mark Job as FULLY PAID' in the Payment & Booking Status box before generating the invoice!");
+                document.querySelector('.payment-status-box').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+
             var client = document.getElementById('manual-inv-client').value.trim() || 'Valued Client';
             var phone = document.getElementById('manual-inv-phone').value.trim() || 'N/A';
             var email = document.getElementById('manual-inv-email').value.trim() || 'N/A';
@@ -3533,9 +3542,6 @@
             var totalAmount = parseFloat(document.getElementById('manual-inv-amount').value) || 0;
             var deposit = totalAmount * 0.5;
             var balance = totalAmount * 0.5;
-
-            var depositPaid = document.getElementById('inv-deposit-paid').checked;
-            var fullPaid = document.getElementById('inv-full-paid').checked;
 
             document.getElementById('out-client').innerText = client;
             document.getElementById('out-phone').innerText = phone;
@@ -3582,13 +3588,6 @@
                 });
                 saveStoredFutureBookings(futureBookings);
                 loadFutureBookingsQueue();
-            } else {
-                document.getElementById('out-invoice-header-title').innerText = 'INVOICE / BOOKING QUOTE';
-                document.getElementById('out-deposit-label').innerHTML = '🔒 Required 50% Deposit (To Confirm Booking)';
-                document.getElementById('out-balance-label').innerHTML = '🚚 Remaining 50% Balance (Due Upon Pickup)';
-                document.getElementById('out-balance-label').style.color = '#dc2626';
-                document.getElementById('out-balance').style.color = '#dc2626';
-                document.getElementById('out-footer-notice').innerText = '* 50% deposit required to lock in your booking date. Balance due upon pickup.';
             }
             
             document.getElementById('out-date').innerText = new Date().toLocaleDateString();
