@@ -1136,6 +1136,18 @@
         </div>
     </div>
 
+    <!-- TABLE EDIT PIN MODAL OVERLAY -->
+    <div id="editPinModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:10000; justify-content:center; align-items:center; flex-direction:column; font-family:monospace;">
+        <div style="background:#111; padding:25px; border:2px solid #38bdf8; border-radius:10px; text-align:center; width:85%; max-width:320px;">
+            <h3 style="color:#38bdf8; margin-bottom:15px;">UNLOCK EDIT MODE</h3>
+            <p style="color:#fff; font-size:13px; margin-bottom:15px;">Enter 6-digit PIN to enable table editing:</p>
+            <input type="password" id="editPinInput" maxlength="6" pattern="[0-9]*" inputmode="numeric" placeholder="****" style="font-size:24px; padding:10px; text-align:center; background:#000; color:#38bdf8; border:1px solid #38bdf8; border-radius:5px; width:100%; margin-bottom:15px;">
+            <button onclick="submitEditPin()" style="background:#38bdf8; color:#000; font-weight:bold; padding:12px; border:none; border-radius:5px; cursor:pointer; width:100%; margin-bottom:10px;">Confirm PIN</button>
+            <button onclick="closeEditPinModal()" style="background:#222; color:#fff; font-weight:bold; padding:10px; border:1px solid #555; border-radius:5px; cursor:pointer; width:100%;">Cancel</button>
+            <p id="editPinError" style="color:#ff3333; font-size:12px; margin-top:10px; display:none;">Incorrect PIN Code</p>
+        </div>
+    </div>
+
     <div class="container">
         <div id="manager-panel" class="manager-panel" style="display:none;">
 
@@ -1474,6 +1486,17 @@
                 </div>
             </div>
 
+            <!-- TABLE EDIT PIN CONTROL BAR -->
+            <div style="background: #061826; border: 1.5px solid #38bdf8; padding: 10px 14px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <strong style="color: #38bdf8; font-size: 0.95rem; text-transform: uppercase; display: block;">Table Edit Mode:</strong>
+                    <span id="editModeStatusLabel" style="color: #f87171; font-weight: bold; font-size: 0.88rem;">🔒 Locked (PIN Required for Edits)</span>
+                </div>
+                <div id="editModeBtnContainer">
+                    <button type="button" onclick="openEditPinModal()" style="background: #0284c7; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.88rem;">🔑 Unlock Table Edits</button>
+                </div>
+            </div>
+
             <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
             <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log operational runs, track crew payouts, and view invoice numbers instantly below!</p>
 
@@ -1558,11 +1581,13 @@
                         </select>
                     </div>
 
-                    <div class="tracker-field-group" style="grid-column: 1 / -1; display: flex; gap: 12px; align-items: center; margin-top: 4px;">
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #4ade80; font-weight: 800; font-size: 1rem;">
-                            <input type="checkbox" id="tr-staff-paid" style="width: 20px; height: 20px; accent-color: #4ade80; cursor: pointer;">
-                            <span>✅ Crew Paid Out-of-Pocket (Driver & Assistant Wages Settled)</span>
-                        </label>
+                    <div class="tracker-field-group" style="grid-column: 1 / -1; background: #042410; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-top: 4px;">
+                        <label style="color: var(--primary-green); font-size: 0.95rem; text-transform: uppercase; margin-bottom: 6px; display: block;">⚠️ Mandatory Crew Payout Checkpoint *</label>
+                        <select id="tr-payout-selection" style="background: #000; color: #fff; border: 1.5px solid var(--primary-green); padding: 10px; border-radius: 6px; font-weight: 800; width: 100%;">
+                            <option value="">-- SELECT CREW SETTLEMENT STATUS --</option>
+                            <option value="PAID_OUT_OF_POCKET">✅ Crew Paid Out-of-Pocket (Wages Settled)</option>
+                            <option value="WAGES_PENDING">⏳ Crew Wages Pending / Payment Pending</option>
+                        </select>
                     </div>
                 </div>
                 <button class="btn-add-job" onclick="addTrackerJob()">➕ Log Corporate Job</button>
@@ -2115,6 +2140,7 @@
     <script>
         var managerPin = "197922";
         var showAllHistory = false;
+        var tableEditUnlocked = false;
 
         const AUTO_LOCK_MS = 3 * 60 * 1000;
         let isOnlineMode = false;
@@ -2135,6 +2161,54 @@
             } else {
                 document.getElementById('managerPinError').style.display = 'block';
                 document.getElementById('managerPinInput').value = '';
+            }
+        }
+
+        function openEditPinModal() {
+            document.getElementById('editPinModal').style.display = 'flex';
+            document.getElementById('editPinInput').focus();
+        }
+
+        function closeEditPinModal() {
+            document.getElementById('editPinModal').style.display = 'none';
+            document.getElementById('editPinInput').value = '';
+            document.getElementById('editPinError').style.display = 'none';
+        }
+
+        function submitEditPin() {
+            var entered = document.getElementById('editPinInput').value;
+            if (entered === managerPin) {
+                tableEditUnlocked = true;
+                closeEditPinModal();
+                updateEditModeUI();
+                loadTrackerJobs();
+                alert("🔓 Table Edit Mode Unlocked!");
+            } else {
+                document.getElementById('editPinError').style.display = 'block';
+                document.getElementById('editPinInput').value = '';
+            }
+        }
+
+        function lockTableEdits() {
+            tableEditUnlocked = false;
+            updateEditModeUI();
+            loadTrackerJobs();
+            alert("🔒 Table Edit Mode Locked.");
+        }
+
+        function updateEditModeUI() {
+            var label = document.getElementById('editModeStatusLabel');
+            var container = document.getElementById('editModeBtnContainer');
+            if (!label || !container) return;
+
+            if (tableEditUnlocked) {
+                label.innerText = "🟢 Unlocked (Edit Mode Active)";
+                label.style.color = "#00ff66";
+                container.innerHTML = '<button type="button" onclick="lockTableEdits()" style="background: #b91c1c; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.88rem;">🔒 Lock / Logout Edit Mode</button>';
+            } else {
+                label.innerText = "🔒 Locked (PIN Required for Edits)";
+                label.style.color = "#f87171";
+                container.innerHTML = '<button type="button" onclick="openEditPinModal()" style="background: #0284c7; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.88rem;">🔑 Unlock Table Edits</button>';
             }
         }
 
@@ -2179,6 +2253,7 @@
             loadVaultReceiptGallery();
             loadFutureBookingsQueue();
             applyOperatingModeUI();
+            updateEditModeUI();
             
             resetIdleTimer();
         }
@@ -2247,6 +2322,7 @@
 
         function lockSystemAndTrap() {
             isOnlineMode = false;
+            tableEditUnlocked = false;
             clearTimeout(idleTimer);
             sessionStorage.removeItem('dnc_unlocked');
             sessionStorage.removeItem('dnc_keep_online');
@@ -3888,12 +3964,20 @@
             var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
             var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
             var status = document.getElementById('tr-status').value;
-            var staffPaid = document.getElementById('tr-staff-paid').checked;
+            var payoutSelection = document.getElementById('tr-payout-selection').value;
 
             if (!inv) {
                 alert("Please enter an Invoice Number.");
                 return;
             }
+
+            if (!payoutSelection) {
+                alert("⚠️ Mandatory Checkpoint: Please select the crew payout settlement status (Crew Paid Out-of-Pocket or Wages Pending) before logging this job.");
+                document.getElementById('tr-payout-selection').focus();
+                return;
+            }
+
+            var staffPaid = (payoutSelection === 'PAID_OUT_OF_POCKET');
 
             var jobs = getStoredJobs();
             jobs.push({ 
@@ -3922,7 +4006,7 @@
             document.getElementById('tr-asst-pay').value = '';
             document.getElementById('tr-petrol').value = '';
             document.getElementById('tr-rate').value = '';
-            document.getElementById('tr-staff-paid').checked = false;
+            document.getElementById('tr-payout-selection').value = '';
             updateLiveProfit();
             
             loadTrackerJobs();
@@ -3947,6 +4031,11 @@
         }
 
         function deleteJob(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first.");
+                openEditPinModal();
+                return;
+            }
             if (!confirm("Are you sure you want to delete this job log?")) return;
             var jobs = getStoredJobs();
             var filtered = jobs.filter(function(j) { return j.id !== id; });
@@ -3955,6 +4044,12 @@
         }
 
         function editJob(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first.");
+                openEditPinModal();
+                return;
+            }
+
             var jobs = getStoredJobs();
             var job = null;
             for (var i = 0; i < jobs.length; i++) {
@@ -4061,6 +4156,11 @@
         }
 
         function deleteMaintenanceLog(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first.");
+                openEditPinModal();
+                return;
+            }
             if (!confirm("Are you sure you want to delete this maintenance entry?")) return;
             var maint = getStoredMaintenance();
             var filtered = maint.filter(function(m) { return m.id !== id; });
@@ -4349,7 +4449,10 @@
                         statusHTML = '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
                     }
 
-                    var staffPaidBadge = j.staffPaid ? '<br><span style="color: #4ade80; font-size: 0.75rem; font-weight: 900;">✅ Crew Wages Settled</span>' : '<br><span style="color: #f87171; font-size: 0.75rem; font-weight: 800;">⏳ Wages Pending</span>';
+                    var staffPaidBadge = j.staffPaid ? '<br><span style="color: #4ade80; font-size: 0.75rem; font-weight: 900;">✅ Crew Paid Out-of-Pocket</span>' : '<br><span style="color: #f87171; font-size: 0.75rem; font-weight: 800;">⏳ Wages Pending</span>';
+
+                    var editBtnStyle = tableEditUnlocked ? 'background: #0284c7; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
+                    var deleteBtnStyle = tableEditUnlocked ? 'background: #dc2626; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
 
                     var tr = document.createElement('tr');
                     tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.82rem;">' + j.date + '</span></td>' +
@@ -4363,8 +4466,8 @@
                                    '<td>' + statusHTML + '</td>' +
                                    '<td>' +
                                       '<div class="action-btn-group">' +
-                                          '<button class="btn-table-edit" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
-                                          '<button class="btn-table-delete" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
+                                          '<button class="btn-table-edit" style="' + editBtnStyle + '" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
+                                          '<button class="btn-table-delete" style="' + deleteBtnStyle + '" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
                                       '</div>' +
                                    '</td>';
                     tbody.appendChild(tr);
