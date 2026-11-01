@@ -1139,7 +1139,7 @@
     <div class="container">
         <div id="manager-panel" class="manager-panel" style="display:none;">
 
-            <!-- ADMIN DISPATCHER TOP HEADER BOX -->
+            <!-- ADMIN DISPATCHER TOP HEADER BADGE -->
             <div class="admin-header-badge">
                 <div class="admin-header-title">
                     ⚙️ ADMIN DISPATCHER
@@ -1276,7 +1276,7 @@
                 </div>
             </div>
 
-            <!-- CREW PAYROLL & CORPORATE PAYSLIPS SECTION (REPOSITIONED DIRECTLY BELOW PAYMENT STATUS) -->
+            <!-- CREW PAYROLL & CORPORATE PAYSLIPS SECTION -->
             <div class="payroll-section-box">
                 <h5>👥 Crew Payroll & Corporate Payslips</h5>
                 <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan operating runs, manage AR charges, and optionally attach WhatsApp screenshots, email text, or PDF receipts:</p>
@@ -1457,96 +1457,6 @@
                 </div>
             </div>
 
-            <div style="background: #270f0f; border: 2px solid #ef4444; border-radius: 10px; padding: 14px; margin-bottom: 20px;">
-                <h5 style="color: #f87171; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
-                    <span>⚠️ Unpaid & Pending Collections</span>
-                    <span id="unpaid-job-count" style="font-size: 0.9rem; background: #7f1d1d; color: #fff; padding: 2px 8px; border-radius: 4px;">0 Jobs Pending</span>
-                </h5>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
-                    <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
-                        <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Total Unpaid Outstanding</h6>
-                        <span id="sum-unpaid-total" style="color: #f87171; font-size: 1.3rem; font-weight: 900;">$0 JMD</span>
-                    </div>
-                    <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
-                        <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Unpaid Driver Payouts</h6>
-                        <span id="sum-unpaid-driver" style="color: #fbbf24; font-size: 1.2rem; font-weight: 900;">$0 JMD</span>
-                    </div>
-                    <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
-                        <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Unpaid Assistant Payouts</h6>
-                        <span id="sum-unpaid-asst" style="color: #fbbf24; font-size: 1.2rem; font-weight: 900;">$0 JMD</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="monthly-summary-container">
-                <h5 id="monthly-container-title">📅 Active Calendar Month Net Profit (October 2026)</h5>
-                <div class="monthly-grid">
-                    <div class="monthly-box" style="grid-column: 1 / -1;">
-                        <h6>Current Month Net Profit</h6>
-                        <span id="month-profit">$0 JMD</span>
-                    </div>
-                </div>
-
-                <h6 style="color:#a7f3d0; font-size:0.82rem; text-transform:uppercase; font-weight:800; margin-bottom:6px;">Current Month Profit Breakdown By Week:</h6>
-                <div class="weeks-breakdown-bar">
-                    <div class="week-chip">
-                        <h7>Week 1</h7>
-                        <span id="m-w1">$0</span>
-                    </div>
-                    <div class="week-chip">
-                        <h7>Week 2</h7>
-                        <span id="m-w2">$0</span>
-                    </div>
-                    <div class="week-chip">
-                        <h7>Week 3</h7>
-                        <span id="m-w3">$0</span>
-                    </div>
-                    <div class="week-chip">
-                        <h7>Week 4</h7>
-                        <span id="m-w4">$0</span>
-                    </div>
-                    <div class="week-chip">
-                        <h7>Week 5</h7>
-                        <span id="m-w5">$0</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="alltime-summary-container">
-                <h5>
-                    <span>📈 All-Time & Yearly Business History</span>
-                    <select class="month-filter-dropdown" id="history-month-filter" onchange="loadTrackerJobs()">
-                        <option value="ALL">🗓️ All-Time Summary</option>
-                    </select>
-                </h5>
-                <div class="alltime-grid">
-                    <div class="alltime-box">
-                        <h6>Revenue</h6>
-                        <span id="all-revenue">$0 JMD</span>
-                    </div>
-                    <div class="alltime-box">
-                        <h6>Total Petrol Spend</h6>
-                        <span id="all-petrol" style="color: #f87171;">$0 JMD</span>
-                    </div>
-                    <div class="alltime-box">
-                        <h6>Total Crew Wages Paid</h6>
-                        <span id="all-wages" style="color: #4ade80;">$0 JMD</span>
-                    </div>
-                    <div class="alltime-box">
-                        <h6>Truck Maintenance Spend</h6>
-                        <span id="all-maint" style="color: #fb7185;">$0 JMD</span>
-                    </div>
-                    <div class="alltime-box">
-                        <h6>Net Profit</h6>
-                        <span id="all-profit" style="color: #38bdf8;">$0 JMD</span>
-                    </div>
-                    <div class="alltime-box" style="grid-column: 1 / -1;">
-                        <h6>Total Logged Runs</h6>
-                        <span id="all-count" style="color: #fbbf24;">0 Jobs</span>
-                    </div>
-                </div>
-            </div>
-
             <div class="week-filter-bar">
                 <span id="current-view-label">📅 Showing: Current M-F Operating Week</span>
                 <button class="btn-week-toggle" onclick="toggleViewMode()">🔄 Switch to View All History Table</button>
@@ -1689,6 +1599,99 @@
                     <tbody id="tracker-table-body">
                     </tbody>
                 </table>
+            </div>
+
+            <!-- REPOSITIONED BOXES: UNPAID/PENDING, MONTHLY PROFITS, ALL-TIME HISTORY (PLACED RIGHT BEFORE FLEET & TRUCK MAINTENANCE) -->
+            <div style="margin-top: 30px;">
+                <div style="background: #270f0f; border: 2px solid #ef4444; border-radius: 10px; padding: 14px; margin-bottom: 20px;">
+                    <h5 style="color: #f87171; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+                        <span>⚠️ Unpaid & Pending Collections</span>
+                        <span id="unpaid-job-count" style="font-size: 0.9rem; background: #7f1d1d; color: #fff; padding: 2px 8px; border-radius: 4px;">0 Jobs Pending</span>
+                    </h5>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
+                        <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
+                            <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Total Unpaid Outstanding</h6>
+                            <span id="sum-unpaid-total" style="color: #f87171; font-size: 1.3rem; font-weight: 900;">$0 JMD</span>
+                        </div>
+                        <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
+                            <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Unpaid Driver Payouts</h6>
+                            <span id="sum-unpaid-driver" style="color: #fbbf24; font-size: 1.2rem; font-weight: 900;">$0 JMD</span>
+                        </div>
+                        <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
+                            <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Unpaid Assistant Payouts</h6>
+                            <span id="sum-unpaid-asst" style="color: #fbbf24; font-size: 1.2rem; font-weight: 900;">$0 JMD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="monthly-summary-container">
+                    <h5 id="monthly-container-title">📅 Active Calendar Month Net Profit (November 2026)</h5>
+                    <div class="monthly-grid">
+                        <div class="monthly-box" style="grid-column: 1 / -1;">
+                            <h6>Current Month Net Profit</h6>
+                            <span id="month-profit">$0 JMD</span>
+                        </div>
+                    </div>
+
+                    <h6 style="color:#a7f3d0; font-size:0.82rem; text-transform:uppercase; font-weight:800; margin-bottom:6px;">Current Month Profit Breakdown By Week:</h6>
+                    <div class="weeks-breakdown-bar">
+                        <div class="week-chip">
+                            <h7>Week 1</h7>
+                            <span id="m-w1">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 2</h7>
+                            <span id="m-w2">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 3</h7>
+                            <span id="m-w3">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 4</h7>
+                            <span id="m-w4">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 5</h7>
+                            <span id="m-w5">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alltime-summary-container">
+                    <h5>
+                        <span>📈 All-Time & Yearly Business History</span>
+                        <select class="month-filter-dropdown" id="history-month-filter" onchange="loadTrackerJobs()">
+                            <option value="ALL">🗓️ All-Time Summary</option>
+                        </select>
+                    </h5>
+                    <div class="alltime-grid">
+                        <div class="alltime-box">
+                            <h6>Revenue</h6>
+                            <span id="all-revenue">$0 JMD</span>
+                        </div>
+                        <div class="alltime-box">
+                            <h6>Total Petrol Spend</h6>
+                            <span id="all-petrol" style="color: #f87171;">$0 JMD</span>
+                        </div>
+                        <div class="alltime-box">
+                            <h6>Total Crew Wages Paid</h6>
+                            <span id="all-wages" style="color: #4ade80;">$0 JMD</span>
+                        </div>
+                        <div class="alltime-box">
+                            <h6>Truck Maintenance Spend</h6>
+                            <span id="all-maint" style="color: #fb7185;">$0 JMD</span>
+                        </div>
+                        <div class="alltime-box">
+                            <h6>Net Profit</h6>
+                            <span id="all-profit" style="color: #38bdf8;">$0 JMD</span>
+                        </div>
+                        <div class="alltime-box" style="grid-column: 1 / -1;">
+                            <h6>Total Logged Runs</h6>
+                            <span id="all-count" style="color: #fbbf24;">0 Jobs</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div style="margin-top: 30px; border-top: 2px dashed #1e4626; padding-top: 20px;">
@@ -1928,7 +1931,7 @@
                 </div>
             </div>
 
-            <!-- BACKUP BUTTON & TRANSFER SYSTEM (REPOSITIONED RIGHT AT THE EXTREME BOTTOM BELOW VEHICLE VAULT) -->
+            <!-- BACKUP BUTTON & TRANSFER SYSTEM (REPOSITIONED AT THE BOTTOM) -->
             <div class="backup-data-box">
                 <h5>📱 Device Backup & Transfer System</h5>
                 <p style="color: #cbd5e1; font-size: 0.9rem;">Export all job history, staff profiles, and maintenance logs to easily transfer to a new phone or backup to Google Drive.</p>
@@ -2874,7 +2877,7 @@
 
                 var card = document.createElement('div');
                 card.className = 'receipt-card';
-                card.innerHTML = '<div style="display:flex; justify-space-between; align-items:center;">' +
+                card.innerHTML = '<div style="display:flex; justify-content:space-between; align-items:center;">' +
                                  '<span class="receipt-tag-badge ' + badgeClass + '">' + r.cat + '</span>' +
                                  '<span style="color:#94a3b8; font-size:0.75rem; font-weight:800;">📅 ' + r.date + ' ⏰ ' + (r.time || '') + '</span>' +
                                  '</div>' +
@@ -3442,7 +3445,6 @@
             var phone = document.getElementById('manual-inv-phone').value.trim() || 'N/A';
             var email = document.getElementById('manual-inv-email').value.trim() || 'N/A';
             
-            // SEQUENTIAL INVOICE NUMBER GENERATOR (DC001, DC002, ...)
             var currentSeq = parseInt(localStorage.getItem('dc_invoice_counter') || '1', 10);
             var num = 'DC' + String(currentSeq).padStart(3, '0');
             localStorage.setItem('dc_invoice_counter', currentSeq + 1);
