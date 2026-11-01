@@ -1264,18 +1264,6 @@
                 </div>
             </div>
 
-            <div class="backup-data-box">
-                <h5>📱 Device Backup & Transfer System</h5>
-                <p style="color: #cbd5e1; font-size: 0.9rem;">Export all job history, staff profiles, and maintenance logs to easily transfer to a new phone or backup to Google Drive.</p>
-                <div class="backup-btn-grid">
-                    <button class="btn-export" onclick="exportDataBackup()">📦 Backup All Data (Export File)</button>
-                    <label class="btn-import-label">
-                        📥 Restore Data (Import File)
-                        <input type="file" id="import-backup-file" accept=".json" onchange="importDataBackup(event)" style="display: none;">
-                    </label>
-                </div>
-            </div>
-
             <div class="payment-status-box">
                 <h5>💳 Payment & Booking Status</h5>
                 <div class="checkbox-item">
@@ -1285,19 +1273,6 @@
                 <div class="checkbox-item">
                     <input type="checkbox" id="inv-full-paid" onchange="togglePaymentBoxes('full')">
                     <label for="inv-full-paid">🎉 Mark Job as FULLY PAID (Balance Settled on Job Date)</label>
-                </div>
-            </div>
-
-            <!-- MODE SELECTOR & REFRESH BAR -->
-            <div style="background: #0e2216; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                <div>
-                    <span style="color: #a7f3d0; font-size: 0.85rem; font-weight: 800; display: block; text-transform: uppercase;">Active Operating Mode (Day Selector):</span>
-                    <strong id="modeIndicatorLabel" style="color: var(--primary-green); font-size: 1rem;">D&C Mode (Monday – Sunday 7 Days)</strong>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                    <button type="button" id="btnModeWestco" onclick="switchOperatingMode('westco')" style="background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.85rem;">🏢 Westco Mode (Mon-Fri)</button>
-                    <button type="button" id="btnModeDnc" onclick="switchOperatingMode('dnc')" style="background: var(--primary-green); color: #000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.85rem;">🚛 D&C Mode (Mon-Sun)</button>
-                    <button type="button" onclick="clearAndRefreshPanel()" style="background: #0284c7; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.85rem;">🔄 Refresh Page</button>
                 </div>
             </div>
 
@@ -1576,6 +1551,18 @@
                 <button class="btn-week-toggle" onclick="toggleViewMode()">🔄 Switch to View All History Table</button>
             </div>
 
+            <!-- MODE SELECTOR & REFRESH BAR -->
+            <div style="background: #0e2216; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <span style="color: #a7f3d0; font-size: 0.85rem; font-weight: 800; display: block; text-transform: uppercase;">Active Operating Mode (Day Selector):</span>
+                    <strong id="modeIndicatorLabel" style="color: var(--primary-green); font-size: 1rem;">D&C Mode (Monday – Sunday 7 Days)</strong>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" id="btnModeWestco" onclick="switchOperatingMode('westco')" style="background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.85rem;">🏢 Wisynco Mode (Mon-Fri)</button>
+                    <button type="button" id="btnModeDnc" onclick="switchOperatingMode('dnc')" style="background: var(--primary-green); color: #000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.85rem;">🚛 D&C Mode (Mon-Sun)</button>
+                </div>
+            </div>
+
             <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
             <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log operational runs, track crew payouts, and view invoice numbers instantly below!</p>
 
@@ -1701,11 +1688,6 @@
                     <tbody id="tracker-table-body">
                     </tbody>
                 </table>
-            </div>
-
-            <!-- MID-PAGE REFRESH BUTTON BAR -->
-            <div style="display: flex; justify-content: flex-end; margin-top: 15px; margin-bottom: 15px;">
-                <button type="button" onclick="clearAndRefreshPanel()" style="background: #0284c7; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.9rem;">🔄 Refresh Page & Sync Records</button>
             </div>
 
             <div style="margin-top: 30px; border-top: 2px dashed #1e4626; padding-top: 20px;">
@@ -1843,6 +1825,18 @@
                 </div>
 
                 <div class="receipt-vault-gallery" id="receipt-gallery-container">
+                </div>
+            </div>
+
+            <div class="backup-data-box">
+                <h5>📱 Device Backup & Transfer System</h5>
+                <p style="color: #cbd5e1; font-size: 0.9rem;">Export all job history, staff profiles, and maintenance logs to easily transfer to a new phone or backup to Google Drive.</p>
+                <div class="backup-btn-grid">
+                    <button class="btn-export" onclick="exportDataBackup()">📦 Backup All Data (Export File)</button>
+                    <label class="btn-import-label">
+                        📥 Restore Data (Import File)
+                        <input type="file" id="import-backup-file" accept=".json" onchange="importDataBackup(event)" style="display: none;">
+                    </label>
                 </div>
             </div>
 
@@ -2210,7 +2204,7 @@
                 btnDnc.style.color = '#38bdf8';
                 btnDnc.style.border = '1px solid #38bdf8';
 
-                if (modeIndicator) modeIndicator.innerText = "Westco Mode (Monday – Friday 5 Days)";
+                if (modeIndicator) modeIndicator.innerText = "Wisynco Mode (Monday – Friday 5 Days)";
 
                 ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].forEach(function(d) {
                     var opt = document.createElement('option');
