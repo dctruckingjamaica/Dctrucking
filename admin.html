@@ -891,12 +891,16 @@
         .inv-badge-container {
             display: flex;
             flex-direction: column;
+            align-items: stretch;
             gap: 6px;
+            width: 100%;
             max-width: 100%;
         }
 
         .inv-badge-pill {
-            display: inline-block;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
             background: #0f381b;
             color: #4ade80;
             border: 1px solid #22c55e;
@@ -1529,7 +1533,10 @@
                     </div>
                     <div class="tracker-field-group">
                         <label>Exact Date (Manual)</label>
-                        <input type="date" id="tr-date" onchange="syncTrackerDayFromDate()">
+                        <div style="display:flex; gap:6px; align-items:center; width:100%;">
+                            <input type="date" id="tr-date" onchange="syncTrackerDayFromDate()" style="flex:1; min-width:0;">
+                            <button type="button" id="tr-date-entry-toggle" onclick="toggleTrackerDateEntry()" title="Type the date manually" aria-label="Type the date manually" style="flex:0 0 auto; padding:9px 11px; background:#1e293b; color:#38bdf8; border:1px solid #38bdf8; border-radius:6px; font-size:1.05rem; cursor:pointer;">✏️</button>
+                        </div>
                     </div>
                     <div class="tracker-field-group">
                         <label>Invoice Number(s)</label>
@@ -1650,6 +1657,12 @@
                 </table>
             </div>
 
+            <!-- HISTORY VIEW CONTROL MOVED ABOVE THE CURRENT ACTIVE OPERATING WEEK -->
+            <div class="week-filter-bar">
+                <span id="current-view-label">📅 Showing: Current M-F Operating Week</span>
+                <button class="btn-week-toggle" onclick="toggleViewMode()">🔄 Switch to View All History Table</button>
+            </div>
+
             <!-- REPOSITIONED BOXES: WEEKLY SUMMARY BAR PLACED RIGHT BEFORE UNPAID & PENDING COLLECTIONS -->
             <div style="margin-top: 30px;">
                 <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📅 Current Active Operating Week</h5>
@@ -1675,11 +1688,6 @@
                         <h6>M-F Runs</h6>
                         <span id="sum-count" style="color: #fbbf24;">0 Jobs</span>
                     </div>
-                </div>
-
-                <div class="week-filter-bar">
-                    <span id="current-view-label">📅 Showing: Current M-F Operating Week</span>
-                    <button class="btn-week-toggle" onclick="toggleViewMode()">🔄 Switch to View All History Table</button>
                 </div>
 
                 <div style="background: #270f0f; border: 2px solid #ef4444; border-radius: 10px; padding: 14px; margin-bottom: 20px;">
@@ -4084,8 +4092,60 @@
             localStorage.setItem("dc_corporate_jobs", JSON.stringify(jobs));
         }
 
+        function getTrackerDateISO() {
+            var dateInput = document.getElementById('tr-date');
+            if (!dateInput || !dateInput.value) return '';
+            var value = dateInput.value.trim();
+            if (/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) return value;
+
+            // Manual entry accepts DD/MM/YYYY, DD-MM-YYYY or DD.MM.YYYY.
+            var match = value.match(/^(\\d{1,2})[\\/.-](\\d{1,2})[\\/.-](\\d{4})$/);
+            if (!match) return '';
+            var day = Number(match[1]);
+            var month = Number(match[2]);
+            var year = Number(match[3]);
+            var check = new Date(year, month - 1, day, 12, 0, 0);
+            if (check.getFullYear() !== year || check.getMonth() !== month - 1 || check.getDate() !== day) return '';
+            return year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+        }
+
+        function toggleTrackerDateEntry() {
+            var dateInput = document.getElementById('tr-date');
+            var toggleButton = document.getElementById('tr-date-entry-toggle');
+            if (!dateInput || !toggleButton) return;
+
+            if (dateInput.type === 'date') {
+                var currentISO = dateInput.value;
+                dateInput.type = 'text';
+                dateInput.placeholder = 'DD/MM/YYYY';
+                dateInput.inputMode = 'numeric';
+                if (currentISO && /^\\d{4}-\\d{2}-\\d{2}$/.test(currentISO)) {
+                    var parts = currentISO.split('-');
+                    dateInput.value = parts[2] + '/' + parts[1] + '/' + parts[0];
+                }
+                toggleButton.innerText = '📅';
+                toggleButton.title = 'Return to calendar';
+                toggleButton.setAttribute('aria-label', 'Return to calendar');
+                dateInput.focus();
+            } else {
+                var isoDate = getTrackerDateISO();
+                if (dateInput.value && !isoDate) {
+                    alert('Please enter a valid date as DD/MM/YYYY, for example 27/10/2026.');
+                    dateInput.focus();
+                    return;
+                }
+                dateInput.type = 'date';
+                dateInput.value = isoDate;
+                dateInput.placeholder = '';
+                toggleButton.innerText = '✏️';
+                toggleButton.title = 'Type the date manually';
+                toggleButton.setAttribute('aria-label', 'Type the date manually');
+            }
+            syncTrackerDayFromDate();
+        }
+
         function syncTrackerDayFromDate() {
-            var dateValue = document.getElementById('tr-date').value;
+            var dateValue = getTrackerDateISO();
             if (!dateValue) return;
             var parts = dateValue.split('-');
             var chosenDate = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 12, 0, 0);
@@ -4099,8 +4159,10 @@
             return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
         }
         function addTrackerJob() {
-            var date = document.getElementById('tr-date').value || getLocalISODate();
-            document.getElementById('tr-date').value = date;
+            var date = getTrackerDateISO() || getLocalISODate();
+            var trackerDateInput = document.getElementById('tr-date');
+            if (trackerDateInput.type !== 'date') trackerDateInput.type = 'date';
+            trackerDateInput.value = date;
             syncTrackerDayFromDate();
             var day = document.getElementById('tr-day').value;
             var inv = document.getElementById('tr-inv').value;
