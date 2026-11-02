@@ -4653,7 +4653,10 @@
             } else {
                 document.getElementById('managerLoginModal').style.display = 'flex';
                 document.getElementById('managerPinInput').focus();
-            }        // ----------------------------------------- //
+            }
+        });
+
+        // ----------------------------------------- //
         // PAYSLIP ARCHIVE & VAULT FUNCTIONS         //
         // ----------------------------------------- //
         let archivedPayslips = JSON.parse(localStorage.getItem('dnc_archived_payslips')) || [];
@@ -4760,7 +4763,6 @@
         // Auto-load existing archives on page startup
         window.addEventListener('DOMContentLoaded', () => {
             renderPayslipArchive();
-        });
         });
     </script>
 </body>
