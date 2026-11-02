@@ -4299,7 +4299,9 @@
             if (newDay === null) return;
             var newDate = prompt("Edit Exact Date (YYYY-MM-DD):", job.date || "");
             if (newDate === null) return;
-            if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(newDate.trim()) || isNaN(new Date(newDate.trim() + "T12:00:00").getTime())) {
+            var dateParts = newDate.trim().split("-").map(Number);
+            var checkedDate = dateParts.length === 3 ? new Date(dateParts[0], dateParts[1] - 1, dateParts[2], 12, 0, 0) : null;
+            if (!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(newDate.trim()) || !checkedDate || checkedDate.getFullYear() !== dateParts[0] || checkedDate.getMonth() !== dateParts[1] - 1 || checkedDate.getDate() !== dateParts[2]) {
                 alert("Please use a valid date in YYYY-MM-DD format.");
                 return;
             }
@@ -4322,7 +4324,7 @@
             var newRateText = prompt("Edit Contract Haulage Rate (JMD):", String(job.rate || 0));
             if (newRateText === null) return;
 
-            var newStatusChoice = prompt("Company / Customer Collection Status:\n1 = UNPAID\n2 = PENDING COLLECTION\n3 = PAID", job.status === "PAID" ? "3" : (job.status === "PENDING COLLECTION" ? "2" : "1"));
+            var newStatusChoice = prompt("Company / Customer Collection Status: 1 = UNPAID, 2 = PENDING COLLECTION, 3 = PAID", job.status === "PAID" ? "3" : (job.status === "PENDING COLLECTION" ? "2" : "1"));
             if (newStatusChoice === null) return;
             var statusMap = { "1": "UNPAID", "2": "PENDING COLLECTION", "3": "PAID" };
             if (!statusMap[newStatusChoice.trim()]) {
@@ -4330,7 +4332,7 @@
                 return;
             }
 
-            var newCrewChoice = prompt("Crew Wages Status:\n1 = WAGES PENDING\n2 = CREW PAID OUT-OF-POCKET", job.staffPaid === true ? "2" : "1");
+            var newCrewChoice = prompt("Crew Wages Status: 1 = WAGES PENDING, 2 = CREW PAID OUT-OF-POCKET", job.staffPaid === true ? "2" : "1");
             if (newCrewChoice === null) return;
             if (newCrewChoice.trim() !== "1" && newCrewChoice.trim() !== "2") {
                 alert("Choose 1 for Wages Pending or 2 for Crew Paid Out-of-Pocket.");
