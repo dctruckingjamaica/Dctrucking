@@ -672,9 +672,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #0a2412;
-            border: 1px solid #1c4d28;
-            padding: 10px 14px;
+            background: #123b20;
+            border: 1.5px solid #4ade80;
+            padding: 11px 14px;
             border-radius: 8px;
             margin-bottom: 15px;
             flex-wrap: wrap;
@@ -682,20 +682,22 @@
         }
 
         .week-filter-bar span {
-            color: #38bdf8;
-            font-weight: 800;
-            font-size: 0.95rem;
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 1rem;
+            text-shadow: 0 1px 2px #000000;
         }
 
         .btn-week-toggle {
-            background: #1e293b;
-            color: #38bdf8;
-            border: 1px solid #38bdf8;
-            padding: 6px 12px;
+            background: #075985;
+            color: #ffffff;
+            border: 1.5px solid #7dd3fc;
+            padding: 8px 13px;
             border-radius: 6px;
-            font-weight: 800;
+            font-weight: 900;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
+            text-shadow: 0 1px 2px #000000;
         }
 
         .payroll-section-box {
@@ -888,18 +890,22 @@
             font-size: 0.95rem; /* Larger header text */
         }
 
-        .inv-badge-container {
-            display: flex;
-            flex-direction: column;
+        /* CORPORATE JOB LOG: force every invoice number onto its own full-width row */
+        #tracker-table-body td:nth-child(2) .inv-badge-container {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) !important;
+            grid-auto-flow: row !important;
             align-items: stretch;
             gap: 6px;
             width: 100%;
             max-width: 100%;
         }
 
-        .inv-badge-pill {
-            display: block;
-            width: 100%;
+        #tracker-table-body td:nth-child(2) .inv-badge-pill {
+            display: block !important;
+            float: none !important;
+            width: 100% !important;
+            max-width: 100%;
             box-sizing: border-box;
             background: #0f381b;
             color: #4ade80;
