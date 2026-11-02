@@ -1204,3 +1204,570 @@
             <p id="editPinError" style="color:#ff3333; font-size:12px; margin-top:10px; display:none;">Incorrect PIN Code</p>
         </div>
     </div>
+    <div class="container">
+        <div id="manager-panel" class="manager-panel" style="display:none;">
+
+            <!-- ADMIN DISPATCHER TOP HEADER BADGE -->
+            <div class="admin-header-badge">
+                <div class="admin-header-title">
+                    ⚙️ ADMIN DISPATCHER
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <div class="admin-header-sub">Internal Operations Hub</div>
+                    <button type="button" onclick="clearAndRefreshPanel()" style="background: #0284c7; color: #fff; border: 1.5px solid #38bdf8; padding: 4px 10px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.8rem;">🔄 Refresh</button>
+                </div>
+            </div>
+            
+            <!-- ONLINE / OFFLINE TOGGLE SESSION BAR AT THE VERY TOP OF PANEL -->
+            <div style="background: #1b261d; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <strong style="color: #fff; display: block; font-size: 13px; text-transform: uppercase;">Session Mode:</strong>
+                    <span id="sessionStatusLabel" style="color: #ff3333; font-weight: bold; font-size: 13px;">🔴 OFFLINE (Auto-Lock: 3 Min)</span>
+                </div>
+                <button id="toggleOnlineBtn" onclick="toggleOnlineStatus()" style="background: #222; color: #fff; border: 2px solid var(--primary-green); padding: 10px 14px; border-radius: 20px; font-weight: bold; cursor: pointer;">
+                    🔴 Toggle ONLINE
+                </button>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1c4d28; padding-bottom: 6px; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                <h4 style="margin-bottom: 0; border-bottom: none; padding-bottom: 0;">🔐 Dispatcher Control Panel (Private)</h4>
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" onclick="clearAndRefreshPanel()" style="background: #0284c7; color: #fff; border: 1.5px solid #38bdf8; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.9rem;">🔄 Clear & Refresh</button>
+                    <a href="index.html" onclick="sessionStorage.removeItem('dnc_unlocked');" style="background:#1e293b; color:#38bdf8; border: 1.5px solid #38bdf8; padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:900; font-size:0.9rem;">🏠 Public Site</a>
+                </div>
+            </div>
+
+            <!-- OFFICIAL INVOICE GENERATION SECTION WITH FILE PICKER & WHATSAPP TEXT PASTE BOX -->
+            <div style="background: #03140b; border: 1.5px solid var(--primary-green); padding: 16px; border-radius: 10px; margin-bottom: 20px;">
+                <div style="margin-bottom: 12px;">
+                    <h5 style="color: var(--primary-green); font-size: 1.1rem; font-weight: 900; text-transform: uppercase;">📄 Official Invoice & WhatsApp Request Auto-Scanner</h5>
+                    <p style="color: #cbd5e1; font-size: 0.88rem;">Upload a screenshot/PDF file or paste a copied WhatsApp message below to auto-fill details instantly!</p>
+                </div>
+
+                <!-- OPTION A: FILE UPLOADER (GALLERY / MY FILES / DRIVE) -->
+                <div style="background: #052410; border: 1px solid #1c4d28; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                    <label style="color: var(--primary-green); font-weight: 800; font-size: 0.88rem; display: block; margin-bottom: 6px;">📁 Choose File / Screenshot (Gallery, My Files, Drive, Photos):</label>
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <input type="file" id="inv-whatsapp-file" accept="image/*,application/pdf" style="padding: 8px; background: #000; color: #fff; border: 1px solid #22c55e; border-radius: 6px; flex: 1; min-width: 220px;" onchange="handleInvoiceFileSelect()">
+                        <button type="button" class="btn-gen" style="background: #059669; color: #fff; padding: 10px 16px; font-size: 0.95rem; min-width: 160px;" onclick="scanInvoiceFileOCR()">🔍 Auto-Scan File OCR</button>
+                    </div>
+                    <div id="inv-file-ocr-status" class="ocr-status-text" style="margin-top: 4px;"></div>
+                </div>
+
+                <!-- OPTION B: PASTE WHATSAPP TEXT BOX -->
+                <div style="background: #052410; border: 1px solid #1c4d28; padding: 12px; border-radius: 8px; margin-bottom: 14px;">
+                    <label style="color: #38bdf8; font-weight: 800; font-size: 0.88rem; display: block; margin-bottom: 6px;">📱 Or Paste Copied WhatsApp Customer Request Text Here:</label>
+                    <textarea id="inv-whatsapp-text-paste" rows="3" placeholder="Paste WhatsApp message here (e.g. 'Client Name: Colette Stewart, Phone: 876-555-0199, Destination: Negril')..." style="width: 100%; padding: 10px; background: #000; color: #fff; border: 1px solid #38bdf8; border-radius: 6px; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;"></textarea>
+                    
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button type="button" class="btn-gen" style="background: #0284c7; color: #fff; flex: 1; min-width: 180px; padding: 10px; font-size: 0.95rem;" onclick="parseWhatsAppTextToInvoice()">⚡ Auto-Parse Pasted WhatsApp Text</button>
+                        <button type="button" class="btn-gen" style="background: #a855f7; color: #fff; flex: 1; min-width: 180px; padding: 10px; font-size: 0.95rem;" onclick="clearPasteBox()">🗑️ Clear Box</button>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 14px;">
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Customer Name:</label>
+                        <input type="text" id="manual-inv-client" placeholder="e.g. John Brown" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Customer Phone / WhatsApp #:</label>
+                        <input type="text" id="manual-inv-phone" placeholder="e.g. 876-555-0199" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Customer Email:</label>
+                        <input type="text" id="manual-inv-email" placeholder="e.g. client@email.com" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Pickup Location:</label>
+                        <input type="text" id="manual-inv-pickup" value="Kingston & Portmore Depot" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Drop-off Town / Destination:</label>
+                        <input type="text" id="manual-inv-dest" list="jamaica-towns-list" placeholder="Type town (e.g. Mandeville)" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;" oninput="invoiceLiveAutoPrice()">
+                    </div>
+                    <div>
+                        <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Total Haulage Rate (JMD):</label>
+                        <input type="number" id="manual-inv-amount" placeholder="0" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="color: #38bdf8; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Scheduled Pickup Date:</label>
+                        <input type="date" id="manual-inv-date" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1.5px solid #38bdf8; border-radius: 6px; font-weight: 700;">
+                    </div>
+                    <div>
+                        <label style="color: #38bdf8; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Scheduled Pickup Time:</label>
+                        <input type="text" id="manual-inv-time" value="09:00 AM" placeholder="e.g. 09:00 AM" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1.5px solid #38bdf8; border-radius: 6px; font-weight: 700;">
+                    </div>
+                </div>
+
+                <button class="btn-gen" style="width: 100%; padding: 12px; font-size: 1rem;" onclick="generateInvoice()">📄 Generate Printable Invoice / Deposit Quote</button>
+            </div>
+            
+            <!-- FUTURE ADVANCE BOOKINGS & DEPOSIT QUEUE -->
+            <div style="background: #120a24; border: 2px solid #a855f7; padding: 16px; border-radius: 10px; margin-bottom: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h5 style="color: #c084fc; font-size: 1.15rem; font-weight: 900; text-transform: uppercase;">⏳ Future Advance Bookings & Deposit Queue</h5>
+                        <p style="color: #cbd5e1; font-size: 0.88rem;">Private bookings with paid deposits waiting for future run dates. Move them straight to your Private Daily Log on run day!</p>
+                    </div>
+                    <div id="upcoming-alert-badge" style="background: #7e22ce; color: #fff; padding: 6px 12px; border-radius: 6px; font-weight: 900; font-size: 0.85rem; display: none;">
+                        ⚠️ Upcoming Job Alert!
+                    </div>
+                </div>
+                
+                <div class="table-scroll">
+                    <table class="tracker-table" style="min-width: 900px;">
+                        <thead>
+                            <tr style="background: #3b1248;">
+                                <th style="color: #c084fc;">Pickup Date & Time</th>
+                                <th style="color: #c084fc;">Client Name & Phone</th>
+                                <th style="color: #c084fc;">Route (Pickup ➔ Destination)</th>
+                                <th style="color: #c084fc;">Total Rate & Deposit</th>
+                                <th style="color: #c084fc;">Action / Send to Log</th>
+                            </tr>
+                        </thead>
+                        <tbody id="future-queue-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="payment-status-box">
+                <h5>💳 Payment & Booking Status</h5>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="inv-deposit-paid" onchange="togglePaymentBoxes('deposit')">
+                    <label for="inv-deposit-paid">🔒 Mark 50% Deposit as PAID (Send to client to confirm booking)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="inv-full-paid" onchange="togglePaymentBoxes('full')">
+                    <label for="inv-full-paid">🎉 Mark Job as FULLY PAID (Balance Settled on Job Date)</label>
+                </div>
+            </div>
+
+            <!-- CREW PAYROLL & CORPORATE PAYSLIPS SECTION -->
+            <div class="payroll-section-box">
+                <h5>👥 Crew Payroll & Corporate Payslips</h5>
+                <p style="color: #cbd5e1; font-size: 0.92rem; margin-bottom: 12px;">Scan operating runs, manage AR charges, and optionally attach WhatsApp screenshots, email text, or PDF receipts:</p>
+                
+                <div class="payroll-grid">
+                    <div class="payroll-card">
+                        <label>🛞 Driver Name:</label>
+                        <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
+                            <input type="text" id="payroll-driver-name" placeholder="Driver Full Name">
+                            <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadStaffProfile('driver')">🔍 Load</button>
+                        </div>
+                        
+                        <label>Payroll # / Employee ID:</label>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                            <input type="text" id="payroll-driver-paynum" value="PAY-2026-001">
+                            <input type="text" id="payroll-driver-id" placeholder="Staff ID">
+                        </div>
+
+                        <label>National ID / TRN:</label>
+                        <input type="text" id="payroll-driver-natid" placeholder="TRN Number">
+
+                        <label>Bank Name & Branch:</label>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                            <input type="text" id="payroll-driver-bankname" placeholder="Bank Name (e.g. NCBCBJM)">
+                            <input type="text" id="payroll-driver-bankbranch" placeholder="Branch">
+                        </div>
+
+                        <label>Account Number & Sort Code:</label>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                            <input type="text" id="payroll-driver-accnum" placeholder="Account Number">
+                            <input type="text" id="payroll-driver-sortcode" placeholder="Sort Code">
+                        </div>
+
+                        <label>Job Position / Dept / Branch:</label>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                            <input type="text" id="payroll-driver-pos" value="Commercial Driver">
+                            <input type="text" id="payroll-driver-dept" value="D&C Logistics">
+                        </div>
+                        <input type="text" id="payroll-driver-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
+
+                        <label>Date Joined:</label>
+                        <input type="date" id="payroll-driver-joined">
+
+                        <label>Deduction Amount This Period (JMD):</label>
+                        <input type="number" id="payroll-driver-deduct" value="0" placeholder="0">
+
+                        <label>Deduction / AR Charges Note:</label>
+                        <input type="text" id="payroll-driver-deductnote" value="Total Amount Of AR Charges Repayable" placeholder="e.g. Total Amount Of AR Charges $145,000 Repayable">
+
+                        <label>Total Outstanding Charges / Balance (JMD):</label>
+                        <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
+                            <input type="number" id="payroll-driver-totalcharges" value="0" placeholder="0">
+                            <button type="button" style="background:#166534; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="applyDeductionToBalance('driver')">📉 Apply Ded.</button>
+                        </div>
+
+                        <label style="margin-top:6px; color:#38bdf8;">Add New AR Charges (JMD):</label>
+                        <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
+                            <input type="number" id="payroll-driver-newcharge" placeholder="Amount to add">
+                            <button type="button" style="background:#b91c1c; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="addNewChargeToBalance('driver')">➕ Add Charge</button>
+                        </div>
+
+                        <label style="margin-top:6px; color:#facc15;">📎 Attach Charge Proof (Auto-Converts PDF to Photo):</label>
+                        <input type="file" id="payroll-driver-proof-file" accept="image/*,application/pdf" style="padding: 6px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; font-size:0.9rem; width:100%; margin-bottom: 6px;">
+                        <textarea id="payroll-driver-proof-text" rows="2" placeholder="Or paste WhatsApp / email charge details text here..." style="font-size:0.88rem; width:100%;"></textarea>
+
+                        <label style="margin-top:8px;">Payment Method & Date:</label>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                            <select id="payroll-driver-method">
+                                <option value="Bank Transfer">🏦 Bank Transfer</option>
+                                <option value="Cash">💵 Cash</option>
+                                <option value="Company Check">📜 Check</option>
+                            </select>
+                            <input type="date" id="payroll-driver-paydate">
+                        </div>
+
+                        <button type="button" class="btn-save-profile" style="background:#0369a1; color:#fff; border:none; border-radius:6px; font-weight:900; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px; cursor:pointer;" onclick="saveStaffProfile('driver')">💾 SAVE DRIVER PROFILE</button>
+                        <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 GENERATE DRIVER WEEKLY PAYSLIP</button>
+                    </div>
+
+                    <div class="payroll-card">
+                        <label>🤝 Assistant Name:</label>
+                        <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
+                            <input type="text" id="payroll-asst-name" placeholder="Assistant Full Name">
+                            <button type="button" style="background:#0284c7; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadStaffProfile('assistant')">🔍 Load</button>
+                        </div>
+                        
+                        <label>Payroll # / Employee ID:</label>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                            <input type="text" id="payroll-asst-paynum" value="PAY-2026-002">
+                            <input type="text" id="payroll-asst-id" placeholder="Staff ID">
+                        </div>
+
+                        <label>National ID / TRN:</label>
+                        <input type="text" id="payroll-asst-natid" placeholder="TRN Number">
+
+                        <label>Bank Name & Branch:</label>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                            <input type="text" id="payroll-asst-bankname" placeholder="Bank Name">
+                            <input type="text" id="payroll-asst-bankbranch" placeholder="Branch">
+                        </div>
+
+                        <label>Account Number & Sort Code:</label>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                            <input type="text" id="payroll-asst-accnum" placeholder="Account Number">
+                            <input type="text" id="payroll-asst-sortcode" placeholder="Sort Code">
+                        </div>
+
+                        <label>Job Position / Dept / Branch:</label>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                            <input type="text" id="payroll-asst-pos" value="Truck Assistant">
+                            <input type="text" id="payroll-asst-dept" value="D&C Logistics">
+                        </div>
+                        <input type="text" id="payroll-asst-branch" value="Kingston & Portmore Hub" style="margin-top:4px;">
+
+                        <label>Date Joined:</label>
+                        <input type="date" id="payroll-asst-joined">
+
+                        <label>Deduction Amount This Period (JMD):</label>
+                        <input type="number" id="payroll-asst-deduct" value="0" placeholder="0">
+
+                        <label>Deduction / AR Charges Note:</label>
+                        <input type="text" id="payroll-asst-deductnote" value="Total Amount Of AR Charges Repayable" placeholder="e.g. Total Amount Of AR Charges $145,000 Repayable">
+
+                        <label>Total Outstanding Charges / Balance (JMD):</label>
+                        <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
+                            <input type="number" id="payroll-asst-totalcharges" value="0" placeholder="0">
+                            <button type="button" style="background:#166534; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="applyDeductionToBalance('assistant')">📉 Apply Ded.</button>
+                        </div>
+
+                        <label style="margin-top:6px; color:#38bdf8;">Add New AR Charges (JMD):</label>
+                        <div style="display:grid; grid-template-columns: 1fr auto; gap:6px;">
+                            <input type="number" id="payroll-asst-newcharge" placeholder="Amount to add">
+                            <button type="button" style="background:#b91c1c; color:#fff; border:none; padding:6px 10px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="addNewChargeToBalance('assistant')">➕ Add Charge</button>
+                        </div>
+
+                        <label style="margin-top:6px; color:#facc15;">📎 Attach Charge Proof (Auto-Converts PDF to Photo):</label>
+                        <input type="file" id="payroll-asst-proof-file" accept="image/*,application/pdf" style="padding: 6px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; font-size:0.9rem; width:100%; margin-bottom: 6px;">
+                        <textarea id="payroll-asst-proof-text" rows="2" placeholder="Or paste WhatsApp / email charge details text here..." style="font-size:0.88rem; width:100%;"></textarea>
+
+                        <label style="margin-top:8px;">Payment Method & Date:</label>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                            <select id="payroll-asst-method">
+                                <option value="Bank Transfer">🏦 Bank Transfer</option>
+                                <option value="Cash">💵 Cash</option>
+                                <option value="Company Check">📜 Check</option>
+                            </select>
+                            <input type="date" id="payroll-asst-paydate">
+                        </div>
+
+                        <button type="button" class="btn-save-profile" style="background:#0369a1; color:#fff; border:none; border-radius:6px; font-weight:900; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px; cursor:pointer;" onclick="saveStaffProfile('assistant')">💾 SAVE ASSISTANT PROFILE</button>
+                        <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 GENERATE ASSISTANT WEEKLY PAYSLIP</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODE SELECTOR & REFRESH BAR -->
+            <div style="background: #0e2216; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <span style="color: #a7f3d0; font-size: 0.85rem; font-weight: 800; display: block; text-transform: uppercase;">Active Operating Mode (Day Selector):</span>
+                    <strong id="modeIndicatorLabel" style="color: var(--primary-green); font-size: 1rem;">D&C Mode (Monday – Sunday 7 Days)</strong>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" id="btnModeWestco" onclick="switchOperatingMode('westco')" style="background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.85rem;">🏢 Wisynco Mode (Mon-Fri)</button>
+                    <button type="button" id="btnModeDnc" onclick="switchOperatingMode('dnc')" style="background: var(--primary-green); color: #000; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.85rem;">🚛 D&C Mode (Mon-Sun)</button>
+                </div>
+            </div>
+
+            <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📊 Corporate Daily Multi-Drop & Cost Tracker</h5>
+            <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log operational runs, track crew payouts, and view invoice numbers instantly below!</p>
+
+            <div class="tracker-form-container">
+                <div class="tracker-form-grid">
+                    <div class="tracker-field-group">
+                        <label>Day of Week</label>
+                        <select id="tr-day">
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                        </select>
+                    </div>
+                    <div class="tracker-field-group">
+                        <label>Exact Date (Manual / Backdating Supported)</label>
+                        <input type="date" id="tr-date">
+                    </div>
+                    <div class="tracker-field-group">
+                        <label>Invoice Number(s)</label>
+                        <input type="text" id="tr-inv" placeholder="e.g. DC001, DC002">
+                    </div>
+                    <div class="tracker-field-group">
+                        <label>Pickup Town</label>
+                        <input type="text" id="tr-pickup" placeholder="Pickup location">
+                    </div>
+
+                    <div class="tracker-field-group">
+                        <label>Rate Sheet Mode</label>
+                        <div style="display: flex; gap: 6px;">
+                            <button type="button" id="mode-btn-wisynco" onclick="setTrackerRateMode('wisynco')" style="flex: 1; padding: 10px; background: #0284c7; color: #fff; font-weight: 900; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">🏢 Wisynco Mode</button>
+                            <button type="button" id="mode-btn-private" onclick="setTrackerRateMode('private')" style="flex: 1; padding: 10px; background: #1e293b; color: #38bdf8; font-weight: 900; border: 1px solid #38bdf8; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">🏷️ D&C Mode</button>
+                        </div>
+                        <input type="hidden" id="tr-active-mode" value="wisynco">
+                    </div>
+
+                    <div class="tracker-field-group">
+                        <label>Drop-off Destination (Auto-Lookup)</label>
+                        <input type="text" id="tr-drop" list="jamaica-towns-list" placeholder="Type town (e.g. Sav-La-Mar, Falmouth)" oninput="trackerLiveAutoPrice()">
+                        <datalist id="jamaica-towns-list">
+                        </datalist>
+                    </div>
+                    <div class="tracker-field-group">
+                        <label>Driver Name (Pre-Filled)</label>
+                        <input type="text" id="tr-driver" placeholder="Driver name" oninput="saveCrewPreferences()">
+                    </div>
+                    <div class="tracker-field-group">
+                        <label>Driver Payout (JMD)</label>
+                        <input type="number" id="tr-driver-pay" placeholder="0" oninput="updateLiveProfit()">
+                    </div>
+                    <div class="tracker-field-group">
+                        <label>Assistant Name (Pre-Filled)</label>
+                        <input type="text" id="tr-assistant" placeholder="Assistant name" oninput="saveCrewPreferences()">
+                    </div>
+                    <div class="tracker-field-group">
+                        <label>Assistant Payout (JMD)</label>
+                        <input type="number" id="tr-asst-pay" placeholder="0" oninput="updateLiveProfit()">
+                    </div>
+                    <div class="tracker-field-group">
+                        <label>Petrol Cost (JMD)</label>
+                        <input type="number" id="tr-petrol" placeholder="0" oninput="updateLiveProfit()">
+                    </div>
+                    <div class="tracker-field-group">
+                        <label>Calculated Rate (JMD) - Auto Filled</label>
+                        <input type="number" id="tr-rate" placeholder="0" oninput="updateLiveProfit()">
+                    </div>
+
+                    <div class="live-profit-preview-box">
+                        <label>Live Net Profit Preview:</label>
+                        <span id="live-net-profit-display">$0 JMD</span>
+                    </div>
+
+                    <div class="tracker-field-group" style="grid-column: 1 / -1; max-width: 300px;">
+                        <label>Payment Status</label>
+                        <select id="tr-status">
+                            <option value="UNPAID">🔴 UNPAID</option>
+                            <option value="PENDING COLLECTION">🟠 PENDING COLLECTION</option>
+                            <option value="PAID">✅ PAID</option>
+                        </select>
+                    </div>
+
+                    <div class="tracker-field-group" style="grid-column: 1 / -1; background: #042410; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-top: 4px;">
+                        <label style="color: var(--primary-green); font-size: 0.95rem; text-transform: uppercase; margin-bottom: 6px; display: block;">⚠️ Mandatory Crew Payout Checkpoint *</label>
+                        <select id="tr-payout-selection" style="background: #000; color: #fff; border: 1.5px solid var(--primary-green); padding: 10px; border-radius: 6px; font-weight: 800; width: 100%;">
+                            <option value="">-- SELECT CREW SETTLEMENT STATUS --</option>
+                            <option value="PAID_OUT_OF_POCKET">✅ Crew Paid Out-of-Pocket (Wages Settled)</option>
+                            <option value="WAGES_PENDING">⏳ Crew Wages Pending / Payment Pending</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-add-job" onclick="addTrackerJob()">➕ Log Corporate Job</button>
+            </div>
+
+            <!-- TABLE EDIT PIN CONTROL BAR -->
+            <div style="background: #061826; border: 1.5px solid #38bdf8; padding: 10px 14px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <strong style="color: #38bdf8; font-size: 0.95rem; text-transform: uppercase; display: block;">Table Edit Mode:</strong>
+                    <span id="editModeStatusLabel" style="color: #f87171; font-weight: bold; font-size: 0.88rem;">🔒 Locked (PIN Required for Edits)</span>
+                </div>
+                <div id="editModeBtnContainer">
+                    <button type="button" onclick="openEditPinModal()" style="background: #0284c7; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.88rem;">🔑 Unlock Table Edits</button>
+                </div>
+            </div>
+
+            <div class="table-scroll">
+                <table class="tracker-table" id="tracker-table">
+                    <colgroup>
+                        <col style="width: 10%;">
+                        <col style="width: 11%;">
+                        <col style="width: 14%;">
+                        <col style="width: 10%;">
+                        <col style="width: 10%;">
+                        <col style="width: 8%;">
+                        <col style="width: 8%;">
+                        <col style="width: 8%;">
+                        <col style="width: 8%;">
+                        <col style="width: 13%;">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Day & Date</th>
+                            <th>Invoice #(s)</th>
+                            <th>Route</th>
+                            <th>Driver & Payout</th>
+                            <th>Assistant & Payout</th>
+                            <th>Petrol Cost</th>
+                            <th>Total Rate</th>
+                            <th>Net Profit</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tracker-table-body">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- DOCUMENT VAULT BOX WITH DIRECT MAINTENANCE EXPENSE BUTTON -->
+            <div class="doc-vault-box">
+                <h5>📑 Vehicle Document Vault & OCR Auto-Scanner (Connected to Maintenance Log)</h5>
+                <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Choose file, enter certificate/license cost, press <strong>Add to Maintenance Log</strong> to instantly update your expense totals, or scan via OCR!</p>
+                
+                <div class="doc-grid">
+                    <div class="doc-card">
+                        <div class="doc-card-header">
+                            <h6>📄 Public Carrier Road Licence</h6>
+                            <span class="badge-status" id="badge-roadlicence">ACTIVE</span>
+                        </div>
+                        <label>Licence / Certificate Number:</label>
+                        <input type="text" id="doc-roadlicence-num" placeholder="Licence #">
+                        <label>Expiry Date:</label>
+                        <input type="date" id="doc-roadlicence-expiry" onchange="updateDocBadges()">
+                        <label>Cost Paid (JMD):</label>
+                        <input type="number" id="doc-roadlicence-cost" placeholder="e.g. 15000">
+                        <label>Attach Official Document (Photo or PDF):</label>
+                        <input type="file" id="doc-roadlicence-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('roadlicence')">
+                        <img id="doc-roadlicence-img-preview" class="doc-preview-img" alt="Road Licence Preview">
+                        <div id="ocr-status-roadlicence" class="ocr-status-text"></div>
+                        <label>Notes / Details:</label>
+                        <textarea id="doc-roadlicence-text" rows="2" placeholder="Paste details or notes..."></textarea>
+                        <div class="doc-btn-group">
+                            <button class="btn-doc-save" onclick="saveVehicleDoc('roadlicence')">💾 Save</button>
+                            <button class="btn-doc-ocr" onclick="scanDocWithOCR('roadlicence')">🔍 Auto-Scan</button>
+                            <button style="background:#166534; color:#fff; border:none; padding:8px; border-radius:6px; font-weight:900; cursor:pointer; flex:1; font-size:0.85rem;" onclick="sendDocToMaintenance('roadlicence')">💸 Add to Maint.</button>
+                        </div>
+                        <div class="doc-btn-group" style="margin-top:4px;">
+                            <button class="btn-doc-share" onclick="shareVehicleDocNative('roadlicence')">📱 WhatsApp</button>
+                            <button class="btn-doc-email" onclick="emailVehicleDoc('roadlicence')">✉️ Email</button>
+                        </div>
+                    </div>
+
+                    <div class="doc-card">
+                        <div class="doc-card-header">
+                            <h6>🛡️ Insurance Certificate</h6>
+                            <span class="badge-status" id="badge-insurance">ACTIVE</span>
+                        </div>
+                        <label>Policy / Cover Note Number:</label>
+                        <input type="text" id="doc-insurance-num" placeholder="Policy #">
+                        <label>Expiry Date:</label>
+                        <input type="date" id="doc-insurance-expiry" onchange="updateDocBadges()">
+                        <label>Cost Paid (JMD):</label>
+                        <input type="number" id="doc-insurance-cost" placeholder="e.g. 45000">
+                        <label>Attach Official Document (Photo or PDF):</label>
+                        <input type="file" id="doc-insurance-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('insurance')">
+                        <img id="doc-insurance-img-preview" class="doc-preview-img" alt="Insurance Preview">
+                        <div id="ocr-status-insurance" class="ocr-status-text"></div>
+                        <label>Broker / Insurer Notes:</label>
+                        <textarea id="doc-insurance-text" rows="2" placeholder="e.g. Chancellor Insurance / Agent details..."></textarea>
+                        <div class="doc-btn-group">
+                            <button class="btn-doc-save" onclick="saveVehicleDoc('insurance')">💾 Save</button>
+                            <button class="btn-doc-ocr" onclick="scanDocWithOCR('insurance')">🔍 Auto-Scan</button>
+                            <button style="background:#166534; color:#fff; border:none; padding:8px; border-radius:6px; font-weight:900; cursor:pointer; flex:1; font-size:0.85rem;" onclick="sendDocToMaintenance('insurance')">💸 Add to Maint.</button>
+                        </div>
+                        <div class="doc-btn-group" style="margin-top:4px;">
+                            <button class="btn-doc-share" onclick="shareVehicleDocNative('insurance')">📱 WhatsApp</button>
+                            <button class="btn-doc-email" onclick="emailVehicleDoc('insurance')">✉️ Email</button>
+                        </div>
+                    </div>
+
+                    <div class="doc-card">
+                        <div class="doc-card-header">
+                            <h6>📋 Certificate of Fitness</h6>
+                            <span class="badge-status" id="badge-fitness">ACTIVE</span>
+                        </div>
+                        <label>Fitness Sticker / Cert Number:</label>
+                        <input type="text" id="doc-fitness-num" placeholder="Fitness Cert #">
+                        <label>Expiry Date:</label>
+                        <input type="date" id="doc-fitness-expiry" onchange="updateDocBadges()">
+                        <label>Cost Paid (JMD):</label>
+                        <input type="number" id="doc-fitness-cost" placeholder="e.g. 8500">
+                        <label>Attach Official Document (Photo or PDF):</label>
+                        <input type="file" id="doc-fitness-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('fitness')">
+                        <img id="doc-fitness-img-preview" class="doc-preview-img" alt="Fitness Preview">
+                        <div id="ocr-status-fitness" class="ocr-status-text"></div>
+                        <label>Notes:</label>
+                        <textarea id="doc-fitness-text" rows="2" placeholder="Depot or inspection notes..."></textarea>
+                        <div class="doc-btn-group">
+                            <button class="btn-doc-save" onclick="saveVehicleDoc('fitness')">💾 Save</button>
+                            <button class="btn-doc-ocr" onclick="scanDocWithOCR('fitness')">🔍 Auto-Scan</button>
+                            <button style="background:#166534; color:#fff; border:none; padding:8px; border-radius:6px; font-weight:900; cursor:pointer; flex:1; font-size:0.85rem;" onclick="sendDocToMaintenance('fitness')">💸 Add to Maint.</button>
+                        </div>
+                        <div class="doc-btn-group" style="margin-top:4px;">
+                            <button class="btn-doc-share" onclick="shareVehicleDocNative('fitness')">📱 WhatsApp</button>
+                            <button class="btn-doc-email" onclick="emailVehicleDoc('fitness')">✉️ Email</button>
+                        </div>
+                    </div>
+
+                    <div class="doc-card">
+                        <div class="doc-card-header">
+                            <h6>📑 Registration Title / C88 / V5</h6>
+                            <span class="badge-status" id="badge-registration">ACTIVE</span>
+                        </div>
+                        <label>Registration Title Number:</label>
+                        <input type="text" id="doc-registration-num" placeholder="Registration #">
+                        <label>Renewal Date / Date Issued:</label>
+                        <input type="date" id="doc-registration-expiry" onchange="updateDocBadges()">
+                        <label>Cost Paid (JMD):</label>
+                        <input type="number" id="doc-registration-cost" placeholder="e.g. 10000">
+                        <label>Attach Official Document (Photo or PDF):</label>
+                        <input type="file" id="doc-registration-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('registration')">
+                        <img id="doc-registration-img-preview" class="doc-preview-img" alt="Registration Title Preview">
+                        <div id="ocr-status-registration" class="ocr-status-text"></div>
+                        <label>Notes:</label>
+                        <textarea id="doc-registration-text" rows="2" placeholder="Chassis / Engine / VIN notes..."></textarea>
+                        <div class="doc-btn-group">
+                            <button class="btn-doc-save" onclick="saveVehicleDoc('registration')">💾 Save</button>
+                            <button class="btn-doc-ocr" onclick="scanDocWithOCR('registration')">🔍 Auto-Scan</button>
+                            <button style="background:#166534; color:#fff; border:none; padding:8px; border-radius:6px; font-weight:900; cursor:pointer; flex:1; font-size:0.85rem;" onclick="sendDocToMaintenance('registration')">💸 Add to Maint.</button>
+                        </div>
+                        <div class="doc-btn-group" style="margin-top:4px;">
+                            <button class="btn-doc-share" onclick="shareVehicleDocNative('registration')">📱 WhatsApp</button>
+                            <button class="btn-doc-email" onclick="emailVehicleDoc('registration')">✉️ Email</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
