@@ -1561,7 +1561,7 @@
                     </div>
                     <div class="tracker-field-group">
                         <label>Driver Payout (JMD)</label>
-                        <input type="number" id="tr-driver-pay" placeholder="0" oninput="updateLiveProfit()">
+                        <input type="number" id="tr-driver-pay" placeholder="0" value="0" oninput="updateLiveProfit()">
                     </div>
                     <div class="tracker-field-group">
                         <label>Assistant Name (Pre-Filled)</label>
@@ -1569,15 +1569,15 @@
                     </div>
                     <div class="tracker-field-group">
                         <label>Assistant Payout (JMD)</label>
-                        <input type="number" id="tr-asst-pay" placeholder="0" oninput="updateLiveProfit()">
+                        <input type="number" id="tr-asst-pay" placeholder="0" value="0" oninput="updateLiveProfit()">
                     </div>
                     <div class="tracker-field-group">
                         <label>Petrol Cost (JMD)</label>
-                        <input type="number" id="tr-petrol" placeholder="0" oninput="updateLiveProfit()">
+                        <input type="number" id="tr-petrol" placeholder="0" value="0" oninput="updateLiveProfit()">
                     </div>
                     <div class="tracker-field-group">
                         <label>Calculated Rate (JMD) - Auto Filled</label>
-                        <input type="number" id="tr-rate" placeholder="0" oninput="updateLiveProfit()">
+                        <input type="number" id="tr-rate" placeholder="0" value="0" oninput="updateLiveProfit()">
                     </div>
 
                     <div class="live-profit-preview-box">
@@ -4162,10 +4162,10 @@
             document.getElementById('tr-inv').value = '';
             document.getElementById('tr-pickup').value = '';
             document.getElementById('tr-drop').value = '';
-            document.getElementById('tr-driver-pay').value = '';
-            document.getElementById('tr-asst-pay').value = '';
-            document.getElementById('tr-petrol').value = '';
-            document.getElementById('tr-rate').value = '';
+            document.getElementById('tr-driver-pay').value = '0';
+            document.getElementById('tr-asst-pay').value = '0';
+            document.getElementById('tr-petrol').value = '0';
+            document.getElementById('tr-rate').value = '0';
             document.getElementById('tr-payout-selection').value = '';
             updateLiveProfit();
             
@@ -4552,7 +4552,7 @@
 
             var grandTotalExpenses = totalPetrolSpend + totalCrewWages + totalMaintCost;
             var netProfit = rev - grandTotalExpenses;
-            document.getElementById('all-revenue').innerText = '
+            document.getElementById('all-revenue').innerText = '$' + rev.toLocaleString() + ' JMD';
             if (document.getElementById('all-petrol')) document.getElementById('all-petrol').innerText = '$' + totalPetrolSpend.toLocaleString() + ' JMD';
             document.getElementById('all-wages').innerText = '$' + totalCrewWages.toLocaleString() + ' JMD';
             document.getElementById('all-maint').innerText = '$' + totalMaintCost.toLocaleString() + ' JMD';
