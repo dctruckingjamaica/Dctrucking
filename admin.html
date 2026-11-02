@@ -3494,6 +3494,17 @@
                 if (document.getElementById('tr-assistant').value === '') document.getElementById('tr-assistant').value = savedAsst;
                 if (document.getElementById('payroll-asst-name').value === '') document.getElementById('payroll-asst-name').value = savedAsst;
             }
+
+            var lastDriver = localStorage.getItem("dc_last_driver_profile_name");
+            var lastAssistant = localStorage.getItem("dc_last_assistant_profile_name");
+            if (lastDriver && !document.getElementById('payroll-driver-name').value) {
+                document.getElementById('payroll-driver-name').value = lastDriver;
+            }
+            if (lastAssistant && !document.getElementById('payroll-asst-name').value) {
+                document.getElementById('payroll-asst-name').value = lastAssistant;
+            }
+            if (document.getElementById('payroll-driver-name').value) loadStaffProfile('driver', true);
+            if (document.getElementById('payroll-asst-name').value) loadStaffProfile('assistant', true);
         }
 
         function applyDeductionToBalance(role) {
@@ -3572,15 +3583,19 @@
             };
 
             localStorage.setItem("dc_staff_profile_" + name.toLowerCase(), JSON.stringify(profile));
+            localStorage.setItem(role === 'driver' ? "dc_last_driver_profile_name" : "dc_last_assistant_profile_name", name);
+            alert((role === 'driver' ? "Driver" : "Assistant") + " profile saved on this phone.");
         }
 
-        function loadStaffProfile(role) {
+        function loadStaffProfile(role, silent) {
             var prefix = role === 'driver' ? 'payroll-driver-' : 'payroll-asst-';
             var nameInput = document.getElementById(prefix + 'name');
             var name = nameInput.value.trim().toLowerCase();
             if (!name) {
-                alert("Please enter the staff member's name to load their profile.");
-                nameInput.focus();
+                if (!silent) {
+                    alert("Please enter the staff member's name to load their profile.");
+                    nameInput.focus();
+                }
                 return;
             }
 
@@ -3602,8 +3617,8 @@
                 document.getElementById(prefix + 'deductnote').value = profile.deductnote || '';
                 document.getElementById(prefix + 'totalcharges').value = profile.totalcharges || '0';
                 document.getElementById(prefix + 'method').value = profile.method || 'Bank Transfer';
-                alert("Profile loaded successfully for " + profile.name + "!");
-            } else {
+                if (!silent) alert("Profile loaded successfully for " + profile.name + "!");
+            } else if (!silent) {
                 alert("No saved profile found for '" + nameInput.value + "'.");
             }
         }
@@ -4133,6 +4148,8 @@
             saveStoredJobs(jobs);
             if (!isCurrentWeek(date)) {
                 showAllHistory = true;
+                var monthFilter = document.getElementById('history-month-filter');
+                if (monthFilter) monthFilter.value = 'ALL';
                 var viewLabel = document.getElementById('current-view-label');
                 var viewButton = document.querySelector('.btn-week-toggle');
                 if (viewLabel) viewLabel.innerText = "📅 Showing: All Historical Records in Table";
