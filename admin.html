@@ -14,10 +14,16 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     </script>
 <script>
- 
-  
+ <script>
+  // Load saved jobs directly from browser memory
+  const cachedJobs = JSON.parse(localStorage.getItem('cachedJobs')) || [];
+  if (typeof logCorporationJobs === 'function') {
+    logCorporationJobs(cachedJobs);
   }
-</script> 
+</script>
+  
+    
+
     <style>
         :root {
             --primary-green: #00e676;
