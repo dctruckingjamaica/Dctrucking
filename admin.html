@@ -4291,32 +4291,101 @@
             }
 
             var jobs = getStoredJobs();
-            var job = null;
-            for (var i = 0; i < jobs.length; i++) {
-                if (jobs[i].id === id) {
-                    job = jobs[i];
-                    break;
-                }
-            }
+            var job = jobs.find(function(item) { return item.id === id; });
             if (!job) return;
 
-            var newDay = prompt("Edit Day of Week:", job.day);
+            // Collect every change first. Cancelling any prompt leaves the saved job untouched.
+            var newDay = prompt("Edit Day of Week:", job.day || "");
             if (newDay === null) return;
-            var newDate = prompt("Edit Exact Date (YYYY-MM-DD):", job.date);
+            var newDate = prompt("Edit Exact Date (YYYY-MM-DD):", job.date || "");
             if (newDate === null) return;
-            var newInv = prompt("Edit Invoice Number(s):", job.inv);
+            if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(newDate.trim()) || isNaN(new Date(newDate.trim() + "T12:00:00").getTime())) {
+                alert("Please use a valid date in YYYY-MM-DD format.");
+                return;
+            }
+            var newInv = prompt("Edit Invoice Number(s):", job.inv || "");
             if (newInv === null) return;
-            var newDrop = prompt("Edit Drop-off Destination:", job.drop);
+            var newPickup = prompt("Edit Pickup / Starting Location:", job.pickup || "");
+            if (newPickup === null) return;
+            var newDrop = prompt("Edit Drop-off Destination / Route:", job.drop || "");
             if (newDrop === null) return;
-            var newRate = prompt("Edit Total Rate (JMD):", job.rate);
+            var newDriver = prompt("Edit Driver Name:", job.driver || "");
+            if (newDriver === null) return;
+            var newDriverPayText = prompt("Edit Driver Payout (JMD):", String(job.driverPay || 0));
+            if (newDriverPayText === null) return;
+            var newAssistant = prompt("Edit Assistant Name:", job.assistant || "");
+            if (newAssistant === null) return;
+            var newAsstPayText = prompt("Edit Assistant Payout (JMD):", String(job.asstPay || 0));
+            if (newAsstPayText === null) return;
+            var newPetrolText = prompt("Edit Petrol Cost (JMD):", String(job.petrol || 0));
+            if (newPetrolText === null) return;
+            var newRateText = prompt("Edit Contract Haulage Rate (JMD):", String(job.rate || 0));
+            if (newRateText === null) return;
+
+            var newStatusChoice = prompt("Company / Customer Collection Status:\n1 = UNPAID\n2 = PENDING COLLECTION\n3 = PAID", job.status === "PAID" ? "3" : (job.status === "PENDING COLLECTION" ? "2" : "1"));
+            if (newStatusChoice === null) return;
+            var statusMap = { "1": "UNPAID", "2": "PENDING COLLECTION", "3": "PAID" };
+            if (!statusMap[newStatusChoice.trim()]) {
+                alert("Choose 1, 2 or 3 for the company payment status.");
+                return;
+            }
+
+            var newCrewChoice = prompt("Crew Wages Status:\n1 = WAGES PENDING\n2 = CREW PAID OUT-OF-POCKET", job.staffPaid === true ? "2" : "1");
+            if (newCrewChoice === null) return;
+            if (newCrewChoice.trim() !== "1" && newCrewChoice.trim() !== "2") {
+                alert("Choose 1 for Wages Pending or 2 for Crew Paid Out-of-Pocket.");
+                return;
+            }
+
+            function readMoney(value, label) {
+                var amount = Number(value.trim());
+                if (value.trim() === "" || !Number.isFinite(amount) || amount < 0) {
+                    alert(label + " must be a valid amount of 0 or more.");
+                    return null;
+                }
+                return amount;
+            }
+
+            var newDriverPay = readMoney(newDriverPayText, "Driver payout");
+            if (newDriverPay === null) return;
+            var newAsstPay = readMoney(newAsstPayText, "Assistant payout");
+            if (newAsstPay === null) return;
+            var newPetrol = readMoney(newPetrolText, "Petrol cost");
+            if (newPetrol === null) return;
+            var newRate = readMoney(newRateText, "Contract haulage rate");
             if (newRate === null) return;
 
-            job.day = newDay.trim() || job.day;
-            job.date = newDate.trim() || job.date;
-            job.inv = newInv.trim() || job.inv;
-            job.drop = newDrop.trim() || job.drop;
-            job.rate = parseFloat(newRate) || job.rate;
+            job.day = newDay.trim();
+            job.date = newDate.trim();
+            job.inv = newInv.trim();
+            job.pickup = newPickup.trim();
+            job.drop = newDrop.trim();
+            job.driver = newDriver.trim();
+            job.driverPay = newDriverPay;
+            job.assistant = newAssistant.trim();
+            job.asstPay = newAsstPay;
+            job.petrol = newPetrol;
+            job.rate = newRate;
+            job.status = statusMap[newStatusChoice.trim()];
+            job.staffPaid = newCrewChoice.trim() === "2";
 
+            saveStoredJobs(jobs);
+            loadTrackerJobs();
+            alert("✅ Job updated. Company collection and crew wages have been saved separately.");
+        }
+
+        function toggleCrewPayoutStatus(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first.");
+                openEditPinModal();
+                return;
+            }
+
+            var jobs = getStoredJobs();
+            var job = jobs.find(function(item) { return item.id === id; });
+            if (!job) return;
+
+            job.staffPaid = job.staffPaid !== true;
             saveStoredJobs(jobs);
             loadTrackerJobs();
         }
@@ -4694,7 +4763,9 @@
                         statusHTML = '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
                     }
 
-                    var staffPaidBadge = j.staffPaid ? '<br><span style="color: #4ade80; font-size: 0.8rem; font-weight: 900;">✅ Crew Paid Out-of-Pocket</span>' : '<br><span style="color: #f87171; font-size: 0.8rem; font-weight: 800;">⏳ Wages Pending</span>';
+                    var staffPaidBadge = j.staffPaid === true
+                        ? '<br><button type="button" onclick="toggleCrewPayoutStatus(' + j.id + ')" title="Tap to change crew wages status" style="margin-top:5px; background:#166534; color:#ffffff; border:1px solid #4ade80; border-radius:5px; padding:5px 7px; font-size:0.78rem; font-weight:900; cursor:pointer;">✅ CREW PAID — TAP TO CHANGE</button>'
+                        : '<br><button type="button" onclick="toggleCrewPayoutStatus(' + j.id + ')" title="Tap to mark crew wages as paid" style="margin-top:5px; background:#7f1d1d; color:#ffffff; border:1px solid #f87171; border-radius:5px; padding:5px 7px; font-size:0.78rem; font-weight:900; cursor:pointer;">⏳ WAGES PENDING — TAP TO MARK PAID</button>';
 
                     var editBtnStyle = tableEditUnlocked ? 'background: #0284c7; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
                     var deleteBtnStyle = tableEditUnlocked ? 'background: #dc2626; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
