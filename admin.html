@@ -13,14 +13,7 @@
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     </script>
-<script>
- <script>
-  // Load saved jobs directly from browser memory
-  const cachedJobs = JSON.parse(localStorage.getItem('cachedJobs')) || [];
-  if (typeof logCorporationJobs === 'function') {
-    logCorporationJobs(cachedJobs);
-  }
-</script>
+
   
     
 
@@ -1184,28 +1177,7 @@
     </style>
 </head>
 <body>
-<script>
-     let cachedJobs = [];
 
-        function getStoredJobs() {
-            return cachedJobs;
-        }
-
-        function saveStoredJobs(jobs) {
-            cachedJobs = jobs;
-            // Pushes your job updates instantly to your cloud database
-            database.ref('dc_corporate_jobs').set(jobs);
-        }
-
-        // Listens for real-time changes from either your phone or iPad
-        database.ref('dc_corporate_jobs').on('value', function(snapshot) {
-            const data = snapshot.val();
-            cachedJobs = data ? data : [];
-            if (typeof loadTrackerJobs === 'function') {
-                loadTrackerJobs();
-            }
-        });
-</script>
     <!-- SECURITY PIN LOGIN MODAL OVERLAY -->
     <div id="managerLoginModal" style="display:flex; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:9999; justify-content:center; align-items:center; flex-direction:column; font-family:monospace;">
         <div style="background:#111; padding:25px; border:2px solid #00ff66; border-radius:10px; text-align:center; width:85%; max-width:320px;">
@@ -1557,7 +1529,7 @@
                     </div>
                     <div class="tracker-field-group">
                         <label>Exact Date (Manual)</label>
-                        <input type="date" id="tr-date">
+                        <input type="date" id="tr-date" onchange="syncTrackerDayFromDate()">
                     </div>
                     <div class="tracker-field-group">
                         <label>Invoice Number(s)</label>
@@ -1954,6 +1926,10 @@
                         <label>Expiry Date:</label>
                         <input type="date" id="doc-roadlicence-expiry" onchange="updateDocBadges()">
                         <label>Attach Official Document (Photo or PDF):</label>
+                        <label>Payment Date:</label>
+                        <input type="date" id="doc-roadlicence-paid-date">
+                        <label>Amount Paid (JMD):</label>
+                        <input type="number" id="doc-roadlicence-cost" min="0" step="1" placeholder="Enter amount paid">
                         <input type="file" id="doc-roadlicence-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('roadlicence')">
                         <img id="doc-roadlicence-img-preview" class="doc-preview-img" alt="Road Licence Preview">
                         <div id="ocr-status-roadlicence" class="ocr-status-text"></div>
@@ -1965,6 +1941,7 @@
                             <button class="btn-doc-share" onclick="shareVehicleDocNative('roadlicence')">📱 WhatsApp</button>
                             <button class="btn-doc-email" onclick="emailVehicleDoc('roadlicence')">✉️ Email</button>
                         </div>
+                        <button type="button" class="btn-doc-save" onclick="saveVehicleDocExpense('roadlicence')">💷 Add Payment to Maintenance Log</button>
                     </div>
 
                     <div class="doc-card">
@@ -1977,6 +1954,10 @@
                         <label>Expiry Date:</label>
                         <input type="date" id="doc-insurance-expiry" onchange="updateDocBadges()">
                         <label>Attach Official Document (Photo or PDF):</label>
+                        <label>Payment Date:</label>
+                        <input type="date" id="doc-insurance-paid-date">
+                        <label>Amount Paid (JMD):</label>
+                        <input type="number" id="doc-insurance-cost" min="0" step="1" placeholder="Enter amount paid">
                         <input type="file" id="doc-insurance-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('insurance')">
                         <img id="doc-insurance-img-preview" class="doc-preview-img" alt="Insurance Preview">
                         <div id="ocr-status-insurance" class="ocr-status-text"></div>
@@ -1988,6 +1969,7 @@
                             <button class="btn-doc-share" onclick="shareVehicleDocNative('insurance')">📱 WhatsApp</button>
                             <button class="btn-doc-email" onclick="emailVehicleDoc('insurance')">✉️ Email</button>
                         </div>
+                        <button type="button" class="btn-doc-save" onclick="saveVehicleDocExpense('insurance')">💷 Add Payment to Maintenance Log</button>
                     </div>
 
                     <div class="doc-card">
@@ -2000,6 +1982,10 @@
                         <label>Expiry Date:</label>
                         <input type="date" id="doc-fitness-expiry" onchange="updateDocBadges()">
                         <label>Attach Official Document (Photo or PDF):</label>
+                        <label>Payment Date:</label>
+                        <input type="date" id="doc-fitness-paid-date">
+                        <label>Amount Paid (JMD):</label>
+                        <input type="number" id="doc-fitness-cost" min="0" step="1" placeholder="Enter amount paid">
                         <input type="file" id="doc-fitness-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('fitness')">
                         <img id="doc-fitness-img-preview" class="doc-preview-img" alt="Fitness Preview">
                         <div id="ocr-status-fitness" class="ocr-status-text"></div>
@@ -2011,6 +1997,7 @@
                             <button class="btn-doc-share" onclick="shareVehicleDocNative('fitness')">📱 WhatsApp</button>
                             <button class="btn-doc-email" onclick="emailVehicleDoc('fitness')">✉️ Email</button>
                         </div>
+                        <button type="button" class="btn-doc-save" onclick="saveVehicleDocExpense('fitness')">💷 Add Payment to Maintenance Log</button>
                     </div>
 
                     <div class="doc-card">
@@ -2023,6 +2010,10 @@
                         <label>Renewal Date / Date Issued:</label>
                         <input type="date" id="doc-registration-expiry" onchange="updateDocBadges()">
                         <label>Attach Official Document (Photo or PDF):</label>
+                        <label>Payment Date:</label>
+                        <input type="date" id="doc-registration-paid-date">
+                        <label>Amount Paid (JMD):</label>
+                        <input type="number" id="doc-registration-cost" min="0" step="1" placeholder="Enter amount paid">
                         <input type="file" id="doc-registration-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('registration')">
                         <img id="doc-registration-img-preview" class="doc-preview-img" alt="Registration Title Preview">
                         <div id="ocr-status-registration" class="ocr-status-text"></div>
@@ -2034,6 +2025,7 @@
                             <button class="btn-doc-share" onclick="shareVehicleDocNative('registration')">📱 WhatsApp</button>
                             <button class="btn-doc-email" onclick="emailVehicleDoc('registration')">✉️ Email</button>
                         </div>
+                        <button type="button" class="btn-doc-save" onclick="saveVehicleDocExpense('registration')">💷 Add Payment to Maintenance Log</button>
                     </div>
                 </div>
             </div>
@@ -3234,18 +3226,50 @@
             }
         }
 
-        function saveVehicleDoc(docType) {
+        function saveVehicleDoc(docType, silent) {
             var num = document.getElementById('doc-' + docType + '-num').value;
             var expiry = document.getElementById('doc-' + docType + '-expiry').value;
             var text = document.getElementById('doc-' + docType + '-text').value;
             var imgPreview = document.getElementById('doc-' + docType + '-img-preview');
             var imgData = (imgPreview.style.display !== 'none' && imgPreview.src) ? imgPreview.src : '';
 
-            var docData = { num: num, expiry: expiry, text: text, imgData: imgData };
+            var costInput = document.getElementById('doc-' + docType + '-cost');
+            var paidDateInput = document.getElementById('doc-' + docType + '-paid-date');
+            var docData = { num: num, expiry: expiry, text: text, imgData: imgData,
+                cost: costInput ? costInput.value : '', paidDate: paidDateInput ? paidDateInput.value : '' };
             localStorage.setItem("dc_doc_" + docType, JSON.stringify(docData));
 
             updateDocBadges();
-            alert("Vehicle document (" + docType.toUpperCase() + ") saved successfully!");
+            if (!silent) alert("Vehicle document (" + docType.toUpperCase() + ") saved successfully!");
+        }
+
+        function saveVehicleDocExpense(docType) {
+            saveVehicleDoc(docType, true);
+            var costInput = document.getElementById('doc-' + docType + '-cost');
+            var dateInput = document.getElementById('doc-' + docType + '-paid-date');
+            var cost = parseFloat(costInput && costInput.value) || 0;
+            var date = (dateInput && dateInput.value) || getLocalISODate();
+            if (cost <= 0) {
+                alert("Please enter the amount paid before adding this document expense.");
+                if (costInput) costInput.focus();
+                return;
+            }
+            var labels = { roadlicence: "Public Carrier Road Licence", insurance: "Vehicle Insurance",
+                fitness: "Certificate of Fitness", registration: "Vehicle Registration" };
+            var maintenance = getStoredMaintenance();
+            var linked = maintenance.find(function(item) { return item.sourceDoc === docType; });
+            if (linked) {
+                linked.date = date; linked.cat = "Vehicle Documents";
+                linked.desc = labels[docType] || docType; linked.cost = cost;
+                linked.vendor = "D&C Vehicle Document Vault";
+            } else {
+                maintenance.push({ id: Date.now(), date: date, cat: "Vehicle Documents",
+                    desc: labels[docType] || docType, cost: cost,
+                    vendor: "D&C Vehicle Document Vault", receipt: "", sourceDoc: docType });
+            }
+            saveStoredMaintenance(maintenance);
+            loadTrackerJobs();
+            alert((labels[docType] || "Vehicle document") + " payment added to the Fleet & Truck Maintenance Log.");
         }
 
         function loadVehicleDocs() {
@@ -3258,6 +3282,8 @@
                     if (document.getElementById('doc-' + type + '-num')) document.getElementById('doc-' + type + '-num').value = data.num || '';
                     if (document.getElementById('doc-' + type + '-expiry')) document.getElementById('doc-' + type + '-expiry').value = data.expiry || '';
                     if (document.getElementById('doc-' + type + '-text')) document.getElementById('doc-' + type + '-text').value = data.text || '';
+                    if (document.getElementById('doc-' + type + '-cost')) document.getElementById('doc-' + type + '-cost').value = data.cost || '';
+                    if (document.getElementById('doc-' + type + '-paid-date')) document.getElementById('doc-' + type + '-paid-date').value = data.paidDate || '';
                     
                     var imgPreview = document.getElementById('doc-' + type + '-img-preview');
                     if (data.imgData) {
@@ -4043,9 +4069,25 @@
             localStorage.setItem("dc_corporate_jobs", JSON.stringify(jobs));
         }
 
+        function syncTrackerDayFromDate() {
+            var dateValue = document.getElementById('tr-date').value;
+            if (!dateValue) return;
+            var parts = dateValue.split('-');
+            var chosenDate = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 12, 0, 0);
+            var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var actualDay = dayNames[chosenDate.getDay()];
+            var daySelect = document.getElementById('tr-day');
+            if (daySelect && Array.from(daySelect.options).some(function(option) { return option.value === actualDay; })) daySelect.value = actualDay;
+        }
+        function getLocalISODate() {
+            var now = new Date();
+            return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+        }
         function addTrackerJob() {
+            var date = document.getElementById('tr-date').value || getLocalISODate();
+            document.getElementById('tr-date').value = date;
+            syncTrackerDayFromDate();
             var day = document.getElementById('tr-day').value;
-            var date = document.getElementById('tr-date').value || new Date().toISOString().split('T')[0];
             var inv = document.getElementById('tr-inv').value;
             var pickup = document.getElementById('tr-pickup').value;
             var drop = document.getElementById('tr-drop').value;
@@ -4089,7 +4131,16 @@
                 staffPaid: staffPaid
             });
             saveStoredJobs(jobs);
-
+            if (!isCurrentWeek(date)) {
+                showAllHistory = true;
+                var viewLabel = document.getElementById('current-view-label');
+                var viewButton = document.querySelector('.btn-week-toggle');
+                if (viewLabel) viewLabel.innerText = "📅 Showing: All Historical Records in Table";
+                if (viewButton) {
+                    viewButton.innerText = "🔄 Switch to Current M-F Week Table Only";
+                    viewButton.style.background = '#0369a1';
+                }
+            }
             document.getElementById('tr-date').value = '';
             document.getElementById('tr-inv').value = '';
             document.getElementById('tr-pickup').value = '';
@@ -4432,7 +4483,7 @@
 
             var totalMaintCost = 0;
             for (var m = 0; m < filteredMaint.length; m++) {
-                totalMaintCost += filteredMaint[m].cost;
+                totalMaintCost += (parseFloat(filteredMaint[m].cost) || 0);
             }
 
             var rev = 0;
@@ -4447,9 +4498,9 @@
             for (var a = 0; a < filteredJobs.length; a++) {
                 var aj = filteredJobs[a];
                 var wagesForJob = (aj.driverPay || 0) + (aj.asstPay || 0);
-                rev += aj.rate;
-                totalPetrolSpend += (aj.petrol || 0);
-                totalCrewWages += wagesForJob;
+                rev += (parseFloat(aj.rate) || 0);
+                totalPetrolSpend += (parseFloat(aj.petrol) || 0);
+                totalCrewWages += (parseFloat(aj.driverPay) || 0) + (parseFloat(aj.asstPay) || 0);
 
                 if (aj.status !== 'PAID') {
                     totalUnpaidRate += (aj.rate || 0);
@@ -4482,10 +4533,9 @@
                 document.getElementById('unpaid-job-count').innerText = unpaidJobCount + (unpaidJobCount === 1 ? ' Job Pending' : ' Jobs Pending');
             }
 
-            var grandTotalExpenses = paidJobExp + totalMaintCost;
-            var netProfit = paidRev - grandTotalExpenses;
-
-            document.getElementById('all-revenue').innerText = '$' + paidRev.toLocaleString() + ' JMD (Paid)';
+            var grandTotalExpenses = totalPetrolSpend + totalCrewWages + totalMaintCost;
+            var netProfit = rev - grandTotalExpenses;
+            document.getElementById('all-revenue').innerText = '
             if (document.getElementById('all-petrol')) document.getElementById('all-petrol').innerText = '$' + totalPetrolSpend.toLocaleString() + ' JMD';
             document.getElementById('all-wages').innerText = '$' + totalCrewWages.toLocaleString() + ' JMD';
             document.getElementById('all-maint').innerText = '$' + totalMaintCost.toLocaleString() + ' JMD';
@@ -4495,6 +4545,220 @@
             var tableJobs = showAllHistory ? allJobs : allJobs.filter(function(j) {
                 return isCurrentWeek(j.date);
             });
+            if (filterMonthVal !== 'ALL') tableJobs = filteredJobs;
+
+            var weekRev = 0;
+            var weekPetrol = 0;
+            var weekWages = 0;
+
+            var currentWeekJobs = allJobs.filter(function(j) { return isCurrentWeek(j.date); });
+            for (var w = 0; w < currentWeekJobs.length; w++) {
+                var wj = currentWeekJobs[w];
+                weekRev += (parseFloat(wj.rate) || 0);
+                weekPetrol += (parseFloat(wj.petrol) || 0);
+                weekWages += (parseFloat(wj.driverPay) || 0) + (parseFloat(wj.asstPay) || 0);
+            }
+
+            var weekTotalExp = weekPetrol + weekWages;
+
+            document.getElementById('sum-revenue').innerText = '$' + weekRev.toLocaleString() + ' JMD';
+            if (document.getElementById('sum-petrol-cost')) document.getElementById('sum-petrol-cost').innerText = '$' + weekPetrol.toLocaleString() + ' JMD';
+            if (document.getElementById('sum-crew-wages')) document.getElementById('sum-crew-wages').innerText = '$' + weekWages.toLocaleString() + ' JMD';
+            document.getElementById('sum-profit').innerText = '$' + (weekRev - weekTotalExp).toLocaleString() + ' JMD';
+            document.getElementById('sum-count').innerText = currentWeekJobs.length + (currentWeekJobs.length === 1 ? ' Job' : ' Jobs');
+
+            if (tableJobs.length === 0) {
+                var emptyMsg = showAllHistory ? "No corporate jobs logged yet." : "No operating week jobs logged yet. Ready to roll!";
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:#94a3b8;">' + emptyMsg + '</td></tr>';
+            } else {
+                for (var i = 0; i < tableJobs.length; i++) {
+                    var j = tableJobs[i];
+                    var expenses = j.driverPay + j.asstPay + j.petrol;
+                    var jobNetProfit = j.rate - expenses;
+
+                    var invArray = (j.inv || '').split(/[\s,]+/).map(function(item) { return item.trim(); }).filter(Boolean);
+                    var invHTML = '<div class="inv-badge-container">';
+                    if (invArray.length > 0) {
+                        for (var k = 0; k < invArray.length; k++) {
+                            invHTML += '<span class="inv-badge-pill">' + invArray[k] + '</span>';
+                        }
+                    } else {
+                        invHTML += '<span class="inv-badge-pill">DC001</span>';
+                    }
+                    invHTML += '</div>';
+
+                    var statusHTML = '';
+                    if (j.status === 'PAID') {
+                        statusHTML = '<span class="status-badge-paid" onclick="toggleJobStatus(' + j.id + ')">✅ PAID</span>';
+                    } else if (j.status === 'PENDING COLLECTION') {
+                        statusHTML = '<span class="status-badge-pending" onclick="toggleJobStatus(' + j.id + ')">🟠 PENDING</span>';
+                    } else {
+                        statusHTML = '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
+                    }
+
+                    var staffPaidBadge = j.staffPaid ? '<br><span style="color: #4ade80; font-size: 0.8rem; font-weight: 900;">✅ Crew Paid Out-of-Pocket</span>' : '<br><span style="color: #f87171; font-size: 0.8rem; font-weight: 800;">⏳ Wages Pending</span>';
+
+                    var editBtnStyle = tableEditUnlocked ? 'background: #0284c7; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
+                    var deleteBtnStyle = tableEditUnlocked ? 'background: #dc2626; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
+
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.88rem;">' + j.date + '</span></td>' +
+                                   '<td>' + invHTML + '</td>' +
+                                   '<td>' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
+                                   '<td>' + j.driver + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.driverPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
+                                   '<td>' + j.assistant + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.asstPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
+                                   '<td style="color:#f87171; font-weight: 800;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
+                                   '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
+                                   '<td style="font-weight:900; color:#38bdf8;">$' + jobNetProfit.toLocaleString() + ' JMD</td>' +
+                                   '<td>' + statusHTML + '</td>' +
+                                   '<td>' +
+                                      '<div class="action-btn-group">' +
+                                          '<button class="btn-table-edit" style="' + editBtnStyle + '" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
+                                          '<button class="btn-table-delete" style="' + deleteBtnStyle + '" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
+                                      '</div>' +
+                                   '</td>';
+                    tbody.appendChild(tr);
+                }
+            }
+
+            loadMaintenanceLogs();
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            populateTownDatalists();
+            
+            if (sessionStorage.getItem('dnc_unlocked') === 'true') {
+                document.getElementById('managerLoginModal').style.display = 'none';
+                unlockSystemUI();
+                if (sessionStorage.getItem('dnc_keep_online') === 'true') {
+                    toggleOnlineStatus();
+                }
+            } else {
+                document.getElementById('managerLoginModal').style.display = 'flex';
+                document.getElementById('managerPinInput').focus();
+            }        // ----------------------------------------- //
+        // PAYSLIP ARCHIVE & VAULT FUNCTIONS         //
+        // ----------------------------------------- //
+        let archivedPayslips = JSON.parse(localStorage.getItem('dnc_archived_payslips')) || [];
+
+        function archiveCurrentPayslip() {
+            // Pulls current values from your active payslip generator fields
+            const workerName = document.getElementById('payslip-worker-name') ? document.getElementById('payslip-worker-name').value : 'Dispatch Worker';
+            const netPay = document.getElementById('payslip-net-pay') ? document.getElementById('payslip-net-pay').innerText : '$0.00';
+            const payPeriod = document.getElementById('payslip-period') ? document.getElementById('payslip-period').value : 'Standard Pay Period';
+            
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+            const payslipObj = {
+                id: 'payslip_' + Date.now(),
+                workerName: workerName,
+                netPay: netPay,
+                payPeriod: payPeriod,
+                date: dateStr,
+                time: timeStr,
+                status: 'UNPAID' // Default status
+            };
+
+            archivedPayslips.unshift(payslipObj);
+            saveAndRenderPayslips();
+        }
+
+        function togglePayslipStatus(id) {
+            const slip = archivedPayslips.find(s => s.id === id);
+            if (slip) {
+                slip.status = slip.status === 'PAID' ? 'UNPAID' : 'PAID';
+                saveAndRenderPayslips();
+            }
+        }
+
+        function deleteArchivedPayslip(id) {
+            if (confirm('Are you sure you want to remove this payslip from the archive?')) {
+                archivedPayslips = archivedPayslips.filter(s => s.id !== id);
+                saveAndRenderPayslips();
+            }
+        }
+
+        function sharePayslipWhatsApp(id) {
+            const slip = archivedPayslips.find(s => s.id === id);
+            if (!slip) return;
+            const text = `*D&C DISPATCH PAYSLIP*%0AWorker: ${slip.workerName}%0APeriod: ${slip.payPeriod}%0ANet Pay: ${slip.netPay}%0AStatus: ${slip.status}%0ADate: ${slip.date} at ${slip.time}`;
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        function sharePayslipEmail(id) {
+            const slip = archivedPayslips.find(s => s.id === id);
+            if (!slip) return;
+            const subject = encodeURIComponent(`Payslip - ${slip.workerName} (${slip.payPeriod})`);
+            const body = encodeURIComponent(`Hello,\n\nHere are the details for your payslip:\n\nWorker: ${slip.workerName}\nPay Period: ${slip.payPeriod}\nNet Pay: ${slip.netPay}\nStatus: ${slip.status}\nGenerated: ${slip.date} at ${slip.time}\n\nBest regards,\nD&C Dispatcher Control Panel`);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        function saveAndRenderPayslips() {
+            localStorage.setItem('dnc_archived_payslips', JSON.stringify(archivedPayslips));
+            renderPayslipArchive();
+        }
+
+        function renderPayslipArchive() {
+            const grid = document.getElementById('payslip-archive-grid');
+            if (!grid) return;
+
+            if (archivedPayslips.length === 0) {
+                grid.innerHTML = `<p style="color: #94a3b8; font-size: 0.9rem; text-align: center; grid-column: 1 / -1;">No payslips archived yet. Generate a payslip above to archive it!</p>`;
+                return;
+            }
+
+            grid.innerHTML = archivedPayslips.map(slip => {
+                const isPaid = slip.status === 'PAID';
+                const watermarkClass = isPaid ? 'watermark-paid' : 'watermark-unpaid';
+                const statusBadgeBg = isPaid ? '#166534' : '#991b1b';
+
+                return `
+                    <div class="archive-card">
+                        <div class="payslip-watermark ${watermarkClass}">${slip.status}</div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; z-index: 2;">
+                            <div>
+                                <h6 style="color: #f8fafc; font-size: 1rem; font-weight: 800; margin-bottom: 2px;">${slip.workerName}</h6>
+                                <p style="color: #cbd5e1; font-size: 0.8rem;">Period: ${slip.payPeriod}</p>
+                            </div>
+                            <span style="background: ${statusBadgeBg}; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 4px;">${slip.status}</span>
+                        </div>
+                        <div style="background: #020810; padding: 10px; border-radius: 6px; border: 1px solid #1e293b; z-index: 2; margin: 6px 0;">
+                            <div style="font-size: 0.75rem; color: #94a3b8;">Net Payout Amount</div>
+                            <div style="font-size: 1.25rem; font-weight: 900; color: #4ade80;">${slip.netPay}</div>
+                            <div style="font-size: 0.72rem; color: #64748b; margin-top: 4px;">Archived: ${slip.date} at ${slip.time}</div>
+                        </div>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap; z-index: 2; margin-top: 4px;">
+                            <button onclick="togglePayslipStatus('${slip.id}')" style="flex: 1; background: #3b82f6; color: #fff; border: none; padding: 6px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">Toggle Paid/Unpaid</button>
+                            <button onclick="sharePayslipWhatsApp('${slip.id}')" style="background: #22c55e; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Share WhatsApp">💬</button>
+                            <button onclick="sharePayslipEmail('${slip.id}')" style="background: #a855f7; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Share Email">✉️</button>
+                            <button onclick="deleteArchivedPayslip('${slip.id}')" style="background: #ef4444; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Delete">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Auto-load existing archives on page startup
+        window.addEventListener('DOMContentLoaded', () => {
+            renderPayslipArchive();
+        });
+        });
+    </script>
+</body>
+</html>
+ + rev.toLocaleString() + ' JMD';
+            if (document.getElementById('all-petrol')) document.getElementById('all-petrol').innerText = '$' + totalPetrolSpend.toLocaleString() + ' JMD';
+            document.getElementById('all-wages').innerText = '$' + totalCrewWages.toLocaleString() + ' JMD';
+            document.getElementById('all-maint').innerText = '$' + totalMaintCost.toLocaleString() + ' JMD';
+            document.getElementById('all-profit').innerText = '$' + netProfit.toLocaleString() + ' JMD';
+            document.getElementById('all-count').innerText = filteredJobs.length + (filteredJobs.length === 1 ? ' Job' : ' Jobs');
+
+            var tableJobs = showAllHistory ? allJobs : allJobs.filter(function(j) {
+                return isCurrentWeek(j.date);
+            });
+            if (filterMonthVal !== 'ALL') tableJobs = filteredJobs;
 
             var weekRev = 0;
             var weekPetrol = 0;
