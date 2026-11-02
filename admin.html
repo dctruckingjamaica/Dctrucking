@@ -44,6 +44,7 @@
             margin: 0 auto;
         }
 
+        /* ADMIN DISPATCHER HEADER BADGE */
         .admin-header-badge {
             background: #161616;
             border: 1px solid var(--primary-green);
@@ -615,53 +616,6 @@
             margin-top: 2px;
         }
 
-        .payslip-archive-container {
-            background: #091a10;
-            border: 2px solid #a855f7;
-            padding: 18px;
-            border-radius: 12px;
-            margin-top: 25px;
-            margin-bottom: 25px;
-        }
-
-        .archive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 14px;
-            margin-top: 15px;
-        }
-
-        .archive-card {
-            background: #04121d;
-            border: 1px solid #7e22ce;
-            border-radius: 8px;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .payslip-watermark {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-25deg);
-            font-size: 3.5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            pointer-events: none;
-            z-index: 10;
-            opacity: 0.18;
-            border: 5px solid currentColor;
-            padding: 5px 20px;
-            border-radius: 10px;
-        }
-        .watermark-paid { color: #166534; }
-        .watermark-unpaid { color: #dc2626; }
-
         .week-filter-bar {
             display: flex;
             justify-content: space-between;
@@ -857,15 +811,15 @@
         .tracker-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: #ffffff;
-            min-width: 1120px;
+            min-width: 1080px;
             table-layout: fixed;
         }
 
         .tracker-table th, .tracker-table td {
             border: 1px solid #224d2d;
-            padding: 10px 12px;
+            padding: 8px 10px;
             text-align: left;
             vertical-align: middle;
             white-space: normal;
@@ -878,13 +832,12 @@
             color: var(--primary-green);
             font-weight: 900;
             text-transform: uppercase;
-            font-size: 0.95rem;
         }
 
         .inv-badge-container {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
             max-width: 100%;
         }
 
@@ -893,9 +846,9 @@
             background: #0f381b;
             color: #4ade80;
             border: 1px solid #22c55e;
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 4px;
-            font-size: 0.92rem;
+            font-size: 0.85rem;
             font-weight: 900;
             white-space: normal;
             word-break: break-all;
@@ -906,10 +859,10 @@
         .status-badge-paid {
             background: #166534;
             color: #ffffff;
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: 4px;
             font-weight: 800;
-            font-size: 0.92rem;
+            font-size: 0.85rem;
             cursor: pointer;
             display: inline-block;
         }
@@ -917,10 +870,10 @@
         .status-badge-unpaid {
             background: #991b1b;
             color: #ffffff;
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: 4px;
             font-weight: 800;
-            font-size: 0.92rem;
+            font-size: 0.85rem;
             cursor: pointer;
             display: inline-block;
         }
@@ -928,10 +881,10 @@
         .status-badge-pending {
             background: #d97706;
             color: #ffffff;
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: 4px;
             font-weight: 800;
-            font-size: 0.92rem;
+            font-size: 0.85rem;
             cursor: pointer;
             display: inline-block;
         }
@@ -947,11 +900,11 @@
             background: #0284c7;
             color: #fff;
             border: none;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 800;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
             text-align: center;
         }
 
@@ -959,11 +912,11 @@
             background: #dc2626;
             color: #fff;
             border: none;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 800;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
             text-align: center;
         }
 
@@ -1170,16 +1123,6 @@
     </style>
 </head>
 <body>
-<script>
-    function getStoredJobs() {
-        var stored = localStorage.getItem("dc_corporate_jobs");
-        return stored ? JSON.parse(stored) : [];
-    }
-
-    function saveStoredJobs(jobs) {
-        localStorage.setItem("dc_corporate_jobs", JSON.stringify(jobs));
-    }  
-</script>
 
     <!-- SECURITY PIN LOGIN MODAL OVERLAY -->
     <div id="managerLoginModal" style="display:flex; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:9999; justify-content:center; align-items:center; flex-direction:column; font-family:monospace;">
@@ -1204,6 +1147,7 @@
             <p id="editPinError" style="color:#ff3333; font-size:12px; margin-top:10px; display:none;">Incorrect PIN Code</p>
         </div>
     </div>
+
     <div class="container">
         <div id="manager-panel" class="manager-panel" style="display:none;">
 
@@ -1530,7 +1474,7 @@
                         </select>
                     </div>
                     <div class="tracker-field-group">
-                        <label>Exact Date (Manual / Backdating Supported)</label>
+                        <label>Exact Date (Manual)</label>
                         <input type="date" id="tr-date">
                     </div>
                     <div class="tracker-field-group">
@@ -1608,7 +1552,7 @@
                 <button class="btn-add-job" onclick="addTrackerJob()">➕ Log Corporate Job</button>
             </div>
 
-            <!-- TABLE EDIT PIN CONTROL BAR -->
+            <!-- TABLE EDIT PIN CONTROL BAR (MOVED RIGHT UNDER LOG CORPORATE JOB) -->
             <div style="background: #061826; border: 1.5px solid #38bdf8; padding: 10px 14px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                 <div>
                     <strong style="color: #38bdf8; font-size: 0.95rem; text-transform: uppercase; display: block;">Table Edit Mode:</strong>
@@ -1652,10 +1596,270 @@
                 </table>
             </div>
 
-            <!-- DOCUMENT VAULT BOX WITH DIRECT MAINTENANCE EXPENSE BUTTON -->
+            <!-- REPOSITIONED BOXES: WEEKLY SUMMARY BAR PLACED RIGHT BEFORE UNPAID & PENDING COLLECTIONS -->
+            <div style="margin-top: 30px;">
+                <h5 style="color: var(--primary-green); font-weight: 900; margin-bottom: 8px;">📅 Current Active Operating Week</h5>
+                
+                <div class="weekly-summary-bar">
+                    <div class="summary-box">
+                        <h6>M-F Revenue</h6>
+                        <span id="sum-revenue">$0 JMD</span>
+                    </div>
+                    <div class="summary-box" style="border-color: #f87171;">
+                        <h6>M-F Petrol Spend</h6>
+                        <span id="sum-petrol-cost" style="color: #f87171;">$0 JMD</span>
+                    </div>
+                    <div class="summary-box" style="border-color: #fb7185;">
+                        <h6>M-F Crew Wages Paid</h6>
+                        <span id="sum-crew-wages" style="color: #fb7185;">$0 JMD</span>
+                    </div>
+                    <div class="summary-box">
+                        <h6>M-F Net Profit</h6>
+                        <span id="sum-profit" style="color: #38bdf8;">$0 JMD</span>
+                    </div>
+                    <div class="summary-box">
+                        <h6>M-F Runs</h6>
+                        <span id="sum-count" style="color: #fbbf24;">0 Jobs</span>
+                    </div>
+                </div>
+
+                <div class="week-filter-bar">
+                    <span id="current-view-label">📅 Showing: Current M-F Operating Week</span>
+                    <button class="btn-week-toggle" onclick="toggleViewMode()">🔄 Switch to View All History Table</button>
+                </div>
+
+                <div style="background: #270f0f; border: 2px solid #ef4444; border-radius: 10px; padding: 14px; margin-bottom: 20px;">
+                    <h5 style="color: #f87171; font-size: 1.1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+                        <span>⚠️ Unpaid & Pending Collections</span>
+                        <span id="unpaid-job-count" style="font-size: 0.9rem; background: #7f1d1d; color: #fff; padding: 2px 8px; border-radius: 4px;">0 Jobs Pending</span>
+                    </h5>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
+                        <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
+                            <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Total Unpaid Outstanding</h6>
+                            <span id="sum-unpaid-total" style="color: #f87171; font-size: 1.3rem; font-weight: 900;">$0 JMD</span>
+                        </div>
+                        <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
+                            <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Unpaid Driver Payouts</h6>
+                            <span id="sum-unpaid-driver" style="color: #fbbf24; font-size: 1.2rem; font-weight: 900;">$0 JMD</span>
+                        </div>
+                        <div style="background: #1a0505; border: 1px solid #991b1b; border-radius: 6px; padding: 10px; text-align: center;">
+                            <h6 style="color: #fca5a5; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 3px;">Unpaid Assistant Payouts</h6>
+                            <span id="sum-unpaid-asst" style="color: #fbbf24; font-size: 1.2rem; font-weight: 900;">$0 JMD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="monthly-summary-container">
+                    <h5 id="monthly-container-title">📅 Active Calendar Month Net Profit (November 2026)</h5>
+                    <div class="monthly-grid">
+                        <div class="monthly-box" style="grid-column: 1 / -1;">
+                            <h6>Current Month Net Profit</h6>
+                            <span id="month-profit">$0 JMD</span>
+                        </div>
+                    </div>
+
+                    <h6 style="color:#a7f3d0; font-size:0.82rem; text-transform:uppercase; font-weight:800; margin-bottom:6px;">Current Month Profit Breakdown By Week:</h6>
+                    <div class="weeks-breakdown-bar">
+                        <div class="week-chip">
+                            <h7>Week 1</h7>
+                            <span id="m-w1">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 2</h7>
+                            <span id="m-w2">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 3</h7>
+                            <span id="m-w3">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 4</h7>
+                            <span id="m-w4">$0</span>
+                        </div>
+                        <div class="week-chip">
+                            <h7>Week 5</h7>
+                            <span id="m-w5">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alltime-summary-container">
+                    <h5>
+                        <span>📈 All-Time & Yearly Business History</span>
+                        <select class="month-filter-dropdown" id="history-month-filter" onchange="loadTrackerJobs()">
+                            <option value="ALL">🗓️ All-Time Summary</option>
+                        </select>
+                    </h5>
+                    <div class="alltime-grid">
+                        <div class="alltime-box">
+                            <h6>Revenue</h6>
+                            <span id="all-revenue">$0 JMD</span>
+                        </div>
+                        <div class="alltime-box">
+                            <h6>Total Petrol Spend</h6>
+                            <span id="all-petrol" style="color: #f87171;">$0 JMD</span>
+                        </div>
+                        <div class="alltime-box">
+                            <h6>Total Crew Wages Paid</h6>
+                            <span id="all-wages" style="color: #4ade80;">$0 JMD</span>
+                        </div>
+                        <div class="alltime-box">
+                            <h6>Truck Maintenance Spend</h6>
+                            <span id="all-maint" style="color: #fb7185;">$0 JMD</span>
+                        </div>
+                        <div class="alltime-box">
+                            <h6>Net Profit</h6>
+                            <span id="all-profit" style="color: #38bdf8;">$0 JMD</span>
+                        </div>
+                        <div class="alltime-box" style="grid-column: 1 / -1;">
+                            <h6>Total Logged Runs</h6>
+                            <span id="all-count" style="color: #fbbf24;">0 Jobs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; border-top: 2px dashed #1e4626; padding-top: 20px;">
+                <h5 style="color: #fb7185; font-weight: 900; margin-bottom: 8px; text-transform: uppercase;">🔧 Fleet & Truck Maintenance Log</h5>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log tires, full services, headlights, parts, receipts, and mechanic profiles to keep track of total truck expenses!</p>
+
+                <div class="tracker-form-container" style="background: #1a0f12; border-color: #5c1d28;">
+                    <div class="tracker-form-grid">
+                        <div class="tracker-field-group">
+                            <label style="color: #fb7185;">Date Spent</label>
+                            <input type="date" id="maint-date">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label style="color: #fb7185;">Category (Selects OEM Parts List)</label>
+                            <select id="maint-cat" onchange="updateDynamicPartsDatalist()">
+                                <option value="Tires">🛞 Tires & Wheels</option>
+                                <option value="Service">🛢️ Service / Oil & Filters</option>
+                                <option value="Tail Lift">🚚 Hydraulic Tail Lift Parts</option>
+                                <option value="Brakes">🛑 Suspension & Brakes</option>
+                                <option value="Parts">💡 Headlights / Lights & Body</option>
+                                <option value="Electrical">⚡ Electrical & Battery</option>
+                                <option value="Mechanical">⚙️ Engine & Transmission</option>
+                                <option value="General Repair">🛠️ General Repair / Supplies</option>
+                            </select>
+                        </div>
+                        <div class="tracker-field-group">
+                            <label style="color: #fb7185;">Item Description / OEM Part Dropdown</label>
+                            <select id="maint-desc" onchange="handlePartSelectChange()" style="padding: 10px; border-radius: 6px; border: 1px solid #333; background: #000; color: #fff; font-size: 1rem; font-weight: 700; width: 100%;">
+                            </select>
+                        </div>
+                        <div class="tracker-field-group" id="maint-custom-desc-group" style="display: none;">
+                            <label style="color: #facc15;">Custom Item Description / Notes</label>
+                            <input type="text" id="maint-custom-desc" placeholder="Type custom part description or notes...">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label style="color: #fb7185;">Cost Spent (JMD)</label>
+                            <input type="number" id="maint-cost" placeholder="e.g. 45000">
+                        </div>
+
+                        <div class="tracker-field-group">
+                            <label style="color: #38bdf8;">Mechanic / Vendor Name</label>
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                <input type="text" id="maint-vendor-name" placeholder="e.g. Kingston Tire Shop" style="flex: 1; min-width: 140px;">
+                                <button type="button" style="background:#0284c7; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadMechanicProfile()">🔍 Load</button>
+                            </div>
+                        </div>
+                        <div class="tracker-field-group">
+                            <label style="color: #38bdf8;">Mechanic Shop Address / Location</label>
+                            <input type="text" id="maint-vendor-address" placeholder="e.g. Spanish Town Road, Kingston">
+                        </div>
+                        <div class="tracker-field-group">
+                            <label style="color: #38bdf8;">Mechanic Phone Number</label>
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                <input type="tel" id="maint-vendor-phone" placeholder="e.g. 876-555-0199" style="flex: 1; min-width: 140px;">
+                                <button type="button" style="background:#059669; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="saveMechanicProfile()">💾 Save Profile</button>
+                            </div>
+                        </div>
+
+                        <div class="tracker-field-group" style="grid-column: 1 / -1;">
+                            <label style="color: #facc15;">📎 Attach Receipt (Upload Photo/PDF or Paste WhatsApp/Email Text):</label>
+                            <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                                <input type="file" id="maint-receipt-file" accept="image/*,application/pdf" style="padding: 8px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; width: 100%;">
+                                <textarea id="maint-receipt-text" rows="2" placeholder="Or paste WhatsApp / email receipt details text here..." style="background:#000; color:#fff; border:1px solid #333; border-radius:6px; padding:8px; font-size:0.9rem; width: 100%;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-add-job" style="background: #fb7185; color: #000; margin-top: 10px;" onclick="addMaintenanceLog()">🔧 Log Maintenance Expense & Receipt</button>
+                </div>
+
+                <div class="table-scroll">
+                    <table class="tracker-table" style="min-width: 950px; table-layout: auto;">
+                        <thead>
+                            <tr style="background: #3b1219;">
+                                <th style="color: #fb7185;">Date</th>
+                                <th style="color: #fb7185;">Category</th>
+                                <th style="color: #fb7185;">Description / Part Details</th>
+                                <th style="color: #fb7185;">Vendor / Mechanic Info</th>
+                                <th style="color: #fb7185;">Receipt / Proof</th>
+                                <th style="color: #fb7185;">Cost (JMD)</th>
+                                <th style="color: #fb7185;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="maint-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="receipt-uploader-box">
+                <h5>🧾 3-Category Smart Receipt Vault & OCR Scanner</h5>
+                <p style="color: #e9d5ff; font-size: 0.92rem; margin-bottom: 12px;">Select category below, upload photo or PDF (from My Files, WhatsApp, or Email), auto-scan with OCR, and store in your digital vault gallery!</p>
+                
+                <div class="receipt-category-selector">
+                    <button type="button" class="btn-receipt-cat active-cat" id="cat-btn-petrol" onclick="setReceiptCategory('Petrol')">⛽ Petrol Receipt</button>
+                    <button type="button" class="btn-receipt-cat" id="cat-btn-maint" onclick="setReceiptCategory('Maintenance')">🛠️ Maintenance Receipt</button>
+                    <button type="button" class="btn-receipt-cat" id="cat-btn-parts" onclick="setReceiptCategory('Parts')">💡 Parts Receipt</button>
+                </div>
+
+                <input type="hidden" id="active-receipt-cat" value="Petrol">
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 12px;">
+                    <div>
+                        <label style="color:#c084fc; font-weight:800; font-size:0.88rem; display:block; margin-bottom:4px;">Date Spent / Uploaded:</label>
+                        <input type="date" id="vault-receipt-date" style="width:100%; padding:10px; background:#000; color:#fff; border:1px solid #a855f7; border-radius:6px; font-weight:700;">
+                    </div>
+                    <div>
+                        <label style="color:#c084fc; font-weight:800; font-size:0.88rem; display:block; margin-bottom:4px;">Vendor / Station / Shop Name:</label>
+                        <input type="text" id="vault-receipt-vendor" placeholder="e.g. Total Station / Opie Oils" style="width:100%; padding:10px; background:#000; color:#fff; border:1px solid #a855f7; border-radius:6px; font-weight:700;">
+                    </div>
+                    <div>
+                        <label style="color:#c084fc; font-weight:800; font-size:0.88rem; display:block; margin-bottom:4px;">Total Amount Paid (JMD):</label>
+                        <input type="number" id="vault-receipt-amount" placeholder="0" style="width:100%; padding:10px; background:#000; color:#fff; border:1px solid #a855f7; border-radius:6px; font-weight:700;">
+                    </div>
+                </div>
+
+                <label style="color:#facc15; font-weight:800; font-size:0.9rem; display:block; margin-bottom:4px;">📎 Choose Receipt File (Photo or PDF from My Files / WhatsApp / Email):</label>
+                <input type="file" id="vault-receipt-file" accept="image/*,application/pdf" style="padding: 8px; background:#000; color:#fff; border:1px solid #a855f7; border-radius:6px; width:100%; margin-bottom:10px;" onchange="handleVaultReceiptFileSelect()">
+
+                <div id="vault-ocr-status" class="ocr-status-text" style="margin-bottom: 8px;"></div>
+                
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom: 15px;">
+                    <button type="button" style="background:#a855f7; color:#fff; font-weight:900; border:none; padding:12px; border-radius:6px; cursor:pointer; flex:1; min-width:160px; font-size:0.95rem;" onclick="scanVaultReceiptOCR()">🔍 Auto-Scan Receipt OCR</button>
+                    <button type="button" style="background:#059669; color:#fff; font-weight:900; border:none; padding:12px; border-radius:6px; cursor:pointer; flex:1; min-width:160px; font-size:0.95rem;" onclick="saveVaultReceipt()">💾 Save to Receipt Gallery</button>
+                </div>
+
+                <div style="background:#090412; border:1px solid #7e22ce; padding:10px; border-radius:8px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                    <span style="color:#c084fc; font-weight:900; font-size:0.9rem;">🔍 Filter Vault:</span>
+                    <input type="text" id="vault-search-query" placeholder="Search by vendor or notes..." style="padding:6px 10px; background:#000; color:#fff; border:1px solid #a855f7; border-radius:4px; font-size:0.88rem; flex:1; min-width:160px;" oninput="loadVaultReceiptGallery()">
+                    <select id="vault-search-cat" style="padding:6px 10px; background:#000; color:#c084fc; border:1px solid #a855f7; border-radius:4px; font-size:0.88rem; font-weight:800;" onchange="loadVaultReceiptGallery()">
+                        <option value="ALL">All Categories</option>
+                        <option value="Petrol">⛽ Petrol Only</option>
+                        <option value="Maintenance">🛠️ Maintenance Only</option>
+                        <option value="Parts">💡 Parts Only</option>
+                    </select>
+                </div>
+
+                <div class="receipt-vault-gallery" id="receipt-gallery-container">
+                </div>
+            </div>
+
             <div class="doc-vault-box">
-                <h5>📑 Vehicle Document Vault & OCR Auto-Scanner (Connected to Maintenance Log)</h5>
-                <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Choose file, enter certificate/license cost, press <strong>Add to Maintenance Log</strong> to instantly update your expense totals, or scan via OCR!</p>
+                <h5>📑 Vehicle Document Vault & OCR Auto-Scanner</h5>
+                <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 12px;">Choose file (Photo or PDF Document), press <strong>Save</strong> to store your document, then press <strong>Auto-Scan</strong> to fill out the blanks automatically. Share directly via WhatsApp or Email anytime!</p>
                 
                 <div class="doc-grid">
                     <div class="doc-card">
@@ -1667,8 +1871,6 @@
                         <input type="text" id="doc-roadlicence-num" placeholder="Licence #">
                         <label>Expiry Date:</label>
                         <input type="date" id="doc-roadlicence-expiry" onchange="updateDocBadges()">
-                        <label>Cost Paid (JMD):</label>
-                        <input type="number" id="doc-roadlicence-cost" placeholder="e.g. 15000">
                         <label>Attach Official Document (Photo or PDF):</label>
                         <input type="file" id="doc-roadlicence-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('roadlicence')">
                         <img id="doc-roadlicence-img-preview" class="doc-preview-img" alt="Road Licence Preview">
@@ -1678,9 +1880,6 @@
                         <div class="doc-btn-group">
                             <button class="btn-doc-save" onclick="saveVehicleDoc('roadlicence')">💾 Save</button>
                             <button class="btn-doc-ocr" onclick="scanDocWithOCR('roadlicence')">🔍 Auto-Scan</button>
-                            <button style="background:#166534; color:#fff; border:none; padding:8px; border-radius:6px; font-weight:900; cursor:pointer; flex:1; font-size:0.85rem;" onclick="sendDocToMaintenance('roadlicence')">💸 Add to Maint.</button>
-                        </div>
-                        <div class="doc-btn-group" style="margin-top:4px;">
                             <button class="btn-doc-share" onclick="shareVehicleDocNative('roadlicence')">📱 WhatsApp</button>
                             <button class="btn-doc-email" onclick="emailVehicleDoc('roadlicence')">✉️ Email</button>
                         </div>
@@ -1695,8 +1894,6 @@
                         <input type="text" id="doc-insurance-num" placeholder="Policy #">
                         <label>Expiry Date:</label>
                         <input type="date" id="doc-insurance-expiry" onchange="updateDocBadges()">
-                        <label>Cost Paid (JMD):</label>
-                        <input type="number" id="doc-insurance-cost" placeholder="e.g. 45000">
                         <label>Attach Official Document (Photo or PDF):</label>
                         <input type="file" id="doc-insurance-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('insurance')">
                         <img id="doc-insurance-img-preview" class="doc-preview-img" alt="Insurance Preview">
@@ -1706,9 +1903,6 @@
                         <div class="doc-btn-group">
                             <button class="btn-doc-save" onclick="saveVehicleDoc('insurance')">💾 Save</button>
                             <button class="btn-doc-ocr" onclick="scanDocWithOCR('insurance')">🔍 Auto-Scan</button>
-                            <button style="background:#166534; color:#fff; border:none; padding:8px; border-radius:6px; font-weight:900; cursor:pointer; flex:1; font-size:0.85rem;" onclick="sendDocToMaintenance('insurance')">💸 Add to Maint.</button>
-                        </div>
-                        <div class="doc-btn-group" style="margin-top:4px;">
                             <button class="btn-doc-share" onclick="shareVehicleDocNative('insurance')">📱 WhatsApp</button>
                             <button class="btn-doc-email" onclick="emailVehicleDoc('insurance')">✉️ Email</button>
                         </div>
@@ -1723,8 +1917,6 @@
                         <input type="text" id="doc-fitness-num" placeholder="Fitness Cert #">
                         <label>Expiry Date:</label>
                         <input type="date" id="doc-fitness-expiry" onchange="updateDocBadges()">
-                        <label>Cost Paid (JMD):</label>
-                        <input type="number" id="doc-fitness-cost" placeholder="e.g. 8500">
                         <label>Attach Official Document (Photo or PDF):</label>
                         <input type="file" id="doc-fitness-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('fitness')">
                         <img id="doc-fitness-img-preview" class="doc-preview-img" alt="Fitness Preview">
@@ -1734,9 +1926,6 @@
                         <div class="doc-btn-group">
                             <button class="btn-doc-save" onclick="saveVehicleDoc('fitness')">💾 Save</button>
                             <button class="btn-doc-ocr" onclick="scanDocWithOCR('fitness')">🔍 Auto-Scan</button>
-                            <button style="background:#166534; color:#fff; border:none; padding:8px; border-radius:6px; font-weight:900; cursor:pointer; flex:1; font-size:0.85rem;" onclick="sendDocToMaintenance('fitness')">💸 Add to Maint.</button>
-                        </div>
-                        <div class="doc-btn-group" style="margin-top:4px;">
                             <button class="btn-doc-share" onclick="shareVehicleDocNative('fitness')">📱 WhatsApp</button>
                             <button class="btn-doc-email" onclick="emailVehicleDoc('fitness')">✉️ Email</button>
                         </div>
@@ -1751,8 +1940,6 @@
                         <input type="text" id="doc-registration-num" placeholder="Registration #">
                         <label>Renewal Date / Date Issued:</label>
                         <input type="date" id="doc-registration-expiry" onchange="updateDocBadges()">
-                        <label>Cost Paid (JMD):</label>
-                        <input type="number" id="doc-registration-cost" placeholder="e.g. 10000">
                         <label>Attach Official Document (Photo or PDF):</label>
                         <input type="file" id="doc-registration-file" accept="image/*,application/pdf" onchange="handleDocFileSelect('registration')">
                         <img id="doc-registration-img-preview" class="doc-preview-img" alt="Registration Title Preview">
@@ -1762,29 +1949,14 @@
                         <div class="doc-btn-group">
                             <button class="btn-doc-save" onclick="saveVehicleDoc('registration')">💾 Save</button>
                             <button class="btn-doc-ocr" onclick="scanDocWithOCR('registration')">🔍 Auto-Scan</button>
-                            <button style="background:#166534; color:#fff; border:none; padding:8px; border-radius:6px; font-weight:900; cursor:pointer; flex:1; font-size:0.85rem;" onclick="sendDocToMaintenance('registration')">💸 Add to Maint.</button>
-                        </div>
-                        <div class="doc-btn-group" style="margin-top:4px;">
                             <button class="btn-doc-share" onclick="shareVehicleDocNative('registration')">📱 WhatsApp</button>
                             <button class="btn-doc-email" onclick="emailVehicleDoc('registration')">✉️ Email</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- PAYSLIP ARCHIVE & VAULT SECTION -->
-            <div class="payslip-archive-container">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
-                    <div>
-                        <h5 style="color: #c084fc; font-size: 1.15rem; font-weight: 900; text-transform: uppercase;">🗂️ Payslip Archive & Vault</h5>
-                        <p style="color: #cbd5e1; font-size: 0.88rem;">Archive generated payslips, view stamps, dates, times, toggle Paid/Unpaid watermarks, and share via WhatsApp or Email.</p>
-                    </div>
-                </div>
-                <div class="archive-grid" id="payslip-archive-grid">
-                    <p style="color: #94a3b8; font-size: 0.9rem; text-align: center; grid-column: 1 / -1;">No payslips archived yet. Generate a payslip above to archive it!</p>
-                </div>
-            </div>
 
-            <!-- BACKUP BUTTON & TRANSFER SYSTEM -->
+            <!-- BACKUP BUTTON & TRANSFER SYSTEM (REPOSITIONED AT THE BOTTOM) -->
             <div class="backup-data-box">
                 <h5>📱 Device Backup & Transfer System</h5>
                 <p style="color: #cbd5e1; font-size: 0.9rem;">Export all job history, staff profiles, and maintenance logs to easily transfer to a new phone or backup to Google Drive.</p>
@@ -1832,8 +2004,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; font-weight: 700; color: #111111;" id="out-desc">Haulage Transport: Kingston to Zone</td>
-                            <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #111111;" id="out-amount">$0 JMD</td>
+                            <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; font-weight: 700; color: #111827;" id="out-desc">Haulage Transport: Kingston to Zone</td>
+                            <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #111827;" id="out-amount">$0 JMD</td>
                         </tr>
                         <tr style="background-color: #f0fdf4;">
                             <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; color: #166534; font-weight: 800;" id="out-deposit-label">🔒 Required 50% Deposit (To Confirm Booking)</td>
@@ -1973,7 +2145,7 @@
         const AUTO_LOCK_MS = 3 * 60 * 1000;
         let isOnlineMode = false;
         let idleTimer = null;
-        let currentOperatingMode = localStorage.getItem('dc_operating_mode') || 'dnc';
+        let currentOperatingMode = localStorage.getItem('dc_operating_mode') || 'dnc'; // 'dnc' or 'westco'
 
         function promptForManagerPin() {
             document.getElementById('managerLoginModal').style.display = 'flex';
@@ -2179,7 +2351,8 @@
         });
 
         const wisynco7TonRates = {
-            "downtown": 19493, "kingston": 18743, "round town": 18743, "half way tree": 18743, "liguanea": 18743, "jacks hill": 18743,
+            "downtown": 19493,
+            "kingston": 18743, "round town": 18743, "half way tree": 18743, "liguanea": 18743, "jacks hill": 18743,
             "spanish town": 15271, "portmore": 15271, "ferry": 15271,
             "old harbour": 18988, "old harbour bay": 18988, "stony hill": 18988, "port royal": 18988, "harbour view": 18988, "airport": 18988, "bogwalk": 18988, "linstead": 18988, "riversdale": 18988, "papine": 18988, "kitson town": 18988,
             "may pen": 21465, "four paths": 21465, "ewarton": 21465, "new longsville": 21465, "gordon town": 21465, "red hills": 21465, "sligoville": 21465,
@@ -2187,26 +2360,33 @@
             "lionel town": 25743, "mitchell town": 25743, "rocky point": 25743, "race course": 25743, "worthy park": 25743, "lawrence tavern": 25743, "golden spring": 25743, "vere": 25743, "portland cottage": 25743, "irish town": 25743, "kemps hill": 25743,
             "chapelton": 30036, "summerfield": 30036, "rock river": 30036, "alston": 30036, "aenon town": 30036, "macho": 30036, "croft hill": 30036, "mavis bank": 30036,
             "porus": 34231, "williamsfield": 34231, "royal flat": 34231, "mandeville": 34231, "newport": 34231, "milk river": 34231, "kellits": 34231,
-            "wait-a-bit": 37766, "albert town": 37766, "spaldings": 34231, "christiana": 34231, "coleyville": 34231, "troy": 34231, "frankfield": 34231, "thompson town": 34231,
+            "wait-a-bit": 37766, "albert town": 37766,
+            "spaldings": 34231, "christiana": 34231, "coleyville": 34231, "troy": 34231, "frankfield": 34231, "thompson town": 34231,
             "junction": 41539, "bull savannah": 41539, "top hill": 41539, "munroe": 41539, "watchwell": 41539, "mountain side": 41539, "ballards valley": 41539, "malvern": 41539, "new forest": 41539, "alligator pond": 41539,
-            "maggotty": 41539, "siloah": 41539, "balaclava": 41539, "lacovia": 41539, "newton": 41539, "santa cruz": 38868, "gutters": 38868,
+            "maggotty": 41539, "siloah": 41539, "balaclava": 41539, "lacovia": 41539, "newton": 41539,
+            "santa cruz": 38868, "gutters": 38868,
             "black river": 43679, "new market": 43679, "springfield": 43679, "treasure beach": 43679, "southfield": 43679,
             "sav-la-mar": 51703, "grange hill": 51703, "frome": 51703, "whithorn": 51703, "petersfield": 51703, "cornwall mountain": 51703, "bethel town": 51703, "whitehouse": 51703, "ginger hill": 51703, "seaford town": 51703,
             "lucea": 55089, "kingsvale": 55089, "maroon town": 55089, "hopewell": 55089, "round hill": 55089,
-            "negril": 57054, "little london": 57054, "darliston": 57054, "delveland": 57054, "green island": 60588, "orange bay": 60588,
-            "montego bay": 50701, "wakefield": 50701, "cambridge": 53890, "lambs river": 53890, "anchovy": 53890,
+            "negril": 57054, "little london": 57054, "darliston": 57054, "delveland": 57054,
+            "green island": 60588, "orange bay": 60588,
+            "montego bay": 50701, "wakefield": 50701,
+            "cambridge": 53890, "lambs river": 53890, "anchovy": 53890,
             "falmouth": 58213, "clarks town": 58213, "jackson town": 58213, "ulster spring": 58213, "cave valley": 58213, "alexandria": 58213,
             "claremont": 52682, "bamboo": 52682, "browns town": 52682, "runaway bay": 52682, "james hill": 52682, "priory": 52682, "boscobel": 52682,
             "st. ann's bay": 52682, "ocho rios": 52682, "retreat": 52682, "gayle": 52682, "oracabessa": 52682, "tower isle": 52682, "jacks river": 52682,
-            "discovery bay": 55583, "braco": 55583, "duncans": 55583, "guys hill": 24390, "glengoffe": 24390, "polly ground": 24390,
+            "discovery bay": 55583, "braco": 55583, "duncans": 55583,
+            "guys hill": 24390, "glengoffe": 24390, "polly ground": 24390,
             "clonmel": 30099, "richmond": 30099, "highgate": 30099, "islington": 30099, "port maria": 30099, "carron hall": 30099,
             "annotto bay": 28164, "windsor castle": 28164, "buff bay": 28164, "skibo": 28164, "hope bay": 44652, "st. margaret's bay": 44652, "port antonio": 44652, "fellowship": 44652, "dragon bay": 44652,
-            "boston": 48472, "long bay": 48472, "easington": 30992, "seaforth": 30992, "morant bay": 30992, "lyssons": 30992, "airy castle": 30992,
+            "boston": 48472, "long bay": 48472,
+            "easington": 30992, "seaforth": 30992, "morant bay": 30992, "lyssons": 30992, "airy castle": 30992,
             "stokes hall": 38683, "trinityville": 38683, "bath": 38683, "bowden": 38683, "golden grove": 38683, "manchioneal": 42842, "hectors river": 42842
         };
 
         const privateCustomerRates = {
-            "downtown": 26000, "kingston": 25000, "round town": 25000, "half way tree": 25000, "liguanea": 25000, "jacks hill": 25000,
+            "downtown": 26000,
+            "kingston": 25000, "round town": 25000, "half way tree": 25000, "liguanea": 25000, "jacks hill": 25000,
             "spanish town": 20000, "portmore": 20000, "ferry": 20000,
             "old harbour": 27000, "old harbour bay": 27000, "stony hill": 27000, "port royal": 27000, "harbour view": 27000, "airport": 27000, "bogwalk": 27000, "linstead": 27000, "riversdale": 27000, "papine": 27000, "kitson town": 27000,
             "may pen": 31000, "four paths": 31000, "ewarton": 31000, "new longsville": 31000, "gordon town": 31000, "red hills": 31000, "sligoville": 31000,
@@ -2214,23 +2394,28 @@
             "lionel town": 35000, "mitchell town": 35000, "rocky point": 35000, "race course": 35000, "worthy park": 35000, "lawrence tavern": 35000, "golden spring": 35000, "vere": 35000, "portland cottage": 35000, "irish town": 35000, "kemps hill": 35000,
             "chapelton": 42000, "summerfield": 42000, "rock river": 42000, "alston": 42000, "aenon town": 42000, "macho": 42000, "croft hill": 42000, "mavis bank": 42000,
             "porus": 47000, "williamsfield": 47000, "royal flat": 47000, "mandeville": 47000, "newport": 47000, "milk river": 47000, "kellits": 47000,
-            "wait-a-bit": 51000, "albert town": 51000, "spaldings": 47000, "christiana": 47000, "coleyville": 47000, "troy": 47000, "frankfield": 47000, "thompson town": 47000,
+            "wait-a-bit": 51000, "albert town": 51000,
+            "spaldings": 47000, "christiana": 47000, "coleyville": 47000, "troy": 47000, "frankfield": 47000, "thompson town": 47000,
             "junction": 57000, "bull savannah": 57000, "top hill": 57000, "munroe": 57000, "watchwell": 57000, "mountain side": 57000, "ballards valley": 57000, "malvern": 57000, "new forest": 57000, "alligator pond": 57000,
-            "maggotty": 57000, "siloah": 57000, "balaclava": 57000, "lacovia": 57000, "newton": 57000, "santa cruz": 54000, "gutters": 54000,
+            "maggotty": 57000, "siloah": 57000, "balaclava": 57000, "lacovia": 57000, "newton": 57000,
+            "santa cruz": 54000, "gutters": 54000,
             "black river": 60000, "new market": 60000, "springfield": 60000, "treasure beach": 60000, "southfield": 60000,
             "sav-la-mar": 71000, "grange hill": 71000, "frome": 71000, "whithorn": 71000, "petersfield": 71000, "cornwall mountain": 71000, "bethel town": 71000, "whitehouse": 71000, "ginger hill": 71000, "seaford town": 71000,
             "lucea": 76000, "kingsvale": 76000, "maroon town": 76000, "hopewell": 76000, "round hill": 76000,
-            "negril": 78000, "little london": 78000, "darliston": 78000, "delveland": 78000, "green island": 82000, "orange bay": 82000,
-            "montego bay": 67000, "wakefield": 67000, "cambridge": 70000, "lambs river": 70000, "anchovy": 70000,
+            "negril": 78000, "little london": 78000, "darliston": 78000, "delveland": 78000,
+            "green island": 82000, "orange bay": 82000, "montego bay": 67000, "wakefield": 67000,
+            "cambridge": 70000, "lambs river": 70000, "anchovy": 70000,
             "falmouth": 59000, "clarks town": 59000, "jackson town": 59000, "ulster spring": 59000, "cave valley": 59000, "alexandria": 59000,
             "claremont": 53000, "bamboo": 53000, "browns town": 53000, "runaway bay": 53000, "james hill": 53000, "priory": 53000, "boscobel": 53000,
             "st. ann's bay": 53000, "ocho rios": 53000, "retreat": 53000, "gayle": 53000, "oracabessa": 53000, "tower isle": 53000, "jacks river": 53000,
-            "discovery bay": 56000, "braco": 56000, "duncans": 56000, "guys hill": 32000, "glengoffe": 32000, "polly ground": 32000,
+            "discovery bay": 56000, "braco": 56000, "duncans": 56000,
+            "guys hill": 32000, "glengoffe": 32000, "polly ground": 32000,
             "clonmel": 42000, "richmond": 42000, "highgate": 42000, "islington": 42000, "port maria": 42000, "carron hall": 42000,
             "annotto bay": 39000, "windsor castle": 39000, "buff bay": 39000, "skibo": 39000,
             "hope bay": 59000, "st. margaret's bay": 59000, "port antonio": 59000, "fellowship": 59000, "dragon bay": 59000,
-            "boston": 64000, "long bay": 64000, "easington": 42000, "seaforth": 42000, "morant bay": 42000, "lyssons": 42000, "airy castle": 42000,
-            "stokes hall": 53000, "trinityville": 53000, "bath": 53000, "bowden": 53000, "golden grove": 53000, "manchioneal": 59000, "hectors river": 59000
+            "boston": 64000, "long bay": 64000,
+            "easington": 42000, "seaforth": 42000, "morant bay": 42000, "lyssons": 42000, "airy castle": 42000, "stokes hall": 53000, "trinityville": 53000, "bath": 53000, "bowden": 53000, "golden grove": 53000,
+            "manchioneal": 59000, "hectors river": 59000
         };
 
         function populateTownDatalists() {
@@ -2432,6 +2617,19 @@
                 }
             }
 
+            if (!clientName) {
+                var nameMatch = text.match(/Client Name[:\s]*([^\n]+)/i);
+                if (nameMatch) clientName = nameMatch[1].trim();
+            }
+            if (!phoneNum) {
+                var phoneMatch = text.match(/(\d{3}[-.\s]?\d{3}[-.\s]?\d{4})|(\+?\d{10,13})/);
+                if (phoneMatch) phoneNum = phoneMatch[0].trim();
+            }
+            if (!emailAddr) {
+                var emailMatch = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+                if (emailMatch) emailAddr = emailMatch[0].trim();
+            }
+
             if (clientName) document.getElementById('manual-inv-client').value = clientName;
             if (phoneNum) document.getElementById('manual-inv-phone').value = phoneNum;
             if (emailAddr) document.getElementById('manual-inv-email').value = emailAddr;
@@ -2463,28 +2661,72 @@
 
         var truckPartsCatalog = {
             "Tires": [
-                "215/75R17.5 Commercial Front Steer Tire", "215/75R17.5 Heavy Duty Rear Traction Tire", "17.5-Inch Steel Rim / Wheel Replacement", "Wheel Alignment & Balancing Service", "Heavy-Duty Tyre Valve Stem & Cap Replacement", "Wheel Nut / Lug Bolt Set (10-Stud)"
+                "215/75R17.5 Commercial Front Steer Tire",
+                "215/75R17.5 Heavy Duty Rear Traction Tire",
+                "17.5-Inch Steel Rim / Wheel Replacement",
+                "Wheel Alignment & Balancing Service",
+                "Heavy-Duty Tyre Valve Stem & Cap Replacement",
+                "Wheel Nut / Lug Bolt Set (10-Stud)"
             ],
             "Service": [
-                "Full Synthetic 10W-40 Engine Oil (15L Service)", "Heavy Duty Oil Filter Element (4HK1/Isz OEM)", "Primary Fuel Filter & Water Separator Element", "Secondary High-Pressure Fuel Filter", "Engine Air Intake Filter Element", "Cab Air / Pollen Filter", "Grease Chassis Lubrication & Tail Lift Service"
+                "Full Synthetic 10W-40 Engine Oil (15L Service)",
+                "Heavy Duty Oil Filter Element (4HK1/Isz OEM)",
+                "Primary Fuel Filter & Water Separator Element",
+                "Secondary High-Pressure Fuel Filter",
+                "Engine Air Intake Filter Element",
+                "Cab Air / Pollen Filter",
+                "Grease Chassis Lubrication & Tail Lift Service"
             ],
             "Tail Lift": [
-                "Hydraulic Tail Lift Cylinder Seal Kit", "Tail Lift Hydraulic Fluid / ISO VG 46 Oil (5L)", "Tail Lift Control Switch / Pendant Cable", "12V/24V Tail Lift Electric Motor Assembly", "Tail Lift Main Power Fuse & Solenoid Relay", "Heavy Duty Platform Rollers & Hinge Pins", "Safety Warning Flag & LED Flasher Kit"
+                "Hydraulic Tail Lift Cylinder Seal Kit",
+                "Tail Lift Hydraulic Fluid / ISO VG 46 Oil (5L)",
+                "Tail Lift Control Switch / Pendant Cable",
+                "12V/24V Tail Lift Electric Motor Assembly",
+                "Tail Lift Main Power Fuse & Solenoid Relay",
+                "Heavy Duty Platform Rollers & Hinge Pins",
+                "Safety Warning Flag & LED Flasher Kit"
             ],
             "Brakes": [
-                "Front Heavy Duty Brake Pads Set", "Rear Heavy Duty Brake Shoes Set", "Front Brake Disc Rotors (Pair)", "Rear Brake Drum Assembly", "Brake Master Cylinder & Fluid Reservoir", "Air Brake / Hydraulic Booster Hose Line", "ABS Wheel Speed Sensor Replacement"
+                "Front Heavy Duty Brake Pads Set",
+                "Rear Heavy Duty Brake Shoes Set",
+                "Front Brake Disc Rotors (Pair)",
+                "Rear Brake Drum Assembly",
+                "Brake Master Cylinder & Fluid Reservoir",
+                "Air Brake / Hydraulic Booster Hose Line",
+                "ABS Wheel Speed Sensor Replacement"
             ],
             "Parts": [
-                "Front Headlight Assembly (Left / Passenger)", "Front Headlight Assembly (Right / Driver)", "H4 Heavy Duty Headlight Bulb (12V/24V)", "Rear LED Tail Light & Reverse Light Assembly", "Side Marker Indicator Light Lens", "Commercial Side View Mirror Assembly", "Heavy Duty Windscreen Wiper Blades (Pair)"
+                "Front Headlight Assembly (Left / Passenger)",
+                "Front Headlight Assembly (Right / Driver)",
+                "H4 Heavy Duty Headlight Bulb (12V/24V)",
+                "Rear LED Tail Light & Reverse Light Assembly",
+                "Side Marker Indicator Light Lens",
+                "Commercial Side View Mirror Assembly",
+                "Heavy Duty Windscreen Wiper Blades (Pair)"
             ],
             "Electrical": [
-                "Heavy Duty Commercial Battery (12V 100Ah / 120Ah)", "Starter Motor Assembly (High Torque Diesel)", "Heavy Duty Alternator (80A/100A)", "Main Battery Disconnect / Isolator Switch", "Ignition Switch & Lock Cylinder Set", "Reverse Warning Alarm Beeper (12V-24V)"
+                "Heavy Duty Commercial Battery (12V 100Ah / 120Ah)",
+                "Starter Motor Assembly (High Torque Diesel)",
+                "Heavy Duty Alternator (80A/100A)",
+                "Main Battery Disconnect / Isolator Switch",
+                "Ignition Switch & Lock Cylinder Set",
+                "Reverse Warning Alarm Beeper (12V-24V)"
             ],
             "Mechanical": [
-                "Drive Belt / Fan & Alternator Belt Set", "Water Pump & Gasket Assembly", "Thermostat & O-Ring Seal Kit", "Clutch Kit (Pressure Plate, Friction Disc & Bearing)", "Transmission Fluid / 80W-90 Gear Oil", "Propshaft Universal Joint (U-Joint)", "Engine Mount Bushings Set"
+                "Drive Belt / Fan & Alternator Belt Set",
+                "Water Pump & Gasket Assembly",
+                "Thermostat & O-Ring Seal Kit",
+                "Clutch Kit (Pressure Plate, Friction Disc & Bearing)",
+                "Transmission Fluid / 80W-90 Gear Oil",
+                "Propshaft Universal Joint (U-Joint)",
+                "Engine Mount Bushings Set"
             ],
             "General Repair": [
-                "Coolant / Radiator Antifreeze (5L Ready-Mix)", "Heavy Duty Exhaust Clamp & Gasket", "Hydraulic Fluid Hose Assembly", "Body Box Door Latch & Hinge Lock", "Reflective Safety Tape Strip (3M Commercial)"
+                "Coolant / Radiator Antifreeze (5L Ready-Mix)",
+                "Heavy Duty Exhaust Clamp & Gasket",
+                "Hydraulic Fluid Hose Assembly",
+                "Body Box Door Latch & Hinge Lock",
+                "Reflective Safety Tape Strip (3M Commercial)"
             ]
         };
 
@@ -2902,53 +3144,15 @@
         function saveVehicleDoc(docType) {
             var num = document.getElementById('doc-' + docType + '-num').value;
             var expiry = document.getElementById('doc-' + docType + '-expiry').value;
-            var cost = parseFloat(document.getElementById('doc-' + docType + '-cost').value) || 0;
             var text = document.getElementById('doc-' + docType + '-text').value;
             var imgPreview = document.getElementById('doc-' + docType + '-img-preview');
             var imgData = (imgPreview.style.display !== 'none' && imgPreview.src) ? imgPreview.src : '';
 
-            var docData = { num: num, expiry: expiry, cost: cost, text: text, imgData: imgData };
+            var docData = { num: num, expiry: expiry, text: text, imgData: imgData };
             localStorage.setItem("dc_doc_" + docType, JSON.stringify(docData));
 
             updateDocBadges();
             alert("Vehicle document (" + docType.toUpperCase() + ") saved successfully!");
-        }
-
-        function sendDocToMaintenance(docType) {
-            var num = document.getElementById('doc-' + docType + '-num').value || 'N/A';
-            var cost = parseFloat(document.getElementById('doc-' + docType + '-cost').value) || 0;
-            var expiry = document.getElementById('doc-' + docType + '-expiry').value || new Date().toISOString().split('T')[0];
-            var imgPreview = document.getElementById('doc-' + docType + '-img-preview');
-            var imgData = (imgPreview.style.display !== 'none' && imgPreview.src) ? imgPreview.src : '';
-
-            if (cost <= 0) {
-                alert("Please enter a valid cost paid for this document before sending to maintenance.");
-                document.getElementById('doc-' + docType + '-cost').focus();
-                return;
-            }
-
-            var titleMap = {
-                'roadlicence': 'Public Carrier Road Licence Fee',
-                'insurance': 'Vehicle Insurance Premium',
-                'fitness': 'Certificate of Fitness Fee',
-                'registration': 'Registration Title / License Fee'
-            };
-            var desc = (titleMap[docType] || docType.toUpperCase()) + " (Cert/Ref #: " + num + ", Expiry: " + expiry + ")";
-
-            var maint = getStoredMaintenance();
-            maint.push({
-                id: Date.now(),
-                date: new Date().toISOString().split('T')[0],
-                cat: 'General Repair',
-                desc: desc,
-                cost: cost,
-                vendor: 'Official Authority / Tax Office',
-                receipt: imgData || 'Document Vault Record'
-            });
-
-            saveStoredMaintenance(maint);
-            loadTrackerJobs();
-            alert("💸 Successfully added $" + cost.toLocaleString() + " JMD from " + docType.toUpperCase() + " to your Fleet & Maintenance Log!");
         }
 
         function loadVehicleDocs() {
@@ -2960,7 +3164,6 @@
                     var data = JSON.parse(saved);
                     if (document.getElementById('doc-' + type + '-num')) document.getElementById('doc-' + type + '-num').value = data.num || '';
                     if (document.getElementById('doc-' + type + '-expiry')) document.getElementById('doc-' + type + '-expiry').value = data.expiry || '';
-                    if (document.getElementById('doc-' + type + '-cost') && data.cost) document.getElementById('doc-' + type + '-cost').value = data.cost;
                     if (document.getElementById('doc-' + type + '-text')) document.getElementById('doc-' + type + '-text').value = data.text || '';
                     
                     var imgPreview = document.getElementById('doc-' + type + '-img-preview');
@@ -4251,18 +4454,18 @@
                         statusHTML = '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
                     }
 
-                    var staffPaidBadge = j.staffPaid ? '<br><span style="color: #4ade80; font-size: 0.8rem; font-weight: 900;">✅ Crew Paid Out-of-Pocket</span>' : '<br><span style="color: #f87171; font-size: 0.8rem; font-weight: 800;">⏳ Wages Pending</span>';
+                    var staffPaidBadge = j.staffPaid ? '<br><span style="color: #4ade80; font-size: 0.75rem; font-weight: 900;">✅ Crew Paid Out-of-Pocket</span>' : '<br><span style="color: #f87171; font-size: 0.75rem; font-weight: 800;">⏳ Wages Pending</span>';
 
                     var editBtnStyle = tableEditUnlocked ? 'background: #0284c7; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
                     var deleteBtnStyle = tableEditUnlocked ? 'background: #dc2626; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
 
                     var tr = document.createElement('tr');
-                    tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.88rem;">' + j.date + '</span></td>' +
+                    tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.82rem;">' + j.date + '</span></td>' +
                                    '<td>' + invHTML + '</td>' +
                                    '<td>' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
-                                   '<td>' + j.driver + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.driverPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
-                                   '<td>' + j.assistant + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.asstPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
-                                   '<td style="color:#f87171; font-weight: 800;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
+                                   '<td>' + j.driver + '<br><span style="color:#4ade80;">$' + j.driverPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
+                                   '<td>' + j.assistant + '<br><span style="color:#4ade80;">$' + j.asstPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
+                                   '<td style="color:#f87171;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#38bdf8;">$' + jobNetProfit.toLocaleString() + ' JMD</td>' +
                                    '<td>' + statusHTML + '</td>' +
@@ -4292,109 +4495,7 @@
                 document.getElementById('managerLoginModal').style.display = 'flex';
                 document.getElementById('managerPinInput').focus();
             }
-
-            renderPayslipArchive();
         });
-
-        let archivedPayslips = JSON.parse(localStorage.getItem('dnc_archived_payslips')) || [];
-
-        function archiveCurrentPayslip() {
-            const workerName = document.getElementById('payslip-worker-name') ? document.getElementById('payslip-worker-name').value : 'Dispatch Worker';
-            const netPay = document.getElementById('payslip-net-pay') ? document.getElementById('payslip-net-pay').innerText : '$0.00';
-            const payPeriod = document.getElementById('payslip-period') ? document.getElementById('payslip-period').value : 'Standard Pay Period';
-            
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-
-            const payslipObj = {
-                id: 'payslip_' + Date.now(),
-                workerName: workerName,
-                netPay: netPay,
-                payPeriod: payPeriod,
-                date: dateStr,
-                time: timeStr,
-                status: 'UNPAID'
-            };
-
-            archivedPayslips.unshift(payslipObj);
-            saveAndRenderPayslips();
-        }
-
-        function togglePayslipStatus(id) {
-            const slip = archivedPayslips.find(s => s.id === id);
-            if (slip) {
-                slip.status = slip.status === 'PAID' ? 'UNPAID' : 'PAID';
-                saveAndRenderPayslips();
-            }
-        }
-
-        function deleteArchivedPayslip(id) {
-            if (confirm('Are you sure you want to remove this payslip from the archive?')) {
-                archivedPayslips = archivedPayslips.filter(s => s.id !== id);
-                saveAndRenderPayslips();
-            }
-        }
-
-        function sharePayslipWhatsApp(id) {
-            const slip = archivedPayslips.find(s => s.id === id);
-            if (!slip) return;
-            const text = `*D&C DISPATCH PAYSLIP*%0AWorker: ${slip.workerName}%0APeriod: ${slip.payPeriod}%0ANet Pay: ${slip.netPay}%0AStatus: ${slip.status}%0ADate: ${slip.date} at ${slip.time}`;
-            window.open(`https://wa.me/?text=${text}`, '_blank');
-        }
-
-        function sharePayslipEmail(id) {
-            const slip = archivedPayslips.find(s => s.id === id);
-            if (!slip) return;
-            const subject = encodeURIComponent(`Payslip - ${slip.workerName} (${slip.payPeriod})`);
-            const body = encodeURIComponent(`Hello,\n\nHere are the details for your payslip:\n\nWorker: ${slip.workerName}\nPay Period: ${slip.payPeriod}\nNet Pay: ${slip.netPay}\nStatus: ${slip.status}\nGenerated: ${slip.date} at ${slip.time}\n\nBest regards,\nD&C Dispatcher Control Panel`);
-            window.location.href = `mailto:?subject=${subject}&body=${body}`;
-        }
-
-        function saveAndRenderPayslips() {
-            localStorage.setItem('dnc_archived_payslips', JSON.stringify(archivedPayslips));
-            renderPayslipArchive();
-        }
-
-        function renderPayslipArchive() {
-            const grid = document.getElementById('payslip-archive-grid');
-            if (!grid) return;
-
-            if (archivedPayslips.length === 0) {
-                grid.innerHTML = `<p style="color: #94a3b8; font-size: 0.9rem; text-align: center; grid-column: 1 / -1;">No payslips archived yet. Generate a payslip above to archive it!</p>`;
-                return;
-            }
-
-            grid.innerHTML = archivedPayslips.map(slip => {
-                const isPaid = slip.status === 'PAID';
-                const watermarkClass = isPaid ? 'watermark-paid' : 'watermark-unpaid';
-                const statusBadgeBg = isPaid ? '#166534' : '#991b1b';
-
-                return `
-                    <div class="archive-card">
-                        <div class="payslip-watermark ${watermarkClass}">${slip.status}</div>
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; z-index: 2;">
-                            <div>
-                                <h6 style="color: #f8fafc; font-size: 1rem; font-weight: 800; margin-bottom: 2px;">${slip.workerName}</h6>
-                                <p style="color: #cbd5e1; font-size: 0.8rem;">Period: ${slip.payPeriod}</p>
-                            </div>
-                            <span style="background: ${statusBadgeBg}; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 4px;">${slip.status}</span>
-                        </div>
-                        <div style="background: #020810; padding: 10px; border-radius: 6px; border: 1px solid #1e293b; z-index: 2; margin: 6px 0;">
-                            <div style="font-size: 0.75rem; color: #94a3b8;">Net Payout Amount</div>
-                            <div style="font-size: 1.25rem; font-weight: 900; color: #4ade80;">${slip.netPay}</div>
-                            <div style="font-size: 0.72rem; color: #64748b; margin-top: 4px;">Archived: ${slip.date} at ${slip.time}</div>
-                        </div>
-                        <div style="display: flex; gap: 6px; flex-wrap: wrap; z-index: 2; margin-top: 4px;">
-                            <button onclick="togglePayslipStatus('${slip.id}')" style="flex: 1; background: #3b82f6; color: #fff; border: none; padding: 6px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">Toggle Paid/Unpaid</button>
-                            <button onclick="sharePayslipWhatsApp('${slip.id}')" style="background: #22c55e; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Share WhatsApp">💬</button>
-                            <button onclick="sharePayslipEmail('${slip.id}')" style="background: #a855f7; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Share Email">✉️</button>
-                            <button onclick="deleteArchivedPayslip('${slip.id}')" style="background: #ef4444; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Delete">🗑️</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
     </script>
 </body>
 </html>
