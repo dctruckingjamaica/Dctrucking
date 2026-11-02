@@ -14,14 +14,8 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     </script>
 <script>
-  // Load saved jobs directly from local browser memory
-  const cachedJobs = JSON.parse(localStorage.getItem('cachedJobs')) || [];
+ 
   
-  // If your table rendering function is named renderJobs or renderTable, call it here:
-  if (typeof renderTable === 'function') {
-    renderTable(cachedJobs);
-  } else if (typeof renderJobs === 'function') {
-    renderJobs(cachedJobs);
   }
 </script> 
     <style>
