@@ -4593,11 +4593,18 @@
                 totalPetrolSpend += (parseFloat(aj.petrol) || 0);
                 totalCrewWages += (parseFloat(aj.driverPay) || 0) + (parseFloat(aj.asstPay) || 0);
 
+                // Customer collections and crew wages are separate:
+                // outstanding job revenue depends on customer payment status,
+                // while crew payouts depend only on whether wages were settled.
                 if (aj.status !== 'PAID') {
-                    totalUnpaidRate += (aj.rate || 0);
-                    totalUnpaidDriverPay += (aj.driverPay || 0);
-                    totalUnpaidAsstPay += (aj.asstPay || 0);
+                    totalUnpaidRate += (parseFloat(aj.rate) || 0);
                     unpaidJobCount++;
+                }
+
+                // Older saved jobs without staffPaid are treated as wages pending.
+                if (aj.staffPaid !== true) {
+                    totalUnpaidDriverPay += (parseFloat(aj.driverPay) || 0);
+                    totalUnpaidAsstPay += (parseFloat(aj.asstPay) || 0);
                 }
             }
 
