@@ -3670,6 +3670,8 @@
             }
             if (document.getElementById('payroll-driver-name').value) loadStaffProfile('driver', true);
             if (document.getElementById('payroll-asst-name').value) loadStaffProfile('assistant', true);
+            syncCrewPayoutStatus('driver');
+            syncCrewPayoutStatus('assistant');
         }
 
         function applyDeductionToBalance(role) {
@@ -4391,8 +4393,10 @@
                 return;
             }
 
-            if (!driver.trim()) driverPayoutSelection = 'NOT_ASSIGNED';
-            if (!assistant.trim()) assistantPayoutSelection = 'NOT_ASSIGNED';
+            if (!driver.trim() || driver.trim().toUpperCase() === 'N/A') driverPayoutSelection = 'NOT_ASSIGNED';
+            else if (driverPayoutSelection === 'NOT_ASSIGNED') driverPayoutSelection = 'WAGES_PENDING';
+            if (!assistant.trim() || assistant.trim().toUpperCase() === 'N/A') assistantPayoutSelection = 'NOT_ASSIGNED';
+            else if (assistantPayoutSelection === 'NOT_ASSIGNED') assistantPayoutSelection = 'WAGES_PENDING';
             var driverPaid = driverPayoutSelection === 'PAID_OUT_OF_POCKET';
             var assistantPaid = assistantPayoutSelection === 'PAID_OUT_OF_POCKET';
 
@@ -4439,10 +4443,8 @@
             document.getElementById('tr-asst-pay').value = '0';
             document.getElementById('tr-petrol').value = '0';
             document.getElementById('tr-rate').value = '0';
-            document.getElementById('tr-driver').value = '';
-            document.getElementById('tr-assistant').value = '';
-            document.getElementById('tr-driver-payout-status').value = 'NOT_ASSIGNED';
-            document.getElementById('tr-assistant-payout-status').value = 'NOT_ASSIGNED';
+            document.getElementById('tr-driver-payout-status').value = document.getElementById('tr-driver').value.trim() ? 'WAGES_PENDING' : 'NOT_ASSIGNED';
+            document.getElementById('tr-assistant-payout-status').value = document.getElementById('tr-assistant').value.trim() ? 'WAGES_PENDING' : 'NOT_ASSIGNED';
             updateLiveProfit();
             
             loadTrackerJobs();
