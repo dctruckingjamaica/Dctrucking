@@ -1544,7 +1544,7 @@
                         </div>
 
                         <button type="button" class="btn-save-profile" style="background:#0369a1; color:#fff; border:none; border-radius:6px; font-weight:900; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px; cursor:pointer;" onclick="saveStaffProfile('driver')">💾 SAVE DRIVER PROFILE</button>
-                        <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 GENERATE DRIVER WEEKLY PAYSLIP</button>
+                        <div style="background:#0f172a;border:1px solid #334155;border-radius:7px;padding:8px;margin:8px 0"><label style="display:block;font-weight:800;color:#bae6fd">Payslip job selection</label><select id="dcn-payroll-driver-mode" style="width:100%;padding:8px;background:#020617;color:#fff;border-radius:5px"><option value="automatic">Automatic weekly jobs (existing process)</option><option value="manual">Manual selection — choose individual jobs</option></select><button type="button" style="background:#0369a1;color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800;margin-top:6px" onclick="dcNewPayrollLoad('driver')">LOAD JOBS FOR DRIVER</button><div id="dcn-payroll-driver-list" style="max-height:220px;overflow:auto;margin-top:7px"></div></div><button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 GENERATE DRIVER WEEKLY PAYSLIP</button>
                     </div>
 
                     <div class="payroll-card">
@@ -1618,7 +1618,7 @@
                         </div>
 
                         <button type="button" class="btn-save-profile" style="background:#0369a1; color:#fff; border:none; border-radius:6px; font-weight:900; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px; cursor:pointer;" onclick="saveStaffProfile('assistant')">💾 SAVE ASSISTANT PROFILE</button>
-                        <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 GENERATE ASSISTANT WEEKLY PAYSLIP</button>
+                        <div style="background:#0f172a;border:1px solid #334155;border-radius:7px;padding:8px;margin:8px 0"><label style="display:block;font-weight:800;color:#bae6fd">Payslip job selection</label><select id="dcn-payroll-assistant-mode" style="width:100%;padding:8px;background:#020617;color:#fff;border-radius:5px"><option value="automatic">Automatic weekly jobs (existing process)</option><option value="manual">Manual selection — choose individual jobs</option></select><button type="button" style="background:#0369a1;color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800;margin-top:6px" onclick="dcNewPayrollLoad('assistant')">LOAD JOBS FOR ASSISTANT</button><div id="dcn-payroll-assistant-list" style="max-height:220px;overflow:auto;margin-top:7px"></div></div><button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 GENERATE ASSISTANT WEEKLY PAYSLIP</button>
                     </div>
                 </div>
             </div>
@@ -4146,6 +4146,16 @@
                 });
             }
 
+            var manualMode=document.getElementById('dcn-payroll-'+roleType+'-mode');
+            if(manualMode&&manualMode.value==='manual'){
+                var selectedIds=dcNewPayrollSelected(roleType);
+                weekJobs=selectedIds.map(function(key){
+                    if(key.indexOf('DNC:')===0){var dj=dcNewGetJobs().find(function(x){return String(x.id)===key.slice(4)});return dj?Object.assign({},dj,{_dcnSource:'D&C'}):null}
+                    var cj=getStoredJobs().find(function(x){return String(x.id)===key.slice(4)});return cj?Object.assign({},cj,{_dcnSource:'Westinco'}):null;
+                }).filter(function(j){return j&&(roleType==='driver'?String(j.driver||'').toLowerCase().includes(staffName.toLowerCase()):String(j.assistant||'').toLowerCase().includes(staffName.toLowerCase()))});
+                if(!weekJobs.length){alert('Select at least one matching job for this payslip.');return}
+            }
+
             if (weekJobs.length === 0) {
                 weekJobs = [{
                     day: 'Current Week',
@@ -4185,7 +4195,7 @@
                 grossEarnings += payout;
 
                 var tr = document.createElement('tr');
-                tr.innerHTML = '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;"><strong>' + (j.day || 'Day') + '</strong> <span style="font-size:0.75rem; color:#64748b;">(' + (j.date || '') + ')</span></td>' +
+                tr.innerHTML = '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;"><strong>' + (j._dcnSource==='D&C'?'D&C':(j._dcnSource==='Westinco'?'Westinco':'Westinco')) + ' — ' + (j.day || 'Day') + '</strong> <span style="font-size:0.75rem; color:#64748b;">(' + (j.date || '') + ')</span></td>' +
                                '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;">' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
                                '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
                 tbody.appendChild(tr);
@@ -5233,6 +5243,18 @@
         }
         document.addEventListener('DOMContentLoaded',function(){dcNewRenderJobs();dcNewRefreshInvoiceJobs()});
 
+
+        function dcNewPayrollSelected(role){var boxes=document.querySelectorAll('#dcn-payroll-'+role+'-list input[type="checkbox"]:checked');return Array.prototype.map.call(boxes,function(b){return b.value})}
+        function dcNewPayrollLoad(role){
+          var nameEl=document.getElementById(role==='driver'?'payroll-driver-name':'payroll-asst-name'),name=(nameEl&&nameEl.value||'').trim().toLowerCase();
+          if(!name){alert('Enter the staff member name first.');return}
+          var items=[];
+          getStoredJobs().forEach(function(j){var staff=role==='driver'?j.driver:j.assistant;if(staff&&String(staff).toLowerCase().includes(name))items.push({key:'CORP:'+j.id,source:'Westinco',ref:j.inv||'Job',date:j.date,route:(j.pickup||'—')+' → '+(j.drop||'—'),pay:role==='driver'?j.driverPay:j.asstPay})});
+          dcNewGetJobs().forEach(function(j){var staff=role==='driver'?j.driver:j.assistant;if(staff&&String(staff).toLowerCase().includes(name))items.push({key:'DNC:'+j.id,source:'D&C',ref:j.ref,date:j.date,route:(j.pickup||'—')+' → '+(j.drop||'—'),pay:role==='driver'?j.driverPay:j.asstPay})});
+          var list=document.getElementById('dcn-payroll-'+role+'-list');
+          if(!items.length){list.innerHTML='<p style="color:#fca5a5">No jobs found for that staff name.</p>';return}
+          list.innerHTML=items.map(function(j){return '<label style="display:block;background:#020617;padding:7px;margin:4px 0;border-radius:5px;color:#fff"><input type="checkbox" value="'+dcNewEsc(j.key)+'" checked style="width:auto;margin-right:6px"> <strong>'+dcNewEsc(j.source)+' | '+dcNewEsc(j.ref)+'</strong> — '+dcNewEsc(j.date)+'<br><span style="font-size:.82rem">'+dcNewEsc(j.route)+' | JMD $'+Number(j.pay||0).toLocaleString()+'</span></label>'}).join('');
+        }
 </script>
 </body>
 </html>
