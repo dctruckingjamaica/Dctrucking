@@ -3822,12 +3822,116 @@ function dcPrivateToggleOperations(){var p=document.getElementById('dc-private-o
 function dcPrivateShowSection(k){['joblog','documents','crew','money'].forEach(function(n){var e=document.getElementById('dc-private-section-'+n);if(e)e.style.display=n===k?'block':'none'});if(k==='crew')dcPrivateRenderCrewSummary();if(k==='money')dcPrivateRenderMoneySummary()}
 function dcPrivateEscape(v){return String(v==null?'':v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function dcPrivateSaveJob(){var $=function(id){return document.getElementById(id)},ref=$('dc-pj-ref').value.trim(),date=$('dc-pj-date').value,rate=Number($('dc-pj-rate').value)||0;if(!ref){alert('Enter a job reference.');return}if(!date){alert('Choose a job date.');return}if(rate<=0){alert('Enter haulage price.');return}var jobs=dcPrivateGetJobs();if(jobs.some(function(j){return String(j.ref).toLowerCase()===ref.toLowerCase()})){alert('That reference already exists.');return}var j={id:'priv_'+Date.now(),ref:ref,date:date,customer:$('dc-pj-customer').value.trim(),pickup:$('dc-pj-pickup').value.trim(),drop:$('dc-pj-drop').value.trim(),rate:rate,driver:$('dc-pj-driver').value.trim(),driverPay:Number($('dc-pj-driverpay').value)||0,assistant:$('dc-pj-assistant').value.trim(),asstPay:Number($('dc-pj-asstpay').value)||0,petrol:Number($('dc-pj-petrol').value)||0,status:$('dc-pj-status').value,crewPayout:$('dc-pj-crewpayout').value};jobs.push(j);if(!dcPrivateSaveJobs(jobs))return;['dc-pj-ref','dc-pj-customer','dc-pj-pickup','dc-pj-drop','dc-pj-driver','dc-pj-assistant'].forEach(function(id){$(id).value=''});['dc-pj-rate','dc-pj-driverpay','dc-pj-asstpay','dc-pj-petrol'].forEach(function(id){$(id).value='0'});dcPrivateRenderJobs();dcPrivateRefreshJobOptions();dcPrivateRenderCrewSummary();dcPrivateRenderMoneySummary();alert('Saved to the separate D&C private job log.')}
-function dcPrivateRenderJobs(){var e=document.getElementById('dc-private-job-list');if(!e)return;var jobs=dcPrivateGetJobs().slice().sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''));});if(!jobs.length){e.innerHTML='<p style="color:#94a3b8">No private jobs recorded yet.</p>';return}e.innerHTML=jobs.map(function(j){var net=(Number(j.rate)||0)-(Number(j.driverPay)||0)-(Number(j.asstPay)||0)-(Number(j.petrol)||0),id=dcPrivateEscape(j.id),collected=j.status==='PAID',crewPaid=j.crewPayout==='PAID';return '<article style="background:#04120d;border:1px solid #166534;border-radius:7px;padding:10px;margin:8px 0"><strong>'+dcPrivateEscape(j.ref)+' | '+dcPrivateEscape(j.date)+'</strong><p>'+dcPrivateEscape(j.pickup)+' → '+dcPrivateEscape(j.drop)+'</p><p>Customer: '+dcPrivateEscape(j.customer||'—')+' | Price JMD $'+(Number(j.rate)||0).toLocaleString()+'</p><p>Driver: '+dcPrivateEscape(j.driver||'—')+' pay $'+(Number(j.driverPay)||0).toLocaleString()+' | Assistant: '+dcPrivateEscape(j.assistant||'—')+' pay $'+(Number(j.asstPay)||0).toLocaleString()+'</p><p>Fuel $'+(Number(j.petrol)||0).toLocaleString()+' | Net estimate $'+net.toLocaleString()+' | Collection '+(collected?'PAID':'UNPAID')+' | Crew '+(crewPaid?'PAID':'PENDING')+'</p><div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"><button type="button" onclick="dcPrivateToggleJobStatus(\''+id+'\',\'status\')" style="background:'+(collected?'#166534':'#92400e')+';color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800">'+(collected?'MARK COLLECTION UNPAID':'MARK CUSTOMER PAID')+'</button><button type="button" onclick="dcPrivateToggleJobStatus(\''+id+'\',\'crewPayout\')" style="background:'+(crewPaid?'#166534':'#7f1d1d')+';color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800">'+(crewPaid?'MARK CREW WAGES PENDING':'MARK CREW PAID')+'</button><button type="button" onclick="dcPrivateDeleteJob(\''+id+'\')" style="background:#991b1b;color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800">DELETE PRIVATE JOB</button></div></article>'}).join('')}function dcPrivateDeleteJob(id){if(!confirm('Delete this private job? Corporate jobs will not be affected.'))return;var jobs=dcPrivateGetJobs().filter(function(j){return String(j.id)!==String(id)});if(dcPrivateSaveJobs(jobs)){dcPrivateRenderJobs();dcPrivateRefreshJobOptions();dcPrivateRenderCrewSummary();dcPrivateRenderMoneySummary()}}
-function dcPrivateRenderCrewSummary(){var e=document.getElementById('dc-private-crew-summary');if(!e)return;var jobs=dcPrivateGetJobs(),pending=0,paid=0;jobs.forEach(function(j){var w=(Number(j.driverPay)||0)+(Number(j.asstPay)||0);if(j.crewPayout==='PAID')paid+=w;else pending+=w});e.innerHTML='<p>Wages pending: JMD $'+pending.toLocaleString()+'</p><p>Crew marked paid: JMD $'+paid.toLocaleString()+'</p>'}
-function dcPrivateToggleJobStatus(id,field){var jobs=dcPrivateGetJobs(),j=jobs.find(function(x){return String(x.id)===String(id)});if(!j)return;if(field==='status')j.status=j.status==='PAID'?'UNPAID':'PAID';else if(field==='crewPayout')j.crewPayout=j.crewPayout==='PAID'?'PENDING':'PAID';else return;if(dcPrivateSaveJobs(jobs)){dcPrivateRenderJobs();dcPrivateRenderCrewSummary();dcPrivateRenderMoneySummary()}}
-function dcPrivateRenderMoneySummary(){var e=document.getElementById('dc-private-money-summary');if(!e)return;var jobs=dcPrivateGetJobs(),revenue=0,collected=0,outstanding=0,fuel=0,wages=0,wagesPaid=0,wagesPending=0,box=0;jobs.forEach(function(j){var rate=Number(j.rate)||0,driver=Number(j.driverPay)||0,asst=Number(j.asstPay)||0,petrol=Number(j.petrol)||0,crew=driver+asst;revenue+=rate;fuel+=petrol;wages+=crew;if(j.status==='PAID')collected+=rate;else outstanding+=rate;if(j.crewPayout==='PAID')wagesPaid+=crew;else wagesPending+=crew;box+=(j.status==='PAID'?rate:0)-petrol-(j.crewPayout==='PAID'?crew:0)});e.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px"><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Total private haulage</strong><p>JMD $'+revenue.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Money collected</strong><p>JMD $'+collected.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Customer balances due</strong><p>JMD $'+outstanding.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Private box estimate</strong><p style="color:#4ade80;font-weight:900">JMD $'+box.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Petrol / expenses</strong><p>JMD $'+fuel.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Total crew wages</strong><p>JMD $'+wages.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Wages paid</strong><p>JMD $'+wagesPaid.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Wages pending</strong><p>JMD $'+wagesPending.toLocaleString()+'</p></div></div>'}function dcPrivateRefreshJobOptions(){var e=document.getElementById('dc-private-job-select');if(!e)return;var selected=e.value,jobs=dcPrivateGetJobs();e.innerHTML='<option value="">— Select private job —</option>';jobs.slice().reverse().forEach(function(j){var o=document.createElement('option');o.value=String(j.id);o.textContent=(j.ref||j.id)+' | '+(j.date||'')+' | '+(j.pickup||'?')+' → '+(j.drop||'?')+' | JMD $'+(Number(j.rate)||0).toLocaleString();e.appendChild(o)});if(selected)e.value=selected}
+
+function dcPrivateGetCollectedAmount(job){
+    var rate=Math.max(0,Number(job&&job.rate)||0);
+    if(job&&job.status==='PAID')return rate;
+    var payments=job&&Array.isArray(job.payments)?job.payments:[];
+    var total=payments.reduce(function(sum,p){return sum+Math.max(0,Number(p&&p.amount)||0)},0);
+    return Math.min(rate,total);
+}
+function dcPrivateGetBalance(job){
+    return Math.max(0,(Number(job&&job.rate)||0)-dcPrivateGetCollectedAmount(job));
+}
+function dcPrivateRenderJobs(){
+    var e=document.getElementById('dc-private-job-list');if(!e)return;
+    var jobs=dcPrivateGetJobs().slice().sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''));});
+    if(!jobs.length){e.innerHTML='<p style="color:#94a3b8">No private jobs recorded yet.</p>';return}
+    e.innerHTML=jobs.map(function(j){
+        var rate=Number(j.rate)||0,received=dcPrivateGetCollectedAmount(j),balance=dcPrivateGetBalance(j);
+        var net=rate-(Number(j.driverPay)||0)-(Number(j.asstPay)||0)-(Number(j.petrol)||0);
+        var id=dcPrivateEscape(j.id),crewPaid=j.crewPayout==='PAID';
+        var collection=received>=rate?'PAID':(received>0?'PART PAID':'UNPAID');
+        return '<article style="background:#04120d;border:1px solid #166534;border-radius:7px;padding:10px;margin:8px 0"><strong>'+dcPrivateEscape(j.ref)+' | '+dcPrivateEscape(j.date)+'</strong><p>'+dcPrivateEscape(j.pickup)+' → '+dcPrivateEscape(j.drop)+'</p><p>Customer: '+dcPrivateEscape(j.customer||'—')+' | Price JMD $'+rate.toLocaleString()+'</p><p>Driver: '+dcPrivateEscape(j.driver||'—')+' pay $'+(Number(j.driverPay)||0).toLocaleString()+' | Assistant: '+dcPrivateEscape(j.assistant||'—')+' pay $'+(Number(j.asstPay)||0).toLocaleString()+'</p><p>Fuel $'+(Number(j.petrol)||0).toLocaleString()+' | Net estimate $'+net.toLocaleString()+' | Collection '+collection+' | Received $'+received.toLocaleString()+' | Balance $'+balance.toLocaleString()+' | Crew '+(crewPaid?'PAID':'PENDING')+'</p><div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0"><button type="button" onclick="dcPrivateToggleJobStatus(\''+id+'\',\'status\')" style="background:'+(collection==='PAID'?'#166534':'#92400e')+';color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800">'+(collection==='PAID'?'MARK COLLECTION UNPAID':'MARK CUSTOMER PAID')+'</button><button type="button" onclick="dcPrivateToggleJobStatus(\''+id+'\',\'crewPayout\')" style="background:'+(crewPaid?'#166534':'#7f1d1d')+';color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800">'+(crewPaid?'MARK CREW WAGES PENDING':'MARK CREW PAID')+'</button><button type="button" onclick="dcPrivateDeleteJob(\''+id+'\')" style="background:#991b1b;color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800">DELETE PRIVATE JOB</button></div></article>';
+    }).join('');
+}
+function dcPrivateDeleteJob(id){
+    if(!confirm('Delete this private job? Corporate jobs will not be affected.'))return;
+    var jobs=dcPrivateGetJobs().filter(function(j){return String(j.id)!==String(id)});
+    if(dcPrivateSaveJobs(jobs)){dcPrivateRenderJobs();dcPrivateRefreshJobOptions();dcPrivateRenderCrewSummary();dcPrivateRenderMoneySummary()}
+}
+function dcPrivateRenderCrewSummary(){
+    var e=document.getElementById('dc-private-crew-summary');if(!e)return;
+    var jobs=dcPrivateGetJobs(),pending=0,paid=0;
+    jobs.forEach(function(j){var w=(Number(j.driverPay)||0)+(Number(j.asstPay)||0);if(j.crewPayout==='PAID')paid+=w;else pending+=w});
+    e.innerHTML='<p>Wages pending: JMD $'+pending.toLocaleString()+'</p><p>Crew marked paid: JMD $'+paid.toLocaleString()+'</p>';
+}
+function dcPrivateToggleJobStatus(id,field){
+    var jobs=dcPrivateGetJobs(),j=jobs.find(function(x){return String(x.id)===String(id)});if(!j)return;
+    if(field==='status')j.status=j.status==='PAID'?'UNPAID':'PAID';
+    else if(field==='crewPayout')j.crewPayout=j.crewPayout==='PAID'?'PENDING':'PAID';
+    else return;
+    if(dcPrivateSaveJobs(jobs)){dcPrivateRenderJobs();dcPrivateRenderCrewSummary();dcPrivateRenderMoneySummary()}
+}
+function dcPrivateRenderMoneySummary(){
+    var e=document.getElementById('dc-private-money-summary');if(!e)return;
+    var jobs=dcPrivateGetJobs(),revenue=0,collected=0,outstanding=0,fuel=0,wages=0,wagesPaid=0,wagesPending=0,box=0;
+    jobs.forEach(function(j){
+        var rate=Number(j.rate)||0,received=dcPrivateGetCollectedAmount(j),driver=Number(j.driverPay)||0,asst=Number(j.asstPay)||0,petrol=Number(j.petrol)||0,crew=driver+asst;
+        revenue+=rate;collected+=received;outstanding+=Math.max(0,rate-received);fuel+=petrol;wages+=crew;
+        if(j.crewPayout==='PAID')wagesPaid+=crew;else wagesPending+=crew;
+        box+=received-petrol-(j.crewPayout==='PAID'?crew:0);
+    });
+    e.innerHTML='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px"><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Total private haulage</strong><p>JMD $'+revenue.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Money collected</strong><p>JMD $'+collected.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Customer balances due</strong><p>JMD $'+outstanding.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Private box estimate</strong><p style="color:#4ade80;font-weight:900">JMD $'+box.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Petrol / expenses</strong><p>JMD $'+fuel.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Total crew wages</strong><p>JMD $'+wages.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Wages paid</strong><p>JMD $'+wagesPaid.toLocaleString()+'</p></div><div style="background:#04120d;padding:12px;border-radius:7px"><strong>Wages pending</strong><p>JMD $'+wagesPending.toLocaleString()+'</p></div></div>';
+}
+function dcPrivateRefreshJobOptions(){var e=document.getElementById('dc-private-job-select');if(!e)return;var selected=e.value,jobs=dcPrivateGetJobs();e.innerHTML='<option value="">— Select private job —</option>';jobs.slice().reverse().forEach(function(j){var o=document.createElement('option');o.value=String(j.id);o.textContent=(j.ref||j.id)+' | '+(j.date||'')+' | '+(j.pickup||'?')+' → '+(j.drop||'?')+' | JMD $'+(Number(j.rate)||0).toLocaleString();e.appendChild(o)});if(selected)e.value=selected}
 function dcPrivateLoadJob(id){if(!id)return;var j=dcPrivateGetJobs().find(function(x){return String(x.id)===String(id)});if(!j)return;document.getElementById('dc-private-invno').value=j.ref||String(j.id);document.getElementById('dc-private-client').value=j.customer||'';document.getElementById('dc-private-pickup').value=j.pickup||'';document.getElementById('dc-private-drop').value=j.drop||'';document.getElementById('dc-private-date').value=j.date||'';document.getElementById('dc-private-rate').value=Number(j.rate)||0;document.getElementById('dc-private-received').value='';document.getElementById('dc-private-payment-date').value=getLocalISODate()}
-function dcPrivateToggleReceiptFields(){var r=document.getElementById('dc-private-doc-type').value==='receipt';document.getElementById('dc-private-received-wrap').style.display=r?'block':'none';document.getElementById('dc-private-payment-date-wrap').style.display=r?'block':'none';if(r&&!document.getElementById('dc-private-payment-date').value)document.getElementById('dc-private-payment-date').value=getLocalISODate()}function dcPrivateGenerateDocument(){var type=document.getElementById('dc-private-doc-type').value,client=document.getElementById('dc-private-client').value.trim(),amount=Number(document.getElementById('dc-private-rate').value)||0,jobId=document.getElementById('dc-private-job-select').value;if(!jobId){alert('Select the private haulage job from the Job Log.');return}if(!client){alert('Enter the customer name.');return}if(amount<=0){alert('Confirm the agreed haulage total.');return}var paid=0,pdate='',balance=amount;if(type==='receipt'){paid=Number(document.getElementById('dc-private-received').value)||0;pdate=document.getElementById('dc-private-payment-date').value;if(paid<=0||paid>amount){alert('Enter an actual payment amount greater than zero and no more than the agreed total.');return}if(!pdate){alert('Enter the actual payment date.');return}balance=amount-paid}var key=type==='receipt'?'dc_private_receipt_counter':'dc_private_invoice_counter',seq=Number(localStorage.getItem(key)||'1'),num=(type==='receipt'?'DCR':'DCI')+String(seq).padStart(4,'0');localStorage.setItem(key,String(seq+1));var $=function(id){return document.getElementById(id)};$('dc-private-doc-title').innerText=type==='receipt'?'OFFICIAL RECEIPT — PAYMENT RECEIVED':'INVOICE — PAYMENT DUE';$('dc-private-out-client').innerText=client;$('dc-private-out-contact').innerText=$('dc-private-phone').value.trim()?'Phone: '+$('dc-private-phone').value.trim():'';$('dc-private-out-email').innerText=$('dc-private-email').value.trim()?'Email: '+$('dc-private-email').value.trim():'';$('dc-private-out-number').innerText=num;$('dc-private-out-date').innerText=type==='receipt'?pdate:getLocalISODate();$('dc-private-out-jobref').innerText=$('dc-private-invno').value;$('dc-private-out-route').innerText=$('dc-private-pickup').value+' → '+$('dc-private-drop').value+' | Job date: '+$('dc-private-date').value;$('dc-private-out-description').innerText='D&C Private Haulage Service — '+$('dc-private-pickup').value+' to '+$('dc-private-drop').value;$('dc-private-out-total').innerText='JMD $'+amount.toLocaleString();$('dc-private-out-payment-line').innerText=type==='receipt'?'Amount actually received: JMD $'+paid.toLocaleString()+' (payment date: '+pdate+')':'Amount due: JMD $'+amount.toLocaleString()+' — no payment recorded';$('dc-private-out-balance-line').innerText=type==='receipt'?'Remaining balance: JMD $'+balance.toLocaleString():'';$('dc-private-out-footer').innerText=type==='receipt'?'Receipt issued for payment actually received. Thank you.':'Please arrange payment of the outstanding haulage amount. Thank you.';$('dc-private-document').style.display='block';$('dc-private-document').scrollIntoView({behavior:'smooth',block:'start'})}
+function dcPrivateToggleReceiptFields(){var r=document.getElementById('dc-private-doc-type').value==='receipt';document.getElementById('dc-private-received-wrap').style.display=r?'block':'none';document.getElementById('dc-private-payment-date-wrap').style.display=r?'block':'none';if(r&&!document.getElementById('dc-private-payment-date').value)document.getElementById('dc-private-payment-date').value=getLocalISODate()}
+function dcPrivateToggleReceiptFields(){
+    var r=document.getElementById('dc-private-doc-type').value==='receipt';
+    document.getElementById('dc-private-received-wrap').style.display=r?'block':'none';
+    document.getElementById('dc-private-payment-date-wrap').style.display=r?'block':'none';
+    if(r&&!document.getElementById('dc-private-payment-date').value)document.getElementById('dc-private-payment-date').value=getLocalISODate();
+}
+function dcPrivateGenerateDocument(){
+    var $=function(id){return document.getElementById(id)};
+    var type=$('dc-private-doc-type').value,client=$('dc-private-client').value.trim();
+    var amount=Number($('dc-private-rate').value)||0,jobId=$('dc-private-job-select').value;
+    if(!jobId){alert('Select the private haulage job from the Job Log.');return}
+    var jobs=dcPrivateGetJobs(),job=jobs.find(function(j){return String(j.id)===String(jobId)});
+    if(!job){alert('That private job could not be found. Refresh the job list and select it again.');return}
+    if(!client){alert('Enter the customer name.');return}
+    var agreedTotal=Number(job.rate)||0;
+    if(agreedTotal<=0||amount!==agreedTotal){alert('The document total must match the agreed price saved against this private job.');return}
+    var receivedBefore=dcPrivateGetCollectedAmount(job),balanceBefore=Math.max(0,agreedTotal-receivedBefore);
+    var paid=0,pdate='',balance=balanceBefore;
+    if(type==='receipt'){
+        paid=Number($('dc-private-received').value)||0;pdate=$('dc-private-payment-date').value;
+        if(paid<=0||paid>balanceBefore){alert('Enter an actual payment amount greater than zero and no more than the remaining balance of JMD $'+balanceBefore.toLocaleString()+'.');return}
+        if(!pdate){alert('Enter the actual payment date.');return}
+        balance=balanceBefore-paid;
+    }
+    var key=type==='receipt'?'dc_private_receipt_counter':'dc_private_invoice_counter';
+    var seq=Number(localStorage.getItem(key)||'1'),num=(type==='receipt'?'DCR':'DCI')+String(seq).padStart(4,'0');
+    if(type==='receipt'){
+        job.payments=Array.isArray(job.payments)?job.payments:[];
+        job.payments.push({receiptNo:num,amount:paid,date:pdate});
+        if(receivedBefore+paid>=agreedTotal)job.status='PAID';
+        else job.status='UNPAID';
+        if(!dcPrivateSaveJobs(jobs))return;
+        dcPrivateRenderJobs();dcPrivateRenderMoneySummary();
+    }
+    try{
+        localStorage.setItem(key,String(seq+1));
+        if(localStorage.getItem(key)!==String(seq+1))throw new Error('Counter verification failed');
+    }catch(err){alert('The document was saved, but its number counter could not be updated. Please stop and contact support before issuing another document.');return}
+    $('dc-private-doc-title').innerText=type==='receipt'?'OFFICIAL RECEIPT — PAYMENT RECEIVED':'INVOICE — PAYMENT DUE';
+    $('dc-private-out-client').innerText=client;
+    $('dc-private-out-contact').innerText=$('dc-private-phone').value.trim()?'Phone: '+$('dc-private-phone').value.trim():'';
+    $('dc-private-out-email').innerText=$('dc-private-email').value.trim()?'Email: '+$('dc-private-email').value.trim():'';
+    $('dc-private-out-number').innerText=num;
+    $('dc-private-out-date').innerText=type==='receipt'?pdate:getLocalISODate();
+    $('dc-private-out-jobref').innerText=$('dc-private-invno').value;
+    $('dc-private-out-route').innerText=$('dc-private-pickup').value+' → '+$('dc-private-drop').value+' | Job date: '+$('dc-private-date').value;
+    $('dc-private-out-description').innerText='D&C Private Haulage Service — '+$('dc-private-pickup').value+' to '+$('dc-private-drop').value;
+    $('dc-private-out-total').innerText='JMD $'+agreedTotal.toLocaleString();
+    $('dc-private-out-payment-line').innerText=type==='receipt'?'Amount actually received: JMD $'+paid.toLocaleString()+' (payment date: '+pdate+')':'Amount due: JMD $'+balanceBefore.toLocaleString()+' — payment outstanding';
+    $('dc-private-out-balance-line').innerText=type==='receipt'?'Remaining balance: JMD $'+balance.toLocaleString():(receivedBefore>0?'Remaining balance: JMD $'+balanceBefore.toLocaleString():'');
+    $('dc-private-out-footer').innerText=type==='receipt'?'Receipt issued for payment actually received. Thank you.':'Please arrange payment of the outstanding haulage amount. Thank you.';
+    $('dc-private-document').style.display='block';
+    $('dc-private-document').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
         function togglePaymentBoxes(type) {
             var dep = document.getElementById('inv-deposit-paid');
             var full = document.getElementById('inv-full-paid');
