@@ -1246,7 +1246,10 @@
             .btn-print { display: none; }
             .editable-preview-field { border-bottom: none; background: transparent; }
         }
-    </style>
+    
+/* D&C standalone job log and payment-due document; isolated from Westinco workflow */
+.dc-new-panel{background:#071b10;border:2px solid #16a34a;border-radius:12px;padding:14px;margin:18px 0;color:#fff}.dc-new-panel h5{color:#4ade80;font-weight:900;margin:0 0 8px}.dc-new-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:9px}.dc-new-panel label{display:block;font-size:.85rem;font-weight:800;margin:6px 0 3px;color:#d1fae5}.dc-new-panel input,.dc-new-panel select{box-sizing:border-box;width:100%;padding:9px;background:#020617;color:#fff;border:1px solid #16a34a;border-radius:6px}.dc-new-panel button{padding:9px 12px;border:0;border-radius:6px;font-weight:900;cursor:pointer;margin:5px 4px 3px 0}.dc-new-job{border:1px solid #166534;background:#04120d;border-radius:8px;padding:10px;margin:9px 0}.dc-new-invoice{display:none;background:#fff;color:#111827;padding:22px;margin-top:14px;border-radius:8px}.dc-new-invoice h2{color:#166534}.dc-new-invoice table{width:100%;border-collapse:collapse}.dc-new-invoice td,.dc-new-invoice th{border-bottom:1px solid #ddd;padding:9px;text-align:left}.dc-new-invoice th{background:#166534;color:#fff}
+</style>
 </head>
 <body>
 
@@ -1418,6 +1421,51 @@
                     <label for="inv-payment-due">📩 Payment Outstanding — Generate Invoice (No Payment Received)</label>
                 </div>
             </div>
+
+            
+            <!-- D&C SEPARATE JOB LOG: does not alter Westinco Monday-Friday workflow -->
+            <section class="dc-new-panel" id="dc-new-private-panel">
+              <h5> D&C JOB LOG & PAYMENT DUE INVOICE</h5>
+              <p style="color:#cbd5e1;font-size:.88rem">Separate D&C records. Westinco's automatic Monday-to-Friday payment system is not used or changed here.</p>
+              <div class="dc-new-grid">
+                <div><label>D&C job reference</label><input id="dcn-ref" placeholder="D&C-001"></div>
+                <div><label>Job date</label><input id="dcn-date" type="date"></div>
+                <div><label>Customer</label><input id="dcn-customer"></div>
+                <div><label>Pickup</label><input id="dcn-pickup"></div>
+                <div><label>Destination</label><input id="dcn-drop"></div>
+                <div><label>Agreed haulage price (JMD)</label><input id="dcn-rate" type="number" min="0" value="0"></div>
+                <div><label>Driver</label><input id="dcn-driver"></div>
+                <div><label>Driver wages (JMD)</label><input id="dcn-driverpay" type="number" min="0" value="0"></div>
+                <div><label>Driver wage status</label><select id="dcn-driverstatus"><option value="PENDING">Wages pending</option><option value="PAID">Paid out of pocket</option></select></div>
+                <div><label>Assistant</label><input id="dcn-assistant"></div>
+                <div><label>Assistant wages (JMD)</label><input id="dcn-asstpay" type="number" min="0" value="0"></div>
+                <div><label>Assistant wage status</label><select id="dcn-asststatus"><option value="PENDING">Wages pending</option><option value="PAID">Paid out of pocket</option></select></div>
+                <div><label>Petrol / expenses (JMD)</label><input id="dcn-petrol" type="number" min="0" value="0"></div>
+                <div><label>Customer collection status</label><select id="dcn-collection"><option value="UNPAID">Unpaid</option><option value="PENDING COLLECTION">Pending collection</option><option value="PAID">Paid</option></select></div>
+              </div>
+              <button type="button" style="background:#16a34a;color:#fff" onclick="dcNewSaveJob()">SAVE D&C JOB</button>
+              <div id="dc-new-job-list"></div>
+              <div style="border-top:1px solid #166534;margin-top:12px;padding-top:10px">
+                <h5> D&C PAYMENT DUE INVOICE</h5>
+                <div class="dc-new-grid">
+                  <div><label>Select D&C job</label><select id="dcn-invoice-job" onchange="dcNewLoadInvoiceJob(this.value)"><option value="">Select saved job</option></select></div>
+                  <div><label>Customer name for invoice</label><input id="dcn-inv-customer"></div>
+                  <div><label>Phone / WhatsApp</label><input id="dcn-inv-phone"></div>
+                  <div><label>Email</label><input id="dcn-inv-email" type="email"></div>
+                </div>
+                <button type="button" style="background:#16a34a;color:#fff" onclick="dcNewGenerateDueInvoice()">GENERATE PAYMENT DUE INVOICE</button>
+                <div id="dc-new-invoice" class="dc-new-invoice">
+                  <div style="display:flex;gap:15px;align-items:center;border-bottom:3px solid #166534;padding-bottom:12px"><img src="IMG-20250804-WA0004.jpg" alt="D&C logo" style="width:130px;max-height:85px;object-fit:contain"><div><h2>PAYMENT DUE INVOICE</h2><strong>D&C REFUSE TRUCKING &amp; EQUIPMENT CO. LIMITED</strong><p>Jamaica | Kingston &amp; Portmore Hub</p></div></div>
+                  <p><strong>Invoice:</strong> <span id="dcn-out-number"></span> &nbsp; <strong>Date:</strong> <span id="dcn-out-date"></span></p>
+                  <p><strong>Billed to:</strong> <span id="dcn-out-customer"></span></p><p><strong>Contact:</strong> <span id="dcn-out-contact"></span></p>
+                  <p><strong>Job reference:</strong> <span id="dcn-out-ref"></span></p><p><strong>Route:</strong> <span id="dcn-out-route"></span></p>
+                  <table><thead><tr><th>Description</th><th>Amount (JMD)</th></tr></thead><tbody><tr><td>D&C haulage service</td><td id="dcn-out-total"></td></tr></tbody></table>
+                  <h3 style="text-align:right;color:#b91c1c">AMOUNT DUE: <span id="dcn-out-balance"></span></h3>
+                  <p>Thank you for choosing D&amp;C Refuse Trucking &amp; Equipment Co. Limited.</p>
+                  <button type="button" onclick="window.print()">PRINT / SAVE PDF</button>
+                </div>
+              </div>
+            </section>
 
             <!-- CREW PAYROLL & CORPORATE PAYSLIPS SECTION -->
             <div class="payroll-section-box">
@@ -5148,6 +5196,43 @@
         window.addEventListener('DOMContentLoaded', () => {
             renderPayslipArchive();
         });
-    </script>
+    
+        // D&C private records are stored separately. No writes are made to Westinco job data.
+        function dcNewGetJobs(){try{var x=JSON.parse(localStorage.getItem('dc_private_jobs_v2')||'[]');return Array.isArray(x)?x:[]}catch(e){console.error(e);alert('D&C job records could not be read.');return[]}}
+        function dcNewSaveJobs(a){try{var s=JSON.stringify(a);localStorage.setItem('dc_private_jobs_v2',s);if(localStorage.getItem('dc_private_jobs_v2')!==s)throw Error('Storage verification failed');return true}catch(e){console.error(e);alert('D&C job was not saved. Existing records were left unchanged.');return false}}
+        function dcNewMoney(id){var n=Number(document.getElementById(id).value);return Number.isFinite(n)&&n>=0?n:null}
+        function dcNewEsc(v){return String(v==null?'':v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+        function dcNewSaveJob(){
+          var g=function(id){return document.getElementById(id)},ref=g('dcn-ref').value.trim(),date=g('dcn-date').value,rate=dcNewMoney('dcn-rate'),dp=dcNewMoney('dcn-driverpay'),ap=dcNewMoney('dcn-asstpay'),fuel=dcNewMoney('dcn-petrol');
+          if(!ref||!date||rate===null||rate<=0||dp===null||ap===null||fuel===null){alert('Enter a reference, date and valid non-negative amounts. The haulage price must be above zero.');return}
+          var jobs=dcNewGetJobs();if(jobs.some(function(j){return String(j.ref).toLowerCase()===ref.toLowerCase()})){alert('That D&C job reference already exists.');return}
+          jobs.push({id:'dcn_'+Date.now(),source:'D&C',ref:ref,date:date,customer:g('dcn-customer').value.trim(),pickup:g('dcn-pickup').value.trim(),drop:g('dcn-drop').value.trim(),rate:rate,driver:g('dcn-driver').value.trim(),driverPay:dp,driverPayout:g('dcn-driverstatus').value,assistant:g('dcn-assistant').value.trim(),asstPay:ap,assistantPayout:g('dcn-asststatus').value,petrol:fuel,status:g('dcn-collection').value});
+          if(!dcNewSaveJobs(jobs))return;dcNewRenderJobs();dcNewRefreshInvoiceJobs();alert('D&C job saved separately. Westinco records were not changed.');
+        }
+        function dcNewEditJob(id){
+          var jobs=dcNewGetJobs(),j=jobs.find(function(x){return x.id===id});if(!j)return;
+          var fields=[['ref','Job reference'],['date','Job date YYYY-MM-DD'],['customer','Customer'],['pickup','Pickup'],['drop','Destination'],['rate','Haulage price'],['driver','Driver'],['driverPay','Driver wages'],['driverPayout','Driver status PAID or PENDING'],['assistant','Assistant'],['asstPay','Assistant wages'],['assistantPayout','Assistant status PAID or PENDING'],['petrol','Petrol / expenses'],['status','Customer collection status UNPAID / PENDING COLLECTION / PAID']];
+          for(var i=0;i<fields.length;i++){var key=fields[i][0],v=prompt('Edit '+fields[i][1]+':',String(j[key]==null?'':j[key]));if(v===null)return;if(['rate','driverPay','asstPay','petrol'].indexOf(key)>=0){var n=Number(v);if(!Number.isFinite(n)||n<0){alert('Enter a valid amount of zero or more.');return}j[key]=n}else if(key==='driverPayout'||key==='assistantPayout'){v=v.toUpperCase();if(v!=='PAID'&&v!=='PENDING'){alert('Use PAID or PENDING.');return}j[key]=v}else if(key==='status'){if(['UNPAID','PENDING COLLECTION','PAID'].indexOf(v.toUpperCase())<0){alert('Invalid collection status.');return}j[key]=v.toUpperCase()}else j[key]=v.trim()}
+          if(!dcNewSaveJobs(jobs))return;dcNewRenderJobs();dcNewRefreshInvoiceJobs();alert('D&C job updated.');
+        }
+        function dcNewRenderJobs(){
+          var e=document.getElementById('dc-new-job-list');if(!e)return;var jobs=dcNewGetJobs().slice().sort(function(a,b){return String(b.date).localeCompare(String(a.date))});
+          if(!jobs.length){e.innerHTML='<p style="color:#94a3b8">No D&C jobs saved yet.</p>';return}
+          e.innerHTML=jobs.map(function(j){return '<article class="dc-new-job"><strong>D&amp;C | '+dcNewEsc(j.ref)+' | '+dcNewEsc(j.date)+'</strong><p>'+dcNewEsc(j.pickup)+' → '+dcNewEsc(j.drop)+' | JMD $'+Number(j.rate||0).toLocaleString()+'</p><p>Driver: '+dcNewEsc(j.driver||'—')+' — '+dcNewEsc(j.driverPayout||'PENDING')+' | Assistant: '+dcNewEsc(j.assistant||'—')+' — '+dcNewEsc(j.assistantPayout||'PENDING')+'</p><p>Collection: '+dcNewEsc(j.status)+'</p><button type="button" style="background:#0369a1;color:#fff" onclick="dcNewEditJob('+JSON.stringify(j.id)+')">EDIT D&amp;C JOB</button></article>'}).join('');
+        }
+        function dcNewRefreshInvoiceJobs(){var e=document.getElementById('dcn-invoice-job');if(!e)return;var keep=e.value;e.innerHTML='<option value="">Select saved job</option>';dcNewGetJobs().forEach(function(j){var o=document.createElement('option');o.value=j.id;o.textContent='D&C | '+j.ref+' | '+j.date+' | JMD $'+Number(j.rate||0).toLocaleString();e.appendChild(o)});if(keep)e.value=keep}
+        function dcNewLoadInvoiceJob(id){var j=dcNewGetJobs().find(function(x){return x.id===id});if(!j)return;document.getElementById('dcn-inv-customer').value=j.customer||''}
+        function dcNewGenerateDueInvoice(){
+          var id=document.getElementById('dcn-invoice-job').value,j=dcNewGetJobs().find(function(x){return x.id===id});if(!j){alert('Select a saved D&C job.');return}
+          var client=document.getElementById('dcn-inv-customer').value.trim();if(!client){alert('Enter the customer name.');return}
+          var paid=j.status==='PAID'?Number(j.rate)||0:0,balance=Math.max(0,(Number(j.rate)||0)-paid),counterKey='dc_new_due_invoice_counter',seq=Number(localStorage.getItem(counterKey)||'1');if(!Number.isSafeInteger(seq)||seq<1){alert('Invoice counter is invalid.');return}
+          try{localStorage.setItem(counterKey,String(seq+1));if(localStorage.getItem(counterKey)!==String(seq+1))throw Error('verify')}catch(e){alert('Could not safely reserve an invoice number.');return}
+          var put=function(id,v){document.getElementById(id).textContent=v};
+          put('dcn-out-number','DCD-'+String(seq).padStart(5,'0'));put('dcn-out-date',typeof getLocalISODate==='function'?getLocalISODate():new Date().toISOString().slice(0,10));put('dcn-out-customer',client);put('dcn-out-contact',[document.getElementById('dcn-inv-phone').value.trim(),document.getElementById('dcn-inv-email').value.trim()].filter(Boolean).join(' | '));put('dcn-out-ref',j.ref);put('dcn-out-route',(j.pickup||'—')+' → '+(j.drop||'—')+' | Job date '+j.date);put('dcn-out-total','JMD $'+Number(j.rate).toLocaleString());put('dcn-out-balance','JMD $'+balance.toLocaleString());
+          document.getElementById('dc-new-invoice').style.display='block';document.getElementById('dc-new-invoice').scrollIntoView({behavior:'smooth',block:'start'});
+        }
+        document.addEventListener('DOMContentLoaded',function(){dcNewRenderJobs();dcNewRefreshInvoiceJobs()});
+
+</script>
 </body>
 </html>
