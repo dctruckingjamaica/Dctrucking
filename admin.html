@@ -1359,6 +1359,7 @@
                     <div>
                         <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Total Haulage Rate (JMD):</label>
                         <input type="number" id="manual-inv-amount" placeholder="0" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                        <small style="color: #86efac; display: block; margin-top: 5px;">D&amp;C rate sheet automatically fills the destination rate. You can still edit this amount manually.</small>
                     </div>
                     <div>
                         <label style="color: #38bdf8; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Scheduled Pickup Date:</label>
@@ -1411,6 +1412,10 @@
                 <div class="checkbox-item">
                     <input type="checkbox" id="inv-full-paid" onchange="togglePaymentBoxes('full')">
                     <label for="inv-full-paid">🎉 Mark Job as FULLY PAID (Balance Settled on Job Date)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="inv-payment-due" onchange="togglePaymentBoxes('due')">
+                    <label for="inv-payment-due">📩 Payment Outstanding — Generate Invoice (No Payment Received)</label>
                 </div>
             </div>
 
@@ -2661,13 +2666,17 @@
 
         function invoiceLiveAutoPrice() {
             var typedVal = document.getElementById('manual-inv-dest').value.trim().toLowerCase();
-            if (!typedVal) return;
+            if (typedVal.length < 3) return;
 
-            for (var place in privateCustomerRates) {
-                if (typedVal.includes(place) || place.includes(typedVal)) {
-                    document.getElementById('manual-inv-amount').value = privateCustomerRates[place];
-                    return;
-                }
+            var matches = Object.keys(privateCustomerRates).filter(function(place) {
+                return typedVal === place || typedVal.includes(place) || place.indexOf(typedVal) === 0;
+            });
+
+            if (matches.length) {
+                // Prefer the longest matching town name to avoid a shorter name
+                // overriding a more specific destination such as Old Harbour Bay.
+                matches.sort(function(a, b) { return b.length - a.length; });
+                document.getElementById('manual-inv-amount').value = privateCustomerRates[matches[0]];
             }
         }
 
@@ -3759,8 +3768,16 @@
         function togglePaymentBoxes(type) {
             var dep = document.getElementById('inv-deposit-paid');
             var full = document.getElementById('inv-full-paid');
-            if (type === 'full' && full.checked) {
-                dep.checked = true; 
+            var due = document.getElementById('inv-payment-due');
+
+            if (type === 'due' && due.checked) {
+                dep.checked = false;
+                full.checked = false;
+            } else if (type === 'deposit' && dep.checked) {
+                due.checked = false;
+            } else if (type === 'full' && full.checked) {
+                dep.checked = true;
+                due.checked = false;
             }
         }
 
@@ -3786,9 +3803,10 @@
         function generateInvoice() {
             var depositPaid = document.getElementById('inv-deposit-paid').checked;
             var fullPaid = document.getElementById('inv-full-paid').checked;
+            var paymentDue = document.getElementById('inv-payment-due').checked;
 
-            if (!depositPaid && !fullPaid) {
-                alert("⚠️ Please toggle and select either 'Mark 50% Deposit as PAID' or 'Mark Job as FULLY PAID' in the Payment & Booking Status box before generating the invoice!");
+            if (!depositPaid && !fullPaid && !paymentDue) {
+                alert("⚠️ Please select Deposit Paid, Paid in Full, or Payment Outstanding in the Payment & Booking Status box before generating the invoice!");
                 document.querySelector('.payment-status-box').scrollIntoView({ behavior: 'smooth' });
                 return;
             }
@@ -3797,18 +3815,24 @@
             var phone = document.getElementById('manual-inv-phone').value.trim() || 'N/A';
             var email = document.getElementById('manual-inv-email').value.trim() || 'N/A';
             
-            var currentSeq = parseInt(localStorage.getItem('dc_invoice_counter') || '1', 10);
-            var num = 'DC' + String(currentSeq).padStart(3, '0');
-            localStorage.setItem('dc_invoice_counter', currentSeq + 1);
-
             var pickup = document.getElementById('manual-inv-pickup').value.trim() || 'Kingston & Portmore Depot';
             var destInput = document.getElementById('manual-inv-dest').value.trim() || 'Destination Hub';
             var pDate = document.getElementById('manual-inv-date').value || new Date().toISOString().split('T')[0];
             var pTime = document.getElementById('manual-inv-time').value || '09:00 AM';
 
             var totalAmount = parseFloat(document.getElementById('manual-inv-amount').value) || 0;
-            var deposit = totalAmount * 0.5;
-            var balance = totalAmount * 0.5;
+            if (totalAmount <= 0) {
+                alert("Please enter the total haulage amount before generating the invoice.");
+                document.getElementById('manual-inv-amount').focus();
+                return;
+            }
+
+            var currentSeq = parseInt(localStorage.getItem('dc_invoice_counter') || '1', 10);
+            var num = 'DC' + String(currentSeq).padStart(3, '0');
+            localStorage.setItem('dc_invoice_counter', currentSeq + 1);
+
+            var deposit = paymentDue ? 0 : totalAmount * 0.5;
+            var balance = paymentDue ? totalAmount : totalAmount * 0.5;
 
             document.getElementById('out-client').innerText = client;
             document.getElementById('out-phone').innerText = phone;
@@ -3824,7 +3848,23 @@
             document.getElementById('out-deposit').innerText = '$' + deposit.toLocaleString() + ' JMD';
             document.getElementById('out-balance').innerText = '$' + balance.toLocaleString() + ' JMD';
 
-            if (fullPaid) {
+            // Reset the invoice colours before applying the selected payment type.
+            // This prevents an outstanding invoice from changing a later receipt's styling.
+            document.getElementById('out-deposit-label').style.color = '#166534';
+            document.getElementById('out-deposit').style.color = '#166534';
+            document.getElementById('out-balance-label').style.color = '#dc2626';
+            document.getElementById('out-balance').style.color = '#dc2626';
+
+            if (paymentDue) {
+                document.getElementById('out-invoice-header-title').innerText = 'INVOICE - PAYMENT DUE';
+                document.getElementById('out-deposit-label').innerText = 'Payment Received to Date';
+                document.getElementById('out-deposit-label').style.color = '#111827';
+                document.getElementById('out-deposit').style.color = '#111827';
+                document.getElementById('out-balance-label').innerText = 'FULL AMOUNT OUTSTANDING - PAYMENT DUE';
+                document.getElementById('out-balance-label').style.color = '#dc2626';
+                document.getElementById('out-balance').style.color = '#dc2626';
+                document.getElementById('out-footer-notice').innerText = 'Payment has not yet been received. Please arrange payment of the full outstanding amount.';
+            } else if (fullPaid) {
                 document.getElementById('out-invoice-header-title').innerText = 'OFFICIAL RECEIPT / PAID IN FULL';
                 document.getElementById('out-deposit-label').innerHTML = '✅ 50% Deposit PAID ($' + deposit.toLocaleString() + ' JMD)';
                 document.getElementById('out-balance-label').innerHTML = '✅ Remaining 50% Balance PAID IN FULL ($' + balance.toLocaleString() + ' JMD)';
@@ -3961,13 +4001,16 @@
             var route = document.getElementById('out-desc').innerText;
             var title = document.getElementById('out-invoice-header-title').innerText;
 
+            var paymentLines = title.indexOf('PAYMENT DUE') !== -1
+                ? "Payment Received: " + deposit + "\n" + "Amount Outstanding: " + balance + "\n"
+                : "Required Deposit (50%): " + deposit + "\n" + "Balance Due: " + balance + "\n";
+
             var msg = "D&C REFUSE TRUCKING - " + title + "\n\n" +
                       "Invoice #: " + num + "\n" +
                       "Client: " + client + "\n" +
                       "Route: " + route + "\n" +
                       "Total Amount: " + total + "\n" +
-                      "Required Deposit (50%): " + deposit + "\n" +
-                      "Balance Due: " + balance + "\n\n" +
+                      paymentLines + "\n" +
                       "Kingston & Portmore Hub, Jamaica.";
 
             var whatsappUrl = phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg) : "https://wa.me/?text=" + encodeURIComponent(msg);
@@ -3984,13 +4027,16 @@
             var title = document.getElementById('out-invoice-header-title').innerText;
 
             var subject = title + " - " + num + " (" + client + ")";
+            var paymentLines = title.indexOf('PAYMENT DUE') !== -1
+                ? "Payment Received: " + deposit + "\n" + "Amount Outstanding: " + balance + "\n"
+                : "50% Deposit: " + deposit + "\n" + "Balance Due: " + balance + "\n";
+
             var body = "D&C REFUSE TRUCKING & EQUIPMENT CO. LTD\n" +
                        "Official Statement / Quote\n\n" +
                        "Invoice #: " + num + "\n" +
                        "Route: " + route + "\n" +
                        "Total Amount: " + total + "\n" +
-                       "50% Deposit: " + deposit + "\n" +
-                       "Balance Due: " + balance + "\n\n" +
+                       paymentLines + "\n" +
                        "Thank you for choosing D&C Refuse Trucking!";
 
             window.open("mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body), "_blank");
