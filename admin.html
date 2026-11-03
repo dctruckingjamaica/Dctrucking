@@ -1638,7 +1638,7 @@
                     </div>
                     <div class="tracker-field-group">
                         <label>Driver Name (Pre-Filled)</label>
-                        <input type="text" id="tr-driver" placeholder="Driver name" oninput="saveCrewPreferences()">
+                        <input type="text" id="tr-driver" placeholder="Driver name" oninput="saveCrewPreferences(); syncCrewPayoutStatus('driver')">
                     </div>
                     <div class="tracker-field-group">
                         <label>Driver Payout (JMD)</label>
@@ -1646,7 +1646,7 @@
                     </div>
                     <div class="tracker-field-group">
                         <label>Assistant Name (Pre-Filled)</label>
-                        <input type="text" id="tr-assistant" placeholder="Assistant name" oninput="saveCrewPreferences()">
+                        <input type="text" id="tr-assistant" placeholder="Assistant name" oninput="saveCrewPreferences(); syncCrewPayoutStatus('assistant')">
                     </div>
                     <div class="tracker-field-group">
                         <label>Assistant Payout (JMD)</label>
@@ -1678,13 +1678,15 @@
                     <div class="tracker-field-group" style="grid-column: 1 / -1; background: #042410; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-top: 4px;">
                         <label style="color: var(--primary-green); font-size: 0.92rem; font-weight: 900; display: block;">DRIVER PAYMENT STATUS</label>
                         <select id="tr-driver-payout-status" style="background:#000;color:#fff;border:1.5px solid var(--primary-green);padding:10px;border-radius:6px;font-weight:800;width:100%;">
+                            <option value="NOT_ASSIGNED" selected>➖ N/A — Driver Not Assigned</option>
                             <option value="WAGES_PENDING">⏳ Driver Payment Due / Wages Pending</option>
-                            <option value="PAID_OUT_OF_POCKET" selected>✅ Driver Paid Out-of-Pocket</option>
+                            <option value="PAID_OUT_OF_POCKET">✅ Driver Paid Out-of-Pocket</option>
                         </select>
                         <label style="color: var(--primary-green); font-size: 0.92rem; font-weight: 900; display: block; margin-top:10px;">ASSISTANT PAYMENT STATUS</label>
                         <select id="tr-assistant-payout-status" style="background:#000;color:#fff;border:1.5px solid var(--primary-green);padding:10px;border-radius:6px;font-weight:800;width:100%;">
+                            <option value="NOT_ASSIGNED" selected>➖ N/A — Assistant Not Assigned</option>
                             <option value="WAGES_PENDING">⏳ Assistant Payment Due / Wages Pending</option>
-                            <option value="PAID_OUT_OF_POCKET" selected>✅ Assistant Paid Out-of-Pocket</option>
+                            <option value="PAID_OUT_OF_POCKET">✅ Assistant Paid Out-of-Pocket</option>
                         </select>
                     </div>
                 </div>
@@ -4346,6 +4348,17 @@
             var now = new Date();
             return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
         }
+        function syncCrewPayoutStatus(role) {
+            var nameInput = document.getElementById(role === 'driver' ? 'tr-driver' : 'tr-assistant');
+            var statusSelect = document.getElementById(role === 'driver' ? 'tr-driver-payout-status' : 'tr-assistant-payout-status');
+            if (!nameInput || !statusSelect) return;
+            if (!nameInput.value.trim()) {
+                statusSelect.value = 'NOT_ASSIGNED';
+            } else if (statusSelect.value === 'NOT_ASSIGNED') {
+                statusSelect.value = 'WAGES_PENDING';
+            }
+        }
+
         function addTrackerJob() {
             var trackerDateInput = document.getElementById('tr-date');
             var date = getTrackerDateISO();
@@ -4378,8 +4391,8 @@
                 return;
             }
 
-            if (!driverPayoutSelection) driverPayoutSelection = 'WAGES_PENDING';
-            if (!assistantPayoutSelection) assistantPayoutSelection = 'WAGES_PENDING';
+            if (!driver.trim()) driverPayoutSelection = 'NOT_ASSIGNED';
+            if (!assistant.trim()) assistantPayoutSelection = 'NOT_ASSIGNED';
             var driverPaid = driverPayoutSelection === 'PAID_OUT_OF_POCKET';
             var assistantPaid = assistantPayoutSelection === 'PAID_OUT_OF_POCKET';
 
@@ -4401,6 +4414,8 @@
                 source: jobSource,
                 driverPaid: driverPaid,
                 assistantPaid: assistantPaid,
+                driverPayoutStatus: driverPayoutSelection,
+                assistantPayoutStatus: assistantPayoutSelection,
                 staffPaid: driverPaid && assistantPaid
             });
             if (!saveStoredJobs(jobs)) return;
@@ -4424,8 +4439,10 @@
             document.getElementById('tr-asst-pay').value = '0';
             document.getElementById('tr-petrol').value = '0';
             document.getElementById('tr-rate').value = '0';
-            document.getElementById('tr-driver-payout-status').value = 'PAID_OUT_OF_POCKET';
-            document.getElementById('tr-assistant-payout-status').value = 'PAID_OUT_OF_POCKET';
+            document.getElementById('tr-driver').value = '';
+            document.getElementById('tr-assistant').value = '';
+            document.getElementById('tr-driver-payout-status').value = 'NOT_ASSIGNED';
+            document.getElementById('tr-assistant-payout-status').value = 'NOT_ASSIGNED';
             updateLiveProfit();
             
             loadTrackerJobs();
@@ -4524,18 +4541,18 @@
                 return;
             }
 
-            var currentDriverPaid = job.driverPaid !== undefined ? job.driverPaid === true : job.staffPaid === true;
-            var currentAssistantPaid = job.assistantPaid !== undefined ? job.assistantPaid === true : job.staffPaid === true;
-            var newDriverPayoutChoice = prompt("Driver payment: 1 = PAYMENT DUE / WAGES PENDING, 2 = PAID OUT-OF-POCKET", currentDriverPaid ? "2" : "1");
+            var currentDriverStatus = job.driverPayoutStatus || (String(job.driver || '').trim() ? ((job.driverPaid !== undefined ? job.driverPaid : job.staffPaid) === true ? 'PAID_OUT_OF_POCKET' : 'WAGES_PENDING') : 'NOT_ASSIGNED');
+            var currentAssistantStatus = job.assistantPayoutStatus || (String(job.assistant || '').trim() ? ((job.assistantPaid !== undefined ? job.assistantPaid : job.staffPaid) === true ? 'PAID_OUT_OF_POCKET' : 'WAGES_PENDING') : 'NOT_ASSIGNED');
+            var newDriverPayoutChoice = prompt("Driver payment: 0 = N/A / NOT ASSIGNED, 1 = PAYMENT DUE / WAGES PENDING, 2 = PAID OUT-OF-POCKET", currentDriverStatus === 'NOT_ASSIGNED' ? "0" : (currentDriverStatus === 'PAID_OUT_OF_POCKET' ? "2" : "1"));
             if (newDriverPayoutChoice === null) return;
-            if (newDriverPayoutChoice.trim() !== "1" && newDriverPayoutChoice.trim() !== "2") {
-                alert("Choose 1 for Driver Payment Due or 2 for Driver Paid Out-of-Pocket.");
+            if (["0","1","2"].indexOf(newDriverPayoutChoice.trim()) < 0) {
+                alert("Choose 0 for N/A, 1 for Driver Payment Due or 2 for Driver Paid Out-of-Pocket.");
                 return;
             }
-            var newAssistantPayoutChoice = prompt("Assistant payment: 1 = PAYMENT DUE / WAGES PENDING, 2 = PAID OUT-OF-POCKET", currentAssistantPaid ? "2" : "1");
+            var newAssistantPayoutChoice = prompt("Assistant payment: 0 = N/A / NOT ASSIGNED, 1 = PAYMENT DUE / WAGES PENDING, 2 = PAID OUT-OF-POCKET", currentAssistantStatus === 'NOT_ASSIGNED' ? "0" : (currentAssistantStatus === 'PAID_OUT_OF_POCKET' ? "2" : "1"));
             if (newAssistantPayoutChoice === null) return;
-            if (newAssistantPayoutChoice.trim() !== "1" && newAssistantPayoutChoice.trim() !== "2") {
-                alert("Choose 1 for Assistant Payment Due or 2 for Assistant Paid Out-of-Pocket.");
+            if (["0","1","2"].indexOf(newAssistantPayoutChoice.trim()) < 0) {
+                alert("Choose 0 for N/A, 1 for Assistant Payment Due or 2 for Assistant Paid Out-of-Pocket.");
                 return;
             }
 
@@ -4571,8 +4588,10 @@
             job.petrol = newPetrol;
             job.rate = newRate;
             job.status = statusMap[newStatusChoice.trim()];
-            job.driverPaid = newDriverPayoutChoice.trim() === "2";
-            job.assistantPaid = newAssistantPayoutChoice.trim() === "2";
+            job.driverPayoutStatus = newDriverPayoutChoice.trim() === "0" || !newDriver.trim() ? "NOT_ASSIGNED" : (newDriverPayoutChoice.trim() === "2" ? "PAID_OUT_OF_POCKET" : "WAGES_PENDING");
+            job.assistantPayoutStatus = newAssistantPayoutChoice.trim() === "0" || !newAssistant.trim() ? "NOT_ASSIGNED" : (newAssistantPayoutChoice.trim() === "2" ? "PAID_OUT_OF_POCKET" : "WAGES_PENDING");
+            job.driverPaid = job.driverPayoutStatus === "PAID_OUT_OF_POCKET";
+            job.assistantPaid = job.assistantPayoutStatus === "PAID_OUT_OF_POCKET";
             job.staffPaid = job.driverPaid && job.assistantPaid;
 
             if (!saveStoredJobs(jobs)) return;
@@ -4589,8 +4608,10 @@
             var jobs = getStoredJobs();
             var job = jobs.find(function(item) { return item.id === id; });
             if (!job) return;
+            if (!String(job.driver || '').trim()) return;
             var current = job.driverPaid !== undefined ? job.driverPaid === true : job.staffPaid === true;
             job.driverPaid = !current;
+            job.driverPayoutStatus = job.driverPaid ? 'PAID_OUT_OF_POCKET' : 'WAGES_PENDING';
             if (job.assistantPaid === undefined) job.assistantPaid = job.staffPaid === true;
             job.staffPaid = job.driverPaid === true && job.assistantPaid === true;
             if (!saveStoredJobs(jobs)) return;
@@ -4606,8 +4627,10 @@
             var jobs = getStoredJobs();
             var job = jobs.find(function(item) { return item.id === id; });
             if (!job) return;
+            if (!String(job.assistant || '').trim()) return;
             var current = job.assistantPaid !== undefined ? job.assistantPaid === true : job.staffPaid === true;
             job.assistantPaid = !current;
+            job.assistantPayoutStatus = job.assistantPaid ? 'PAID_OUT_OF_POCKET' : 'WAGES_PENDING';
             if (job.driverPaid === undefined) job.driverPaid = job.staffPaid === true;
             job.staffPaid = job.driverPaid === true && job.assistantPaid === true;
             if (!saveStoredJobs(jobs)) return;
@@ -4978,10 +5001,12 @@
                 }
 
                 // Older saved jobs without staffPaid are treated as wages pending.
+                var driverIsAssigned = String(aj.driver || '').trim() && String(aj.driver).trim().toUpperCase() !== 'N/A';
+                var assistantIsAssigned = String(aj.assistant || '').trim() && String(aj.assistant).trim().toUpperCase() !== 'N/A';
                 var driverIsPaid = aj.driverPaid !== undefined ? aj.driverPaid === true : aj.staffPaid === true;
                 var assistantIsPaid = aj.assistantPaid !== undefined ? aj.assistantPaid === true : aj.staffPaid === true;
-                if (!driverIsPaid) totalUnpaidDriverPay += (parseFloat(aj.driverPay) || 0);
-                if (!assistantIsPaid) totalUnpaidAsstPay += (parseFloat(aj.asstPay) || 0);
+                if (driverIsAssigned && !driverIsPaid) totalUnpaidDriverPay += (parseFloat(aj.driverPay) || 0);
+                if (assistantIsAssigned && !assistantIsPaid) totalUnpaidAsstPay += (parseFloat(aj.asstPay) || 0);
             }
 
             var paidRev = 0;
@@ -5070,14 +5095,20 @@
                         statusHTML = '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
                     }
 
+                    var driverIsAssigned = String(j.driver || '').trim() && String(j.driver).trim().toUpperCase() !== 'N/A';
+                    var assistantIsAssigned = String(j.assistant || '').trim() && String(j.assistant).trim().toUpperCase() !== 'N/A';
                     var driverIsPaid = j.driverPaid !== undefined ? j.driverPaid === true : j.staffPaid === true;
                     var assistantIsPaid = j.assistantPaid !== undefined ? j.assistantPaid === true : j.staffPaid === true;
-                    var driverPaidBadge = driverIsPaid
+                    var driverPaidBadge = !driverIsAssigned
+                        ? '<br><span style="display:inline-block;margin-top:5px;background:#334155;color:#cbd5e1;border:1px solid #64748b;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;">➖ DRIVER N/A — NOT ASSIGNED</span>'
+                        : (driverIsPaid
                         ? '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ DRIVER PAID — TAP TO CHANGE</button>'
-                        : '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ DRIVER PAYMENT DUE — TAP TO MARK PAID</button>';
-                    var assistantPaidBadge = assistantIsPaid
+                        : '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ DRIVER PAYMENT DUE — TAP TO MARK PAID</button>');
+                    var assistantPaidBadge = !assistantIsAssigned
+                        ? '<br><span style="display:inline-block;margin-top:5px;background:#334155;color:#cbd5e1;border:1px solid #64748b;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;">➖ ASSISTANT N/A — NOT ASSIGNED</span>'
+                        : (assistantIsPaid
                         ? '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ ASSISTANT PAID — TAP TO CHANGE</button>'
-                        : '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ ASSISTANT PAYMENT DUE — TAP TO MARK PAID</button>';
+                        : '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ ASSISTANT PAYMENT DUE — TAP TO MARK PAID</button>');
 
                     var editBtnStyle = tableEditUnlocked ? 'background: #0284c7; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
                     var deleteBtnStyle = tableEditUnlocked ? 'background: #dc2626; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
