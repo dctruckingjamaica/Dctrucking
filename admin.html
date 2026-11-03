@@ -1605,11 +1605,10 @@
                     </div>
 
                     <div class="tracker-field-group" style="grid-column: 1 / -1; background: #042410; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-top: 4px;">
-                        <label style="color: var(--primary-green); font-size: 0.95rem; text-transform: uppercase; margin-bottom: 6px; display: block;">⚠️ Mandatory Crew Payout Checkpoint *</label>
+                        <label style="color: var(--primary-green); font-size: 0.95rem; text-transform: uppercase; margin-bottom: 6px; display: block;">Crew Payout Status (default: Wages Pending)</label>
                         <select id="tr-payout-selection" style="background: #000; color: #fff; border: 1.5px solid var(--primary-green); padding: 10px; border-radius: 6px; font-weight: 800; width: 100%;">
-                            <option value="">-- SELECT CREW SETTLEMENT STATUS --</option>
+                            <option value="WAGES_PENDING" selected>⏳ Crew Wages Pending / Payment Pending</option>
                             <option value="PAID_OUT_OF_POCKET">✅ Crew Paid Out-of-Pocket (Wages Settled)</option>
-                            <option value="WAGES_PENDING">⏳ Crew Wages Pending / Payment Pending</option>
                         </select>
                     </div>
                 </div>
@@ -4212,11 +4211,7 @@
                 return;
             }
 
-            if (!payoutSelection) {
-                alert("⚠️ Mandatory Checkpoint: Please select the crew payout settlement status (Crew Paid Out-of-Pocket or Wages Pending) before logging this job.");
-                document.getElementById('tr-payout-selection').focus();
-                return;
-            }
+            if (!payoutSelection) payoutSelection = 'WAGES_PENDING';
 
             var staffPaid = (payoutSelection === 'PAID_OUT_OF_POCKET');
 
