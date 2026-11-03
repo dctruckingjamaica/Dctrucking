@@ -4597,7 +4597,10 @@
             if (id === 'unpaid-job-count' || id === 'all-count') {
                 return rounded.toLocaleString() + (id === 'unpaid-job-count' ? (rounded === 1 ? ' Job Pending' : ' Jobs Pending') : (rounded === 1 ? ' Job' : ' Jobs'));
             }
-            return '
+            return '$' + rounded.toLocaleString() + ' JMD';
+        }
+
+        function clearCorporateFinancialHistory() {
             var approved = confirm("RESET JOB & MONEY HISTORY?\\n\\nThis will permanently remove all saved corporate job records and truck maintenance expense history on this phone. Unpaid/pending collections and all-time/monthly/yearly totals will then reset to zero. Vehicle Vault insurance/fitness photos, staff profiles, and payslip archives will be kept.\\n\\nContinue?");
             if (!approved) return;
 
