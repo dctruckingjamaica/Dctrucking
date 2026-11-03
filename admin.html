@@ -1208,12 +1208,12 @@
 <body>
 
     <!-- SECURITY PIN LOGIN MODAL OVERLAY -->
-    <div id="managerLoginModal" style="display:flex; position:fixed; inset:0; width:100%; height:100vh; height:100dvh; box-sizing:border-box; padding:16px; overflow-y:auto; background:rgba(0,0,0,0.98); z-index:9999; justify-content:center; align-items:center; flex-direction:column; font-family:monospace;">
-        <div style="background:#111; padding:25px; border:2px solid #00ff66; border-radius:10px; text-align:center; width:100%; max-width:320px; box-sizing:border-box; flex-shrink:0;">
+    <div id="managerLoginModal" style="display:flex; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:9999; justify-content:center; align-items:center; flex-direction:column; font-family:monospace;">
+        <div style="background:#111; padding:25px; border:2px solid #00ff66; border-radius:10px; text-align:center; width:85%; max-width:320px;">
             <h3 style="color:#00ff66; margin-bottom:15px;">D&C MANAGER ACCESS</h3>
             <p style="color:#fff; font-size:13px; margin-bottom:15px;">Enter PIN to unlock dispatch controls:</p>
-            <input type="password" id="managerPinInput" maxlength="6" pattern="[0-9]*" inputmode="numeric" autocomplete="current-password" placeholder="****" onkeydown="if(event.key==='Enter'){event.preventDefault();submitManagerPin();}" style="font-size:24px; padding:10px; text-align:center; background:#000; color:#00ff66; border:1px solid #00ff66; border-radius:5px; width:100%; box-sizing:border-box; margin-bottom:15px;">
-            <button type="button" onclick="submitManagerPin()" style="background:#00ff66; color:#000; font-weight:bold; padding:12px; border:none; border-radius:5px; cursor:pointer; width:100%; margin-bottom:10px;">Unlock Panel</button>
+            <input type="password" id="managerPinInput" maxlength="6" pattern="[0-9]*" inputmode="numeric" placeholder="****" style="font-size:24px; padding:10px; text-align:center; background:#000; color:#00ff66; border:1px solid #00ff66; border-radius:5px; width:100%; margin-bottom:15px;">
+            <button onclick="submitManagerPin()" style="background:#00ff66; color:#000; font-weight:bold; padding:12px; border:none; border-radius:5px; cursor:pointer; width:100%; margin-bottom:10px;">Unlock Panel</button>
             <a href="index.html" onclick="sessionStorage.removeItem('dnc_unlocked');" style="color:#888; text-decoration:none; font-size:12px;">← Return to Public Website</a>
             <p id="managerPinError" style="color:#ff3333; font-size:12px; margin-top:10px; display:none;">Incorrect PIN Code</p>
         </div>
