@@ -1208,7 +1208,7 @@
 <body>
 
     <!-- SECURITY PIN LOGIN MODAL OVERLAY -->
-    <div id="managerLoginModal" style="display:flex; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:9999; justify-content:center; align-items:center; flex-direction:column; font-family:monospace;">
+    <div id="managerLoginModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:9999; justify-content:center; align-items:center; flex-direction:column; font-family:monospace;">
         <div style="background:#111; padding:25px; border:2px solid #00ff66; border-radius:10px; text-align:center; width:85%; max-width:320px;">
             <h3 style="color:#00ff66; margin-bottom:15px;">D&C MANAGER ACCESS</h3>
             <p style="color:#fff; font-size:13px; margin-bottom:15px;">Enter PIN to unlock dispatch controls:</p>
@@ -2265,6 +2265,8 @@
     </div>
 
     <script>
+        // TEMPORARY ADMIN ACCESS: PIN login disabled at the owner's request.
+        sessionStorage.setItem('dnc_unlocked', 'true');
         var managerPin = "197922";
         var showAllHistory = false;
         var tableEditUnlocked = false;
@@ -2275,20 +2277,15 @@
         let currentOperatingMode = localStorage.getItem('dc_operating_mode') || 'dnc'; // 'dnc' or 'westco'
 
         function promptForManagerPin() {
-            document.getElementById('managerLoginModal').style.display = 'flex';
-            document.getElementById('managerPinInput').focus();
+            sessionStorage.setItem('dnc_unlocked', 'true');
+            document.getElementById('managerLoginModal').style.display = 'none';
+            unlockSystemUI();
         }
 
         function submitManagerPin() {
-            var entered = document.getElementById('managerPinInput').value;
-            if (entered === managerPin) {
-                sessionStorage.setItem('dnc_unlocked', 'true');
-                document.getElementById('managerLoginModal').style.display = 'none';
-                unlockSystemUI();
-            } else {
-                document.getElementById('managerPinError').style.display = 'block';
-                document.getElementById('managerPinInput').value = '';
-            }
+            sessionStorage.setItem('dnc_unlocked', 'true');
+            document.getElementById('managerLoginModal').style.display = 'none';
+            unlockSystemUI();
         }
 
         function openEditPinModal() {
@@ -2448,17 +2445,17 @@
         }
 
         function lockSystemAndTrap() {
+            // PIN login temporarily disabled at the owner's request.
             isOnlineMode = false;
             tableEditUnlocked = false;
             clearTimeout(idleTimer);
-            sessionStorage.removeItem('dnc_unlocked');
+            sessionStorage.setItem('dnc_unlocked', 'true');
             sessionStorage.removeItem('dnc_keep_online');
 
             var panel = document.getElementById('manager-panel');
-            if (panel) panel.style.display = 'none';
-
-            document.getElementById('managerLoginModal').style.display = 'flex';
-            document.getElementById('managerPinInput').value = '';
+            if (panel) panel.style.display = 'block';
+            var modal = document.getElementById('managerLoginModal');
+            if (modal) modal.style.display = 'none';
 
             var btn = document.getElementById('toggleOnlineBtn');
             var statusLabel = document.getElementById('sessionStatusLabel');
@@ -2468,7 +2465,7 @@
                 btn.innerText = "🔴 Toggle ONLINE";
             }
             if (statusLabel) {
-                statusLabel.innerText = "🔴 OFFLINE (Hard Locked)";
+                statusLabel.innerText = "🔴 OFFLINE";
                 statusLabel.style.color = "#ff3333";
             }
         }
