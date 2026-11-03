@@ -4157,19 +4157,9 @@ async function generateWeeklyPayslip(roleType) {
             }else{
                 var allJobs=dcPayrollGetCombinedJobs(roleType,staffName);
                 weekJobs=allJobs.filter(function(j){return isCurrentWeek(j.date);});
-                if(weekJobs.length===0)weekJobs=allJobs;
+                if(weekJobs.length===0){alert('No jobs found for this staff member in the current operating week. Use Manual Selection to include backdated jobs.');return;}
             }
 
-            if (weekJobs.length === 0) {
-                weekJobs = [{
-                    day: 'Current Week',
-                    date: new Date().toISOString().split('T')[0],
-                    pickup: 'Kingston Depot',
-                    drop: 'General Route',
-                    driverPay: 0,
-                    asstPay: 0
-                }];
-            }
 
             var payslipTitle = roleType === 'driver' ? 'DRIVER WEEKLY PAYSLIP' : 'ASSISTANT WEEKLY PAYSLIP';
             document.getElementById('slip-title-main').innerText = payslipTitle;
