@@ -1678,13 +1678,13 @@
                     <div class="tracker-field-group" style="grid-column: 1 / -1; background: #042410; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-top: 4px;">
                         <label style="color: var(--primary-green); font-size: 0.92rem; font-weight: 900; display: block;">DRIVER PAYMENT STATUS</label>
                         <select id="tr-driver-payout-status" style="background:#000;color:#fff;border:1.5px solid var(--primary-green);padding:10px;border-radius:6px;font-weight:800;width:100%;">
-                            <option value="WAGES_PENDING" selected>⏳ Driver Payment Due / Wages Pending</option>
-                            <option value="PAID_OUT_OF_POCKET">✅ Driver Paid Out-of-Pocket</option>
+                            <option value="WAGES_PENDING">⏳ Driver Payment Due / Wages Pending</option>
+                            <option value="PAID_OUT_OF_POCKET" selected>✅ Driver Paid Out-of-Pocket</option>
                         </select>
                         <label style="color: var(--primary-green); font-size: 0.92rem; font-weight: 900; display: block; margin-top:10px;">ASSISTANT PAYMENT STATUS</label>
                         <select id="tr-assistant-payout-status" style="background:#000;color:#fff;border:1.5px solid var(--primary-green);padding:10px;border-radius:6px;font-weight:800;width:100%;">
-                            <option value="WAGES_PENDING" selected>⏳ Assistant Payment Due / Wages Pending</option>
-                            <option value="PAID_OUT_OF_POCKET">✅ Assistant Paid Out-of-Pocket</option>
+                            <option value="WAGES_PENDING">⏳ Assistant Payment Due / Wages Pending</option>
+                            <option value="PAID_OUT_OF_POCKET" selected>✅ Assistant Paid Out-of-Pocket</option>
                         </select>
                     </div>
                 </div>
@@ -2177,7 +2177,8 @@
                     </div>
                 </div>
 
-                <p style="margin-bottom: 10px; color: #111827;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800; color: #111827;"></span> at <span id="out-pickup-time-text" style="font-weight: 800; color: #0284c7;">09:00 AM</span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800; color: #111827;"></span></p>
+                <p style="margin-bottom: 10px; color: #111827;"><strong>Scheduled Pickup:</strong> <span id="out-pickup-date-text" style="font-weight:800;color:#111827;"></span> at <span id="out-pickup-time-text" style="font-weight: 800; color: #0284c7;">09:00 AM</span></p>
+                <p style="margin-bottom: 10px; color: #111827;"><strong>Route:</strong> Pickup: <span id="out-pickup-text" style="font-weight: 800; color: #111827;"></span> ➔ Drop-off: <span id="out-dest-text" style="font-weight: 800; color: #111827;"></span></p>
                 
                 <table style="margin-bottom: 12px; width: 100%; border-collapse: collapse;">
                     <thead>
@@ -3849,6 +3850,7 @@
             document.getElementById('out-num').innerText = num;
             
             document.getElementById('out-pickup-text').innerText = pickup;
+            document.getElementById('out-pickup-date-text').innerText = pDate;
             document.getElementById('out-dest-text').innerText = destInput;
             document.getElementById('out-pickup-time-text').innerText = pTime;
             document.getElementById('out-desc').innerText = 'Haulage Transport: ' + pickup + ' to ' + destInput;
@@ -4411,8 +4413,8 @@
             document.getElementById('tr-asst-pay').value = '0';
             document.getElementById('tr-petrol').value = '0';
             document.getElementById('tr-rate').value = '0';
-            document.getElementById('tr-driver-payout-status').value = 'WAGES_PENDING';
-            document.getElementById('tr-assistant-payout-status').value = 'WAGES_PENDING';
+            document.getElementById('tr-driver-payout-status').value = 'PAID_OUT_OF_POCKET';
+            document.getElementById('tr-assistant-payout-status').value = 'PAID_OUT_OF_POCKET';
             updateLiveProfit();
             
             loadTrackerJobs();
@@ -4483,6 +4485,13 @@
             if (newPickup === null) return;
             var newDrop = prompt("Edit Drop-off Destination / Route:", job.drop || "");
             if (newDrop === null) return;
+            var currentSourceChoice = job.source === 'D&C' ? '1' : (job.source === 'Westinco' ? '2' : '3');
+            var newSourceChoice = prompt("Job type: 1 = D&C, 2 = Westinco, 3 = leave unchanged", currentSourceChoice);
+            if (newSourceChoice === null) return;
+            if (['1','2','3'].indexOf(newSourceChoice.trim()) < 0) {
+                alert("Choose 1 for D&C, 2 for Westinco, or 3 to leave unchanged.");
+                return;
+            }
             var newDriver = prompt("Edit Driver Name:", job.driver || "");
             if (newDriver === null) return;
             var newDriverPayText = prompt("Edit Driver Payout (JMD):", String(job.driverPay || 0));
@@ -4542,6 +4551,8 @@
             job.inv = newInv.trim();
             job.pickup = newPickup.trim();
             job.drop = newDrop.trim();
+            if (newSourceChoice.trim() === '1') job.source = 'D&C';
+            else if (newSourceChoice.trim() === '2') job.source = 'Westinco';
             job.driver = newDriver.trim();
             job.driverPay = newDriverPay;
             job.assistant = newAssistant.trim();
