@@ -3146,7 +3146,7 @@
         }
 
         async function scanDocWithOCR(docType) {
-            saveVehicleDoc(docType);
+            if (!await saveVehicleDoc(docType)) return;
 
             var fileInput = document.getElementById('doc-' + docType + '-file');
             var statusDiv = document.getElementById('ocr-status-' + docType);
@@ -3187,7 +3187,7 @@
                 }
 
                 updateDocBadges();
-                saveVehicleDoc(docType);
+                await saveVehicleDoc(docType);
             } catch (err) {
                 console.error(err);
                 statusDiv.innerText = "❌ OCR scan failed. Enter date manually.";
@@ -3240,7 +3240,33 @@
             }
         }
 
-        function saveVehicleDoc(docType, silent) {
+        function compressVehicleDocImage(dataUrl) {
+            return new Promise(function(resolve, reject) {
+                if (!dataUrl || !/^data:image\//i.test(dataUrl)) {
+                    resolve(dataUrl || "");
+                    return;
+                }
+                var image = new Image();
+                image.onload = function() {
+                    try {
+                        var maxSide = 1400;
+                        var scale = Math.min(1, maxSide / Math.max(image.naturalWidth || image.width, image.naturalHeight || image.height));
+                        var canvas = document.createElement("canvas");
+                        canvas.width = Math.max(1, Math.round((image.naturalWidth || image.width) * scale));
+                        canvas.height = Math.max(1, Math.round((image.naturalHeight || image.height) * scale));
+                        var context = canvas.getContext("2d");
+                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL("image/jpeg", 0.68));
+                    } catch (err) {
+                        reject(err);
+                    }
+                };
+                image.onerror = function() { reject(new Error("The selected document image could not be processed.")); };
+                image.src = dataUrl;
+            });
+        }
+
+        async function saveVehicleDoc(docType, silent) {
             var num = document.getElementById('doc-' + docType + '-num').value;
             var expiry = document.getElementById('doc-' + docType + '-expiry').value;
             var text = document.getElementById('doc-' + docType + '-text').value;
@@ -3249,16 +3275,26 @@
 
             var costInput = document.getElementById('doc-' + docType + '-cost');
             var paidDateInput = document.getElementById('doc-' + docType + '-paid-date');
-            var docData = { num: num, expiry: expiry, text: text, imgData: imgData,
-                cost: costInput ? costInput.value : '', paidDate: paidDateInput ? paidDateInput.value : '' };
-            localStorage.setItem("dc_doc_" + docType, JSON.stringify(docData));
-
-            updateDocBadges();
-            if (!silent) alert("Vehicle document (" + docType.toUpperCase() + ") saved successfully!");
+            try {
+                imgData = await compressVehicleDocImage(imgData);
+                var docData = { num: num, expiry: expiry, text: text, imgData: imgData,
+                    cost: costInput ? costInput.value : '', paidDate: paidDateInput ? paidDateInput.value : '' };
+                var json = JSON.stringify(docData);
+                localStorage.setItem("dc_doc_" + docType, json);
+                if (localStorage.getItem("dc_doc_" + docType) !== json) {
+                    throw new Error("The saved vehicle document could not be verified.");
+                }
+                updateDocBadges();
+                if (!silent) alert("Vehicle document (" + docType.toUpperCase() + ") saved successfully. The photo has been resized to use less phone storage.");
+                return true;
+            } catch (err) {
+                console.error("Vehicle document save failed:", err);
+                alert("❌ VEHICLE DOCUMENT NOT SAVED. Your previous saved details have not been intentionally removed. The photo may be too large or phone storage may be full. Try a smaller photo and save again.");
+                return false;
+            }
         }
-
-        function saveVehicleDocExpense(docType) {
-            saveVehicleDoc(docType, true);
+        async function saveVehicleDocExpense(docType) {
+            if (!await saveVehicleDoc(docType, true)) return;
             var costInput = document.getElementById('doc-' + docType + '-cost');
             var dateInput = document.getElementById('doc-' + docType + '-paid-date');
             var cost = parseFloat(costInput && costInput.value) || 0;
@@ -4095,7 +4131,18 @@
         }
 
         function saveStoredJobs(jobs) {
-            localStorage.setItem("dc_corporate_jobs", JSON.stringify(jobs));
+            try {
+                var json = JSON.stringify(jobs);
+                localStorage.setItem("dc_corporate_jobs", json);
+                if (localStorage.getItem("dc_corporate_jobs") !== json) {
+                    throw new Error("Saved job records could not be verified.");
+                }
+                return true;
+            } catch (err) {
+                console.error("Corporate job save failed:", err);
+                alert("❌ YOUR JOB WAS NOT SAVED. Your existing job records have been left untouched. Phone storage may be full or blocked. Please do not close this page; free space in the Vehicle Vault by saving smaller photos, then try again.");
+                return false;
+            }
         }
 
         function getTrackerDateISO() {
@@ -4219,7 +4266,7 @@
                 status: status,
                 staffPaid: staffPaid
             });
-            saveStoredJobs(jobs);
+            if (!saveStoredJobs(jobs)) return;
             if (!isCurrentWeek(date)) {
                 showAllHistory = true;
                 var monthFilter = document.getElementById('history-month-filter');
@@ -4266,7 +4313,7 @@
                     break;
                 }
             }
-            saveStoredJobs(jobs);
+            if (!saveStoredJobs(jobs)) return;
             loadTrackerJobs();
         }
 
@@ -4279,7 +4326,7 @@
             if (!confirm("Are you sure you want to delete this job log?")) return;
             var jobs = getStoredJobs();
             var filtered = jobs.filter(function(j) { return j.id !== id; });
-            saveStoredJobs(filtered);
+            if (!saveStoredJobs(filtered)) return;
             loadTrackerJobs();
         }
 
@@ -4371,7 +4418,7 @@
             job.status = statusMap[newStatusChoice.trim()];
             job.staffPaid = newCrewChoice.trim() === "2";
 
-            saveStoredJobs(jobs);
+            if (!saveStoredJobs(jobs)) return;
             loadTrackerJobs();
             alert("✅ Job updated. Company collection and crew wages have been saved separately.");
         }
@@ -4388,7 +4435,7 @@
             if (!job) return;
 
             job.staffPaid = job.staffPaid !== true;
-            saveStoredJobs(jobs);
+            if (!saveStoredJobs(jobs)) return;
             loadTrackerJobs();
         }
 
