@@ -3973,7 +3973,7 @@
             window.open("mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body), "_blank");
         }
 
-        async function generateWeeklyPayslip(roleType) {
+        async function generateWeeklyPayslip(roleType, generationMode) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
             var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
             var natIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-natid') : document.getElementById('payroll-asst-natid');
@@ -4010,34 +4010,46 @@
             var proofTextVal = proofTextInput.value.trim();
 
             var allJobs = getStoredJobs();
-            var weekJobs = allJobs.filter(function(j) {
-                if (!isCurrentWeek(j.date)) return false;
-                if (roleType === 'driver') {
-                    return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
-                } else {
-                    return j.assistant && j.assistant.toLowerCase().includes(staffName.toLowerCase());
+            var weekJobs = [];
+            if (generationMode === 'manual') {
+                if (!selectedPayslipJobIds.length) {
+                    alert('Please tick the jobs you want in the log table and save the selection first.');
+                    return;
                 }
-            });
-
-            if (weekJobs.length === 0) {
                 weekJobs = allJobs.filter(function(j) {
-                    if (roleType === 'driver') {
-                        return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
-                    } else {
-                        return j.assistant && j.assistant.toLowerCase().includes(staffName.toLowerCase());
-                    }
+                    var selected = selectedPayslipJobIds.some(function(value) { return Number(value) === Number(j.id); });
+                    if (!selected) return false;
+                    if (roleType === 'driver') return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
+                    return j.assistant && j.assistant.toLowerCase().includes(staffName.toLowerCase());
                 });
-            }
-
-            if (weekJobs.length === 0) {
-                weekJobs = [{
-                    day: 'Current Week',
-                    date: new Date().toISOString().split('T')[0],
-                    pickup: 'Kingston Depot',
-                    drop: 'General Route',
-                    driverPay: 0,
-                    asstPay: 0
-                }];
+                if (!weekJobs.length) {
+                    alert('None of the selected jobs match the entered ' + (roleType === 'driver' ? 'driver' : 'assistant') + ' name. Please check the staff name and selected jobs.');
+                    return;
+                }
+            } else {
+                // AUTOMATIC weekly behavior intentionally retained: current Monday-Friday jobs,
+                // with historical matching fallback when the active week has no matching runs.
+                weekJobs = allJobs.filter(function(j) {
+                    if (!isCurrentWeek(j.date)) return false;
+                    if (roleType === 'driver') return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
+                    return j.assistant && j.assistant.toLowerCase().includes(staffName.toLowerCase());
+                });
+                if (weekJobs.length === 0) {
+                    weekJobs = allJobs.filter(function(j) {
+                        if (roleType === 'driver') return j.driver && j.driver.toLowerCase().includes(staffName.toLowerCase());
+                        return j.assistant && j.assistant.toLowerCase().includes(staffName.toLowerCase());
+                    });
+                }
+                if (weekJobs.length === 0) {
+                    weekJobs = [{
+                        day: 'Current Week',
+                        date: new Date().toISOString().split('T')[0],
+                        pickup: 'Kingston Depot',
+                        drop: 'General Route',
+                        driverPay: 0,
+                        asstPay: 0
+                    }];
+                }
             }
 
             var payslipTitle = roleType === 'driver' ? 'DRIVER WEEKLY PAYSLIP' : 'ASSISTANT WEEKLY PAYSLIP';
