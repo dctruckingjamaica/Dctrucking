@@ -1359,6 +1359,7 @@
                     <div>
                         <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Total Haulage Rate (JMD):</label>
                         <input type="number" id="manual-inv-amount" placeholder="0" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
+                        <small style="color: #86efac; display: block; margin-top: 5px;">D&amp;C rate sheet automatically fills the destination rate. You can still edit this amount manually.</small>
                     </div>
                     <div>
                         <label style="color: #38bdf8; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Scheduled Pickup Date:</label>
@@ -2665,13 +2666,17 @@
 
         function invoiceLiveAutoPrice() {
             var typedVal = document.getElementById('manual-inv-dest').value.trim().toLowerCase();
-            if (!typedVal) return;
+            if (typedVal.length < 3) return;
 
-            for (var place in privateCustomerRates) {
-                if (typedVal.includes(place) || place.includes(typedVal)) {
-                    document.getElementById('manual-inv-amount').value = privateCustomerRates[place];
-                    return;
-                }
+            var matches = Object.keys(privateCustomerRates).filter(function(place) {
+                return typedVal === place || typedVal.includes(place) || place.indexOf(typedVal) === 0;
+            });
+
+            if (matches.length) {
+                // Prefer the longest matching town name to avoid a shorter name
+                // overriding a more specific destination such as Old Harbour Bay.
+                matches.sort(function(a, b) { return b.length - a.length; });
+                document.getElementById('manual-inv-amount').value = privateCustomerRates[matches[0]];
             }
         }
 
@@ -3843,9 +3848,17 @@
             document.getElementById('out-deposit').innerText = '$' + deposit.toLocaleString() + ' JMD';
             document.getElementById('out-balance').innerText = '$' + balance.toLocaleString() + ' JMD';
 
+            // Reset the invoice colours before applying the selected payment type.
+            // This prevents an outstanding invoice from changing a later receipt's styling.
+            document.getElementById('out-deposit-label').style.color = '#166534';
+            document.getElementById('out-deposit').style.color = '#166534';
+            document.getElementById('out-balance-label').style.color = '#dc2626';
+            document.getElementById('out-balance').style.color = '#dc2626';
+
             if (paymentDue) {
                 document.getElementById('out-invoice-header-title').innerText = 'INVOICE - PAYMENT DUE';
                 document.getElementById('out-deposit-label').innerText = 'Payment Received to Date';
+                document.getElementById('out-deposit-label').style.color = '#111827';
                 document.getElementById('out-deposit').style.color = '#111827';
                 document.getElementById('out-balance-label').innerText = 'FULL AMOUNT OUTSTANDING - PAYMENT DUE';
                 document.getElementById('out-balance-label').style.color = '#dc2626';
@@ -3988,13 +4001,16 @@
             var route = document.getElementById('out-desc').innerText;
             var title = document.getElementById('out-invoice-header-title').innerText;
 
+            var paymentLines = title.indexOf('PAYMENT DUE') !== -1
+                ? "Payment Received: " + deposit + "\n" + "Amount Outstanding: " + balance + "\n"
+                : "Required Deposit (50%): " + deposit + "\n" + "Balance Due: " + balance + "\n";
+
             var msg = "D&C REFUSE TRUCKING - " + title + "\n\n" +
                       "Invoice #: " + num + "\n" +
                       "Client: " + client + "\n" +
                       "Route: " + route + "\n" +
                       "Total Amount: " + total + "\n" +
-                      "Payment Received: " + deposit + "\n" +
-                      "Amount Outstanding: " + balance + "\n\n" +
+                      paymentLines + "\n" +
                       "Kingston & Portmore Hub, Jamaica.";
 
             var whatsappUrl = phone ? "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg) : "https://wa.me/?text=" + encodeURIComponent(msg);
@@ -4011,13 +4027,16 @@
             var title = document.getElementById('out-invoice-header-title').innerText;
 
             var subject = title + " - " + num + " (" + client + ")";
+            var paymentLines = title.indexOf('PAYMENT DUE') !== -1
+                ? "Payment Received: " + deposit + "\n" + "Amount Outstanding: " + balance + "\n"
+                : "50% Deposit: " + deposit + "\n" + "Balance Due: " + balance + "\n";
+
             var body = "D&C REFUSE TRUCKING & EQUIPMENT CO. LTD\n" +
                        "Official Statement / Quote\n\n" +
                        "Invoice #: " + num + "\n" +
                        "Route: " + route + "\n" +
                        "Total Amount: " + total + "\n" +
-                       "Payment Received: " + deposit + "\n" +
-                       "Amount Outstanding: " + balance + "\n\n" +
+                       paymentLines + "\n" +
                        "Thank you for choosing D&C Refuse Trucking!";
 
             window.open("mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body), "_blank");
