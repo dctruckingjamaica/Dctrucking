@@ -1246,7 +1246,10 @@
             .btn-print { display: none; }
             .editable-preview-field { border-bottom: none; background: transparent; }
         }
-    </style>
+    
+/* D&C standalone job log and payment-due document; isolated from Westinco workflow */
+.dc-new-invoice th{background:#166534;color:#fff}
+</style>
 </head>
 <body>
 
@@ -1371,7 +1374,7 @@
                     </div>
                 </div>
 
-                <button class="btn-gen" style="width: 100%; padding: 12px; font-size: 1rem;" onclick="generateInvoice()">📄 Generate Printable Invoice / Deposit Quote</button>
+                <button class="btn-gen" style="width: 100%; padding: 12px; font-size: 1rem;" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
             </div>
             
             <!-- FUTURE ADVANCE BOOKINGS & DEPOSIT QUEUE -->
@@ -1419,6 +1422,7 @@
                 </div>
             </div>
 
+            
             <!-- CREW PAYROLL & CORPORATE PAYSLIPS SECTION -->
             <div class="payroll-section-box">
                 <h5>👥 Crew Payroll & Corporate Payslips</h5>
@@ -1496,7 +1500,7 @@
                         </div>
 
                         <button type="button" class="btn-save-profile" style="background:#0369a1; color:#fff; border:none; border-radius:6px; font-weight:900; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px; cursor:pointer;" onclick="saveStaffProfile('driver')">💾 SAVE DRIVER PROFILE</button>
-                        <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 GENERATE DRIVER WEEKLY PAYSLIP</button>
+                        <div style="background:#0f172a;border:1px solid #334155;border-radius:7px;padding:8px;margin:8px 0"><label style="display:block;font-weight:800;color:#bae6fd">Payslip job selection</label><select id="dcn-payroll-driver-mode" style="width:100%;padding:8px;background:#020617;color:#fff;border-radius:5px"><option value="automatic">Automatic weekly jobs (existing process)</option><option value="manual">Manual selection — choose individual jobs</option></select><button type="button" style="background:#0369a1;color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800;margin-top:6px" onclick="dcNewPayrollLoad('driver')">LOAD JOBS FOR DRIVER</button><div id="dcn-payroll-driver-list" style="max-height:220px;overflow:auto;margin-top:7px"></div></div><button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 GENERATE DRIVER WEEKLY PAYSLIP</button>
                     </div>
 
                     <div class="payroll-card">
@@ -1570,7 +1574,7 @@
                         </div>
 
                         <button type="button" class="btn-save-profile" style="background:#0369a1; color:#fff; border:none; border-radius:6px; font-weight:900; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px; cursor:pointer;" onclick="saveStaffProfile('assistant')">💾 SAVE ASSISTANT PROFILE</button>
-                        <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 GENERATE ASSISTANT WEEKLY PAYSLIP</button>
+                        <div style="background:#0f172a;border:1px solid #334155;border-radius:7px;padding:8px;margin:8px 0"><label style="display:block;font-weight:800;color:#bae6fd">Payslip job selection</label><select id="dcn-payroll-assistant-mode" style="width:100%;padding:8px;background:#020617;color:#fff;border-radius:5px"><option value="automatic">Automatic weekly jobs (existing process)</option><option value="manual">Manual selection — choose individual jobs</option></select><button type="button" style="background:#0369a1;color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800;margin-top:6px" onclick="dcNewPayrollLoad('assistant')">LOAD JOBS FOR ASSISTANT</button><div id="dcn-payroll-assistant-list" style="max-height:220px;overflow:auto;margin-top:7px"></div></div><button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 GENERATE ASSISTANT WEEKLY PAYSLIP</button>
                     </div>
                 </div>
             </div>
@@ -1672,10 +1676,15 @@
                     </div>
 
                     <div class="tracker-field-group" style="grid-column: 1 / -1; background: #042410; border: 1.5px solid var(--primary-green); padding: 12px; border-radius: 8px; margin-top: 4px;">
-                        <label style="color: var(--primary-green); font-size: 0.95rem; text-transform: uppercase; margin-bottom: 6px; display: block;">Crew Payout Status (select how the crew was paid)</label>
-                        <select id="tr-payout-selection" style="background: #000; color: #fff; border: 1.5px solid var(--primary-green); padding: 10px; border-radius: 6px; font-weight: 800; width: 100%;">
-                            <option value="PAID_OUT_OF_POCKET" selected>✅ Crew Paid Out-of-Pocket (Wages Settled)</option>
-                            <option value="WAGES_PENDING">⏳ Crew Wages Pending / Payment Pending</option>
+                        <label style="color: var(--primary-green); font-size: 0.92rem; font-weight: 900; display: block;">DRIVER PAYMENT STATUS</label>
+                        <select id="tr-driver-payout-status" style="background:#000;color:#fff;border:1.5px solid var(--primary-green);padding:10px;border-radius:6px;font-weight:800;width:100%;">
+                            <option value="WAGES_PENDING" selected>⏳ Driver Payment Due / Wages Pending</option>
+                            <option value="PAID_OUT_OF_POCKET">✅ Driver Paid Out-of-Pocket</option>
+                        </select>
+                        <label style="color: var(--primary-green); font-size: 0.92rem; font-weight: 900; display: block; margin-top:10px;">ASSISTANT PAYMENT STATUS</label>
+                        <select id="tr-assistant-payout-status" style="background:#000;color:#fff;border:1.5px solid var(--primary-green);padding:10px;border-radius:6px;font-weight:800;width:100%;">
+                            <option value="WAGES_PENDING" selected>⏳ Assistant Payment Due / Wages Pending</option>
+                            <option value="PAID_OUT_OF_POCKET">✅ Assistant Paid Out-of-Pocket</option>
                         </select>
                     </div>
                 </div>
@@ -3803,7 +3812,7 @@
         function generateInvoice() {
             var depositPaid = document.getElementById('inv-deposit-paid').checked;
             var fullPaid = document.getElementById('inv-full-paid').checked;
-            var paymentDue = document.getElementById('inv-payment-due').checked;
+            var paymentDue = currentOperatingMode === 'dnc' || document.getElementById('inv-payment-due').checked;
 
             if (!depositPaid && !fullPaid && !paymentDue) {
                 alert("⚠️ Please select Deposit Paid, Paid in Full, or Payment Outstanding in the Payment & Booking Status box before generating the invoice!");
@@ -3856,7 +3865,7 @@
             document.getElementById('out-balance').style.color = '#dc2626';
 
             if (paymentDue) {
-                document.getElementById('out-invoice-header-title').innerText = 'INVOICE - PAYMENT DUE';
+                document.getElementById('out-invoice-header-title').innerText = 'PAYMENT DUE';
                 document.getElementById('out-deposit-label').innerText = 'Payment Received to Date';
                 document.getElementById('out-deposit-label').style.color = '#111827';
                 document.getElementById('out-deposit').style.color = '#111827';
@@ -4098,6 +4107,16 @@
                 });
             }
 
+            var manualMode=document.getElementById('dcn-payroll-'+roleType+'-mode');
+            if(manualMode&&manualMode.value==='manual'){
+                var selectedIds=dcNewPayrollSelected(roleType);
+                weekJobs=selectedIds.map(function(key){
+                    var id=key.indexOf('JOB:')===0?key.slice(4):key;
+                    return getStoredJobs().find(function(x){return String(x.id)===String(id)})||null;
+                }).filter(function(j){return j&&(roleType==='driver'?String(j.driver||'').toLowerCase().includes(staffName.toLowerCase()):String(j.assistant||'').toLowerCase().includes(staffName.toLowerCase()))});
+                if(!weekJobs.length){alert('Select at least one matching job for this payslip.');return}
+            }
+
             if (weekJobs.length === 0) {
                 weekJobs = [{
                     day: 'Current Week',
@@ -4137,7 +4156,7 @@
                 grossEarnings += payout;
 
                 var tr = document.createElement('tr');
-                tr.innerHTML = '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;"><strong>' + (j.day || 'Day') + '</strong> <span style="font-size:0.75rem; color:#64748b;">(' + (j.date || '') + ')</span></td>' +
+                tr.innerHTML = '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;"><strong>' + (j.source==='D&C'?'D&C — ':'') + (j.day || 'Day') + '</strong> <span style="font-size:0.75rem; color:#64748b;">(' + (j.date || '') + ')</span></td>' +
                                '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;">' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
                                '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
                 tbody.appendChild(tr);
@@ -4337,16 +4356,19 @@
             var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
             var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
             var status = document.getElementById('tr-status').value;
-            var payoutSelection = document.getElementById('tr-payout-selection').value;
+            var driverPayoutSelection = document.getElementById('tr-driver-payout-status').value;
+            var assistantPayoutSelection = document.getElementById('tr-assistant-payout-status').value;
+            var jobSource = document.getElementById('tr-active-mode').value === 'private' ? 'D&C' : 'Westinco';
 
             if (!inv) {
                 alert("Please enter an Invoice Number.");
                 return;
             }
 
-            if (!payoutSelection) payoutSelection = 'WAGES_PENDING';
-
-            var staffPaid = (payoutSelection === 'PAID_OUT_OF_POCKET');
+            if (!driverPayoutSelection) driverPayoutSelection = 'WAGES_PENDING';
+            if (!assistantPayoutSelection) assistantPayoutSelection = 'WAGES_PENDING';
+            var driverPaid = driverPayoutSelection === 'PAID_OUT_OF_POCKET';
+            var assistantPaid = assistantPayoutSelection === 'PAID_OUT_OF_POCKET';
 
             var jobs = getStoredJobs();
             jobs.push({ 
@@ -4363,7 +4385,10 @@
                 petrol: petrol, 
                 rate: rate, 
                 status: status,
-                staffPaid: staffPaid
+                source: jobSource,
+                driverPaid: driverPaid,
+                assistantPaid: assistantPaid,
+                staffPaid: driverPaid && assistantPaid
             });
             if (!saveStoredJobs(jobs)) return;
             if (!isCurrentWeek(date)) {
@@ -4386,7 +4411,8 @@
             document.getElementById('tr-asst-pay').value = '0';
             document.getElementById('tr-petrol').value = '0';
             document.getElementById('tr-rate').value = '0';
-            document.getElementById('tr-payout-selection').value = '';
+            document.getElementById('tr-driver-payout-status').value = 'WAGES_PENDING';
+            document.getElementById('tr-assistant-payout-status').value = 'WAGES_PENDING';
             updateLiveProfit();
             
             loadTrackerJobs();
@@ -4478,10 +4504,18 @@
                 return;
             }
 
-            var newCrewChoice = prompt("Crew Wages Status: 1 = WAGES PENDING, 2 = CREW PAID OUT-OF-POCKET", job.staffPaid === true ? "2" : "1");
-            if (newCrewChoice === null) return;
-            if (newCrewChoice.trim() !== "1" && newCrewChoice.trim() !== "2") {
-                alert("Choose 1 for Wages Pending or 2 for Crew Paid Out-of-Pocket.");
+            var currentDriverPaid = job.driverPaid !== undefined ? job.driverPaid === true : job.staffPaid === true;
+            var currentAssistantPaid = job.assistantPaid !== undefined ? job.assistantPaid === true : job.staffPaid === true;
+            var newDriverPayoutChoice = prompt("Driver payment: 1 = PAYMENT DUE / WAGES PENDING, 2 = PAID OUT-OF-POCKET", currentDriverPaid ? "2" : "1");
+            if (newDriverPayoutChoice === null) return;
+            if (newDriverPayoutChoice.trim() !== "1" && newDriverPayoutChoice.trim() !== "2") {
+                alert("Choose 1 for Driver Payment Due or 2 for Driver Paid Out-of-Pocket.");
+                return;
+            }
+            var newAssistantPayoutChoice = prompt("Assistant payment: 1 = PAYMENT DUE / WAGES PENDING, 2 = PAID OUT-OF-POCKET", currentAssistantPaid ? "2" : "1");
+            if (newAssistantPayoutChoice === null) return;
+            if (newAssistantPayoutChoice.trim() !== "1" && newAssistantPayoutChoice.trim() !== "2") {
+                alert("Choose 1 for Assistant Payment Due or 2 for Assistant Paid Out-of-Pocket.");
                 return;
             }
 
@@ -4515,25 +4549,45 @@
             job.petrol = newPetrol;
             job.rate = newRate;
             job.status = statusMap[newStatusChoice.trim()];
-            job.staffPaid = newCrewChoice.trim() === "2";
+            job.driverPaid = newDriverPayoutChoice.trim() === "2";
+            job.assistantPaid = newAssistantPayoutChoice.trim() === "2";
+            job.staffPaid = job.driverPaid && job.assistantPaid;
 
             if (!saveStoredJobs(jobs)) return;
             loadTrackerJobs();
             alert("✅ Job updated. Company collection and crew wages have been saved separately.");
         }
 
-        function toggleCrewPayoutStatus(id) {
+        function toggleDriverPayoutStatus(id) {
             if (!tableEditUnlocked) {
                 alert("🔒 Table edit mode is locked. Please unlock using your PIN first.");
                 openEditPinModal();
                 return;
             }
-
             var jobs = getStoredJobs();
             var job = jobs.find(function(item) { return item.id === id; });
             if (!job) return;
+            var current = job.driverPaid !== undefined ? job.driverPaid === true : job.staffPaid === true;
+            job.driverPaid = !current;
+            if (job.assistantPaid === undefined) job.assistantPaid = job.staffPaid === true;
+            job.staffPaid = job.driverPaid === true && job.assistantPaid === true;
+            if (!saveStoredJobs(jobs)) return;
+            loadTrackerJobs();
+        }
 
-            job.staffPaid = job.staffPaid !== true;
+        function toggleAssistantPayoutStatus(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first.");
+                openEditPinModal();
+                return;
+            }
+            var jobs = getStoredJobs();
+            var job = jobs.find(function(item) { return item.id === id; });
+            if (!job) return;
+            var current = job.assistantPaid !== undefined ? job.assistantPaid === true : job.staffPaid === true;
+            job.assistantPaid = !current;
+            if (job.driverPaid === undefined) job.driverPaid = job.staffPaid === true;
+            job.staffPaid = job.driverPaid === true && job.assistantPaid === true;
             if (!saveStoredJobs(jobs)) return;
             loadTrackerJobs();
         }
@@ -4902,10 +4956,10 @@
                 }
 
                 // Older saved jobs without staffPaid are treated as wages pending.
-                if (aj.staffPaid !== true) {
-                    totalUnpaidDriverPay += (parseFloat(aj.driverPay) || 0);
-                    totalUnpaidAsstPay += (parseFloat(aj.asstPay) || 0);
-                }
+                var driverIsPaid = aj.driverPaid !== undefined ? aj.driverPaid === true : aj.staffPaid === true;
+                var assistantIsPaid = aj.assistantPaid !== undefined ? aj.assistantPaid === true : aj.staffPaid === true;
+                if (!driverIsPaid) totalUnpaidDriverPay += (parseFloat(aj.driverPay) || 0);
+                if (!assistantIsPaid) totalUnpaidAsstPay += (parseFloat(aj.asstPay) || 0);
             }
 
             var paidRev = 0;
@@ -4994,9 +5048,14 @@
                         statusHTML = '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
                     }
 
-                    var staffPaidBadge = j.staffPaid === true
-                        ? '<br><button type="button" onclick="toggleCrewPayoutStatus(' + j.id + ')" title="Tap to change crew wages status" style="margin-top:5px; background:#166534; color:#ffffff; border:1px solid #4ade80; border-radius:5px; padding:5px 7px; font-size:0.78rem; font-weight:900; cursor:pointer;">✅ CREW PAID — TAP TO CHANGE</button>'
-                        : '<br><button type="button" onclick="toggleCrewPayoutStatus(' + j.id + ')" title="Tap to mark crew wages as paid" style="margin-top:5px; background:#7f1d1d; color:#ffffff; border:1px solid #f87171; border-radius:5px; padding:5px 7px; font-size:0.78rem; font-weight:900; cursor:pointer;">⏳ WAGES PENDING — TAP TO MARK PAID</button>';
+                    var driverIsPaid = j.driverPaid !== undefined ? j.driverPaid === true : j.staffPaid === true;
+                    var assistantIsPaid = j.assistantPaid !== undefined ? j.assistantPaid === true : j.staffPaid === true;
+                    var driverPaidBadge = driverIsPaid
+                        ? '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ DRIVER PAID — TAP TO CHANGE</button>'
+                        : '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ DRIVER PAYMENT DUE — TAP TO MARK PAID</button>';
+                    var assistantPaidBadge = assistantIsPaid
+                        ? '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ ASSISTANT PAID — TAP TO CHANGE</button>'
+                        : '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ ASSISTANT PAYMENT DUE — TAP TO MARK PAID</button>';
 
                     var editBtnStyle = tableEditUnlocked ? 'background: #0284c7; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
                     var deleteBtnStyle = tableEditUnlocked ? 'background: #dc2626; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
@@ -5004,9 +5063,9 @@
                     var tr = document.createElement('tr');
                     tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.88rem;">' + j.date + '</span></td>' +
                                    '<td>' + invHTML + '</td>' +
-                                   '<td>' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
-                                   '<td>' + j.driver + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.driverPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
-                                   '<td>' + j.assistant + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.asstPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
+                                   '<td>' + (j.source === 'D&C' ? '<strong style="color:#4ade80;">D&amp;C — </strong>' : '') + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
+                                   '<td>' + j.driver + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.driverPay.toLocaleString() + ' JMD</span>' + driverPaidBadge + '</td>' +
+                                   '<td>' + j.assistant + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.asstPay.toLocaleString() + ' JMD</span>' + assistantPaidBadge + '</td>' +
                                    '<td style="color:#f87171; font-weight: 800;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#38bdf8;">$' + jobNetProfit.toLocaleString() + ' JMD</td>' +
@@ -5148,6 +5207,29 @@
         window.addEventListener('DOMContentLoaded', () => {
             renderPayslipArchive();
         });
-    </script>
+    
+        // D&C private records are stored separately. No writes are made to Westinco job data.
+        function dcNewPayrollSelected(role){var boxes=document.querySelectorAll('#dcn-payroll-'+role+'-list input[type="checkbox"]:checked');return Array.prototype.map.call(boxes,function(b){return b.value})}
+
+        function dcNewPayrollLoad(role){
+          var nameEl=document.getElementById(role==='driver'?'payroll-driver-name':'payroll-asst-name');
+          var name=(nameEl&&nameEl.value||'').trim().toLowerCase();
+          if(!name){alert('Enter the staff member name first.');return}
+          var items=[];
+          getStoredJobs().forEach(function(j){
+            var staff=role==='driver'?j.driver:j.assistant;
+            if(staff&&String(staff).toLowerCase().includes(name)){
+              items.push({key:'JOB:'+j.id,source:j.source==='D&C'?'D&C':'Westinco',ref:j.inv||'Job',date:j.date,route:(j.pickup||'—')+' → '+(j.drop||'—'),pay:role==='driver'?j.driverPay:j.asstPay});
+            }
+          });
+          var list=document.getElementById('dcn-payroll-'+role+'-list');
+          if(!items.length){list.innerHTML='<p style="color:#fca5a5">No jobs found for that staff name.</p>';return}
+          list.innerHTML=items.map(function(j){
+            var safe=function(v){return String(v==null?'':v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+            return '<label style="display:block;background:#020617;padding:7px;margin:4px 0;border-radius:5px;color:#fff"><input type="checkbox" value="'+safe(j.key)+'" checked style="width:auto;margin-right:6px"> <strong>'+safe(j.source)+' | '+safe(j.ref)+'</strong> — '+safe(j.date)+'<br><span style="font-size:.82rem">'+safe(j.route)+' | JMD $'+Number(j.pay||0).toLocaleString()+'</span></label>';
+          }).join('');
+        }
+
+</script>
 </body>
 </html>
