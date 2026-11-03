@@ -2462,8 +2462,15 @@
             var btnDnc = document.getElementById('btnModeDnc');
             var modeIndicator = document.getElementById('modeIndicatorLabel');
             var daySelect = document.getElementById('tr-day');
+            var rateModeInput = document.getElementById('tr-active-mode');
+            var rateModeWestinco = document.getElementById('mode-btn-wisynco');
+            var rateModeDnc = document.getElementById('mode-btn-private');
 
             if (!btnWestco || !btnDnc || !daySelect) return;
+
+            // Keep the day selector, rate table, saved job label and invoice mode in step.
+            // D&C is the private rate table; Westinco uses the existing Wisynco rate table.
+            if (rateModeInput) rateModeInput.value = currentOperatingMode === 'westco' ? 'wisynco' : 'private';
 
             var currentDayVal = daySelect.value;
             daySelect.innerHTML = '';
@@ -2476,6 +2483,17 @@
                 btnDnc.style.background = '#1e293b';
                 btnDnc.style.color = '#38bdf8';
                 btnDnc.style.border = '1px solid #38bdf8';
+
+                if (rateModeWestinco) {
+                    rateModeWestinco.style.background = '#0284c7';
+                    rateModeWestinco.style.color = '#fff';
+                    rateModeWestinco.style.border = 'none';
+                }
+                if (rateModeDnc) {
+                    rateModeDnc.style.background = '#1e293b';
+                    rateModeDnc.style.color = '#38bdf8';
+                    rateModeDnc.style.border = '1px solid #38bdf8';
+                }
 
                 if (modeIndicator) modeIndicator.innerText = "Wisynco Mode (Monday – Friday 5 Days)";
 
@@ -2493,6 +2511,17 @@
                 btnWestco.style.background = '#1e293b';
                 btnWestco.style.color = '#38bdf8';
                 btnWestco.style.border = '1px solid #38bdf8';
+
+                if (rateModeDnc) {
+                    rateModeDnc.style.background = '#0284c7';
+                    rateModeDnc.style.color = '#fff';
+                    rateModeDnc.style.border = 'none';
+                }
+                if (rateModeWestinco) {
+                    rateModeWestinco.style.background = '#1e293b';
+                    rateModeWestinco.style.color = '#38bdf8';
+                    rateModeWestinco.style.border = '1px solid #38bdf8';
+                }
 
                 if (modeIndicator) modeIndicator.innerText = "D&C Mode (Monday – Sunday 7 Days)";
 
@@ -2633,28 +2662,10 @@
         }
 
         function setTrackerRateMode(mode) {
-            document.getElementById('tr-active-mode').value = mode;
-            var btnWisynco = document.getElementById('mode-btn-wisynco');
-            var btnPrivate = document.getElementById('mode-btn-private');
-
-            if (mode === 'wisynco') {
-                btnWisynco.style.background = '#0284c7';
-                btnWisynco.style.color = '#fff';
-                btnWisynco.style.border = 'none';
-
-                btnPrivate.style.background = '#1e293b';
-                btnPrivate.style.color = '#38bdf8';
-                btnPrivate.style.border = '1px solid #38bdf8';
-            } else {
-                btnPrivate.style.background = '#0284c7';
-                btnPrivate.style.color = '#fff';
-                btnPrivate.style.border = 'none';
-
-                btnWisynco.style.background = '#1e293b';
-                btnWisynco.style.color = '#38bdf8';
-                btnWisynco.style.border = '1px solid #38bdf8';
-            }
-
+            // Both visible mode selectors now operate as one switch.
+            currentOperatingMode = mode === 'wisynco' ? 'westco' : 'dnc';
+            localStorage.setItem('dc_operating_mode', currentOperatingMode);
+            applyOperatingModeUI();
             trackerLiveAutoPrice();
         }
 
