@@ -669,16 +669,33 @@
         .watermark-unpaid { color: #dc2626; }
 
         .week-filter-bar {
+            position: relative;
+            clear: both;
             display: flex;
+            width: 100%;
             justify-content: space-between;
             align-items: center;
             background: #123b20;
-            border: 1.5px solid #4ade80;
+            border: 2px solid #4ade80;
             padding: 11px 14px;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-top: 24px;
+            margin-bottom: 24px;
             flex-wrap: wrap;
             gap: 10px;
+            z-index: 1;
+        }
+
+        .history-reset-btn {
+            background: #7f1d1d;
+            color: #ffffff;
+            border: 1.5px solid #f87171;
+            border-radius: 6px;
+            padding: 7px 10px;
+            font-size: 0.82rem;
+            font-weight: 900;
+            cursor: pointer;
+            white-space: normal;
         }
 
         .week-filter-bar span {
@@ -1750,9 +1767,12 @@
                 <div class="alltime-summary-container">
                     <h5>
                         <span>📈 All-Time & Yearly Business History</span>
-                        <select class="month-filter-dropdown" id="history-month-filter" onchange="loadTrackerJobs()">
-                            <option value="ALL">🗓️ All-Time Summary</option>
-                        </select>
+                        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                            <select class="month-filter-dropdown" id="history-month-filter" onchange="loadTrackerJobs()">
+                                <option value="ALL">🗓️ All-Time Summary</option>
+                            </select>
+                            <button type="button" class="history-reset-btn" onclick="clearCorporateFinancialHistory()">🧹 RESET JOB & MONEY HISTORY</button>
+                        </div>
                     </h5>
                     <div class="alltime-grid">
                         <div class="alltime-box">
@@ -4544,6 +4564,35 @@
             friday.setHours(23, 59, 59, 999);
 
             return jobDate >= monday && jobDate <= friday;
+        }
+
+        // Reset old job/financial history while preserving Vehicle Vault documents,
+        // staff profiles, payslips, and other local website data.
+        function clearCorporateFinancialHistory() {
+            var approved = confirm("RESET JOB & MONEY HISTORY?\\n\\nThis will permanently remove all saved corporate job records and truck maintenance expense history on this phone. Unpaid/pending collections and all-time/monthly/yearly totals will then reset to zero. Vehicle Vault insurance/fitness photos, staff profiles, and payslip archives will be kept.\\n\\nContinue?");
+            if (!approved) return;
+
+            try {
+                localStorage.setItem("dc_corporate_jobs", "[]");
+                localStorage.setItem("dc_truck_maintenance", "[]");
+
+                if (localStorage.getItem("dc_corporate_jobs") !== "[]" ||
+                    localStorage.getItem("dc_truck_maintenance") !== "[]") {
+                    throw new Error("Could not verify reset");
+                }
+
+                showAllHistory = false;
+                var historyToggle = document.querySelector(".btn-week-toggle");
+                if (historyToggle) historyToggle.innerText = "🔄 Switch to View All History Table";
+                var viewLabel = document.getElementById("current-view-label");
+                if (viewLabel) viewLabel.innerText = "📅 Showing: Current M-F Operating Week";
+
+                loadTrackerJobs();
+                alert("✅ Job and money history has been reset. Vehicle Vault documents and photos were preserved.");
+            } catch (err) {
+                console.error("History reset failed:", err);
+                alert("❌ The history reset could not be completed. Please try again.");
+            }
         }
 
         function populateHistoryMonthDropdown(jobs) {
