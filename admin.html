@@ -2545,6 +2545,11 @@
                     daySelect.value = currentDayVal;
                 }
             }
+
+            // Keep the existing job-entry rate selector aligned with the main operating-mode switch.
+            if (typeof setTrackerRateMode === 'function') {
+                setTrackerRateMode(currentOperatingMode === 'dnc' ? 'private' : 'wisynco');
+            }
         }
 
         function lockSystemAndTrap() {
@@ -2668,10 +2673,11 @@
 
         function dcPrivateUpdateDocumentModeUI() {
             var activeMode = document.getElementById('tr-active-mode') ? document.getElementById('tr-active-mode').value : 'wisynco';
+            var dncModeActive = currentOperatingMode === 'dnc' && activeMode === 'private';
             var documentTool = document.getElementById('dc-private-job-doc-tool');
             var documentPreview = document.getElementById('dc-private-document');
-            if (documentTool) documentTool.style.display = activeMode === 'private' ? 'block' : 'none';
-            if (activeMode !== 'private' && documentPreview) documentPreview.style.display = 'none';
+            if (documentTool) documentTool.style.display = dncModeActive ? 'block' : 'none';
+            if (!dncModeActive && documentPreview) documentPreview.style.display = 'none';
         }
 
         function setTrackerRateMode(mode) {
@@ -3912,7 +3918,7 @@ function dcPrivateToggleReceiptFields(){
 }
 function dcPrivateGenerateDocument(){
     var activeMode=document.getElementById('tr-active-mode')?document.getElementById('tr-active-mode').value:'wisynco';
-    if(activeMode!=='private'){alert('Switch the Job Log to D&C Mode before generating a D&C invoice or receipt.');return}
+    if(currentOperatingMode!=='dnc'||activeMode!=='private'){alert('Switch the main operating mode and Job Log rate mode to D&C before generating a D&C invoice or receipt.');return}
     var $=function(id){return document.getElementById(id)};
     var type=$('dc-private-doc-type').value,client=$('dc-private-client').value.trim();
     var amount=Number($('dc-private-rate').value)||0,jobId=$('dc-private-job-select').value;
