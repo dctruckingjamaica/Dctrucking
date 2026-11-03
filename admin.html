@@ -1503,6 +1503,15 @@
                         </div>
 
                         <button type="button" class="btn-save-profile" style="background:#0369a1; color:#fff; border:none; border-radius:6px; font-weight:900; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px; cursor:pointer;" onclick="saveStaffProfile('driver')">💾 SAVE DRIVER PROFILE</button>
+                        <label style="margin-top:8px;">Jobs to include in payslip:</label>
+                        <select id="dc-payroll-driver-mode" onchange="dcPayrollModeChanged('driver')" style="width:100%;padding:8px;border-radius:6px;">
+                            <option value="automatic" selected>Automatic (current weekly process)</option>
+                            <option value="manual">Manual job selection</option>
+                        </select>
+                        <div id="dc-payroll-driver-manual-controls" style="display:none;background:#0f172a;border:1px solid #334155;border-radius:7px;padding:8px;margin:6px 0;">
+                            <button type="button" onclick="dcPayrollLoadManualJobs('driver')" style="background:#0369a1;color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800;">🔄 Load matching jobs</button>
+                            <div id="dc-payroll-driver-manual-list" style="max-height:240px;overflow:auto;margin-top:6px;"></div>
+                        </div>
                         <button class="btn-gen-payroll-driver" onclick="generateWeeklyPayslip('driver')">🛞 GENERATE DRIVER WEEKLY PAYSLIP</button>
                     </div>
 
@@ -1577,6 +1586,15 @@
                         </div>
 
                         <button type="button" class="btn-save-profile" style="background:#0369a1; color:#fff; border:none; border-radius:6px; font-weight:900; margin-top:6px; margin-bottom:6px; font-size:0.9rem; padding:8px; cursor:pointer;" onclick="saveStaffProfile('assistant')">💾 SAVE ASSISTANT PROFILE</button>
+                        <label style="margin-top:8px;">Jobs to include in payslip:</label>
+                        <select id="dc-payroll-assistant-mode" onchange="dcPayrollModeChanged('assistant')" style="width:100%;padding:8px;border-radius:6px;">
+                            <option value="automatic" selected>Automatic (current weekly process)</option>
+                            <option value="manual">Manual job selection</option>
+                        </select>
+                        <div id="dc-payroll-assistant-manual-controls" style="display:none;background:#0f172a;border:1px solid #334155;border-radius:7px;padding:8px;margin:6px 0;">
+                            <button type="button" onclick="dcPayrollLoadManualJobs('assistant')" style="background:#0369a1;color:#fff;border:0;border-radius:5px;padding:7px;font-weight:800;">🔄 Load matching jobs</button>
+                            <div id="dc-payroll-assistant-manual-list" style="max-height:240px;overflow:auto;margin-top:6px;"></div>
+                        </div>
                         <button class="btn-gen-payroll-asst" onclick="generateWeeklyPayslip('assistant')">🤝 GENERATE ASSISTANT WEEKLY PAYSLIP</button>
                     </div>
                 </div>
@@ -4060,6 +4078,1119 @@ function dcPrivateToggleReceiptFields(){var r=document.getElementById('dc-privat
 
             window.open("mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body), "_blank");
         }
+
+        function dcPayrollRoleName(roleType){var e=document.getElementById(roleType==='driver'?'payroll-driver-name':'payroll-asst-name');return e?(e.value||'').trim():'';}
+        function dcPayrollMatches(job,roleType,staffName){var field=roleType==='driver'?job.driver:job.assistant;return !!field&&String(field).toLowerCase().includes(staffName.toLowerCase());}
+        function dcPayrollGetCombinedJobs(roleType,staffName){var corporate=getStoredJobs().map(function(j){var x=Object.assign({},j);x._dcPayrollSource='West Sincoe';x._dcPayrollId='corp:'+String(j.id!=null?j.id:(j.ref||j.date+'|'+j.pickup+'|'+j.drop));return x;});var privateJobs=dcPrivateGetJobs().map(function(j){var x=Object.assign({},j);x.assistant=j.assistant;x._dcPayrollSource='D&C Private';x._dcPayrollId='private:'+String(j.id||j.ref);x.day=x.day|| (j.date?new Date(j.date+'T12:00:00').toLocaleDateString(undefined,{weekday:'long'}):'Day');return x;});return corporate.concat(privateJobs).filter(function(j){return dcPayrollMatches(j,roleType,staffName);});}
+        function dcPayrollManualKey(roleType,staffName){return 'dc_payslip_manual_'+roleType+'_'+String(staffName||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'_');}
+        function dcPayrollLoadManualJobs(roleType){var staffName=dcPayrollRoleName(roleType);if(!staffName){alert('Enter the staff name first.');return;}var jobs=dcPayrollGetCombinedJobs(roleType,staffName);var container=document.getElementById(roleType==='driver'?'dc-payroll-driver-manual-list':'dc-payroll-assistant-manual-list');if(!container)return;var key=dcPayrollManualKey(roleType,staffName),selected=[];try{selected=JSON.parse(localStorage.getItem(key)||'[]');if(!Array.isArray(selected))selected=[];}catch(e){selected=[];}container.innerHTML=jobs.length?jobs.map(function(j){var id=dcPrivateEscape(j._dcPayrollId),checked=selected.indexOf(j._dcPayrollId)>=0;return '<label style="display:flex;align-items:flex-start;gap:8px;padding:7px;border-bottom:1px solid #334155;color:#e2e8f0;font-size:.88rem"><input type="checkbox" value="'+id+'" '+(checked?'checked':'')+' onchange="dcPayrollSaveManualSelection(\''+roleType+'\')" style="margin-top:3px"><span><strong>'+dcPrivateEscape(j._dcPayrollSource)+' · '+dcPrivateEscape(j.ref||j.day||'Job')+'</strong><br>'+dcPrivateEscape(j.date||'')+' · '+dcPrivateEscape(j.pickup||'-')+' → '+dcPrivateEscape(j.drop||'-')+' · Pay 
+            var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
+            var payNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-paynum') : document.getElementById('payroll-asst-paynum');
+            var natIdInput = roleType === 'driver' ? document.getElementById('payroll-driver-natid') : document.getElementById('payroll-asst-natid');
+            var bankNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankname') : document.getElementById('payroll-asst-bankname');
+            var bankBranchInput = roleType === 'driver' ? document.getElementById('payroll-driver-bankbranch') : document.getElementById('payroll-asst-bankbranch');
+            var accNumInput = roleType === 'driver' ? document.getElementById('payroll-driver-accnum') : document.getElementById('payroll-asst-accnum');
+            var sortCodeInput = roleType === 'driver' ? document.getElementById('payroll-driver-sortcode') : document.getElementById('payroll-asst-sortcode');
+            var posInput = roleType === 'driver' ? document.getElementById('payroll-driver-pos') : document.getElementById('payroll-asst-pos');
+            var deptInput = roleType === 'driver' ? document.getElementById('payroll-driver-dept') : document.getElementById('payroll-asst-dept');
+            var branchInput = roleType === 'driver' ? document.getElementById('payroll-driver-branch') : document.getElementById('payroll-asst-branch');
+            var deductInput = roleType === 'driver' ? document.getElementById('payroll-driver-deduct') : document.getElementById('payroll-asst-deduct');
+            var deductNoteInput = roleType === 'driver' ? document.getElementById('payroll-driver-deductnote') : document.getElementById('payroll-asst-deductnote');
+            var chargesInput = roleType === 'driver' ? document.getElementById('payroll-driver-totalcharges') : document.getElementById('payroll-asst-totalcharges');
+            var methodSelect = roleType === 'driver' ? document.getElementById('payroll-driver-method') : document.getElementById('payroll-asst-method');
+            var paydateInput = roleType === 'driver' ? document.getElementById('payroll-driver-paydate') : document.getElementById('payroll-asst-paydate');
+            var proofFileInput = roleType === 'driver' ? document.getElementById('payroll-driver-proof-file') : document.getElementById('payroll-asst-proof-file');
+            var proofTextInput = roleType === 'driver' ? document.getElementById('payroll-driver-proof-text') : document.getElementById('payroll-asst-proof-text');
+
+            var staffName = staffNameInput.value.trim() || (roleType === 'driver' ? 'Driver Staff' : 'Assistant Staff');
+            var payNum = payNumInput.value.trim() || 'PAY-2026-001';
+            var natId = natIdInput.value.trim() || 'N/A';
+            var bankName = bankNameInput.value.trim() || 'N/A';
+            var bankBranch = bankBranchInput.value.trim() || 'N/A';
+            var accNum = accNumInput.value.trim() || 'N/A';
+            var sortCode = sortCodeInput.value.trim() || 'N/A';
+            var position = posInput.value.trim() || (roleType === 'driver' ? 'Commercial Driver' : 'Truck Assistant');
+            var dept = deptInput.value.trim() || 'D&C Logistics';
+            var branch = branchInput.value.trim() || 'Kingston & Portmore Hub';
+            var deduction = parseFloat(deductInput.value) || 0;
+            var deductionNoteText = deductNoteInput.value.trim() || 'Total Amount Of AR Charges Repayable';
+            var totalCharges = parseFloat(chargesInput.value) || 0;
+            var paymentMethod = methodSelect.value;
+            var payDate = paydateInput.value || new Date().toLocaleDateString();
+            var proofTextVal = proofTextInput.value.trim();
+
+            var payrollMode=document.getElementById(roleType==='driver'?'dc-payroll-driver-mode':'dc-payroll-assistant-mode');
+            var weekJobs;
+            if(payrollMode&&payrollMode.value==='manual'){
+                weekJobs=dcPayrollGetSelectedManualJobs(roleType,staffName);
+                if(!weekJobs.length){alert('No jobs are selected for this payslip. Choose Manual Selection and tick the jobs to include.');return;}
+            }else{
+                var allJobs=dcPayrollGetCombinedJobs(roleType,staffName);
+                weekJobs=allJobs.filter(function(j){return isCurrentWeek(j.date);});
+                if(weekJobs.length===0)weekJobs=allJobs;
+            }
+
+            if (weekJobs.length === 0) {
+                weekJobs = [{
+                    day: 'Current Week',
+                    date: new Date().toISOString().split('T')[0],
+                    pickup: 'Kingston Depot',
+                    drop: 'General Route',
+                    driverPay: 0,
+                    asstPay: 0
+                }];
+            }
+
+            var payslipTitle = roleType === 'driver' ? 'DRIVER WEEKLY PAYSLIP' : 'ASSISTANT WEEKLY PAYSLIP';
+            document.getElementById('slip-title-main').innerText = payslipTitle;
+            document.getElementById('slip-name').innerText = staffName;
+            document.getElementById('slip-paynum').innerText = payNum;
+            document.getElementById('slip-natid').innerText = natId;
+            document.getElementById('slip-bankname').innerText = bankName;
+            document.getElementById('slip-bankbranch').innerText = bankBranch;
+            document.getElementById('slip-accnum').innerText = accNum;
+            document.getElementById('slip-sortcode').innerText = sortCode;
+            document.getElementById('slip-position').innerText = position;
+            document.getElementById('slip-dept').innerText = dept;
+            document.getElementById('slip-branch').innerText = branch;
+            document.getElementById('slip-method').innerText = paymentMethod;
+            document.getElementById('slip-paydate').innerText = payDate;
+            document.getElementById('slip-period').innerText = 'Weekly Operating Statement (' + new Date().toLocaleDateString() + ')';
+            document.getElementById('slip-deduct-note').innerText = deductionNoteText;
+
+            var tbody = document.getElementById('slip-runs-tbody');
+            tbody.innerHTML = '';
+
+            var grossEarnings = 0;
+
+            for (var i = 0; i < weekJobs.length; i++) {
+                var j = weekJobs[i];
+                var payout = roleType === 'driver' ? (j.driverPay || 0) : (j.asstPay || 0);
+                grossEarnings += payout;
+
+                var tr = document.createElement('tr');
+                tr.innerHTML = '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;"><strong>' + (j.day || 'Day') + '</strong> <span style="font-size:0.75rem; color:#64748b;">(' + (j.date || '') + ')</span></td>' +
+                               '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;">' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
+                               '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
+                tbody.appendChild(tr);
+            }
+
+            var netPayable = grossEarnings - deduction;
+            if (netPayable < 0) netPayable = 0;
+
+            document.getElementById('slip-gross').innerText = '$' + grossEarnings.toLocaleString() + ' JMD';
+            document.getElementById('slip-deduct-amt').innerText = '$' + deduction.toLocaleString() + ' JMD';
+            document.getElementById('slip-total-charges').innerText = '$' + totalCharges.toLocaleString() + ' JMD';
+            document.getElementById('slip-total-amount').innerText = '$' + netPayable.toLocaleString() + ' JMD';
+
+            var proofContainer = document.getElementById('slip-proof-container');
+            proofContainer.innerHTML = '';
+
+            var hasProofFile = proofFileInput.files && proofFileInput.files[0];
+
+            if (hasProofFile || proofTextVal) {
+                var sectionMarkup = '<div style="break-before: page; page-break-before: always; padding-top: 15px;">';
+                sectionMarkup += '<div style="background: #0a2412; color: #00e676; border: 2px solid #00e676; padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: center;">';
+                sectionMarkup += '<h4 style="font-size: 1.15rem; font-weight: 900; text-transform: uppercase; margin-bottom: 4px;">📋 AR Charges & Deduction Proof</h4>';
+                sectionMarkup += '<p style="font-size: 0.9rem; color: #ffffff; font-weight: 700;">Supporting document and itemized balance details for ' + staffName + '</p>';
+                sectionMarkup += '</div>';
+
+                if (proofTextVal) {
+                    sectionMarkup += '<div style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 8px; margin-bottom: 15px; color: #0f172a; font-size: 0.95rem; white-space: pre-wrap;">' + proofTextVal + '</div>';
+                }
+
+                sectionMarkup += '<div id="slip-proof-image-box" style="text-align: center;"></div>';
+                sectionMarkup += '</div>';
+
+                proofContainer.innerHTML = sectionMarkup;
+                proofContainer.style.display = 'block';
+
+                if (hasProofFile) {
+                    var file = proofFileInput.files[0];
+                    var imgBox = document.getElementById('slip-proof-image-box');
+
+                    if (file.type === 'application/pdf') {
+                        try {
+                            imgBox.innerHTML = '<p style="color: #1a531f; font-weight: 800;">⏳ Converting PDF proof to full-size image...</p>';
+                            var fileReader = new FileReader();
+                            fileReader.onload = async function() {
+                                var typedarray = new Uint8Array(this.result);
+                                var pdf = await pdfjsLib.getDocument(typedarray).promise;
+                                var page = await pdf.getPage(1);
+                                var viewport = page.getViewport({ scale: 2.0 });
+                                var canvas = document.createElement('canvas');
+                                var context = canvas.getContext('2d');
+                                canvas.height = viewport.height;
+                                canvas.width = viewport.width;
+
+                                await page.render({ canvasContext: context, viewport: viewport }).promise;
+                                var imageUrl = canvas.toDataURL('image/jpeg', 0.95);
+
+                                imgBox.innerHTML = '<img src="' + imageUrl + '" alt="AR Charges Proof" style="max-width: 100%; height: auto; border-radius: 8px; border: 2px solid #1a531f; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: block; margin: 0 auto;">';
+                            };
+                            fileReader.readAsArrayBuffer(file);
+                        } catch (err) {
+                            console.error(err);
+                            imgBox.innerHTML = '<p style="color: #dc2626; font-weight: 800;">❌ Could not render PDF preview.</p>';
+                        }
+                    } else {
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            imgBox.innerHTML = '<img src="' + e.target.result + '" alt="AR Charges Proof" style="max-width: 100%; height: auto; border-radius: 8px; border: 2px solid #1a531f; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: block; margin: 0 auto;">';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            } else {
+                proofContainer.style.display = 'none';
+            }
+
+            document.getElementById('invoice-preview').style.display = 'none';
+            document.getElementById('payslip-preview').style.display = 'block';
+            document.getElementById('payslip-preview').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function sendWhatsAppWeeklyPayslip() {
+            var title = document.getElementById('slip-title-main').innerText;
+            var name = document.getElementById('slip-name').innerText;
+            var paynum = document.getElementById('slip-paynum').innerText;
+            var natid = document.getElementById('slip-natid').innerText;
+            var bankname = document.getElementById('slip-bankname').innerText;
+            var bankbranch = document.getElementById('slip-bankbranch').innerText;
+            var accnum = document.getElementById('slip-accnum').innerText;
+            var sortcode = document.getElementById('slip-sortcode').innerText;
+            var position = document.getElementById('slip-position').innerText;
+            var dept = document.getElementById('slip-dept').innerText;
+            var method = document.getElementById('slip-method').innerText;
+            var paydate = document.getElementById('slip-paydate').innerText;
+            var gross = document.getElementById('slip-gross').innerText;
+            var deduct = document.getElementById('slip-deduct-amt').innerText;
+            var deductNote = document.getElementById('slip-deduct-note').innerText;
+            var charges = document.getElementById('slip-total-charges').innerText;
+            var net = document.getElementById('slip-total-amount').innerText;
+
+            var message = "D&C REFUSE TRUCKING - " + title + "\n\n" +
+                          "Employee: " + name + " (Payroll #: " + paynum + ")\n" +
+                          "TRN / National ID: " + natid + "\n" +
+                          "Bank: " + bankname + " (" + bankbranch + ")\n" +
+                          "Acc #: " + accnum + " | Sort Code: " + sortcode + "\n" +
+                          "Position: " + position + " | Dept: " + dept + "\n" +
+                          "Payment Method: " + method + " (" + paydate + ")\n\n" +
+                          "Gross Earnings: " + gross + "\n" +
+                          "Deductions This Period: " + deduct + " (" + deductNote + ")\n" +
+                          "Total Outstanding Charges: " + charges + "\n" +
+                          "Amount Payable (Net): " + net + "\n\n" +
+                          "Thank you for your hard work!";
+
+            var whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(message);
+            window.open(whatsappUrl, "_blank");
+        }
+
+        function getStoredJobs() {
+            var stored = localStorage.getItem("dc_corporate_jobs");
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function saveStoredJobs(jobs) {
+            try {
+                var json = JSON.stringify(jobs);
+                localStorage.setItem("dc_corporate_jobs", json);
+                if (localStorage.getItem("dc_corporate_jobs") !== json) {
+                    throw new Error("Saved job records could not be verified.");
+                }
+                return true;
+            } catch (err) {
+                console.error("Corporate job save failed:", err);
+                alert("❌ YOUR JOB WAS NOT SAVED. Your existing job records have been left untouched. Phone storage may be full or blocked. Please do not close this page; free space in the Vehicle Vault by saving smaller photos, then try again.");
+                return false;
+            }
+        }
+
+        function getTrackerDateISO() {
+            var dateInput = document.getElementById('tr-date');
+            if (!dateInput || !dateInput.value) return '';
+            var value = dateInput.value.trim();
+
+            // Native date inputs return ISO dates (YYYY-MM-DD).
+            var isoMatch = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+            if (isoMatch) {
+                var isoYear = Number(isoMatch[1]);
+                var isoMonth = Number(isoMatch[2]);
+                var isoDay = Number(isoMatch[3]);
+                var isoCheck = new Date(isoYear, isoMonth - 1, isoDay, 12, 0, 0);
+                if (isoCheck.getFullYear() === isoYear && isoCheck.getMonth() === isoMonth - 1 && isoCheck.getDate() === isoDay) return value;
+            }
+
+            // Also accept a manually entered date if a browser supplies text.
+            var match = value.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);
+            if (!match) return '';
+            var day = Number(match[1]);
+            var month = Number(match[2]);
+            var year = Number(match[3]);
+            var check = new Date(year, month - 1, day, 12, 0, 0);
+            if (check.getFullYear() !== year || check.getMonth() !== month - 1 || check.getDate() !== day) return '';
+            return year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+        }
+
+        function syncTrackerDayFromDate() {
+            var dateValue = getTrackerDateISO();
+            if (!dateValue) return;
+            var parts = dateValue.split('-');
+            var chosenDate = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 12, 0, 0);
+            var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var actualDay = dayNames[chosenDate.getDay()];
+            var daySelect = document.getElementById('tr-day');
+            if (daySelect && Array.from(daySelect.options).some(function(option) { return option.value === actualDay; })) daySelect.value = actualDay;
+        }
+        function getLocalISODate() {
+            var now = new Date();
+            return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+        }
+        function addTrackerJob() {
+            var trackerDateInput = document.getElementById('tr-date');
+            var date = getTrackerDateISO();
+            if (trackerDateInput.value && !date) {
+                alert('Please enter a valid date as DD/MM/YYYY, for example 27/10/2026.');
+                trackerDateInput.focus();
+                return;
+            }
+            date = date || getLocalISODate();
+            if (trackerDateInput.type !== 'date') trackerDateInput.type = 'date';
+            trackerDateInput.value = date;
+            syncTrackerDayFromDate();
+            var day = document.getElementById('tr-day').value;
+            var inv = document.getElementById('tr-inv').value;
+            var pickup = document.getElementById('tr-pickup').value;
+            var drop = document.getElementById('tr-drop').value;
+            var driver = document.getElementById('tr-driver').value || 'N/A';
+            var driverPay = parseFloat(document.getElementById('tr-driver-pay').value) || 0;
+            var assistant = document.getElementById('tr-assistant').value || 'N/A';
+            var asstPay = parseFloat(document.getElementById('tr-asst-pay').value) || 0;
+            var petrol = parseFloat(document.getElementById('tr-petrol').value) || 0;
+            var rate = parseFloat(document.getElementById('tr-rate').value) || 0;
+            var status = document.getElementById('tr-status').value;
+            var payoutSelection = document.getElementById('tr-payout-selection').value;
+
+            if (!inv) {
+                alert("Please enter an Invoice Number.");
+                return;
+            }
+
+            if (!payoutSelection) payoutSelection = 'WAGES_PENDING';
+
+            var staffPaid = (payoutSelection === 'PAID_OUT_OF_POCKET');
+
+            var jobs = getStoredJobs();
+            jobs.push({ 
+                id: Date.now(), 
+                day: day, 
+                date: date,
+                inv: inv, 
+                pickup: pickup, 
+                drop: drop, 
+                driver: driver, 
+                driverPay: driverPay,
+                assistant: assistant, 
+                asstPay: asstPay,
+                petrol: petrol, 
+                rate: rate, 
+                status: status,
+                staffPaid: staffPaid
+            });
+            if (!saveStoredJobs(jobs)) return;
+            if (!isCurrentWeek(date)) {
+                showAllHistory = true;
+                var monthFilter = document.getElementById('history-month-filter');
+                if (monthFilter) monthFilter.value = 'ALL';
+                var viewLabel = document.getElementById('current-view-label');
+                var viewButton = document.querySelector('.btn-week-toggle');
+                if (viewLabel) viewLabel.innerText = "📅 Showing: All Historical Records in Table";
+                if (viewButton) {
+                    viewButton.innerText = "🔄 Switch to Current M-F Week Table Only";
+                    viewButton.style.background = '#0369a1';
+                }
+            }
+            document.getElementById('tr-date').value = '';
+            document.getElementById('tr-inv').value = '';
+            document.getElementById('tr-pickup').value = '';
+            document.getElementById('tr-drop').value = '';
+            document.getElementById('tr-driver-pay').value = '0';
+            document.getElementById('tr-asst-pay').value = '0';
+            document.getElementById('tr-petrol').value = '0';
+            document.getElementById('tr-rate').value = '0';
+            document.getElementById('tr-payout-selection').value = '';
+            updateLiveProfit();
+            
+            loadTrackerJobs();
+        }
+
+        function toggleJobStatus(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first before changing payment status.");
+                openEditPinModal();
+                return;
+            }
+
+            var jobs = getStoredJobs();
+            for (var i = 0; i < jobs.length; i++) {
+                if (jobs[i].id === id) {
+                    if (jobs[i].status === 'UNPAID') {
+                        jobs[i].status = 'PENDING COLLECTION';
+                    } else if (jobs[i].status === 'PENDING COLLECTION') {
+                        jobs[i].status = 'PAID';
+                    } else {
+                        jobs[i].status = 'UNPAID';
+                    }
+                    break;
+                }
+            }
+            if (!saveStoredJobs(jobs)) return;
+            loadTrackerJobs();
+        }
+
+        function deleteJob(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first.");
+                openEditPinModal();
+                return;
+            }
+            if (!confirm("Are you sure you want to delete this job log?")) return;
+            var jobs = getStoredJobs();
+            var filtered = jobs.filter(function(j) { return j.id !== id; });
+            if (!saveStoredJobs(filtered)) return;
+            loadTrackerJobs();
+        }
+
+        function editJob(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first.");
+                openEditPinModal();
+                return;
+            }
+
+            var jobs = getStoredJobs();
+            var job = jobs.find(function(item) { return item.id === id; });
+            if (!job) return;
+
+            // Collect every change first. Cancelling any prompt leaves the saved job untouched.
+            var newDay = prompt("Edit Day of Week:", job.day || "");
+            if (newDay === null) return;
+            var newDate = prompt("Edit Exact Date (YYYY-MM-DD):", job.date || "");
+            if (newDate === null) return;
+            var dateParts = newDate.trim().split("-").map(Number);
+            var checkedDate = dateParts.length === 3 ? new Date(dateParts[0], dateParts[1] - 1, dateParts[2], 12, 0, 0) : null;
+            if (!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(newDate.trim()) || !checkedDate || checkedDate.getFullYear() !== dateParts[0] || checkedDate.getMonth() !== dateParts[1] - 1 || checkedDate.getDate() !== dateParts[2]) {
+                alert("Please use a valid date in YYYY-MM-DD format.");
+                return;
+            }
+            var newInv = prompt("Edit Invoice Number(s):", job.inv || "");
+            if (newInv === null) return;
+            var newPickup = prompt("Edit Pickup / Starting Location:", job.pickup || "");
+            if (newPickup === null) return;
+            var newDrop = prompt("Edit Drop-off Destination / Route:", job.drop || "");
+            if (newDrop === null) return;
+            var newDriver = prompt("Edit Driver Name:", job.driver || "");
+            if (newDriver === null) return;
+            var newDriverPayText = prompt("Edit Driver Payout (JMD):", String(job.driverPay || 0));
+            if (newDriverPayText === null) return;
+            var newAssistant = prompt("Edit Assistant Name:", job.assistant || "");
+            if (newAssistant === null) return;
+            var newAsstPayText = prompt("Edit Assistant Payout (JMD):", String(job.asstPay || 0));
+            if (newAsstPayText === null) return;
+            var newPetrolText = prompt("Edit Petrol Cost (JMD):", String(job.petrol || 0));
+            if (newPetrolText === null) return;
+            var newRateText = prompt("Edit Contract Haulage Rate (JMD):", String(job.rate || 0));
+            if (newRateText === null) return;
+
+            var newStatusChoice = prompt("Company / Customer Collection Status: 1 = UNPAID, 2 = PENDING COLLECTION, 3 = PAID", job.status === "PAID" ? "3" : (job.status === "PENDING COLLECTION" ? "2" : "1"));
+            if (newStatusChoice === null) return;
+            var statusMap = { "1": "UNPAID", "2": "PENDING COLLECTION", "3": "PAID" };
+            if (!statusMap[newStatusChoice.trim()]) {
+                alert("Choose 1, 2 or 3 for the company payment status.");
+                return;
+            }
+
+            var newCrewChoice = prompt("Crew Wages Status: 1 = WAGES PENDING, 2 = CREW PAID OUT-OF-POCKET", job.staffPaid === true ? "2" : "1");
+            if (newCrewChoice === null) return;
+            if (newCrewChoice.trim() !== "1" && newCrewChoice.trim() !== "2") {
+                alert("Choose 1 for Wages Pending or 2 for Crew Paid Out-of-Pocket.");
+                return;
+            }
+
+            function readMoney(value, label) {
+                var amount = Number(value.trim());
+                if (value.trim() === "" || !Number.isFinite(amount) || amount < 0) {
+                    alert(label + " must be a valid amount of 0 or more.");
+                    return null;
+                }
+                return amount;
+            }
+
+            var newDriverPay = readMoney(newDriverPayText, "Driver payout");
+            if (newDriverPay === null) return;
+            var newAsstPay = readMoney(newAsstPayText, "Assistant payout");
+            if (newAsstPay === null) return;
+            var newPetrol = readMoney(newPetrolText, "Petrol cost");
+            if (newPetrol === null) return;
+            var newRate = readMoney(newRateText, "Contract haulage rate");
+            if (newRate === null) return;
+
+            job.day = newDay.trim();
+            job.date = newDate.trim();
+            job.inv = newInv.trim();
+            job.pickup = newPickup.trim();
+            job.drop = newDrop.trim();
+            job.driver = newDriver.trim();
+            job.driverPay = newDriverPay;
+            job.assistant = newAssistant.trim();
+            job.asstPay = newAsstPay;
+            job.petrol = newPetrol;
+            job.rate = newRate;
+            job.status = statusMap[newStatusChoice.trim()];
+            job.staffPaid = newCrewChoice.trim() === "2";
+
+            if (!saveStoredJobs(jobs)) return;
+            loadTrackerJobs();
+            alert("✅ Job updated. Company collection and crew wages have been saved separately.");
+        }
+
+        function toggleCrewPayoutStatus(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first.");
+                openEditPinModal();
+                return;
+            }
+
+            var jobs = getStoredJobs();
+            var job = jobs.find(function(item) { return item.id === id; });
+            if (!job) return;
+
+            job.staffPaid = job.staffPaid !== true;
+            if (!saveStoredJobs(jobs)) return;
+            loadTrackerJobs();
+        }
+
+        function getStoredMaintenance() {
+            var stored = localStorage.getItem("dc_truck_maintenance");
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function saveStoredMaintenance(maint) {
+            localStorage.setItem("dc_truck_maintenance", JSON.stringify(maint));
+        }
+
+        function addMaintenanceLog() {
+            var date = document.getElementById('maint-date').value || new Date().toISOString().split('T')[0];
+            var cat = document.getElementById('maint-cat').value;
+            
+            var descSelect = document.getElementById('maint-desc').value;
+            var desc = descSelect;
+            if (descSelect === "CUSTOM_PART_INPUT") {
+                desc = document.getElementById('maint-custom-desc').value.trim() || "Custom Repair / Part";
+            }
+
+            var cost = parseFloat(document.getElementById('maint-cost').value) || 0;
+            
+            var vendorName = document.getElementById('maint-vendor-name').value.trim() || 'N/A';
+            var vendorAddress = document.getElementById('maint-vendor-address').value.trim();
+            var vendorPhone = document.getElementById('maint-vendor-phone').value.trim();
+
+            var receiptFileInput = document.getElementById('maint-receipt-file');
+            var receiptText = document.getElementById('maint-receipt-text').value.trim();
+
+            if (!desc || cost <= 0) {
+                alert("Please select or enter an Item Description and valid Cost.");
+                return;
+            }
+
+            var vendorCombined = vendorName;
+            if (vendorAddress || vendorPhone) {
+                vendorCombined += '<br><span style="font-size:0.78rem; color:#94a3b8;">' + (vendorAddress ? vendorAddress + ' ' : '') + (vendorPhone ? '📞 ' + vendorPhone : '') + '</span>';
+            }
+
+            var processAndSave = function(receiptData) {
+                var maint = getStoredMaintenance();
+                maint.push({
+                    id: Date.now(),
+                    date: date,
+                    cat: cat,
+                    desc: desc,
+                    cost: cost,
+                    vendor: vendorCombined,
+                    receipt: receiptData || receiptText
+                });
+
+                saveStoredMaintenance(maint);
+
+                document.getElementById('maint-date').value = '';
+                document.getElementById('maint-custom-desc').value = '';
+                document.getElementById('maint-cost').value = '';
+                document.getElementById('maint-receipt-text').value = '';
+                document.getElementById('maint-receipt-file').value = '';
+
+                loadTrackerJobs();
+            };
+
+            if (receiptFileInput.files && receiptFileInput.files[0]) {
+                var file = receiptFileInput.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var dataUrl = e.target.result;
+                    processAndSave(dataUrl);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                processAndSave(null);
+            }
+        }
+
+        function deleteMaintenanceLog(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first.");
+                openEditPinModal();
+                return;
+            }
+            if (!confirm("Are you sure you want to delete this maintenance entry?")) return;
+            var maint = getStoredMaintenance();
+            var filtered = maint.filter(function(m) { return m.id !== id; });
+            saveStoredMaintenance(filtered);
+            loadTrackerJobs();
+        }
+
+        function loadMaintenanceLogs() {
+            var maint = getStoredMaintenance();
+            var tbody = document.getElementById('maint-table-body');
+            tbody.innerHTML = '';
+
+            if (maint.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#94a3b8;">No maintenance logs recorded yet.</td></tr>';
+                return;
+            }
+
+            for (var i = 0; i < maint.length; i++) {
+                var m = maint[i];
+
+                var proofHTML = 'N/A';
+                if (m.receipt) {
+                    if (m.receipt.startsWith('data:image/')) {
+                        proofHTML = '<a href="' + m.receipt + '" target="_blank" style="color:#38bdf8; font-weight:800; text-decoration:none;">📷 View Receipt</a>';
+                    } else if (m.receipt.startsWith('data:application/pdf')) {
+                        proofHTML = '<a href="' + m.receipt + '" target="_blank" style="color:#38bdf8; font-weight:800; text-decoration:none;">📄 View PDF</a>';
+                    } else {
+                        proofHTML = '<span style="font-size:0.8rem; color:#cbd5e1;" title="' + m.receipt + '">📝 Note Saved</span>';
+                    }
+                }
+
+                var tr = document.createElement('tr');
+                tr.innerHTML = '<td><strong>' + m.date + '</strong></td>' +
+                               '<td><span style="color:#fb7185; font-weight:800;">' + m.cat + '</span></td>' +
+                               '<td>' + m.desc + '</td>' +
+                               '<td>' + m.vendor + '</td>' +
+                               '<td>' + proofHTML + '</td>' +
+                               '<td style="font-weight:900; color:#f87171;">$' + m.cost.toLocaleString() + ' JMD</td>' +
+                               '<td><button style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMaintenanceLog(' + m.id + ')">🗑️</button></td>';
+                tbody.appendChild(tr);
+            }
+        }
+
+        function isCurrentWeek(dateString) {
+            if (!dateString || dateString === 'N/A') return true;
+            var jobDate = new Date(dateString);
+            var now = new Date();
+
+            var currentDay = now.getDay();
+            var diffToMonday = now.getDate() - currentDay + (currentDay === 0 ? -6 : 1);
+            var monday = new Date(now.getTime());
+            monday.setDate(diffToMonday);
+            monday.setHours(0, 0, 0, 0);
+
+            var friday = new Date(monday.getTime());
+            friday.setDate(monday.getDate() + (currentOperatingMode === 'westco' ? 4 : 6));
+            friday.setHours(23, 59, 59, 999);
+
+            return jobDate >= monday && jobDate <= friday;
+        }
+
+
+        // Individual financial-box adjustments are stored separately from job records.
+        // Each reset establishes a new starting point for that box; future jobs still count.
+        function getFinancialAdjustments() {
+            try { return JSON.parse(localStorage.getItem('dc_financial_box_adjustments') || '{}'); }
+            catch (e) { return {}; }
+        }
+        var financialBoxBaseValues = {};
+        function adjustedFinancialBoxValue(id, baseValue) {
+            var numericBase = parseFloat(baseValue) || 0;
+            financialBoxBaseValues[id] = numericBase;
+            var adjustments = getFinancialAdjustments();
+            return numericBase + (parseFloat(adjustments[id]) || 0);
+        }
+        function formatFinancialBox(id, value) {
+            var rounded = Math.round(value);
+            if (id === 'unpaid-job-count' || id === 'all-count') {
+                return rounded.toLocaleString() + (id === 'unpaid-job-count' ? (rounded === 1 ? ' Job Pending' : ' Jobs Pending') : (rounded === 1 ? ' Job' : ' Jobs'));
+            }
+            return '$' + rounded.toLocaleString() + ' JMD';
+        }
+
+        // Edit/reset only the displayed financial summary adjustment; saved job records remain unchanged.
+        function editFinancialBox(id, label) {
+            var base = financialBoxBaseValues[id];
+            if (typeof base !== 'number') {
+                alert('Please wait for the figures to load, then try again.');
+                return;
+            }
+            var current = adjustedFinancialBoxValue(id, base);
+            var entered = prompt('Enter the corrected value for ' + label + ':', String(Math.round(current)));
+            if (entered === null) return;
+            var value = Number(entered.replace(/[$,\\s]/g, ''));
+            if (!Number.isFinite(value) || value < 0) {
+                alert('Please enter a valid amount or count (zero or above).');
+                return;
+            }
+            var adjustments = getFinancialAdjustments();
+            adjustments[id] = value - base;
+            localStorage.setItem('dc_financial_box_adjustments', JSON.stringify(adjustments));
+            loadTrackerJobs();
+        }
+
+        function resetFinancialBox(id, label) {
+            var base = financialBoxBaseValues[id];
+            if (typeof base !== 'number') {
+                alert('Please wait for the figures to load, then try again.');
+                return;
+            }
+            if (!confirm('Reset only the ' + label + ' box to zero? Your saved jobs and maintenance records will stay in place.')) return;
+            var adjustments = getFinancialAdjustments();
+            adjustments[id] = -base;
+            localStorage.setItem('dc_financial_box_adjustments', JSON.stringify(adjustments));
+            loadTrackerJobs();
+        }
+
+        function clearCorporateFinancialHistory() {
+            var approved = confirm("RESET JOB & MONEY HISTORY?\\n\\nThis will permanently remove all saved corporate job records and truck maintenance expense history on this phone. Unpaid/pending collections and all-time/monthly/yearly totals will then reset to zero. Vehicle Vault insurance/fitness photos, staff profiles, and payslip archives will be kept.\\n\\nContinue?");
+            if (!approved) return;
+
+            try {
+                localStorage.setItem("dc_corporate_jobs", "[]");
+                localStorage.setItem("dc_truck_maintenance", "[]");
+
+                if (localStorage.getItem("dc_corporate_jobs") !== "[]" ||
+                    localStorage.getItem("dc_truck_maintenance") !== "[]") {
+                    throw new Error("Could not verify reset");
+                }
+
+                showAllHistory = false;
+                var historyToggle = document.querySelector(".btn-week-toggle");
+                if (historyToggle) historyToggle.innerText = "🔄 Switch to View All History Table";
+                var viewLabel = document.getElementById("current-view-label");
+                if (viewLabel) viewLabel.innerText = "📅 Showing: Current M-F Operating Week";
+
+                loadTrackerJobs();
+                alert("✅ Job and money history has been reset. Vehicle Vault documents and photos were preserved.");
+            } catch (err) {
+                console.error("History reset failed:", err);
+                alert("❌ The history reset could not be completed. Please try again.");
+            }
+        }
+
+        function populateHistoryMonthDropdown(jobs) {
+            var filterSelect = document.getElementById('history-month-filter');
+            var selectedVal = filterSelect.value;
+            filterSelect.innerHTML = '<option value="ALL">🗓️ All-Time Summary</option>';
+
+            var monthSet = {};
+            for (var i = 0; i < jobs.length; i++) {
+                if (jobs[i].date) {
+                    var d = new Date(jobs[i].date);
+                    var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+                    var label = d.toLocaleString('default', { month: 'long', year: 'numeric' });
+                    monthSet[key] = label;
+                }
+            }
+
+            var sortedKeys = Object.keys(monthSet).sort().reverse();
+            for (var k = 0; k < sortedKeys.length; k++) {
+                var opt = document.createElement('option');
+                opt.value = sortedKeys[k];
+                opt.innerText = '📅 ' + monthSet[sortedKeys[k]];
+                filterSelect.appendChild(opt);
+            }
+
+            filterSelect.value = selectedVal;
+        }
+
+        function calculateMonthlyProfitAndWeeks(allJobs, allMaint) {
+            var now = new Date();
+            var currentYear = now.getFullYear();
+            var currentMonth = now.getMonth();
+
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            document.getElementById('monthly-container-title').innerText = "📅 Active Calendar Month Net Profit (" + monthNames[currentMonth] + " " + currentYear + ")";
+
+            var monthJobs = allJobs.filter(function(j) {
+                if (!j.date) return false;
+                var d = new Date(j.date);
+                return d.getFullYear() === currentYear && d.getMonth() === currentMonth;
+            });
+
+            var monthMaint = allMaint.filter(function(m) {
+                if (!m.date) return false;
+                var d = new Date(m.date);
+                return d.getFullYear() === currentYear && d.getMonth() === currentMonth;
+            });
+
+            var monthRev = 0;
+            var monthJobExp = 0;
+            var weekProfits = [0, 0, 0, 0, 0];
+
+            for (var i = 0; i < monthJobs.length; i++) {
+                var j = monthJobs[i];
+                var exp = (j.driverPay || 0) + (j.asstPay || 0) + (j.petrol || 0);
+                var net = j.rate - exp;
+
+                monthRev += j.rate;
+                monthJobExp += exp;
+
+                var d = new Date(j.date);
+                var dayOfMonth = d.getDate();
+                var weekIdx = Math.floor((dayOfMonth - 1) / 7);
+                if (weekIdx > 4) weekIdx = 4;
+                weekProfits[weekIdx] += net;
+            }
+
+            var monthMaintCost = 0;
+            for (var k = 0; k < monthMaint.length; k++) {
+                monthMaintCost += monthMaint[k].cost;
+            }
+
+            var currentMonthNet = monthRev - (monthJobExp + monthMaintCost);
+            document.getElementById('month-profit').innerText = '$' + currentMonthNet.toLocaleString() + ' JMD';
+
+            document.getElementById('m-w1').innerText = '$' + weekProfits[0].toLocaleString();
+            document.getElementById('m-w2').innerText = '$' + weekProfits[1].toLocaleString();
+            document.getElementById('m-w3').innerText = '$' + weekProfits[2].toLocaleString();
+            document.getElementById('m-w4').innerText = '$' + weekProfits[3].toLocaleString();
+            document.getElementById('m-w5').innerText = '$' + weekProfits[4].toLocaleString();
+        }
+
+        function loadTrackerJobs() {
+            var allJobs = getStoredJobs();
+            var allMaint = getStoredMaintenance();
+            var tbody = document.getElementById('tracker-table-body');
+            tbody.innerHTML = '';
+
+            populateHistoryMonthDropdown(allJobs);
+            calculateMonthlyProfitAndWeeks(allJobs, allMaint);
+
+            var filterMonthVal = document.getElementById('history-month-filter').value;
+
+            var filteredJobs = allJobs;
+            var filteredMaint = allMaint;
+
+            if (filterMonthVal !== 'ALL') {
+                filteredJobs = allJobs.filter(function(j) {
+                    if (!j.date) return false;
+                    var d = new Date(j.date);
+                    var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+                    return key === filterMonthVal;
+                });
+
+                filteredMaint = allMaint.filter(function(m) {
+                    if (!m.date) return false;
+                    var d = new Date(m.date);
+                    var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+                    return key === filterMonthVal;
+                });
+            }
+
+            var totalMaintCost = 0;
+            for (var m = 0; m < filteredMaint.length; m++) {
+                totalMaintCost += (parseFloat(filteredMaint[m].cost) || 0);
+            }
+
+            var rev = 0;
+            var totalPetrolSpend = 0;
+            var totalCrewWages = 0;
+
+            var totalUnpaidRate = 0;
+            var totalUnpaidDriverPay = 0;
+            var totalUnpaidAsstPay = 0;
+            var unpaidJobCount = 0;
+
+            for (var a = 0; a < filteredJobs.length; a++) {
+                var aj = filteredJobs[a];
+                var wagesForJob = (aj.driverPay || 0) + (aj.asstPay || 0);
+                rev += (parseFloat(aj.rate) || 0);
+                totalPetrolSpend += (parseFloat(aj.petrol) || 0);
+                totalCrewWages += (parseFloat(aj.driverPay) || 0) + (parseFloat(aj.asstPay) || 0);
+
+                // Customer collections and crew wages are separate:
+                // outstanding job revenue depends on customer payment status,
+                // while crew payouts depend only on whether wages were settled.
+                if (aj.status !== 'PAID') {
+                    totalUnpaidRate += (parseFloat(aj.rate) || 0);
+                    unpaidJobCount++;
+                }
+
+                // Older saved jobs without staffPaid are treated as wages pending.
+                if (aj.staffPaid !== true) {
+                    totalUnpaidDriverPay += (parseFloat(aj.driverPay) || 0);
+                    totalUnpaidAsstPay += (parseFloat(aj.asstPay) || 0);
+                }
+            }
+
+            var paidRev = 0;
+            var paidJobExp = 0;
+            for (var a = 0; a < filteredJobs.length; a++) {
+                var aj = filteredJobs[a];
+                if (aj.status === 'PAID') {
+                    paidRev += aj.rate;
+                    paidJobExp += (aj.driverPay || 0) + (aj.asstPay || 0) + (aj.petrol || 0);
+                }
+            }
+
+            if (document.getElementById('sum-unpaid-total')) {
+                document.getElementById('sum-unpaid-total').innerText = '$' + totalUnpaidRate.toLocaleString() + ' JMD';
+            }
+            if (document.getElementById('sum-unpaid-driver')) {
+                document.getElementById('sum-unpaid-driver').innerText = '$' + totalUnpaidDriverPay.toLocaleString() + ' JMD';
+            }
+            if (document.getElementById('sum-unpaid-asst')) {
+                document.getElementById('sum-unpaid-asst').innerText = '$' + totalUnpaidAsstPay.toLocaleString() + ' JMD';
+            }
+            if (document.getElementById('unpaid-job-count')) {
+                document.getElementById('unpaid-job-count').innerText = unpaidJobCount + (unpaidJobCount === 1 ? ' Job Pending' : ' Jobs Pending');
+            }
+
+            var grandTotalExpenses = totalPetrolSpend + totalCrewWages + totalMaintCost;
+            var netProfit = rev - grandTotalExpenses;
+            document.getElementById('all-revenue').innerText = '$' + rev.toLocaleString() + ' JMD';
+            if (document.getElementById('all-petrol')) document.getElementById('all-petrol').innerText = '$' + totalPetrolSpend.toLocaleString() + ' JMD';
+            document.getElementById('all-wages').innerText = '$' + totalCrewWages.toLocaleString() + ' JMD';
+            document.getElementById('all-maint').innerText = '$' + totalMaintCost.toLocaleString() + ' JMD';
+            document.getElementById('all-profit').innerText = '$' + netProfit.toLocaleString() + ' JMD';
+            document.getElementById('all-count').innerText = filteredJobs.length + (filteredJobs.length === 1 ? ' Job' : ' Jobs');
+
+            var tableJobs = showAllHistory ? allJobs : allJobs.filter(function(j) {
+                return isCurrentWeek(j.date);
+            });
+            if (filterMonthVal !== 'ALL') tableJobs = filteredJobs;
+
+            var weekRev = 0;
+            var weekPetrol = 0;
+            var weekWages = 0;
+
+            var currentWeekJobs = allJobs.filter(function(j) { return isCurrentWeek(j.date); });
+            for (var w = 0; w < currentWeekJobs.length; w++) {
+                var wj = currentWeekJobs[w];
+                weekRev += (parseFloat(wj.rate) || 0);
+                weekPetrol += (parseFloat(wj.petrol) || 0);
+                weekWages += (parseFloat(wj.driverPay) || 0) + (parseFloat(wj.asstPay) || 0);
+            }
+
+            var weekTotalExp = weekPetrol + weekWages;
+
+            document.getElementById('sum-revenue').innerText = '$' + weekRev.toLocaleString() + ' JMD';
+            if (document.getElementById('sum-petrol-cost')) document.getElementById('sum-petrol-cost').innerText = '$' + weekPetrol.toLocaleString() + ' JMD';
+            if (document.getElementById('sum-crew-wages')) document.getElementById('sum-crew-wages').innerText = '$' + weekWages.toLocaleString() + ' JMD';
+            document.getElementById('sum-profit').innerText = '$' + (weekRev - weekTotalExp).toLocaleString() + ' JMD';
+            document.getElementById('sum-count').innerText = currentWeekJobs.length + (currentWeekJobs.length === 1 ? ' Job' : ' Jobs');
+
+            if (tableJobs.length === 0) {
+                var emptyMsg = showAllHistory ? "No corporate jobs logged yet." : "No operating week jobs logged yet. Ready to roll!";
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:#94a3b8;">' + emptyMsg + '</td></tr>';
+            } else {
+                for (var i = 0; i < tableJobs.length; i++) {
+                    var j = tableJobs[i];
+                    var expenses = j.driverPay + j.asstPay + j.petrol;
+                    var jobNetProfit = j.rate - expenses;
+
+                    var invArray = (j.inv || '').split(/[\s,]+/).map(function(item) { return item.trim(); }).filter(Boolean);
+                    var invHTML = '<div class="inv-badge-container">';
+                    if (invArray.length > 0) {
+                        for (var k = 0; k < invArray.length; k++) {
+                            invHTML += '<span class="inv-badge-pill">' + invArray[k] + '</span>';
+                        }
+                    } else {
+                        invHTML += '<span class="inv-badge-pill">DC001</span>';
+                    }
+                    invHTML += '</div>';
+
+                    var statusHTML = '';
+                    if (j.status === 'PAID') {
+                        statusHTML = '<span class="status-badge-paid" onclick="toggleJobStatus(' + j.id + ')">✅ PAID</span>';
+                    } else if (j.status === 'PENDING COLLECTION') {
+                        statusHTML = '<span class="status-badge-pending" onclick="toggleJobStatus(' + j.id + ')">🟠 PENDING</span>';
+                    } else {
+                        statusHTML = '<span class="status-badge-unpaid" onclick="toggleJobStatus(' + j.id + ')">🔴 UNPAID</span>';
+                    }
+
+                    var staffPaidBadge = j.staffPaid === true
+                        ? '<br><button type="button" onclick="toggleCrewPayoutStatus(' + j.id + ')" title="Tap to change crew wages status" style="margin-top:5px; background:#166534; color:#ffffff; border:1px solid #4ade80; border-radius:5px; padding:5px 7px; font-size:0.78rem; font-weight:900; cursor:pointer;">✅ CREW PAID — TAP TO CHANGE</button>'
+                        : '<br><button type="button" onclick="toggleCrewPayoutStatus(' + j.id + ')" title="Tap to mark crew wages as paid" style="margin-top:5px; background:#7f1d1d; color:#ffffff; border:1px solid #f87171; border-radius:5px; padding:5px 7px; font-size:0.78rem; font-weight:900; cursor:pointer;">⏳ WAGES PENDING — TAP TO MARK PAID</button>';
+
+                    var editBtnStyle = tableEditUnlocked ? 'background: #0284c7; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
+                    var deleteBtnStyle = tableEditUnlocked ? 'background: #dc2626; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
+
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.88rem;">' + j.date + '</span></td>' +
+                                   '<td>' + invHTML + '</td>' +
+                                   '<td>' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
+                                   '<td>' + j.driver + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.driverPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
+                                   '<td>' + j.assistant + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.asstPay.toLocaleString() + ' JMD</span>' + staffPaidBadge + '</td>' +
+                                   '<td style="color:#f87171; font-weight: 800;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
+                                   '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
+                                   '<td style="font-weight:900; color:#38bdf8;">$' + jobNetProfit.toLocaleString() + ' JMD</td>' +
+                                   '<td>' + statusHTML + '</td>' +
+                                   '<td>' +
+                                      '<div class="action-btn-group">' +
+                                          '<button class="btn-table-edit" style="' + editBtnStyle + '" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
+                                          '<button class="btn-table-delete" style="' + deleteBtnStyle + '" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
+                                      '</div>' +
+                                   '</td>';
+                    tbody.appendChild(tr);
+                }
+            }
+
+            loadMaintenanceLogs();
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            populateTownDatalists();
+            dcPrivateRefreshJobOptions();
+            dcPrivateToggleReceiptFields();
+            dcPrivateRenderJobs();
+            var pDate=document.getElementById('dc-pj-date');if(pDate&&!pDate.value)pDate.value=getLocalISODate();
+            
+            if (sessionStorage.getItem('dnc_unlocked') === 'true') {
+                document.getElementById('managerLoginModal').style.display = 'none';
+                unlockSystemUI();
+                if (sessionStorage.getItem('dnc_keep_online') === 'true') {
+                    toggleOnlineStatus();
+                }
+            } else {
+                document.getElementById('manager-panel').style.display = 'none';
+                document.getElementById('managerLoginModal').style.display = 'flex';
+                document.getElementById('managerPinInput').focus();
+            }
+        });
+
+        // ----------------------------------------- //
+        // PAYSLIP ARCHIVE & VAULT FUNCTIONS         //
+        // ----------------------------------------- //
+        let archivedPayslips = JSON.parse(localStorage.getItem('dnc_archived_payslips')) || [];
+
+        function archiveCurrentPayslip() {
+            // Pulls current values from your active payslip generator fields
+            const workerName = document.getElementById('payslip-worker-name') ? document.getElementById('payslip-worker-name').value : 'Dispatch Worker';
+            const netPay = document.getElementById('payslip-net-pay') ? document.getElementById('payslip-net-pay').innerText : '$0.00';
+            const payPeriod = document.getElementById('payslip-period') ? document.getElementById('payslip-period').value : 'Standard Pay Period';
+            
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+            const payslipObj = {
+                id: 'payslip_' + Date.now(),
+                workerName: workerName,
+                netPay: netPay,
+                payPeriod: payPeriod,
+                date: dateStr,
+                time: timeStr,
+                status: 'UNPAID' // Default status
+            };
+
+            archivedPayslips.unshift(payslipObj);
+            saveAndRenderPayslips();
+        }
+
+        function togglePayslipStatus(id) {
+            const slip = archivedPayslips.find(s => s.id === id);
+            if (slip) {
+                slip.status = slip.status === 'PAID' ? 'UNPAID' : 'PAID';
+                saveAndRenderPayslips();
+            }
+        }
+
+        function deleteArchivedPayslip(id) {
+            if (confirm('Are you sure you want to remove this payslip from the archive?')) {
+                archivedPayslips = archivedPayslips.filter(s => s.id !== id);
+                saveAndRenderPayslips();
+            }
+        }
+
+        function sharePayslipWhatsApp(id) {
+            const slip = archivedPayslips.find(s => s.id === id);
+            if (!slip) return;
+            const text = `*D&C DISPATCH PAYSLIP*%0AWorker: ${slip.workerName}%0APeriod: ${slip.payPeriod}%0ANet Pay: ${slip.netPay}%0AStatus: ${slip.status}%0ADate: ${slip.date} at ${slip.time}`;
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        function sharePayslipEmail(id) {
+            const slip = archivedPayslips.find(s => s.id === id);
+            if (!slip) return;
+            const subject = encodeURIComponent(`Payslip - ${slip.workerName} (${slip.payPeriod})`);
+            const body = encodeURIComponent(`Hello,\n\nHere are the details for your payslip:\n\nWorker: ${slip.workerName}\nPay Period: ${slip.payPeriod}\nNet Pay: ${slip.netPay}\nStatus: ${slip.status}\nGenerated: ${slip.date} at ${slip.time}\n\nBest regards,\nD&C Dispatcher Control Panel`);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        function saveAndRenderPayslips() {
+            localStorage.setItem('dnc_archived_payslips', JSON.stringify(archivedPayslips));
+            renderPayslipArchive();
+        }
+
+        function renderPayslipArchive() {
+            const grid = document.getElementById('payslip-archive-grid');
+            if (!grid) return;
+
+            if (archivedPayslips.length === 0) {
+                grid.innerHTML = `<p style="color: #94a3b8; font-size: 0.9rem; text-align: center; grid-column: 1 / -1;">No payslips archived yet. Generate a payslip above to archive it!</p>`;
+                return;
+            }
+
+            grid.innerHTML = archivedPayslips.map(slip => {
+                const isPaid = slip.status === 'PAID';
+                const watermarkClass = isPaid ? 'watermark-paid' : 'watermark-unpaid';
+                const statusBadgeBg = isPaid ? '#166534' : '#991b1b';
+
+                return `
+                    <div class="archive-card">
+                        <div class="payslip-watermark ${watermarkClass}">${slip.status}</div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; z-index: 2;">
+                            <div>
+                                <h6 style="color: #f8fafc; font-size: 1rem; font-weight: 800; margin-bottom: 2px;">${slip.workerName}</h6>
+                                <p style="color: #cbd5e1; font-size: 0.8rem;">Period: ${slip.payPeriod}</p>
+                            </div>
+                            <span style="background: ${statusBadgeBg}; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 4px;">${slip.status}</span>
+                        </div>
+                        <div style="background: #020810; padding: 10px; border-radius: 6px; border: 1px solid #1e293b; z-index: 2; margin: 6px 0;">
+                            <div style="font-size: 0.75rem; color: #94a3b8;">Net Payout Amount</div>
+                            <div style="font-size: 1.25rem; font-weight: 900; color: #4ade80;">${slip.netPay}</div>
+                            <div style="font-size: 0.72rem; color: #64748b; margin-top: 4px;">Archived: ${slip.date} at ${slip.time}</div>
+                        </div>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap; z-index: 2; margin-top: 4px;">
+                            <button onclick="togglePayslipStatus('${slip.id}')" style="flex: 1; background: #3b82f6; color: #fff; border: none; padding: 6px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">Toggle Paid/Unpaid</button>
+                            <button onclick="sharePayslipWhatsApp('${slip.id}')" style="background: #22c55e; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Share WhatsApp">💬</button>
+                            <button onclick="sharePayslipEmail('${slip.id}')" style="background: #a855f7; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Share Email">✉️</button>
+                            <button onclick="deleteArchivedPayslip('${slip.id}')" style="background: #ef4444; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Delete">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Auto-load existing archives on page startup
+        window.addEventListener('DOMContentLoaded', () => {
+            renderPayslipArchive();
+        });
+    </script>
+</body>
+</html>
++Number(roleType==='driver'?j.driverPay:j.asstPay||0).toLocaleString()+' JMD</span></label>';}).join(''):'<p style="color:#94a3b8">No matching jobs found for this staff name.</p>';container.dataset.staffName=staffName;container.dataset.roleType=roleType;}
+        function dcPayrollSaveManualSelection(roleType){var container=document.getElementById(roleType==='driver'?'dc-payroll-driver-manual-list':'dc-payroll-assistant-manual-list');if(!container)return;var name=container.dataset.staffName||dcPayrollRoleName(roleType),checked=Array.prototype.slice.call(container.querySelectorAll('input[type="checkbox"]:checked')).map(function(e){return e.value;});try{localStorage.setItem(dcPayrollManualKey(roleType,name),JSON.stringify(checked));}catch(e){alert('Manual payslip selections could not be saved.');}}
+        function dcPayrollGetSelectedManualJobs(roleType,staffName){var key=dcPayrollManualKey(roleType,staffName),selected=[];try{selected=JSON.parse(localStorage.getItem(key)||'[]');if(!Array.isArray(selected))selected=[];}catch(e){selected=[];}return dcPayrollGetCombinedJobs(roleType,staffName).filter(function(j){return selected.indexOf(j._dcPayrollId)>=0;});}
+        function dcPayrollModeChanged(roleType){var box=document.getElementById(roleType==='driver'?'dc-payroll-driver-manual-controls':'dc-payroll-assistant-manual-controls');var mode=document.getElementById(roleType==='driver'?'dc-payroll-driver-mode':'dc-payroll-assistant-mode');if(box)box.style.display=mode&&mode.value==='manual'?'block':'none';if(mode&&mode.value==='manual')dcPayrollLoadManualJobs(roleType);}
 
         async function generateWeeklyPayslip(roleType) {
             var staffNameInput = roleType === 'driver' ? document.getElementById('payroll-driver-name') : document.getElementById('payroll-asst-name');
