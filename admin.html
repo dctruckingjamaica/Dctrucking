@@ -2670,6 +2670,8 @@
                 btnWisynco.style.border = '1px solid #38bdf8';
             }
 
+            var addButton = document.querySelector('.btn-add-job');
+            if (addButton) addButton.innerText = mode === 'private' ? '➕ Log D&C Private Job' : '➕ Log Corporate Job';
             trackerLiveAutoPrice();
         }
 
@@ -4385,34 +4387,66 @@ function sendWhatsAppWeeklyPayslip() {
 
             var staffPaid = (payoutSelection === 'PAID_OUT_OF_POCKET');
 
-            var jobs = getStoredJobs();
-            jobs.push({ 
-                id: Date.now(), 
-                day: day, 
-                date: date,
-                inv: inv, 
-                pickup: pickup, 
-                drop: drop, 
-                driver: driver, 
-                driverPay: driverPay,
-                assistant: assistant, 
-                asstPay: asstPay,
-                petrol: petrol, 
-                rate: rate, 
-                status: status,
-                staffPaid: staffPaid
-            });
-            if (!saveStoredJobs(jobs)) return;
-            if (!isCurrentWeek(date)) {
-                showAllHistory = true;
-                var monthFilter = document.getElementById('history-month-filter');
-                if (monthFilter) monthFilter.value = 'ALL';
-                var viewLabel = document.getElementById('current-view-label');
-                var viewButton = document.querySelector('.btn-week-toggle');
-                if (viewLabel) viewLabel.innerText = "📅 Showing: All Historical Records in Table";
-                if (viewButton) {
-                    viewButton.innerText = "🔄 Switch to Current M-F Week Table Only";
-                    viewButton.style.background = '#0369a1';
+            var activeMode = document.getElementById('tr-active-mode') ? document.getElementById('tr-active-mode').value : 'wisynco';
+            if (activeMode === 'private') {
+                var privateJobs = dcPrivateGetJobs();
+                if (privateJobs.some(function(job) { return String(job.ref || '').toLowerCase() === String(inv).trim().toLowerCase(); })) {
+                    alert('That job reference already exists in the D&C Private Job Log. Please check the reference before saving.');
+                    document.getElementById('tr-inv').focus();
+                    return;
+                }
+                privateJobs.push({
+                    id: 'priv_' + Date.now(),
+                    ref: inv.trim(),
+                    date: date,
+                    customer: '',
+                    pickup: pickup,
+                    drop: drop,
+                    rate: rate,
+                    driver: driver,
+                    driverPay: driverPay,
+                    assistant: assistant,
+                    asstPay: asstPay,
+                    petrol: petrol,
+                    status: status,
+                    crewPayout: staffPaid ? 'PAID' : 'PENDING'
+                });
+                if (!dcPrivateSaveJobs(privateJobs)) return;
+                dcPrivateRenderJobs();
+                dcPrivateRefreshJobOptions();
+                dcPrivateRenderCrewSummary();
+                dcPrivateRenderMoneySummary();
+                alert('Saved to the separate D&C Private Job Log. Corporate records and Wisynco totals were not changed.');
+            } else {
+                var jobs = getStoredJobs();
+                jobs.push({
+                    id: Date.now(),
+                    day: day,
+                    date: date,
+                    inv: inv,
+                    pickup: pickup,
+                    drop: drop,
+                    driver: driver,
+                    driverPay: driverPay,
+                    assistant: assistant,
+                    asstPay: asstPay,
+                    petrol: petrol,
+                    rate: rate,
+                    status: status,
+                    staffPaid: staffPaid
+                });
+                if (!saveStoredJobs(jobs)) return;
+                if (!isCurrentWeek(date)) {
+                    showAllHistory = true;
+                    var monthFilter = document.getElementById('history-month-filter');
+                    if (monthFilter) monthFilter.value = 'ALL';
+                    var viewLabel = document.getElementById('current-view-label');
+                    var viewButton = document.querySelector('.btn-week-toggle');
+                    if (viewLabel) viewLabel.innerText = "📅 Showing: All Historical Records in Table";
+                    if (viewButton) {
+                        viewButton.innerText = "🔄 Switch to Current M-F Week Table Only";
+                        viewButton.style.background = '#0369a1';
+                    }
                 }
             }
             document.getElementById('tr-date').value = '';
@@ -4425,8 +4459,13 @@ function sendWhatsAppWeeklyPayslip() {
             document.getElementById('tr-rate').value = '0';
             document.getElementById('tr-payout-selection').value = '';
             updateLiveProfit();
-            
-            loadTrackerJobs();
+
+            if (activeMode === 'private') {
+                dcPrivateRenderJobs();
+                dcPrivateRefreshJobOptions();
+            } else {
+                loadTrackerJobs();
+            }
         }
 
         function toggleJobStatus(id) {
