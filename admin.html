@@ -5103,7 +5103,8 @@
         });
     </script>
 </body>
-</html> + (parseFloat(j.driverPay) || 0).toLocaleString() + ' JMD</span>' + driverPaidBadge + '</td>' +
+</html>
+ + (parseFloat(j.driverPay) || 0).toLocaleString() + ' JMD</span>' + driverPaidBadge + '</td>' +
                                    '<td>' + (hasAssistantOnJob(j) ? j.assistant + '<br><span style="color:#4ade80; font-weight:800;"> +
                                    '<td>' +
                                       '<div class="action-btn-group">' +
@@ -5244,7 +5245,8 @@
         });
     </script>
 </body>
-</html> + (parseFloat(j.asstPay) || 0).toLocaleString() + ' JMD</span>' + assistantPaidBadge : '—') + '</td>' +
+</html>
+ + (parseFloat(j.asstPay) || 0).toLocaleString() + ' JMD</span>' + assistantPaidBadge : '—') + '</td>' +
                                    '<td style="color:#f87171; font-weight:800;"> +
                                    '<td>' +
                                       '<div class="action-btn-group">' +
@@ -5385,7 +5387,8 @@
         });
     </script>
 </body>
-</html> + (parseFloat(j.petrol) || 0).toLocaleString() + ' JMD</td>' +
+</html>
+ + (parseFloat(j.petrol) || 0).toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#ffffff;"> +
                                    '<td>' +
                                       '<div class="action-btn-group">' +
@@ -5526,7 +5529,8 @@
         });
     </script>
 </body>
-</html> + (parseFloat(j.rate) || 0).toLocaleString() + ' JMD</td>' +
+</html>
+ + (parseFloat(j.rate) || 0).toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#38bdf8;"> +
                                    '<td>' +
                                       '<div class="action-btn-group">' +
@@ -5667,8 +5671,9 @@
         });
     </script>
 </body>
-</html> + (parseFloat(jobNetProfit) || 0).toLocaleString() + ' JMD</td>' +
-                                   '<td>' + statusHTML + '</td>' +
+</html>
+ + (parseFloat(jobNetProfit) || 0).toLocaleString() + ' JMD</td>' +
+                                   '<td>' + statusHTML + '</td> +
                                    '<td>' +
                                       '<div class="action-btn-group">' +
                                           '<button class="btn-table-edit" style="' + editBtnStyle + '" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
