@@ -1538,11 +1538,8 @@
                         </select>
                     </div>
                     <div class="tracker-field-group">
-                        <label>Exact Date (Manual)</label>
-                        <div style="display:flex; gap:6px; align-items:center; width:100%;">
-                            <input type="date" id="tr-date" onchange="syncTrackerDayFromDate()" style="flex:1; min-width:0;">
-                            <button type="button" id="tr-date-entry-toggle" onclick="toggleTrackerDateEntry()" title="Type the date manually" aria-label="Type the date manually" style="flex:0 0 auto; padding:9px 11px; background:#1e293b; color:#38bdf8; border:1px solid #38bdf8; border-radius:6px; font-size:1.05rem; cursor:pointer;">✏️</button>
-                        </div>
+                        <label>Exact Date</label>
+                        <input type="date" id="tr-date" onchange="syncTrackerDayFromDate()" style="width:100%;">
                     </div>
                     <div class="tracker-field-group">
                         <label>Invoice Number(s)</label>
@@ -4149,10 +4146,19 @@
             var dateInput = document.getElementById('tr-date');
             if (!dateInput || !dateInput.value) return '';
             var value = dateInput.value.trim();
-            if (/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) return value;
 
-            // Manual entry accepts DD/MM/YYYY, DD-MM-YYYY or DD.MM.YYYY.
-            var match = value.match(/^(\\d{1,2})[\\/.-](\\d{1,2})[\\/.-](\\d{4})$/);
+            // Native date inputs return ISO dates (YYYY-MM-DD).
+            var isoMatch = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+            if (isoMatch) {
+                var isoYear = Number(isoMatch[1]);
+                var isoMonth = Number(isoMatch[2]);
+                var isoDay = Number(isoMatch[3]);
+                var isoCheck = new Date(isoYear, isoMonth - 1, isoDay, 12, 0, 0);
+                if (isoCheck.getFullYear() === isoYear && isoCheck.getMonth() === isoMonth - 1 && isoCheck.getDate() === isoDay) return value;
+            }
+
+            // Also accept a manually entered date if a browser supplies text.
+            var match = value.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);
             if (!match) return '';
             var day = Number(match[1]);
             var month = Number(match[2]);
@@ -4160,41 +4166,6 @@
             var check = new Date(year, month - 1, day, 12, 0, 0);
             if (check.getFullYear() !== year || check.getMonth() !== month - 1 || check.getDate() !== day) return '';
             return year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
-        }
-
-        function toggleTrackerDateEntry() {
-            var dateInput = document.getElementById('tr-date');
-            var toggleButton = document.getElementById('tr-date-entry-toggle');
-            if (!dateInput || !toggleButton) return;
-
-            if (dateInput.type === 'date') {
-                var currentISO = dateInput.value;
-                dateInput.type = 'text';
-                dateInput.placeholder = 'DD/MM/YYYY';
-                dateInput.inputMode = 'numeric';
-                if (currentISO && /^\\d{4}-\\d{2}-\\d{2}$/.test(currentISO)) {
-                    var parts = currentISO.split('-');
-                    dateInput.value = parts[2] + '/' + parts[1] + '/' + parts[0];
-                }
-                toggleButton.innerText = '📅';
-                toggleButton.title = 'Return to calendar';
-                toggleButton.setAttribute('aria-label', 'Return to calendar');
-                dateInput.focus();
-            } else {
-                var isoDate = getTrackerDateISO();
-                if (dateInput.value && !isoDate) {
-                    alert('Please enter a valid date as DD/MM/YYYY, for example 27/10/2026.');
-                    dateInput.focus();
-                    return;
-                }
-                dateInput.type = 'date';
-                dateInput.value = isoDate;
-                dateInput.placeholder = '';
-                toggleButton.innerText = '✏️';
-                toggleButton.title = 'Type the date manually';
-                toggleButton.setAttribute('aria-label', 'Type the date manually');
-            }
-            syncTrackerDayFromDate();
         }
 
         function syncTrackerDayFromDate() {
