@@ -3960,7 +3960,7 @@ function dcPrivateToggleReceiptFields(){var r=document.getElementById('dc-privat
 
             for (var i = 0; i < bookings.length; i++) {
                 var b = bookings[i];
-                var jobDate = new Date(b.date);
+                var jobDate = parseTrackerDateLocal(b.date) || new Date(b.date);
                 jobDate.setHours(0,0,0,0);
                 var diffDays = Math.ceil((jobDate - today) / (1000 * 60 * 60 * 24));
 
@@ -4698,9 +4698,25 @@ function sendWhatsAppWeeklyPayslip() {
             }
         }
 
+        // Parse YYYY-MM-DD as a local calendar date, avoiding UTC day/month shifts.
+        function parseTrackerDateLocal(value) {
+            if (!value) return null;
+            var textValue = String(value).trim();
+            var match = textValue.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+            if (match) {
+                var year = Number(match[1]), month = Number(match[2]), day = Number(match[3]);
+                var localDate = new Date(year, month - 1, day, 12, 0, 0, 0);
+                if (localDate.getFullYear() !== year || localDate.getMonth() !== month - 1 || localDate.getDate() !== day) return null;
+                return localDate;
+            }
+            var parsed = new Date(textValue);
+            return isNaN(parsed.getTime()) ? null : parsed;
+        }
+
         function isCurrentWeek(dateString) {
             if (!dateString || dateString === 'N/A') return true;
-            var jobDate = new Date(dateString);
+            var jobDate = parseTrackerDateLocal(dateString);
+            if (!jobDate) return false;
             var now = new Date();
 
             var currentDay = now.getDay();
@@ -4807,7 +4823,7 @@ function sendWhatsAppWeeklyPayslip() {
             var monthSet = {};
             for (var i = 0; i < jobs.length; i++) {
                 if (jobs[i].date) {
-                    var d = new Date(jobs[i].date);
+                    var d = parseTrackerDateLocal(jobs[i].date);
                     var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
                     var label = d.toLocaleString('default', { month: 'long', year: 'numeric' });
                     monthSet[key] = label;
@@ -4835,13 +4851,13 @@ function sendWhatsAppWeeklyPayslip() {
 
             var monthJobs = allJobs.filter(function(j) {
                 if (!j.date) return false;
-                var d = new Date(j.date);
+                var d = parseTrackerDateLocal(j.date);
                 return d.getFullYear() === currentYear && d.getMonth() === currentMonth;
             });
 
             var monthMaint = allMaint.filter(function(m) {
                 if (!m.date) return false;
-                var d = new Date(m.date);
+                var d = parseTrackerDateLocal(m.date);
                 return d.getFullYear() === currentYear && d.getMonth() === currentMonth;
             });
 
@@ -4857,7 +4873,7 @@ function sendWhatsAppWeeklyPayslip() {
                 monthRev += j.rate;
                 monthJobExp += exp;
 
-                var d = new Date(j.date);
+                var d = parseTrackerDateLocal(j.date);
                 var dayOfMonth = d.getDate();
                 var weekIdx = Math.floor((dayOfMonth - 1) / 7);
                 if (weekIdx > 4) weekIdx = 4;
@@ -4896,14 +4912,14 @@ function sendWhatsAppWeeklyPayslip() {
             if (filterMonthVal !== 'ALL') {
                 filteredJobs = allJobs.filter(function(j) {
                     if (!j.date) return false;
-                    var d = new Date(j.date);
+                    var d = parseTrackerDateLocal(j.date);
                     var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
                     return key === filterMonthVal;
                 });
 
                 filteredMaint = allMaint.filter(function(m) {
                     if (!m.date) return false;
-                    var d = new Date(m.date);
+                    var d = parseTrackerDateLocal(m.date);
                     var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
                     return key === filterMonthVal;
                 });
