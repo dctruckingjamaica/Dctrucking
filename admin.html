@@ -4195,7 +4195,7 @@
                 grossEarnings += payout;
 
                 var tr = document.createElement('tr');
-                tr.innerHTML = '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;"><strong>' + (j._dcnSource==='D&C'?'D&C':(j._dcnSource==='Westinco'?'Westinco':'Westinco')) + ' — ' + (j.day || 'Day') + '</strong> <span style="font-size:0.75rem; color:#64748b;">(' + (j.date || '') + ')</span></td>' +
+                tr.innerHTML = '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;"><strong>' + (j._dcnSource==='D&C'?'D&C — ':'') + (j.day || 'Day') + '</strong> <span style="font-size:0.75rem; color:#64748b;">(' + (j.date || '') + ')</span></td>' +
                                '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd;">' + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
                                '<td style="padding: 6px 10px; border-bottom: 1px solid #ddd; text-align:right; font-weight:900; color:#059669;">$' + payout.toLocaleString() + ' JMD</td>';
                 tbody.appendChild(tr);
