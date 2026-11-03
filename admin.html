@@ -2676,19 +2676,43 @@
         }
 
         function trackerLiveAutoPrice() {
-            var typedVal = document.getElementById('tr-drop').value.trim().toLowerCase();
-            var activeMode = document.getElementById('tr-active-mode') ? document.getElementById('tr-active-mode').value : 'wisynco';
-            if (!typedVal) return;
+            var destinationInput = document.getElementById('tr-drop');
+            var rateInput = document.getElementById('tr-rate');
+            if (!destinationInput || !rateInput) return;
 
+            var typedVal = destinationInput.value.trim().toLowerCase()
+                .replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ').trim();
+            var activeMode = document.getElementById('tr-active-mode')
+                ? document.getElementById('tr-active-mode').value : 'wisynco';
             var activeTable = (activeMode === 'private') ? privateCustomerRates : wisynco7TonRates;
 
-            for (var place in activeTable) {
-                if (typedVal.includes(place) || place.includes(typedVal)) {
-                    document.getElementById('tr-rate').value = activeTable[place];
-                    updateLiveProfit();
-                    return;
-                }
+            // Never leave a previous mode's or destination's price on screen.
+            if (!typedVal) {
+                rateInput.value = '';
+                updateLiveProfit();
+                return;
             }
+
+            var exactPlace = Object.keys(activeTable).find(function(place) {
+                return place.replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ').trim() === typedVal;
+            });
+            if (exactPlace) {
+                rateInput.value = activeTable[exactPlace];
+                updateLiveProfit();
+                return;
+            }
+
+            // Allow a partial town name only when it identifies one rate-table entry.
+            var matches = Object.keys(activeTable).filter(function(place) {
+                var normalizedPlace = place.replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ').trim();
+                return normalizedPlace.includes(typedVal) || typedVal.includes(normalizedPlace);
+            });
+            if (matches.length === 1) {
+                rateInput.value = activeTable[matches[0]];
+            } else {
+                rateInput.value = '';
+            }
+            updateLiveProfit();
         }
 
         function invoiceLiveAutoPrice() {
