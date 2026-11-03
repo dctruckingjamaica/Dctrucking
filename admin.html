@@ -4151,7 +4151,7 @@
                 var selectedIds=dcNewPayrollSelected(roleType);
                 weekJobs=selectedIds.map(function(key){
                     if(key.indexOf('DNC:')===0){var dj=dcNewGetJobs().find(function(x){return String(x.id)===key.slice(4)});return dj?Object.assign({},dj,{_dcnSource:'D&C'}):null}
-                    var cj=getStoredJobs().find(function(x){return String(x.id)===key.slice(4)});return cj?Object.assign({},cj,{_dcnSource:'Westinco'}):null;
+                    var cj=getStoredJobs().find(function(x){return String(x.id)===key.slice(key.indexOf(':')+1)});return cj?Object.assign({},cj,{_dcnSource:'Westinco'}):null;
                 }).filter(function(j){return j&&(roleType==='driver'?String(j.driver||'').toLowerCase().includes(staffName.toLowerCase()):String(j.assistant||'').toLowerCase().includes(staffName.toLowerCase()))});
                 if(!weekJobs.length){alert('Select at least one matching job for this payslip.');return}
             }
