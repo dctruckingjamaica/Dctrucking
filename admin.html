@@ -4299,7 +4299,23 @@ async function generateWeeklyPayslip(roleType) {
             }else{
                 var allJobs=dcPayrollGetCombinedJobs(roleType,staffName);
                 weekJobs=allJobs.filter(function(j){return isCurrentWeek(j.date);});
-                if(weekJobs.length===0){alert('No jobs found for this staff member in the current operating week. Use Manual Selection to include backdated jobs.');return;}
+
+                // Preserve the previous automatic-mode fallback: when the current
+                // week has no matching jobs, use all matching staff jobs. If none
+                // exist at all, keep the legacy zero-value placeholder row.
+                if(weekJobs.length===0){
+                    weekJobs=allJobs;
+                }
+                if(weekJobs.length===0){
+                    weekJobs=[{
+                        day:'Current Week',
+                        date:new Date().toISOString().split('T')[0],
+                        pickup:'Kingston Depot',
+                        drop:'General Route',
+                        driverPay:0,
+                        asstPay:0
+                    }];
+                }
             }
 
 
