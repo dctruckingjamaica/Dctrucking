@@ -2681,7 +2681,7 @@
             if (!destinationInput || !rateInput) return;
 
             var typedVal = destinationInput.value.trim().toLowerCase()
-                .replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ').trim();
+                .replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim();
             var activeMode = document.getElementById('tr-active-mode')
                 ? document.getElementById('tr-active-mode').value : 'wisynco';
             var activeTable = (activeMode === 'private') ? privateCustomerRates : wisynco7TonRates;
@@ -2694,7 +2694,7 @@
             }
 
             var exactPlace = Object.keys(activeTable).find(function(place) {
-                return place.replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ').trim() === typedVal;
+                return place.replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim() === typedVal;
             });
             if (exactPlace) {
                 rateInput.value = activeTable[exactPlace];
@@ -2704,7 +2704,7 @@
 
             // Allow a partial town name only when it identifies one rate-table entry.
             var matches = Object.keys(activeTable).filter(function(place) {
-                var normalizedPlace = place.replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ').trim();
+                var normalizedPlace = place.replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim();
                 return normalizedPlace.includes(typedVal) || typedVal.includes(normalizedPlace);
             });
             if (matches.length === 1) {
