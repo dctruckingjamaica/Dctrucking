@@ -3922,18 +3922,24 @@ function dcPrivateGenerateDocument(){
     }
     var key=type==='receipt'?'dc_private_receipt_counter':'dc_private_invoice_counter';
     var seq=Number(localStorage.getItem(key)||'1'),num=(type==='receipt'?'DCR':'DCI')+String(seq).padStart(4,'0');
+    // Reserve and verify the document number before saving a receipt ledger entry.
+    // This prevents a saved payment from being paired with a reused receipt number.
+    try{
+        localStorage.setItem(key,String(seq+1));
+        if(localStorage.getItem(key)!==String(seq+1))throw new Error('Counter verification failed');
+    }catch(err){alert('The document number counter could not be updated. No payment entry was saved. Please stop and contact support.');return}
     if(type==='receipt'){
         job.payments=Array.isArray(job.payments)?job.payments:[];
         job.payments.push({receiptNo:num,amount:paid,date:pdate});
         if(receivedBefore+paid>=agreedTotal)job.status='PAID';
         else job.status='UNPAID';
-        if(!dcPrivateSaveJobs(jobs))return;
+        if(!dcPrivateSaveJobs(jobs)){
+            try{localStorage.setItem(key,String(seq));if(localStorage.getItem(key)!==String(seq))throw new Error('Counter rollback verification failed')}
+            catch(rollbackErr){alert('CRITICAL: The payment record did not save and the receipt counter could not be rolled back. Stop issuing documents and contact support.')}
+            return;
+        }
         dcPrivateRenderJobs();dcPrivateRenderMoneySummary();
     }
-    try{
-        localStorage.setItem(key,String(seq+1));
-        if(localStorage.getItem(key)!==String(seq+1))throw new Error('Counter verification failed');
-    }catch(err){alert('The document was saved, but its number counter could not be updated. Please stop and contact support before issuing another document.');return}
     $('dc-private-doc-title').innerText=type==='receipt'?'OFFICIAL RECEIPT — PAYMENT RECEIVED':'INVOICE — PAYMENT DUE';
     $('dc-private-out-client').innerText=client;
     $('dc-private-out-contact').innerText=$('dc-private-phone').value.trim()?'Phone: '+$('dc-private-phone').value.trim():'';
