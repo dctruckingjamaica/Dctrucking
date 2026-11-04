@@ -3250,6 +3250,8 @@
         }
 
         async function shareVaultReceiptWhatsApp(id) {
+            if (!(await assertAdminAccess())) return;
+
             var receipts = getStoredVaultReceipts();
             var r = receipts.find(function(item) { return item.id === id; });
             if (!r) return;
@@ -3275,7 +3277,9 @@
             window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
         }
 
-        function emailVaultReceipt(id) {
+        async function emailVaultReceipt(id) {
+            if (!(await assertAdminAccess())) return;
+
             var receipts = getStoredVaultReceipts();
             var r = receipts.find(function(item) { return item.id === id; });
             if (!r) return;
@@ -3709,6 +3713,8 @@
         }
 
         async function shareVehicleDocNative(docType) {
+            if (!(await assertAdminAccess())) return;
+
             var num = document.getElementById('doc-' + docType + '-num').value || 'N/A';
             var expiry = document.getElementById('doc-' + docType + '-expiry').value || 'N/A';
             var text = document.getElementById('doc-' + docType + '-text').value || '';
@@ -3747,7 +3753,9 @@
             window.open(url, "_blank");
         }
 
-        function emailVehicleDoc(docType) {
+        async function emailVehicleDoc(docType) {
+            if (!(await assertAdminAccess())) return;
+
             var num = document.getElementById('doc-' + docType + '-num').value || 'N/A';
             var expiry = document.getElementById('doc-' + docType + '-expiry').value || 'N/A';
             var text = document.getElementById('doc-' + docType + '-text').value || '';
@@ -4253,7 +4261,9 @@
             loadFutureBookingsQueue();
         }
 
-        function sendWhatsAppInvoice() {
+        async function sendWhatsAppInvoice() {
+            if (!(await assertAdminAccess())) return;
+
             var client = document.getElementById('out-client').innerText;
             var phone = document.getElementById('manual-inv-phone').value.trim().replace(/[^0-9]/g, '');
             var num = document.getElementById('out-num').innerText;
@@ -4279,7 +4289,9 @@
             window.open(whatsappUrl, "_blank");
         }
 
-        function emailInvoice() {
+        async function emailInvoice() {
+            if (!(await assertAdminAccess())) return;
+
             var client = document.getElementById('out-client').innerText;
             var num = document.getElementById('out-num').innerText;
             var total = document.getElementById('out-amount').innerText;
@@ -4501,7 +4513,9 @@
             window.print();
         }
 
-        function sendWhatsAppWeeklyPayslip() {
+        async function sendWhatsAppWeeklyPayslip() {
+            if (!(await assertAdminAccess())) return;
+
             var title = document.getElementById('slip-title-main').innerText;
             var name = document.getElementById('slip-name').innerText;
             var paynum = document.getElementById('slip-paynum').innerText;
@@ -5607,14 +5621,18 @@
             }
         }
 
-        function sharePayslipWhatsApp(id) {
+        async function sharePayslipWhatsApp(id) {
+            if (!(await assertAdminAccess())) return;
+
             const slip = archivedPayslips.find(s => s.id === id);
             if (!slip) return;
             const text = `*D&C DISPATCH PAYSLIP*%0AWorker: ${slip.workerName}%0APeriod: ${slip.payPeriod}%0ANet Pay: ${slip.netPay}%0AStatus: ${slip.status}%0ADate: ${slip.date} at ${slip.time}`;
             window.open(`https://wa.me/?text=${text}`, '_blank');
         }
 
-        function sharePayslipEmail(id) {
+        async function sharePayslipEmail(id) {
+            if (!(await assertAdminAccess())) return;
+
             const slip = archivedPayslips.find(s => s.id === id);
             if (!slip) return;
             const subject = encodeURIComponent(`Payslip - ${slip.workerName} (${slip.payPeriod})`);
