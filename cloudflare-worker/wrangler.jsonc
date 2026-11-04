@@ -1,0 +1,20 @@
+{
+  "$schema": "https://developers.cloudflare.com/workers/wrangler/config-schema.json",
+  "name": "dctrucking-private-admin",
+  "main": "worker.js",
+  "compatibility_date": "2026-11-03",
+  "workers_dev": true,
+  "vars": {
+    "UPSTREAM_BRANCH": "security-testing-cloudflare-2026-11-04"
+  },
+  "ratelimits": [
+    {
+      "name": "LOGIN_LIMITER",
+      "namespace_id": "731904",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ]
+}
