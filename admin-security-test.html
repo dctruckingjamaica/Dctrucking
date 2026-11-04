@@ -2724,7 +2724,8 @@
             }
         }
 
-        function setTrackerRateMode(mode) {
+        async function setTrackerRateMode(mode) {
+            if (!(await assertAdminAccess())) return;
             // Both visible mode selectors now operate as one switch.
             currentOperatingMode = mode === 'wisynco' ? 'westco' : 'dnc';
             localStorage.setItem('dc_operating_mode', currentOperatingMode);
