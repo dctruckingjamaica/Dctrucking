@@ -3250,8 +3250,12 @@
             window.open("mailto:?subject=" + encodeURIComponent("Receipt Record: " + r.vendor) + "&body=" + encodeURIComponent(body), "_blank");
         }
 
+        function normalizeMechanicProfileName(value) {
+            return (value || '').trim().replace(/\\s+/g, ' ').toLowerCase();
+        }
+
         function saveMechanicProfile() {
-            var name = document.getElementById('maint-vendor-name').value.trim();
+            var name = document.getElementById('maint-vendor-name').value.trim().replace(/\\s+/g, ' ');
             var address = document.getElementById('maint-vendor-address').value.trim();
             var phone = document.getElementById('maint-vendor-phone').value.trim();
 
@@ -3260,29 +3264,81 @@
                 return;
             }
 
-            var profile = { name: name, address: address, phone: phone };
-            localStorage.setItem("dc_mechanic_" + name.toLowerCase(), JSON.stringify(profile));
-            alert("Mechanic Profile saved for " + name + "!");
+            var profile = { name: name, address: address, phone: phone, updatedAt: new Date().toISOString() };
+            var normalizedName = normalizeMechanicProfileName(name);
+            var profileKey = "dc_mechanic_" + normalizedName;
+
+            try {
+                // Keep the original per-name key for compatibility, and also maintain
+                // a searchable index so casing/spacing differences won't block loading.
+                localStorage.setItem(profileKey, JSON.stringify(profile));
+                var indexKey = "dc_mechanic_profiles_index";
+                var profiles = JSON.parse(localStorage.getItem(indexKey) || "[]");
+                if (!Array.isArray(profiles)) profiles = [];
+                var existingIndex = profiles.findIndex(function(item) {
+                    return normalizeMechanicProfileName(item && item.name) === normalizedName;
+                });
+                if (existingIndex >= 0) profiles[existingIndex] = profile;
+                else profiles.push(profile);
+                localStorage.setItem(indexKey, JSON.stringify(profiles));
+                alert("Mechanic Profile saved for " + name + "!");
+            } catch (error) {
+                console.error("Mechanic profile save failed:", error);
+                alert("Could not save the mechanic profile in this browser. Please check browser storage is available.");
+            }
         }
 
         function loadMechanicProfile() {
             var input = document.getElementById('maint-vendor-name');
-            var name = input.value.trim().toLowerCase();
-            if (!name) {
+            var typedName = input.value.trim().replace(/\\s+/g, ' ');
+            var normalizedName = normalizeMechanicProfileName(typedName);
+            if (!normalizedName) {
                 alert("Please type a mechanic or shop name to search.");
                 input.focus();
                 return;
             }
 
-            var saved = localStorage.getItem("dc_mechanic_" + name);
-            if (saved) {
-                var profile = JSON.parse(saved);
-                document.getElementById('maint-vendor-name').value = profile.name;
-                document.getElementById('maint-vendor-address').value = profile.address || '';
-                document.getElementById('maint-vendor-phone').value = profile.phone || '';
-                alert("Loaded mechanic details for " + profile.name + "!");
-            } else {
-                alert("No saved profile found for '" + input.value + "'. You can enter details and click 'Save Profile'.");
+            var profile = null;
+            try {
+                // First try the compatible direct key, then the saved index.
+                var saved = localStorage.getItem("dc_mechanic_" + normalizedName);
+                if (saved) profile = JSON.parse(saved);
+
+                if (!profile) {
+                    var profiles = JSON.parse(localStorage.getItem("dc_mechanic_profiles_index") || "[]");
+                    if (Array.isArray(profiles)) {
+                        profile = profiles.find(function(item) {
+                            return normalizeMechanicProfileName(item && item.name) === normalizedName;
+                        }) || null;
+                    }
+                }
+
+                // Recover older profiles even if their key used different spacing/case.
+                if (!profile) {
+                    for (var i = 0; i < localStorage.length; i++) {
+                        var key = localStorage.key(i);
+                        if (!key || key.indexOf("dc_mechanic_") !== 0 || key === "dc_mechanic_profiles_index") continue;
+                        try {
+                            var candidate = JSON.parse(localStorage.getItem(key) || "null");
+                            if (candidate && normalizeMechanicProfileName(candidate.name) === normalizedName) {
+                                profile = candidate;
+                                break;
+                            }
+                        } catch (ignored) {}
+                    }
+                }
+
+                if (profile) {
+                    document.getElementById('maint-vendor-name').value = profile.name || typedName;
+                    document.getElementById('maint-vendor-address').value = profile.address || '';
+                    document.getElementById('maint-vendor-phone').value = profile.phone || '';
+                    alert("Loaded mechanic details for " + (profile.name || typedName) + "!");
+                } else {
+                    alert("No saved profile found for '" + typedName + "'. You can enter details and click 'Save Profile'.");
+                }
+            } catch (error) {
+                console.error("Mechanic profile load failed:", error);
+                alert("Could not load the mechanic profile from this browser's storage.");
             }
         }
 
