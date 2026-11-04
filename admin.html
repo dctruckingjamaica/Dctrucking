@@ -1967,7 +1967,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn-add-job" style="background: #fb7185; color: #000; margin-top: 10px;" onclick="addMaintenanceLog()">🔧 Log Maintenance Expense & Receipt</button>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;"><button id="maint-form-submit-btn" class="btn-add-job" style="background: #fb7185; color: #000;" onclick="addMaintenanceLog()">🔧 Log Maintenance Expense & Receipt</button><button id="maint-form-cancel-btn" type="button" style="display:none; background:#475569; color:#fff; border:none; padding:9px 12px; border-radius:6px; font-weight:900; cursor:pointer;" onclick="cancelMaintenanceEdit()">Cancel Edit</button></div>
                 </div>
 
                 <div class="table-scroll">
@@ -2354,6 +2354,7 @@
         var managerPin = "197922";
         var showAllHistory = false;
         var tableEditUnlocked = false;
+        var editingMaintenanceId = null;
 
         const AUTO_LOCK_MS = 3 * 60 * 1000;
         let isOnlineMode = false;
@@ -3251,11 +3252,11 @@
         }
 
         function normalizeMechanicProfileName(value) {
-            return (value || '').trim().replace(/\\s+/g, ' ').toLowerCase();
+            return (value || '').trim().replace(/\s+/g, ' ').toLowerCase();
         }
 
         function saveMechanicProfile() {
-            var name = document.getElementById('maint-vendor-name').value.trim().replace(/\\s+/g, ' ');
+            var name = document.getElementById('maint-vendor-name').value.trim().replace(/\s+/g, ' ');
             var address = document.getElementById('maint-vendor-address').value.trim();
             var phone = document.getElementById('maint-vendor-phone').value.trim();
 
@@ -3290,7 +3291,7 @@
 
         function loadMechanicProfile() {
             var input = document.getElementById('maint-vendor-name');
-            var typedName = input.value.trim().replace(/\\s+/g, ' ');
+            var typedName = input.value.trim().replace(/\s+/g, ' ');
             var normalizedName = normalizeMechanicProfileName(typedName);
             if (!normalizedName) {
                 alert("Please type a mechanic or shop name to search.");
@@ -4771,25 +4772,41 @@
 
             var processAndSave = function(receiptData) {
                 var maint = getStoredMaintenance();
-                maint.push({
-                    id: Date.now(),
+                var existingIndex = editingMaintenanceId === null ? -1 : maint.findIndex(function(item) {
+                    return String(item.id) === String(editingMaintenanceId);
+                });
+                var existingRecord = existingIndex >= 0 ? maint[existingIndex] : null;
+                var record = {
+                    id: existingRecord ? existingRecord.id : Date.now(),
                     date: date,
                     cat: cat,
                     desc: desc,
                     cost: cost,
                     vendor: vendorCombined,
-                    receipt: receiptData || receiptText
-                });
+                    vendorName: vendorName,
+                    vendorAddress: vendorAddress,
+                    vendorPhone: vendorPhone,
+                    receipt: receiptData || receiptText || (existingRecord ? existingRecord.receipt : '')
+                };
 
+                if (existingIndex >= 0) maint[existingIndex] = record;
+                else maint.push(record);
                 saveStoredMaintenance(maint);
 
+                editingMaintenanceId = null;
                 document.getElementById('maint-date').value = '';
                 document.getElementById('maint-custom-desc').value = '';
                 document.getElementById('maint-cost').value = '';
+                document.getElementById('maint-vendor-name').value = '';
+                document.getElementById('maint-vendor-address').value = '';
+                document.getElementById('maint-vendor-phone').value = '';
                 document.getElementById('maint-receipt-text').value = '';
                 document.getElementById('maint-receipt-file').value = '';
-
+                document.getElementById('maint-form-submit-btn').innerText = '🔧 Log Maintenance Expense & Receipt';
+                document.getElementById('maint-form-cancel-btn').style.display = 'none';
+                loadMaintenanceLogs();
                 loadTrackerJobs();
+                alert(existingRecord ? 'Maintenance entry updated.' : 'Maintenance entry saved.');
             };
 
             if (receiptFileInput.files && receiptFileInput.files[0]) {
@@ -4803,6 +4820,62 @@
             } else {
                 processAndSave(null);
             }
+        }
+
+        function editMaintenanceLog(id) {
+            if (!tableEditUnlocked) {
+                alert("🔒 Table edit mode is locked. Please unlock using your PIN first.");
+                openEditPinModal();
+                return;
+            }
+            var maint = getStoredMaintenance();
+            var record = maint.find(function(item) { return String(item.id) === String(id); });
+            if (!record) {
+                alert("Maintenance record could not be found.");
+                return;
+            }
+
+            editingMaintenanceId = record.id;
+            document.getElementById('maint-date').value = record.date || '';
+            document.getElementById('maint-cat').value = record.cat || 'General Repair';
+            updateDynamicPartsDatalist();
+            var descSelect = document.getElementById('maint-desc');
+            var matchingOption = Array.from(descSelect.options).find(function(option) { return option.value === record.desc; });
+            if (matchingOption) {
+                descSelect.value = record.desc;
+                document.getElementById('maint-custom-desc').value = '';
+            } else {
+                descSelect.value = 'CUSTOM_PART_INPUT';
+                document.getElementById('maint-custom-desc').value = record.desc || '';
+            }
+            handlePartSelectChange();
+            document.getElementById('maint-cost').value = record.cost || '';
+            var legacyVendorText = (record.vendor || '').replace(/<br><span[^>]*>[\s\S]*?<\/span>/i, '').replace(/<[^>]*>/g, '').trim();
+            var legacyVendorDetails = (record.vendor || '').match(/<br><span[^>]*>([\s\S]*?)<\/span>/i);
+            var legacyDetailsText = legacyVendorDetails ? legacyVendorDetails[1].replace(/<[^>]*>/g, '').trim() : '';
+            var legacyPhoneParts = legacyDetailsText.split('📞');
+            document.getElementById('maint-vendor-name').value = record.vendorName || legacyVendorText;
+            document.getElementById('maint-vendor-address').value = record.vendorAddress || (legacyPhoneParts[0] || '').trim();
+            document.getElementById('maint-vendor-phone').value = record.vendorPhone || (legacyPhoneParts.length > 1 ? legacyPhoneParts.slice(1).join('📞').trim() : '');
+            document.getElementById('maint-receipt-text').value = record.receipt && !record.receipt.startsWith('data:') ? record.receipt : '';
+            document.getElementById('maint-receipt-file').value = '';
+            document.getElementById('maint-form-submit-btn').innerText = '💾 Save Maintenance Changes';
+            document.getElementById('maint-form-cancel-btn').style.display = 'inline-block';
+            document.getElementById('maint-date').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function cancelMaintenanceEdit() {
+            editingMaintenanceId = null;
+            document.getElementById('maint-date').value = '';
+            document.getElementById('maint-custom-desc').value = '';
+            document.getElementById('maint-cost').value = '';
+            document.getElementById('maint-vendor-name').value = '';
+            document.getElementById('maint-vendor-address').value = '';
+            document.getElementById('maint-vendor-phone').value = '';
+            document.getElementById('maint-receipt-text').value = '';
+            document.getElementById('maint-receipt-file').value = '';
+            document.getElementById('maint-form-submit-btn').innerText = '🔧 Log Maintenance Expense & Receipt';
+            document.getElementById('maint-form-cancel-btn').style.display = 'none';
         }
 
         function deleteMaintenanceLog(id) {
@@ -4907,7 +4980,7 @@
                                '<td>' + m.vendor + '</td>' +
                                '<td>' + proofHTML + '</td>' +
                                '<td style="font-weight:900; color:#f87171;">$' + m.cost.toLocaleString() + ' JMD</td>' +
-                               '<td><button style="background:#dc2626; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMaintenanceLog(' + m.id + ')">🗑️</button></td>';
+                               '<td><div style="display:flex; gap:5px; flex-wrap:wrap;"><button type="button" style="background:' + (tableEditUnlocked ? '#0284c7' : '#334155') + '; color:' + (tableEditUnlocked ? '#fff' : '#94a3b8') + '; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="editMaintenanceLog(' + m.id + ')">✏️ Edit</button><button type="button" style="background:' + (tableEditUnlocked ? '#dc2626' : '#334155') + '; color:' + (tableEditUnlocked ? '#fff' : '#94a3b8') + '; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deleteMaintenanceLog(' + m.id + ')">🗑️ Delete</button></div></td>';
                 tbody.appendChild(tr);
             }
         }
