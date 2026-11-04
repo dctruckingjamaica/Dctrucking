@@ -2468,7 +2468,9 @@
             }
         }
 
-        function toggleOnlineStatus() {
+        async function toggleOnlineStatus() {
+            if (!(await assertAdminAccess())) return;
+
             var btn = document.getElementById('toggleOnlineBtn');
             var statusLabel = document.getElementById('sessionStatusLabel');
 
@@ -2514,7 +2516,9 @@
             resetIdleTimer();
         }
 
-        function switchOperatingMode(mode) {
+        async function switchOperatingMode(mode) {
+            if (!(await assertAdminAccess())) return;
+
             currentOperatingMode = mode;
             localStorage.setItem('dc_operating_mode', mode);
             applyOperatingModeUI();
@@ -3392,7 +3396,9 @@
             }
         }
 
-        function loadMechanicProfile() {
+        async function loadMechanicProfile() {
+            if (!(await assertAdminAccess())) return;
+
             var input = document.getElementById('maint-vendor-name');
             var typedName = String(input.value || '').trim().replace(/\s+/g, ' ');
             var picker = document.getElementById('maint-vendor-profile-picker');
