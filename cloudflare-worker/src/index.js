@@ -133,8 +133,8 @@ export default {
       }
 
       if (url.pathname === "/api/login") {
-        const ip = request.headers.get("CF-Connecting-IP") || "unknown";
-        const rate = await env.RATE_LIMITER.limit({ key: "dispatch-login:" + ip });
+        // One manager account: use one shared key so attempts from multiple IPs cannot each get a fresh allowance.
+        const rate = await env.RATE_LIMITER.limit({ key: "dispatch-manager-login" });
         if (!rate || rate.success !== true) {
           return jsonResponse({ success: false, error: "Too many login attempts. Please wait before trying again." }, 429, cors);
         }
