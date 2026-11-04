@@ -2342,7 +2342,7 @@
 
                 <br>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff; flex: 1; min-width: 200px;" onclick="window.print()">🖨️ Print / Save Payslip PDF</button>
+                    <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff; flex: 1; min-width: 200px;" onclick="archiveThenPrintPayslip()">🖨️ Print / Save Payslip PDF</button>
                     <button class="btn-whatsapp btn-print" style="flex: 1; min-width: 200px;" onclick="sendWhatsAppWeeklyPayslip()">📱 Send via WhatsApp</button>
                 </div>
             </div>
@@ -4282,8 +4282,12 @@
             document.getElementById('payslip-preview').style.display = 'block';
             document.getElementById('payslip-preview').scrollIntoView({ behavior: 'smooth' });
 
-            // Automatically archive this generated payslip after the preview is populated.
+        }
+
+        function archiveThenPrintPayslip() {
+            // Archive only when the user chooses to print/save the completed payslip.
             archiveCurrentPayslip();
+            window.print();
         }
 
         function sendWhatsAppWeeklyPayslip() {
