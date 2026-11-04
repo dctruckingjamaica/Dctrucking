@@ -2426,28 +2426,6 @@
             }
         }
 
-        async function toggleOnlineStatus() {
-            if (!(await assertAdminAccess())) return;
-
-            var btn = document.getElementById('toggleOnlineBtn');
-            var statusLabel = document.getElementById('sessionStatusLabel');
-
-            isOnlineMode = !isOnlineMode;
-
-            if (isOnlineMode) {
-                clearTimeout(idleTimer);
-                btn.style.background = "#00ff66";
-                btn.style.color = "#000";
-                btn.innerText = "🟢 ONLINE (Stay Awake)";
-                statusLabel.innerText = "🟢 ONLINE (Always Active & Open)";
-                statusLabel.style.color = "#00ff66";
-                sessionStorage.setItem('dnc_keep_online', 'true');
-            } else {
-                sessionStorage.removeItem('dnc_keep_online');
-                lockSystemAndTrap();
-            }
-        }
-
         function resetIdleTimer() {
             clearTimeout(idleTimer);
             if (!isOnlineMode && sessionStorage.getItem('dnc_unlocked') === 'true' && sessionStorage.getItem('dnc_auth_token')) {
@@ -2456,30 +2434,6 @@
                     lockSystemAndTrap();
                 }, AUTO_LOCK_MS);
             }
-        }
-
-        function unlockSystemUI() {
-            var panel = document.getElementById('manager-panel');
-            if (panel) panel.style.display = 'block';
-            loadTrackerJobs();
-            loadMaintenanceLogs();
-            loadCrewPreferences();
-            loadVehicleDocs();
-            updateDynamicPartsDatalist();
-            loadVaultReceiptGallery();
-            loadFutureBookingsQueue();
-            applyOperatingModeUI();
-            updateEditModeUI();
-            
-            resetIdleTimer();
-        }
-
-        async function switchOperatingMode(mode) {
-            if (!(await assertAdminAccess())) return;
-
-            currentOperatingMode = mode;
-            localStorage.setItem('dc_operating_mode', mode);
-            applyOperatingModeUI();
         }
 
         function applyOperatingModeUI() {
@@ -2564,36 +2518,6 @@
                 } else {
                     daySelect.value = currentDayVal;
                 }
-            }
-        }
-
-        function lockSystemAndTrap() {
-            isOnlineMode = false;
-            tableEditUnlocked = false;
-            clearTimeout(idleTimer);
-            sessionStorage.removeItem('dnc_unlocked');
-            sessionStorage.removeItem('dnc_keep_online');
-
-            var panel = document.getElementById('manager-panel');
-            if (panel) panel.style.display = 'none';
-            var modal = document.getElementById('managerLoginModal');
-            if (modal) modal.style.display = 'flex';
-            var pinInput = document.getElementById('managerPinInput');
-            if (pinInput) {
-                pinInput.value = '';
-                pinInput.focus();
-            }
-
-            var btn = document.getElementById('toggleOnlineBtn');
-            var statusLabel = document.getElementById('sessionStatusLabel');
-            if (btn) {
-                btn.style.background = "#222";
-                btn.style.color = "#fff";
-                btn.innerText = "🔴 Toggle ONLINE";
-            }
-            if (statusLabel) {
-                statusLabel.innerText = "🔴 OFFLINE";
-                statusLabel.style.color = "#ff3333";
             }
         }
 
@@ -5882,9 +5806,7 @@
                 sessionStorage.setItem('dnc_keep_online', 'true');
             } else {
                 sessionStorage.removeItem('dnc_keep_online');
-                if (btn) { btn.style.background = '#222'; btn.style.color = '#fff'; btn.innerText = '🔴 Toggle ONLINE'; }
-                if (statusLabel) { statusLabel.innerText = '🔴 OFFLINE'; statusLabel.style.color = '#ff3333'; }
-                resetIdleTimer();
+                lockSystemAndTrap();
             }
         }
 
