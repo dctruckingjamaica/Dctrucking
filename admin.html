@@ -3252,11 +3252,11 @@
         }
 
         function normalizeMechanicProfileName(value) {
-            return (value || '').trim().replace(/\\s+/g, ' ').toLowerCase();
+            return (value || '').trim().replace(/\s+/g, ' ').toLowerCase();
         }
 
         function saveMechanicProfile() {
-            var name = document.getElementById('maint-vendor-name').value.trim().replace(/\\s+/g, ' ');
+            var name = document.getElementById('maint-vendor-name').value.trim().replace(/\s+/g, ' ');
             var address = document.getElementById('maint-vendor-address').value.trim();
             var phone = document.getElementById('maint-vendor-phone').value.trim();
 
@@ -3291,7 +3291,7 @@
 
         function loadMechanicProfile() {
             var input = document.getElementById('maint-vendor-name');
-            var typedName = input.value.trim().replace(/\\s+/g, ' ');
+            var typedName = input.value.trim().replace(/\s+/g, ' ');
             var normalizedName = normalizeMechanicProfileName(typedName);
             if (!normalizedName) {
                 alert("Please type a mechanic or shop name to search.");
@@ -4850,9 +4850,13 @@
             }
             handlePartSelectChange();
             document.getElementById('maint-cost').value = record.cost || '';
-            document.getElementById('maint-vendor-name').value = record.vendorName || (record.vendor || '').replace(/<br><span[^>]*>[\\s\\S]*?<\\/span>/i, '').replace(/<[^>]*>/g, '').trim();
-            document.getElementById('maint-vendor-address').value = record.vendorAddress || '';
-            document.getElementById('maint-vendor-phone').value = record.vendorPhone || '';
+            var legacyVendorText = (record.vendor || '').replace(/<br><span[^>]*>[\s\S]*?<\/span>/i, '').replace(/<[^>]*>/g, '').trim();
+            var legacyVendorDetails = (record.vendor || '').match(/<br><span[^>]*>([\s\S]*?)<\/span>/i);
+            var legacyDetailsText = legacyVendorDetails ? legacyVendorDetails[1].replace(/<[^>]*>/g, '').trim() : '';
+            var legacyPhoneParts = legacyDetailsText.split('📞');
+            document.getElementById('maint-vendor-name').value = record.vendorName || legacyVendorText;
+            document.getElementById('maint-vendor-address').value = record.vendorAddress || (legacyPhoneParts[0] || '').trim();
+            document.getElementById('maint-vendor-phone').value = record.vendorPhone || (legacyPhoneParts.length > 1 ? legacyPhoneParts.slice(1).join('📞').trim() : '');
             document.getElementById('maint-receipt-text').value = record.receipt && !record.receipt.startsWith('data:') ? record.receipt : '';
             document.getElementById('maint-receipt-file').value = '';
             document.getElementById('maint-form-submit-btn').innerText = '💾 Save Maintenance Changes';
