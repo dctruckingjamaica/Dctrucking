@@ -1875,8 +1875,22 @@
             </div>
 
             <div style="margin-top: 30px; border-top: 2px dashed #1e4626; padding-top: 20px;">
-                <h5 style="color: #fb7185; font-weight: 900; margin-bottom: 8px; text-transform: uppercase;">🔧 Fleet & Truck Maintenance Log</h5>
-                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 15px;">Log tires, full services, headlights, parts, receipts, and mechanic profiles to keep track of total truck expenses!</p>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
+                    <h5 style="color: #fb7185; font-weight: 900; margin:0; text-transform: uppercase;">🔧 Fleet & Truck Maintenance Log</h5>
+                    <span id="fleet-service-due-badge" style="display:inline-block; padding:6px 10px; border-radius:6px; font-size:.78rem; font-weight:900; border:1px solid #64748b; background:#334155; color:#e2e8f0;">⚪ SERVICE DUE DATE NOT SET</span>
+                </div>
+                <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 10px;">Log tires, full services, headlights, parts, receipts, and mechanic profiles to keep track of total truck expenses!</p>
+                <div style="display:flex; align-items:flex-end; flex-wrap:wrap; gap:8px; margin:0 0 15px; padding:10px; border:1px solid #5c1d28; border-radius:8px; background:#10090c;">
+                    <div style="flex:1; min-width:150px;">
+                        <label style="color:#fb7185; font-size:.82rem; font-weight:800; display:block;">Last Service Date & Time</label>
+                        <input type="datetime-local" id="fleet-last-service-datetime" style="width:100%; padding:8px; background:#000; color:#fff; border:1px solid #5c1d28; border-radius:6px;">
+                    </div>
+                    <div style="flex:1; min-width:150px;">
+                        <label style="color:#fb7185; font-size:.82rem; font-weight:800; display:block;">Next Service Due Date & Time</label>
+                        <input type="datetime-local" id="fleet-next-service-datetime" style="width:100%; padding:8px; background:#000; color:#fff; border:1px solid #5c1d28; border-radius:6px;">
+                    </div>
+                    <button type="button" onclick="saveFleetServiceDueDates()" style="background:#be123c; color:#fff; border:none; padding:9px 12px; border-radius:6px; font-weight:900; cursor:pointer;">💾 Save Service Dates</button>
+                </div>
 
                 <div class="tracker-form-container" style="background: #1a0f12; border-color: #5c1d28;">
                     <div class="tracker-form-grid">
@@ -2026,7 +2040,6 @@
                         <input type="text" id="doc-roadlicence-num" placeholder="Licence #">
                         <label>Expiry Date:</label>
                         <input type="date" id="doc-roadlicence-expiry" onchange="updateDocBadges()">
-                        <label>Attach Official Document (Photo or PDF):</label>
                         <label>Payment Date:</label>
                         <input type="date" id="doc-roadlicence-paid-date">
                         <label>Amount Paid (JMD):</label>
@@ -2054,7 +2067,6 @@
                         <input type="text" id="doc-insurance-num" placeholder="Policy #">
                         <label>Expiry Date:</label>
                         <input type="date" id="doc-insurance-expiry" onchange="updateDocBadges()">
-                        <label>Attach Official Document (Photo or PDF):</label>
                         <label>Payment Date:</label>
                         <input type="date" id="doc-insurance-paid-date">
                         <label>Amount Paid (JMD):</label>
@@ -2082,7 +2094,6 @@
                         <input type="text" id="doc-fitness-num" placeholder="Fitness Cert #">
                         <label>Expiry Date:</label>
                         <input type="date" id="doc-fitness-expiry" onchange="updateDocBadges()">
-                        <label>Attach Official Document (Photo or PDF):</label>
                         <label>Payment Date:</label>
                         <input type="date" id="doc-fitness-paid-date">
                         <label>Amount Paid (JMD):</label>
@@ -4726,6 +4737,64 @@
             loadTrackerJobs();
         }
 
+        // Fleet service dates are manually managed and saved locally on this device.
+        function updateFleetServiceDueBadge() {
+            var badge = document.getElementById('fleet-service-due-badge');
+            var nextInput = document.getElementById('fleet-next-service-datetime');
+            if (!badge || !nextInput) return;
+            var nextDue = nextInput.value;
+            if (!nextDue) {
+                badge.innerText = '⚪ SERVICE DUE DATE NOT SET';
+                badge.style.background = '#334155';
+                badge.style.color = '#e2e8f0';
+                badge.style.borderColor = '#64748b';
+                return;
+            }
+            var dueTime = new Date(nextDue).getTime();
+            if (!Number.isFinite(dueTime)) return;
+            var now = Date.now();
+            var sevenDays = 7 * 24 * 60 * 60 * 1000;
+            if (dueTime < now) {
+                badge.innerText = '🔴 SERVICE OVERDUE';
+                badge.style.background = '#7f1d1d';
+                badge.style.color = '#fff';
+                badge.style.borderColor = '#f87171';
+            } else if (dueTime - now <= sevenDays) {
+                badge.innerText = '🟠 SERVICE DUE SOON (7 DAYS)';
+                badge.style.background = '#9a3412';
+                badge.style.color = '#fff';
+                badge.style.borderColor = '#fb923c';
+            } else {
+                badge.innerText = '🟢 SERVICE UP TO DATE';
+                badge.style.background = '#166534';
+                badge.style.color = '#fff';
+                badge.style.borderColor = '#4ade80';
+            }
+        }
+
+        function saveFleetServiceDueDates() {
+            var lastService = document.getElementById('fleet-last-service-datetime').value;
+            var nextService = document.getElementById('fleet-next-service-datetime').value;
+            if (nextService && lastService && new Date(nextService).getTime() < new Date(lastService).getTime()) {
+                alert('Next service due date/time must be after the last service date/time.');
+                return;
+            }
+            localStorage.setItem('dc_fleet_last_service_datetime', lastService);
+            localStorage.setItem('dc_fleet_next_service_datetime', nextService);
+            updateFleetServiceDueBadge();
+            alert('✅ Fleet service dates saved on this device.');
+        }
+
+        function loadFleetServiceDueDates() {
+            var lastInput = document.getElementById('fleet-last-service-datetime');
+            var nextInput = document.getElementById('fleet-next-service-datetime');
+            if (!lastInput || !nextInput) return;
+            lastInput.value = localStorage.getItem('dc_fleet_last_service_datetime') || '';
+            nextInput.value = localStorage.getItem('dc_fleet_next_service_datetime') || '';
+            updateFleetServiceDueBadge();
+            nextInput.addEventListener('change', updateFleetServiceDueBadge);
+        }
+
         function loadMaintenanceLogs() {
             var maint = getStoredMaintenance();
             var tbody = document.getElementById('maint-table-body');
@@ -5140,6 +5209,7 @@
 
         window.addEventListener('DOMContentLoaded', function() {
             populateTownDatalists();
+            loadFleetServiceDueDates();
             
             if (sessionStorage.getItem('dnc_unlocked') === 'true') {
                 document.getElementById('managerLoginModal').style.display = 'none';
