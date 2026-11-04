@@ -3283,11 +3283,11 @@
         }
 
         function normalizeMechanicProfileName(value) {
-            return String(value || '').trim().replace(/\\s+/g, ' ').toLowerCase();
+            return String(value || '').trim().replace(/\s+/g, ' ').toLowerCase();
         }
 
         function saveMechanicProfile() {
-            var name = String(document.getElementById('maint-vendor-name').value || '').trim().replace(/\\s+/g, ' ');
+            var name = String(document.getElementById('maint-vendor-name').value || '').trim().replace(/\s+/g, ' ');
             var address = String(document.getElementById('maint-vendor-address').value || '').trim();
             var phone = String(document.getElementById('maint-vendor-phone').value || '').trim();
             var normalizedName = normalizeMechanicProfileName(name);
@@ -3327,7 +3327,7 @@
 
         function loadMechanicProfile() {
             var input = document.getElementById('maint-vendor-name');
-            var typedName = String(input.value || '').trim().replace(/\\s+/g, ' ');
+            var typedName = String(input.value || '').trim().replace(/\s+/g, ' ');
             var normalizedName = normalizeMechanicProfileName(typedName);
             if (!normalizedName) {
                 alert('Please type the mechanic or shop name to load its saved details.');
