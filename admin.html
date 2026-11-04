@@ -4281,6 +4281,9 @@
             document.getElementById('invoice-preview').style.display = 'none';
             document.getElementById('payslip-preview').style.display = 'block';
             document.getElementById('payslip-preview').scrollIntoView({ behavior: 'smooth' });
+
+            // Automatically archive this generated payslip after the preview is populated.
+            archiveCurrentPayslip();
         }
 
         function sendWhatsAppWeeklyPayslip() {
@@ -5249,9 +5252,10 @@
 
         function archiveCurrentPayslip() {
             // Pulls current values from your active payslip generator fields
-            const workerName = document.getElementById('payslip-worker-name') ? document.getElementById('payslip-worker-name').value : 'Dispatch Worker';
-            const netPay = document.getElementById('payslip-net-pay') ? document.getElementById('payslip-net-pay').innerText : '$0.00';
-            const payPeriod = document.getElementById('payslip-period') ? document.getElementById('payslip-period').value : 'Standard Pay Period';
+            // Read the values from the actual generated payslip preview.
+            const workerName = document.getElementById('slip-name') ? document.getElementById('slip-name').innerText.trim() : 'Dispatch Worker';
+            const netPay = document.getElementById('slip-total-amount') ? document.getElementById('slip-total-amount').innerText.trim() : '$0.00';
+            const payPeriod = document.getElementById('slip-period') ? document.getElementById('slip-period').innerText.trim() : 'Standard Pay Period';
             
             const now = new Date();
             const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
