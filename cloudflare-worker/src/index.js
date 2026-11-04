@@ -208,7 +208,7 @@ export default {
       }
       if (!signatureValid) return jsonResponse({ valid: false }, 401, cors);
 
-      return jsonResponse({ valid: true }, 200, cors);
+      return jsonResponse({ valid: true, exp: payload.exp }, 200, cors);
     } catch (error) {
       // Never return stack traces or secret values to the browser.
       return jsonResponse({ success: false, error: "Internal server error." }, 500, cors);
