@@ -5728,34 +5728,55 @@
         var WORKER_BASE_URL = "https://REPLACE-WITH-YOUR-WORKER.workers.dev";
         var _dncAuthVerifiedToken = null;
         var _dncAuthVerifiedAt = 0;
+        var _dncAuthExpiresAt = 0;
+        var _dncAuthExpiryTimer = null;
+        var _dncVerifyPromise = null;
         sessionStorage.removeItem('dnc_keep_online');
 
         async function verifySessionTokenServerSide(forceCheck) {
             var token = sessionStorage.getItem('dnc_auth_token');
             if (!token || WORKER_BASE_URL.indexOf('REPLACE-WITH-YOUR-WORKER') !== -1) return false;
-            if (!forceCheck && token === _dncAuthVerifiedToken && Date.now() - _dncAuthVerifiedAt < 5000) return true;
-            try {
-                var response = await fetch(WORKER_BASE_URL.replace(/\/+$/, '') + '/api/verify-token', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ token: token }),
-                    cache: 'no-store'
-                });
-                if (!response.ok) throw new Error('Session verification rejected.');
-                var result = await response.json();
-                if (result.valid !== true) throw new Error('Session is invalid or expired.');
-                _dncAuthVerifiedToken = token;
-                _dncAuthVerifiedAt = Date.now();
-                return true;
-            } catch (error) {
-                _dncAuthVerifiedToken = null;
-                _dncAuthVerifiedAt = 0;
-                console.error('Dispatch session verification failed:', error);
-                return false;
-            }
-        }
+            if (!forceCheck && token === _dncAuthVerifiedToken && Date.now() - _dncAuthVerifiedAt < 5000 && _dncAuthExpiresAt > Date.now()) return true;
+            if (_dncVerifyPromise && _dncVerifyPromise.token === token) return await _dncVerifyPromise.promise;
 
-        async function assertAdminAccess() {
+            var promise = (async function() {
+                try {
+                    var response = await fetch(WORKER_BASE_URL.replace(/\/+$/, '') + '/api/verify-token', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ token: token }),
+                        cache: 'no-store'
+                    });
+                    if (!response.ok) throw new Error('Session verification rejected.');
+                    var result = await response.json();
+                    if (result.valid !== true || !Number.isSafeInteger(result.exp) || result.exp <= Date.now()) {
+                        throw new Error('Session is invalid or expired.');
+                    }
+                    _dncAuthVerifiedToken = token;
+                    _dncAuthVerifiedAt = Date.now();
+                    _dncAuthExpiresAt = result.exp;
+                    clearTimeout(_dncAuthExpiryTimer);
+                    _dncAuthExpiryTimer = setTimeout(function() {
+                        alert('Your two-hour dispatch login has expired. Dispatch access is now locked.');
+                        lockSystemAndTrap();
+                    }, Math.max(0, result.exp - Date.now()));
+                    return true;
+                } catch (error) {
+                    _dncAuthVerifiedToken = null;
+                    _dncAuthVerifiedAt = 0;
+                    _dncAuthExpiresAt = 0;
+                    clearTimeout(_dncAuthExpiryTimer);
+                    console.error('Dispatch session verification failed:', error);
+                    return false;
+                }
+            })();
+            _dncVerifyPromise = { token: token, promise: promise };
+            try {
+                return await promise;
+            } finally {
+                if (_dncVerifyPromise && _dncVerifyPromise.promise === promise) _dncVerifyPromise = null;
+            }
+        }async function assertAdminAccess() {
             if (await verifySessionTokenServerSide(false)) return true;
             lockSystemAndTrap();
             alert('Dispatch session expired or the security server is unavailable. Please sign in again.');
@@ -5792,6 +5813,8 @@
                 sessionStorage.setItem('dnc_auth_token', result.token);
                 _dncAuthVerifiedToken = null;
                 _dncAuthVerifiedAt = 0;
+                _dncAuthExpiresAt = 0;
+                clearTimeout(_dncAuthExpiryTimer);
                 if (!(await verifySessionTokenServerSide(true))) {
                     sessionStorage.removeItem('dnc_auth_token');
                     sessionStorage.removeItem('dnc_unlocked');
@@ -5828,6 +5851,9 @@
             sessionStorage.removeItem('dnc_keep_online');
             _dncAuthVerifiedToken = null;
             _dncAuthVerifiedAt = 0;
+            _dncAuthExpiresAt = 0;
+            _dncVerifyPromise = null;
+            clearTimeout(_dncAuthExpiryTimer);
             var panel = document.getElementById('manager-panel');
             if (panel) panel.style.display = 'none';
             var modal = document.getElementById('managerLoginModal');
