@@ -2379,48 +2379,6 @@
             if (pinInput) pinInput.focus();
         }
 
-        function submitManagerPin() {
-            var entered = document.getElementById('managerPinInput').value;
-            if (entered === managerPin) {
-                sessionStorage.setItem('dnc_unlocked', 'true');
-                document.getElementById('managerLoginModal').style.display = 'none';
-                document.getElementById('managerPinInput').value = '';
-                document.getElementById('managerPinError').style.display = 'none';
-                unlockSystemUI();
-            } else {
-                sessionStorage.removeItem('dnc_unlocked');
-                document.getElementById('managerPinError').style.display = 'block';
-                document.getElementById('managerPinInput').value = '';
-                document.getElementById('managerPinInput').focus();
-            }
-        }
-
-        function openEditPinModal() {
-            document.getElementById('editPinModal').style.display = 'flex';
-            document.getElementById('editPinInput').focus();
-        }
-
-        function closeEditPinModal() {
-            document.getElementById('editPinModal').style.display = 'none';
-            document.getElementById('editPinInput').value = '';
-            document.getElementById('editPinError').style.display = 'none';
-        }
-
-        function submitEditPin() {
-            var entered = document.getElementById('editPinInput').value;
-            if (entered === managerPin) {
-                tableEditUnlocked = true;
-                closeEditPinModal();
-                updateEditModeUI();
-                loadTrackerJobs();
-                loadMaintenanceLogs();
-                alert("🔓 Table Edit Mode Unlocked!");
-            } else {
-                document.getElementById('editPinError').style.display = 'block';
-                document.getElementById('editPinInput').value = '';
-            }
-        }
-
         function lockTableEdits() {
             tableEditUnlocked = false;
             updateEditModeUI();
