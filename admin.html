@@ -1894,12 +1894,6 @@
                     <h5 style="color: #fb7185; font-weight: 900; margin:0; text-transform: uppercase;">🔧 Fleet & Truck Maintenance Log</h5>
                     <span id="fleet-service-due-badge" style="display:inline-block; padding:6px 10px; border-radius:6px; font-size:.78rem; font-weight:900; border:1px solid #64748b; background:#334155; color:#e2e8f0;">⚪ SERVICE DUE DATE NOT SET</span>
                 </div>
-                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin:0 0 10px; padding:8px 10px; border:1px solid #5c1d28; border-radius:8px; background:#10090c;">
-                    <span id="maintEditModeStatusLabel" style="color:#f87171; font-weight:900; font-size:.84rem;">🔒 Locked (PIN Required for Edits)</span>
-                    <div id="maintEditModeBtnContainer">
-                        <button type="button" onclick="openEditPinModal()" style="background:#0284c7; color:#fff; border:none; padding:8px 14px; border-radius:6px; font-weight:900; cursor:pointer; font-size:.88rem;">🔑 Unlock Maintenance Edits</button>
-                    </div>
-                </div>
                 <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 10px;">Log tires, full services, headlights, parts, receipts, and mechanic profiles to keep track of total truck expenses!</p>
                 <div style="display:flex; align-items:flex-end; flex-wrap:wrap; gap:8px; margin:0 0 15px; padding:10px; border:1px solid #5c1d28; border-radius:8px; background:#10090c;">
                     <div style="flex:1; min-width:150px;">
@@ -1952,6 +1946,9 @@
                                 <input type="text" id="maint-vendor-name" placeholder="e.g. Kingston Tire Shop" style="flex: 1; min-width: 140px;">
                                 <button type="button" style="background:#0284c7; color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:800; cursor:pointer;" onclick="loadMechanicProfile()">🔍 Load</button>
                             </div>
+                            <select id="maint-vendor-profile-picker" aria-label="Choose a saved mechanic profile" style="margin-top:6px; width:100%; padding:8px; background:#000; color:#fff; border:1px solid #38bdf8; border-radius:6px;" onchange="selectMechanicProfileFromList()">
+                                <option value="">Choose saved mechanic profile (or type name above)</option>
+                            </select>
                         </div>
                         <div class="tracker-field-group">
                             <label style="color: #38bdf8;">Mechanic Shop Address / Location</label>
@@ -1974,6 +1971,12 @@
                         </div>
                     </div>
                     <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;"><button id="maint-form-submit-btn" class="btn-add-job" style="background: #fb7185; color: #000;" onclick="addMaintenanceLog()">🔧 Log Maintenance Expense & Receipt</button><button id="maint-form-cancel-btn" type="button" style="display:none; background:#475569; color:#fff; border:none; padding:9px 12px; border-radius:6px; font-weight:900; cursor:pointer;" onclick="cancelMaintenanceEdit()">Cancel Edit</button></div>
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin:0 0 10px; padding:8px 10px; border:1px solid #5c1d28; border-radius:8px; background:#10090c;">
+                    <span id="maintEditModeStatusLabel" style="color:#f87171; font-weight:900; font-size:.84rem;">🔒 Locked (PIN Required for Edits)</span>
+                    <div id="maintEditModeBtnContainer">
+                        <button type="button" onclick="openEditPinModal()" style="background:#0284c7; color:#fff; border:none; padding:8px 14px; border-radius:6px; font-weight:900; cursor:pointer; font-size:.88rem;">🔑 Unlock Maintenance Edits</button>
+                    </div>
+                </div>
                 </div>
 
                 <div class="table-scroll">
@@ -3286,6 +3289,57 @@
             return String(value || '').trim().replace(/\s+/g, ' ').toLowerCase();
         }
 
+        function populateMechanicProfilePicker() {
+            var picker = document.getElementById('maint-vendor-profile-picker');
+            if (!picker) return;
+            var profilesByName = {};
+            try {
+                var registry = JSON.parse(localStorage.getItem('dc_mechanic_profiles_v2') || '{}');
+                if (registry && typeof registry === 'object' && !Array.isArray(registry)) {
+                    Object.keys(registry).forEach(function(key) {
+                        var profile = registry[key];
+                        if (profile && profile.name) profilesByName[normalizeMechanicProfileName(profile.name)] = profile;
+                    });
+                }
+                var oldIndex = JSON.parse(localStorage.getItem('dc_mechanic_profiles_index') || '[]');
+                if (Array.isArray(oldIndex)) oldIndex.forEach(function(profile) {
+                    if (profile && profile.name) {
+                        var key = normalizeMechanicProfileName(profile.name);
+                        if (!profilesByName[key]) profilesByName[key] = profile;
+                    }
+                });
+                for (var i = 0; i < localStorage.length; i++) {
+                    var storageKey = localStorage.key(i);
+                    if (!storageKey || storageKey.indexOf('dc_mechanic_') !== 0 || storageKey === 'dc_mechanic_profiles_index' || storageKey === 'dc_mechanic_profiles_v2') continue;
+                    try {
+                        var legacy = JSON.parse(localStorage.getItem(storageKey) || 'null');
+                        if (legacy && legacy.name) {
+                            var legacyKey = normalizeMechanicProfileName(legacy.name);
+                            if (!profilesByName[legacyKey]) profilesByName[legacyKey] = legacy;
+                        }
+                    } catch (ignored) {}
+                }
+            } catch (error) {
+                console.error('Could not list mechanic profiles:', error);
+            }
+            var selected = picker.value;
+            picker.innerHTML = '<option value="">Choose saved mechanic profile (or type name above)</option>';
+            Object.keys(profilesByName).sort().forEach(function(key) {
+                var option = document.createElement('option');
+                option.value = key;
+                option.textContent = profilesByName[key].name;
+                picker.appendChild(option);
+            });
+            if (selected && profilesByName[selected]) picker.value = selected;
+        }
+
+        function selectMechanicProfileFromList() {
+            var picker = document.getElementById('maint-vendor-profile-picker');
+            if (!picker || !picker.value) return;
+            var profileName = picker.options[picker.selectedIndex].text;
+            document.getElementById('maint-vendor-name').value = profileName;
+        }
+
         function saveMechanicProfile() {
             var name = String(document.getElementById('maint-vendor-name').value || '').trim().replace(/\s+/g, ' ');
             var address = String(document.getElementById('maint-vendor-address').value || '').trim();
@@ -3318,6 +3372,8 @@
                 if (existingIndex >= 0) profiles[existingIndex] = profile;
                 else profiles.push(profile);
                 localStorage.setItem(indexKey, JSON.stringify(profiles));
+                populateMechanicProfilePicker();
+                document.getElementById('maint-vendor-profile-picker').value = normalizedName;
                 alert('Mechanic profile saved in this browser for ' + name + '.');
             } catch (error) {
                 console.error('Mechanic profile save failed:', error);
@@ -3328,9 +3384,15 @@
         function loadMechanicProfile() {
             var input = document.getElementById('maint-vendor-name');
             var typedName = String(input.value || '').trim().replace(/\s+/g, ' ');
+            var picker = document.getElementById('maint-vendor-profile-picker');
+            if (!typedName && picker && picker.value) {
+                typedName = picker.options[picker.selectedIndex].text;
+                input.value = typedName;
+            }
             var normalizedName = normalizeMechanicProfileName(typedName);
             if (!normalizedName) {
-                alert('Please type the mechanic or shop name to load its saved details.');
+                populateMechanicProfilePicker();
+                alert('Please choose a saved mechanic from the list or type its shop name above, then press Load.');
                 input.focus();
                 return;
             }
@@ -3390,6 +3452,8 @@
                     document.getElementById('maint-vendor-name').value = profile.name || typedName;
                     document.getElementById('maint-vendor-address').value = profile.address || '';
                     document.getElementById('maint-vendor-phone').value = profile.phone || '';
+                    populateMechanicProfilePicker();
+                    document.getElementById('maint-vendor-profile-picker').value = normalizedName;
                     alert('Loaded saved mechanic details for ' + (profile.name || typedName) + '.');
                 } else {
                     alert("No saved profile found for '" + typedName + "'. Please enter the address and phone, then press Save Profile.");
@@ -5420,6 +5484,7 @@
 
         window.addEventListener('DOMContentLoaded', function() {
             populateTownDatalists();
+            populateMechanicProfilePicker();
             loadFleetServiceDueDates();
             
             if (sessionStorage.getItem('dnc_unlocked') === 'true') {
