@@ -20,7 +20,8 @@ This is a draft security test only. It is not deployed and does not change the l
 
 ## Session behaviour
 - Signed tokens expire after two hours.
-- The admin page automatically locks after three minutes of inactivity.
+- The admin page automatically locks after three minutes of inactivity unless the user manually enables the existing ONLINE mode.
+- A separate hard two-hour expiry timer locks the panel even if ONLINE mode is enabled.
 - Logout clears the token from this browser session. It does not revoke a copied token on the server; a copied token can remain valid until its two-hour expiry.
 - No business records are sent to the Worker. Jobs, invoices, crew profiles, receipts, documents and other business records remain in browser localStorage.
 
