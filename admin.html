@@ -1128,6 +1128,21 @@
             mix-blend-mode: multiply; 
         }
 
+        /* Slightly enlarge only the D&C Payment Due invoice logo. Keep the
+           image proportions intact so it stays crisp and is never stretched. */
+        #invoice-preview.dnc-payment-due .inv-header {
+            grid-template-columns: 210px 1fr;
+        }
+
+        #invoice-preview.dnc-payment-due .inv-logo-box {
+            width: 210px;
+        }
+
+        #invoice-preview.dnc-payment-due .inv-logo-box img {
+            max-height: 110px;
+            object-fit: contain;
+        }
+
         .inv-title-box {
             min-width: 0;
             text-align: left;
@@ -3862,6 +3877,9 @@
                 document.getElementById('manual-inv-amount').focus();
                 return;
             }
+
+            // Apply the logo enlargement only to the D&C Payment Due invoice.
+            document.getElementById('invoice-preview').classList.toggle('dnc-payment-due', currentOperatingMode === 'dnc' && paymentDue);
 
             var currentSeq = parseInt(localStorage.getItem('dc_invoice_counter') || '1', 10);
             var num = 'DC' + String(currentSeq).padStart(3, '0');
