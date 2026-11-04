@@ -1894,6 +1894,12 @@
                     <h5 style="color: #fb7185; font-weight: 900; margin:0; text-transform: uppercase;">🔧 Fleet & Truck Maintenance Log</h5>
                     <span id="fleet-service-due-badge" style="display:inline-block; padding:6px 10px; border-radius:6px; font-size:.78rem; font-weight:900; border:1px solid #64748b; background:#334155; color:#e2e8f0;">⚪ SERVICE DUE DATE NOT SET</span>
                 </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin:0 0 10px; padding:8px 10px; border:1px solid #5c1d28; border-radius:8px; background:#10090c;">
+                    <span id="maintEditModeStatusLabel" style="color:#f87171; font-weight:900; font-size:.84rem;">🔒 Locked (PIN Required for Edits)</span>
+                    <div id="maintEditModeBtnContainer">
+                        <button type="button" onclick="openEditPinModal()" style="background:#0284c7; color:#fff; border:none; padding:8px 14px; border-radius:6px; font-weight:900; cursor:pointer; font-size:.88rem;">🔑 Unlock Maintenance Edits</button>
+                    </div>
+                </div>
                 <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 10px;">Log tires, full services, headlights, parts, receipts, and mechanic profiles to keep track of total truck expenses!</p>
                 <div style="display:flex; align-items:flex-end; flex-wrap:wrap; gap:8px; margin:0 0 15px; padding:10px; border:1px solid #5c1d28; border-radius:8px; background:#10090c;">
                     <div style="flex:1; min-width:150px;">
@@ -2404,6 +2410,7 @@
                 closeEditPinModal();
                 updateEditModeUI();
                 loadTrackerJobs();
+                loadMaintenanceLogs();
                 alert("🔓 Table Edit Mode Unlocked!");
             } else {
                 document.getElementById('editPinError').style.display = 'block';
@@ -2415,22 +2422,46 @@
             tableEditUnlocked = false;
             updateEditModeUI();
             loadTrackerJobs();
+            loadMaintenanceLogs();
             alert("🔒 Table Edit Mode Locked.");
         }
 
         function updateEditModeUI() {
             var label = document.getElementById('editModeStatusLabel');
             var container = document.getElementById('editModeBtnContainer');
-            if (!label || !container) return;
+            var maintLabel = document.getElementById('maintEditModeStatusLabel');
+            var maintContainer = document.getElementById('maintEditModeBtnContainer');
 
             if (tableEditUnlocked) {
-                label.innerText = "🟢 Unlocked (Edit Mode Active)";
-                label.style.color = "#00ff66";
-                container.innerHTML = '<button type="button" onclick="lockTableEdits()" style="background: #b91c1c; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.88rem;">🔒 Lock / Logout Edit Mode</button>';
+                if (label) {
+                    label.innerText = '🟢 Unlocked (Edit Mode Active)';
+                    label.style.color = '#00ff66';
+                }
+                if (container) {
+                    container.innerHTML = '<button type="button" onclick="lockTableEdits()" style="background:#b91c1c; color:#fff; border:none; padding:8px 14px; border-radius:6px; font-weight:900; cursor:pointer; font-size:.88rem;">🔒 Lock / Logout Edit Mode</button>';
+                }
+                if (maintLabel) {
+                    maintLabel.innerText = '🟢 Maintenance Edit Mode Unlocked';
+                    maintLabel.style.color = '#00ff66';
+                }
+                if (maintContainer) {
+                    maintContainer.innerHTML = '<button type="button" onclick="lockTableEdits()" style="background:#b91c1c; color:#fff; border:none; padding:8px 14px; border-radius:6px; font-weight:900; cursor:pointer; font-size:.88rem;">🔒 Lock / Logout Maintenance</button>';
+                }
             } else {
-                label.innerText = "🔒 Locked (PIN Required for Edits)";
-                label.style.color = "#f87171";
-                container.innerHTML = '<button type="button" onclick="openEditPinModal()" style="background: #0284c7; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 900; cursor: pointer; font-size: 0.88rem;">🔑 Unlock Table Edits</button>';
+                if (label) {
+                    label.innerText = '🔒 Locked (PIN Required for Edits)';
+                    label.style.color = '#f87171';
+                }
+                if (container) {
+                    container.innerHTML = '<button type="button" onclick="openEditPinModal()" style="background:#0284c7; color:#fff; border:none; padding:8px 14px; border-radius:6px; font-weight:900; cursor:pointer; font-size:.88rem;">🔑 Unlock Table Edits</button>';
+                }
+                if (maintLabel) {
+                    maintLabel.innerText = '🔒 Locked (PIN Required for Edits)';
+                    maintLabel.style.color = '#f87171';
+                }
+                if (maintContainer) {
+                    maintContainer.innerHTML = '<button type="button" onclick="openEditPinModal()" style="background:#0284c7; color:#fff; border:none; padding:8px 14px; border-radius:6px; font-weight:900; cursor:pointer; font-size:.88rem;">🔑 Unlock Maintenance Edits</button>';
+                }
             }
         }
 
@@ -3252,29 +3283,34 @@
         }
 
         function normalizeMechanicProfileName(value) {
-            return (value || '').trim().replace(/\s+/g, ' ').toLowerCase();
+            return String(value || '').trim().replace(/\\s+/g, ' ').toLowerCase();
         }
 
         function saveMechanicProfile() {
-            var name = document.getElementById('maint-vendor-name').value.trim().replace(/\s+/g, ' ');
-            var address = document.getElementById('maint-vendor-address').value.trim();
-            var phone = document.getElementById('maint-vendor-phone').value.trim();
+            var name = String(document.getElementById('maint-vendor-name').value || '').trim().replace(/\\s+/g, ' ');
+            var address = String(document.getElementById('maint-vendor-address').value || '').trim();
+            var phone = String(document.getElementById('maint-vendor-phone').value || '').trim();
+            var normalizedName = normalizeMechanicProfileName(name);
 
-            if (!name) {
+            if (!normalizedName) {
                 alert("Please enter the Mechanic or Vendor Name first.");
+                document.getElementById('maint-vendor-name').focus();
                 return;
             }
 
             var profile = { name: name, address: address, phone: phone, updatedAt: new Date().toISOString() };
-            var normalizedName = normalizeMechanicProfileName(name);
-            var profileKey = "dc_mechanic_" + normalizedName;
-
             try {
-                // Keep the original per-name key for compatibility, and also maintain
-                // a searchable index so casing/spacing differences won't block loading.
-                localStorage.setItem(profileKey, JSON.stringify(profile));
-                var indexKey = "dc_mechanic_profiles_index";
-                var profiles = JSON.parse(localStorage.getItem(indexKey) || "[]");
+                // Store in a single durable registry, indexed by normalized shop name.
+                var registryKey = 'dc_mechanic_profiles_v2';
+                var registry = JSON.parse(localStorage.getItem(registryKey) || '{}');
+                if (!registry || typeof registry !== 'object' || Array.isArray(registry)) registry = {};
+                registry[normalizedName] = profile;
+                localStorage.setItem(registryKey, JSON.stringify(registry));
+
+                // Also keep existing storage formats so older versions remain compatible.
+                localStorage.setItem('dc_mechanic_' + normalizedName, JSON.stringify(profile));
+                var indexKey = 'dc_mechanic_profiles_index';
+                var profiles = JSON.parse(localStorage.getItem(indexKey) || '[]');
                 if (!Array.isArray(profiles)) profiles = [];
                 var existingIndex = profiles.findIndex(function(item) {
                     return normalizeMechanicProfileName(item && item.name) === normalizedName;
@@ -3282,47 +3318,62 @@
                 if (existingIndex >= 0) profiles[existingIndex] = profile;
                 else profiles.push(profile);
                 localStorage.setItem(indexKey, JSON.stringify(profiles));
-                alert("Mechanic Profile saved for " + name + "!");
+                alert('Mechanic profile saved in this browser for ' + name + '.');
             } catch (error) {
-                console.error("Mechanic profile save failed:", error);
-                alert("Could not save the mechanic profile in this browser. Please check browser storage is available.");
+                console.error('Mechanic profile save failed:', error);
+                alert('Could not save the mechanic profile. Browser storage may be unavailable or full.');
             }
         }
 
         function loadMechanicProfile() {
             var input = document.getElementById('maint-vendor-name');
-            var typedName = input.value.trim().replace(/\s+/g, ' ');
+            var typedName = String(input.value || '').trim().replace(/\\s+/g, ' ');
             var normalizedName = normalizeMechanicProfileName(typedName);
             if (!normalizedName) {
-                alert("Please type a mechanic or shop name to search.");
+                alert('Please type the mechanic or shop name to load its saved details.');
                 input.focus();
                 return;
             }
 
             var profile = null;
             try {
-                // First try the compatible direct key, then the saved index.
-                var saved = localStorage.getItem("dc_mechanic_" + normalizedName);
-                if (saved) profile = JSON.parse(saved);
-
-                if (!profile) {
-                    var profiles = JSON.parse(localStorage.getItem("dc_mechanic_profiles_index") || "[]");
-                    if (Array.isArray(profiles)) {
-                        profile = profiles.find(function(item) {
-                            return normalizeMechanicProfileName(item && item.name) === normalizedName;
-                        }) || null;
+                // Primary source: stable v2 registry.
+                var registry = JSON.parse(localStorage.getItem('dc_mechanic_profiles_v2') || '{}');
+                if (registry && typeof registry === 'object' && !Array.isArray(registry)) {
+                    profile = registry[normalizedName] || null;
+                    if (!profile) {
+                        var registryKeys = Object.keys(registry);
+                        for (var r = 0; r < registryKeys.length; r++) {
+                            var candidateProfile = registry[registryKeys[r]];
+                            if (candidateProfile && normalizeMechanicProfileName(candidateProfile.name) === normalizedName) {
+                                profile = candidateProfile;
+                                break;
+                            }
+                        }
                     }
                 }
 
-                // Recover older profiles even if their key used different spacing/case.
+                // Compatibility: search the prior index and direct per-name entries.
+                if (!profile) {
+                    var oldIndex = JSON.parse(localStorage.getItem('dc_mechanic_profiles_index') || '[]');
+                    if (Array.isArray(oldIndex)) {
+                        profile = oldIndex.find(function(item) {
+                            return item && normalizeMechanicProfileName(item.name) === normalizedName;
+                        }) || null;
+                    }
+                }
+                if (!profile) {
+                    var directSaved = localStorage.getItem('dc_mechanic_' + normalizedName);
+                    if (directSaved) profile = JSON.parse(directSaved);
+                }
                 if (!profile) {
                     for (var i = 0; i < localStorage.length; i++) {
                         var key = localStorage.key(i);
-                        if (!key || key.indexOf("dc_mechanic_") !== 0 || key === "dc_mechanic_profiles_index") continue;
+                        if (!key || key.indexOf('dc_mechanic_') !== 0 || key === 'dc_mechanic_profiles_index' || key === 'dc_mechanic_profiles_v2') continue;
                         try {
-                            var candidate = JSON.parse(localStorage.getItem(key) || "null");
-                            if (candidate && normalizeMechanicProfileName(candidate.name) === normalizedName) {
-                                profile = candidate;
+                            var legacyCandidate = JSON.parse(localStorage.getItem(key) || 'null');
+                            if (legacyCandidate && normalizeMechanicProfileName(legacyCandidate.name) === normalizedName) {
+                                profile = legacyCandidate;
                                 break;
                             }
                         } catch (ignored) {}
@@ -3330,16 +3381,22 @@
                 }
 
                 if (profile) {
+                    // Migrate found older data into the durable registry for future loads.
+                    var currentRegistry = JSON.parse(localStorage.getItem('dc_mechanic_profiles_v2') || '{}');
+                    if (!currentRegistry || typeof currentRegistry !== 'object' || Array.isArray(currentRegistry)) currentRegistry = {};
+                    currentRegistry[normalizedName] = profile;
+                    localStorage.setItem('dc_mechanic_profiles_v2', JSON.stringify(currentRegistry));
+
                     document.getElementById('maint-vendor-name').value = profile.name || typedName;
                     document.getElementById('maint-vendor-address').value = profile.address || '';
                     document.getElementById('maint-vendor-phone').value = profile.phone || '';
-                    alert("Loaded mechanic details for " + (profile.name || typedName) + "!");
+                    alert('Loaded saved mechanic details for ' + (profile.name || typedName) + '.');
                 } else {
-                    alert("No saved profile found for '" + typedName + "'. You can enter details and click 'Save Profile'.");
+                    alert("No saved profile found for '" + typedName + "'. Please enter the address and phone, then press Save Profile.");
                 }
             } catch (error) {
-                console.error("Mechanic profile load failed:", error);
-                alert("Could not load the mechanic profile from this browser's storage.");
+                console.error('Mechanic profile load failed:', error);
+                alert('Could not load the mechanic profile from browser storage.');
             }
         }
 
