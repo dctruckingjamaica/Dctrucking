@@ -1392,13 +1392,30 @@
                 <button class="btn-gen" style="width: 100%; padding: 12px; font-size: 1rem;" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
             </div>
             
+            <div class="payment-status-box">
+                <h5>💳 Payment & Booking Status</h5>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="inv-deposit-paid" onchange="togglePaymentBoxes('deposit')">
+                    <label for="inv-deposit-paid">🔒 Mark 50% Deposit as PAID (Send to client to confirm booking)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="inv-full-paid" onchange="togglePaymentBoxes('full')">
+                    <label for="inv-full-paid">🎉 Mark Job as FULLY PAID (Balance Settled on Job Date)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="inv-payment-due" onchange="togglePaymentBoxes('due')">
+                    <label for="inv-payment-due">📩 Payment Outstanding — Generate Invoice (No Payment Received)</label>
+                </div>
+            </div>
+
+            
             <!-- BENCH TEST: LOCAL INVOICE HISTORY / RETRIEVAL -->
             <div id="dc-invoice-history-panel" style="background:#03140b;border:2px solid #1a531f;padding:16px;border-radius:10px;margin:18px 0 25px;">
-                <h5 style="color:#86efac;font-size:1.1rem;font-weight:900;text-transform:uppercase;margin-bottom:8px;">🗂️ Invoice History — Bench Test</h5>
-                <p style="color:#cbd5e1;font-size:0.88rem;margin-bottom:10px;">Invoices generated on this phone are saved here. Retrieve one to refill the existing generator, then use the current payment toggle and Generate Printable Invoice button to create the next receipt.</p>
-                <input id="dc-invoice-history-search" type="search" placeholder="Search invoice number or customer name..." oninput="renderDcInvoiceHistory()" style="width:100%;padding:9px;background:#000;color:#fff;border:1px solid #1a531f;border-radius:6px;margin-bottom:10px;">
+                <h5 style="color:#86efac;font-size:1.1rem;font-weight:900;text-transform:uppercase;margin-bottom:8px;">🗂️ Invoice Archive</h5>
+                <p style="color:#cbd5e1;font-size:0.88rem;margin-bottom:10px;">Saved printable invoices are kept on this phone. Open and print an original copy, or retrieve its details to use the existing payment toggles for an official receipt.</p>
+                <select id="dc-invoice-history-filter" onchange="renderDcInvoiceHistory()" style="width:100%;padding:9px;background:#000;color:#fff;border:1px solid #1a531f;border-radius:6px;margin-bottom:8px;"><option value="all">All invoices</option><option value="deposit">50% Deposits Paid</option><option value="full">Paid in Full</option><option value="due">Payment Outstanding</option></select>\n                <input id="dc-invoice-history-search" type="search" placeholder="Search invoice number or customer name..." oninput="renderDcInvoiceHistory()" style="width:100%;padding:9px;background:#000;color:#fff;border:1px solid #1a531f;border-radius:6px;margin-bottom:10px;">
                 <div id="dc-invoice-history-list" style="display:grid;gap:8px;">
-                    <p style="color:#cbd5e1;">No saved invoices yet. Generate an invoice to begin building this phone's history.</p>
+                    <p style="color:#cbd5e1;">No archived invoices yet. Generate an invoice, then press Print / Save PDF to archive it.</p>
                 </div>
             </div>
 
@@ -1431,23 +1448,6 @@
                 </div>
             </div>
 
-            <div class="payment-status-box">
-                <h5>💳 Payment & Booking Status</h5>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="inv-deposit-paid" onchange="togglePaymentBoxes('deposit')">
-                    <label for="inv-deposit-paid">🔒 Mark 50% Deposit as PAID (Send to client to confirm booking)</label>
-                </div>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="inv-full-paid" onchange="togglePaymentBoxes('full')">
-                    <label for="inv-full-paid">🎉 Mark Job as FULLY PAID (Balance Settled on Job Date)</label>
-                </div>
-                <div class="checkbox-item">
-                    <input type="checkbox" id="inv-payment-due" onchange="togglePaymentBoxes('due')">
-                    <label for="inv-payment-due">📩 Payment Outstanding — Generate Invoice (No Payment Received)</label>
-                </div>
-            </div>
-
-            
             <!-- CREW PAYROLL & CORPORATE PAYSLIPS SECTION -->
             <div class="payroll-section-box">
                 <h5>👥 Crew Payroll & Corporate Payslips</h5>
@@ -2264,7 +2264,7 @@
                 </div>
                 <br>
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff; flex: 1; min-width: 200px;" onclick="window.print()">🖨️ Print / Save PDF</button>
+                    <button class="btn-gen btn-print" style="background-color: #1a531f; color: #ffffff; flex: 1; min-width: 200px;" onclick="saveDcInvoiceHistoryAndPrint()">🖨️ Print / Save PDF</button>
                     <button class="btn-whatsapp btn-print" style="flex: 1; min-width: 200px;" onclick="sendWhatsAppInvoice()">📱 Send via WhatsApp</button>
                     <button class="btn-doc-email btn-print" style="flex: 1; min-width: 200px;" onclick="emailInvoice()">✉️ Send via Email</button>
                 </div>
@@ -4066,11 +4066,13 @@
         function renderDcInvoiceHistory() {
             var list = document.getElementById('dc-invoice-history-list');
             var search = (document.getElementById('dc-invoice-history-search').value || '').trim().toLowerCase();
+            var filter = document.getElementById('dc-invoice-history-filter').value || 'all';
             if (!list) return;
             list.innerHTML = '';
             var records = getDcInvoiceHistory().filter(function(record) {
-                return !search || String(record.invoiceNo || '').toLowerCase().includes(search) || String(record.client || '').toLowerCase().includes(search);
-            });
+                var matchesSearch = !search || String(record.invoiceNo || '').toLowerCase().includes(search) || String(record.client || '').toLowerCase().includes(search);
+                return matchesSearch && (filter === 'all' || record.status === filter);
+            }).sort(function(a,b) { return String(b.savedAtISO || '').localeCompare(String(a.savedAtISO || '')); });
             if (!records.length) {
                 var empty = document.createElement('p');
                 empty.style.color = '#cbd5e1';
@@ -4091,15 +4093,66 @@
                 sub.textContent = (record.statusLabel || 'Invoice') + ' | ' + (record.pickup || '') + ' → ' + (record.destination || '') + ' | $' + Number(record.amount || 0).toLocaleString() + ' JMD | ' + (record.savedAt || '');
                 details.appendChild(heading);
                 details.appendChild(sub);
+                var actions = document.createElement('div');
+                actions.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;';
+                var view = document.createElement('button');
+                view.type = 'button';
+                view.textContent = '🖨️ View / Print Saved Copy';
+                view.style.cssText = 'background:#14532d;color:#fff;border:1px solid #86efac;padding:8px 10px;border-radius:6px;font-weight:900;cursor:pointer;';
+                view.onclick = function() { viewDcInvoiceHistorySnapshot(record.id); };
                 var retrieve = document.createElement('button');
                 retrieve.type = 'button';
-                retrieve.textContent = '↩️ Retrieve';
-                retrieve.style.cssText = 'background:#1a531f;color:#fff;border:1px solid #86efac;padding:8px 12px;border-radius:6px;font-weight:900;cursor:pointer;';
+                retrieve.textContent = '↩️ Retrieve for Receipt';
+                retrieve.style.cssText = 'background:#1a531f;color:#fff;border:1px solid #86efac;padding:8px 10px;border-radius:6px;font-weight:900;cursor:pointer;';
                 retrieve.onclick = function() { retrieveDcInvoiceHistoryRecord(record.id); };
+                var remove = document.createElement('button');
+                remove.type = 'button';
+                remove.textContent = '🗑️ Delete';
+                remove.style.cssText = 'background:#7f1d1d;color:#fff;border:1px solid #fca5a5;padding:8px 10px;border-radius:6px;font-weight:900;cursor:pointer;';
+                remove.onclick = function() { deleteDcInvoiceHistoryRecord(record.id); };
+                actions.appendChild(view); actions.appendChild(retrieve); actions.appendChild(remove);
                 card.appendChild(details);
-                card.appendChild(retrieve);
+                card.appendChild(actions);
                 list.appendChild(card);
             });
+        }
+
+        function saveDcInvoiceHistoryAndPrint() {
+            if (dcInvoiceHistoryPendingRecord) {
+                var preview = document.getElementById('invoice-preview');
+                if (!preview || preview.style.display === 'none') {
+                    alert('Please generate the invoice preview first.');
+                    return;
+                }
+                dcInvoiceHistoryPendingRecord.printableHTML = preview.outerHTML;
+                archiveDcInvoiceHistoryRecord(dcInvoiceHistoryPendingRecord);
+                dcInvoiceHistoryPendingRecord = null;
+                dcInvoiceHistoryLoadedId = null;
+            }
+            window.print();
+        }
+
+        function viewDcInvoiceHistorySnapshot(recordId) {
+            var record = getDcInvoiceHistory().find(function(item) { return item.id === recordId; });
+            if (!record || !record.printableHTML) {
+                alert('This archive entry has no saved printable copy yet. Retrieve the details and generate/print it once to archive the printable version.');
+                return;
+            }
+            var popup = window.open('', '_blank');
+            if (!popup) {
+                alert('The browser blocked the invoice window. Please allow pop-ups for this site, then try again.');
+                return;
+            }
+            var css = Array.from(document.querySelectorAll('style')).map(function(el) { return el.innerHTML; }).join('\n');
+            popup.document.open();
+            popup.document.write('<!doctype html><html><head><meta charset="utf-8"><title>' + String(record.invoiceNo || 'Saved Invoice') + '</title><style>' + css + '</style></head><body>' + record.printableHTML + '<div style="text-align:center;padding:12px;"><button class="btn-print" onclick="window.print()" style="padding:10px 16px;font-weight:bold;">Print / Save PDF</button></div></body></html>');
+            popup.document.close();
+        }
+
+        function deleteDcInvoiceHistoryRecord(recordId) {
+            if (!confirm('Delete this archived invoice from this phone? This cannot be undone.')) return;
+            saveDcInvoiceHistory(getDcInvoiceHistory().filter(function(item) { return item.id !== recordId; }));
+            renderDcInvoiceHistory();
         }
 
         function retrieveDcInvoiceHistoryRecord(recordId) {
@@ -4229,10 +4282,10 @@
             
             document.getElementById('out-date').innerText = new Date().toLocaleDateString();
 
-            // BENCH TEST: save a snapshot of this generated invoice without changing existing invoice output.
+            // BENCH TEST: hold invoice metadata until the existing Print / Save PDF action is pressed.
             var historyStatus = paymentDue ? 'due' : (fullPaid ? 'full' : 'deposit');
             var historyStatusLabel = paymentDue ? 'Payment Due' : (fullPaid ? 'Paid in Full' : '50% Deposit Paid');
-            archiveDcInvoiceHistoryRecord({
+            dcInvoiceHistoryPendingRecord = {
                 id: 'invhist_' + Date.now() + '_' + Math.random().toString(36).slice(2,8),
                 invoiceNo: num,
                 client: client,
@@ -4247,9 +4300,10 @@
                 status: historyStatus,
                 statusLabel: historyStatusLabel,
                 savedAt: new Date().toLocaleString(),
-                sourceInvoiceId: dcInvoiceHistoryLoadedId
-            });
-            dcInvoiceHistoryLoadedId = null;
+                savedAtISO: new Date().toISOString(),
+                sourceInvoiceId: dcInvoiceHistoryLoadedId,
+                printableHTML: ''
+            };
 
             document.getElementById('invoice-preview').style.display = 'block';
             document.getElementById('payslip-preview').style.display = 'none';
