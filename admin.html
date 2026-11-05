@@ -1987,6 +1987,9 @@
                         <button type="button" onclick="openEditPinModal()" style="background:#0284c7; color:#fff; border:none; padding:8px 14px; border-radius:6px; font-weight:900; cursor:pointer; font-size:.88rem;">🔑 Unlock Maintenance Edits</button>
                     </div>
                 </div>
+                <div style="display:flex; justify-content:flex-start; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 10px;">
+                    <button id="maint-history-toggle-btn" type="button" onclick="toggleMaintenanceHistory()" style="background:#1e293b; color:#fff; border:1px solid #fb7185; padding:8px 14px; border-radius:6px; font-weight:900; cursor:pointer; font-size:.88rem;">📚 Show All Maintenance History</button>
+                    <span id="maint-history-count-label" style="color:#cbd5e1; font-size:.8rem; font-weight:700;"></span>
                 </div>
 
                 <div class="table-scroll">
@@ -5243,18 +5246,45 @@
             nextInput.addEventListener('change', updateFleetServiceDueBadge);
         }
 
+        // This is a display-only view setting; it never changes saved maintenance records.
+        var showAllMaintenanceHistory = false;
+
+        function toggleMaintenanceHistory() {
+            showAllMaintenanceHistory = !showAllMaintenanceHistory;
+            loadMaintenanceLogs();
+        }
+
         function loadMaintenanceLogs() {
             var maint = getStoredMaintenance();
             var tbody = document.getElementById('maint-table-body');
+            var historyButton = document.getElementById('maint-history-toggle-btn');
+            var historyCount = document.getElementById('maint-history-count-label');
             tbody.innerHTML = '';
+
+            if (historyButton) {
+                historyButton.innerText = showAllMaintenanceHistory
+                    ? '🔽 Show Latest Maintenance Expense'
+                    : '📚 Show All Maintenance History';
+                historyButton.style.background = showAllMaintenanceHistory ? '#0369a1' : '#1e293b';
+                historyButton.disabled = maint.length <= 1;
+                historyButton.style.opacity = maint.length <= 1 ? '0.55' : '1';
+                historyButton.style.cursor = maint.length <= 1 ? 'not-allowed' : 'pointer';
+            }
+            if (historyCount) {
+                historyCount.innerText = maint.length
+                    ? (showAllMaintenanceHistory ? 'Showing all ' + maint.length + ' records' : 'Showing latest 1 of ' + maint.length + ' records')
+                    : 'No records saved';
+            }
 
             if (maint.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#94a3b8;">No maintenance logs recorded yet.</td></tr>';
                 return;
             }
 
-            for (var i = 0; i < maint.length; i++) {
-                var m = maint[i];
+            // Keep the existing saved order. Collapsed view shows only the most recently added record.
+            var visibleMaintenance = showAllMaintenanceHistory ? maint : maint.slice(-1);
+            for (var i = 0; i < visibleMaintenance.length; i++) {
+                var m = visibleMaintenance[i];
 
                 var proofHTML = 'N/A';
                 if (m.receipt) {
