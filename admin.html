@@ -3222,6 +3222,7 @@
             var query = document.getElementById('vault-search-query') ? document.getElementById('vault-search-query').value.trim().toLowerCase() : '';
             var catFilter = document.getElementById('vault-search-cat') ? document.getElementById('vault-search-cat').value : 'ALL';
 
+            // Preserve existing saved receipt records and category/date/time/vendor/notes search.
             var filtered = receipts.filter(function(r) {
                 var vendorText = String(r.vendor || '').toLowerCase();
                 var dateText = String(r.date || '').toLowerCase();
@@ -3233,34 +3234,46 @@
             });
 
             if (filtered.length === 0) {
-                container.innerHTML = '<p style="color:#c084fc; font-size:0.9rem; text-align:center; grid-column:1 / -1;">No receipts found in vault matching filter criteria.</p>';
+                container.innerHTML = '<p style="color:#c084fc;font-size:0.9rem;text-align:center;grid-column:1/-1;">No receipts found in vault matching filter criteria.</p>';
                 return;
             }
 
-            filtered.forEach(function(r) {
-                var badgeClass = r.cat === 'Maintenance' ? 'tag-maintenance' : (r.cat === 'Parts' ? 'tag-parts' : 'tag-petrol');
-                var card = document.createElement('div');
-                card.className = 'receipt-card receipt-compact-card';
-                var detailId = 'receipt-details-' + String(r.id).replace(/[^a-zA-Z0-9_-]/g, '');
-                var amountText = '$' + (r.amount || 0).toLocaleString() + ' JMD';
+            // Render one section per category with compact, expandable receipt rows.
+            ['Petrol', 'Maintenance', 'Parts'].forEach(function(category) {
+                var categoryReceipts = filtered.filter(function(r) { return r.cat === category; });
+                if (!categoryReceipts.length) return;
 
-                card.innerHTML =
-                    '<button type="button" class="receipt-compact-toggle" aria-expanded="false" aria-controls="' + detailId + '" onclick="toggleVaultReceiptDetails(this)" style="width:100%;text-align:left;background:#090412;color:#fff;border:0;border-radius:6px;padding:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;">' +
-                    '<span style="display:flex;flex-direction:column;gap:4px;min-width:0;">' +
-                    '<span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span class="receipt-tag-badge ' + badgeClass + '">' + r.cat + '</span><strong style="color:#fff;font-size:0.9rem;">' + (r.vendor || 'Receipt') + '</strong></span>' +
-                    '<span style="color:#94a3b8;font-size:0.75rem;font-weight:800;">📅 ' + (r.date || '') + ' ⏰ ' + (r.time || '') + '</span>' +
-                    '</span><span style="white-space:nowrap;color:#38bdf8;font-weight:900;">' + amountText + '　⌄</span>' +
-                    '</button>' +
-                    '<div id="' + detailId + '" class="receipt-compact-details" hidden style="padding-top:8px;">' +
-                    (r.imgData ? '<img src="' + r.imgData + '" alt="Receipt Image">' : '<div style="height:100px;background:#000;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:0.85rem;">No Photo Attached</div>') +
-                    '<div style="font-weight:800;color:#fff;font-size:0.95rem;">' + (r.vendor || 'Receipt') + '</div>' +
-                    '<div style="font-weight:900;color:#38bdf8;font-size:1.1rem;">' + amountText + '</div>' +
-                    '<div style="display:flex;gap:4px;margin-top:4px;">' +
-                    '<button style="background:#25d366;color:#fff;border:none;padding:6px;border-radius:4px;font-weight:800;cursor:pointer;flex:1;font-size:0.78rem;" onclick="shareVaultReceiptWhatsApp(' + r.id + ')">📱 WhatsApp</button>' +
-                    '<button style="background:#ea4335;color:#fff;border:none;padding:6px;border-radius:4px;font-weight:800;cursor:pointer;flex:1;font-size:0.78rem;" onclick="emailVaultReceipt(' + r.id + ')">✉️ Email</button>' +
-                    '<button style="background:#dc2626;color:#fff;border:none;padding:6px;border-radius:4px;font-weight:800;cursor:pointer;flex:1;font-size:0.78rem;" onclick="deleteVaultReceipt(' + r.id + ')">🗑️</button>' +
-                    '</div></div>';
-                container.appendChild(card);
+                var badgeClass = category === 'Maintenance' ? 'tag-maintenance' : (category === 'Parts' ? 'tag-parts' : 'tag-petrol');
+                var group = document.createElement('section');
+                group.className = 'receipt-category-group';
+                group.style.cssText = 'background:#0d0617;border:1px solid #7e22ce;border-radius:8px;padding:10px;margin-bottom:10px;';
+
+                var heading = document.createElement('div');
+                heading.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;border-bottom:1px solid #7e22ce;padding:2px 2px 8px;margin-bottom:6px;';
+                heading.innerHTML = '<span class="receipt-tag-badge ' + badgeClass + '">' + category + ' RECEIPTS</span><span style="color:#c084fc;font-size:0.78rem;font-weight:900;">' + categoryReceipts.length + (categoryReceipts.length === 1 ? ' receipt' : ' receipts') + '</span>';
+                group.appendChild(heading);
+
+                categoryReceipts.forEach(function(r) {
+                    var detailId = 'receipt-details-' + String(r.id).replace(/[^a-zA-Z0-9_-]/g, '');
+                    var amountText = '$' + (Number(r.amount) || 0).toLocaleString() + ' JMD';
+                    var row = document.createElement('div');
+                    row.className = 'receipt-compact-row';
+                    row.style.cssText = 'border-bottom:1px solid #332044;padding:5px 0;';
+                    row.innerHTML =
+                        '<button type="button" class="receipt-compact-toggle" aria-expanded="false" aria-controls="' + detailId + '" onclick="toggleVaultReceiptDetails(this)" style="width:100%;text-align:left;background:#090412;color:#fff;border:0;border-radius:6px;padding:9px;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;">' +
+                        '<span style="display:flex;flex-direction:column;gap:3px;min-width:0;"><strong style="color:#fff;font-size:0.88rem;overflow-wrap:anywhere;">' + (r.vendor || 'Receipt') + '</strong>' +
+                        '<span style="color:#94a3b8;font-size:0.73rem;font-weight:800;">📅 ' + (r.date || '') + ' ⏰ ' + (r.time || '') + '</span></span>' +
+                        '<span style="white-space:nowrap;color:#38bdf8;font-weight:900;font-size:0.85rem;">' + amountText + '　⌄</span></button>' +
+                        '<div id="' + detailId + '" class="receipt-compact-details" hidden style="padding:8px 4px;">' +
+                        (r.imgData ? '<img src="' + r.imgData + '" alt="Receipt Image" style="width:100%;max-height:180px;object-fit:contain;border-radius:6px;border:1px solid #a855f7;background:#000;">' : '<div style="height:100px;background:#000;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:0.85rem;">No Photo Attached</div>') +
+                        '<div style="font-weight:800;color:#fff;font-size:0.95rem;margin-top:6px;">' + (r.vendor || 'Receipt') + '</div><div style="font-weight:900;color:#38bdf8;font-size:1.1rem;">' + amountText + '</div>' +
+                        '<div style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;">' +
+                        '<button style="background:#25d366;color:#fff;border:none;padding:6px;border-radius:4px;font-weight:800;cursor:pointer;flex:1;font-size:0.78rem;" onclick="shareVaultReceiptWhatsApp(' + r.id + ')">📱 WhatsApp</button>' +
+                        '<button style="background:#ea4335;color:#fff;border:none;padding:6px;border-radius:4px;font-weight:800;cursor:pointer;flex:1;font-size:0.78rem;" onclick="emailVaultReceipt(' + r.id + ')">✉️ Email</button>' +
+                        '<button style="background:#dc2626;color:#fff;border:none;padding:6px;border-radius:4px;font-weight:800;cursor:pointer;flex:1;font-size:0.78rem;" onclick="deleteVaultReceipt(' + r.id + ')">🗑️</button></div></div>';
+                    group.appendChild(row);
+                });
+                container.appendChild(group);
             });
         }
 
