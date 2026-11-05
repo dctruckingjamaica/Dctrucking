@@ -3226,30 +3226,52 @@
                 var vendorText = String(r.vendor || '').toLowerCase();
                 var dateText = String(r.date || '').toLowerCase();
                 var timeText = String(r.time || '').toLowerCase();
-                var matchesCat = (catFilter === 'ALL' || r.cat === catFilter);
-                var matchesQuery = !query || vendorText.includes(query) || dateText.includes(query) || timeText.includes(query) || String(r.notes || '').toLowerCase().includes(query);
+                var notesText = String(r.notes || '').toLowerCase();
+                var matchesCat = catFilter === 'ALL' || r.cat === catFilter;
+                var matchesQuery = !query || vendorText.includes(query) || dateText.includes(query) || timeText.includes(query) || notesText.includes(query);
                 return matchesCat && matchesQuery;
             });
 
             if (filtered.length === 0) {
-                container.innerHTML = '<p style="color:#c084fc; font-size:0.9rem; text-align:center; grid-column: 1 / -1;">No receipts found in vault matching filter criteria.</p>';
+                container.innerHTML = '<p style="color:#c084fc; font-size:0.9rem; text-align:center; grid-column:1 / -1;">No receipts found in vault matching filter criteria.</p>';
                 return;
             }
 
-            for (var i = 0; i < filtered.length; i++) {
-                var r = filtered[i];
-                var badgeClass = 'tag-petrol';
-                if (r.cat === 'Maintenance') badgeClass = 'tag-maintenance';
-                if (r.cat === 'Parts') badgeClass = 'tag-parts';
-
+            filtered.forEach(function(r) {
+                var badgeClass = r.cat === 'Maintenance' ? 'tag-maintenance' : (r.cat === 'Parts' ? 'tag-parts' : 'tag-petrol');
                 var card = document.createElement('div');
                 card.className = 'receipt-card receipt-compact-card';
                 var detailId = 'receipt-details-' + String(r.id).replace(/[^a-zA-Z0-9_-]/g, '');
-                card.innerHTML = '<button type="button" class="receipt-compact-toggle" aria-expanded="false" aria-controls="' + detailId + '" onclick="toggleVaultReceiptDetails(this)" style="width:100%; text-align:left; background:#090412; color:#fff; border:0; border-radius:6px; padding:10px; display:flex; align-items:center; justify-content:space-between; gap:10px; cursor:pointer;">' +
-                                 '<span style="display:flex; flex-direction:column; gap:4px; min-width:0;">' +
-                                 '<span style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;"><span class="receipt-tag-badge ' + badgeClass + '">' + r.cat + '</span><strong style="color:#fff; font-size:0.9rem;">' + (r.vendor || 'Receipt') + '</strong></span>' +
-                                 '<span style="color:#94a3b8; font-size:0.75rem; font-weight:800;">📅 ' + (r.date || '') + ' ⏰ ' + (r.time || '') + '</span>' +
-                                 '</span><span style="white-space:nowrap; color:#38bdf8; font-weight:900;">
+                var amountText = '$' + (r.amount || 0).toLocaleString() + ' JMD';
+
+                card.innerHTML =
+                    '<button type="button" class="receipt-compact-toggle" aria-expanded="false" aria-controls="' + detailId + '" onclick="toggleVaultReceiptDetails(this)" style="width:100%;text-align:left;background:#090412;color:#fff;border:0;border-radius:6px;padding:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;">' +
+                    '<span style="display:flex;flex-direction:column;gap:4px;min-width:0;">' +
+                    '<span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span class="receipt-tag-badge ' + badgeClass + '">' + r.cat + '</span><strong style="color:#fff;font-size:0.9rem;">' + (r.vendor || 'Receipt') + '</strong></span>' +
+                    '<span style="color:#94a3b8;font-size:0.75rem;font-weight:800;">📅 ' + (r.date || '') + ' ⏰ ' + (r.time || '') + '</span>' +
+                    '</span><span style="white-space:nowrap;color:#38bdf8;font-weight:900;">' + amountText + '　⌄</span>' +
+                    '</button>' +
+                    '<div id="' + detailId + '" class="receipt-compact-details" hidden style="padding-top:8px;">' +
+                    (r.imgData ? '<img src="' + r.imgData + '" alt="Receipt Image">' : '<div style="height:100px;background:#000;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:0.85rem;">No Photo Attached</div>') +
+                    '<div style="font-weight:800;color:#fff;font-size:0.95rem;">' + (r.vendor || 'Receipt') + '</div>' +
+                    '<div style="font-weight:900;color:#38bdf8;font-size:1.1rem;">' + amountText + '</div>' +
+                    '<div style="display:flex;gap:4px;margin-top:4px;">' +
+                    '<button style="background:#25d366;color:#fff;border:none;padding:6px;border-radius:4px;font-weight:800;cursor:pointer;flex:1;font-size:0.78rem;" onclick="shareVaultReceiptWhatsApp(' + r.id + ')">📱 WhatsApp</button>' +
+                    '<button style="background:#ea4335;color:#fff;border:none;padding:6px;border-radius:4px;font-weight:800;cursor:pointer;flex:1;font-size:0.78rem;" onclick="emailVaultReceipt(' + r.id + ')">✉️ Email</button>' +
+                    '<button style="background:#dc2626;color:#fff;border:none;padding:6px;border-radius:4px;font-weight:800;cursor:pointer;flex:1;font-size:0.78rem;" onclick="deleteVaultReceipt(' + r.id + ')">🗑️</button>' +
+                    '</div></div>';
+                container.appendChild(card);
+            });
+        }
+
+        function toggleVaultReceiptDetails(button) {
+            var details = document.getElementById(button.getAttribute('aria-controls'));
+            if (!details) return;
+            var isOpening = details.hidden;
+            details.hidden = !isOpening;
+            button.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
+        }
+
         async function shareVaultReceiptWhatsApp(id) {
             var receipts = getStoredVaultReceipts();
             var r = receipts.find(function(item) { return item.id === id; });
