@@ -1389,6 +1389,17 @@
                     </div>
                 </div>
 
+                <div id="dc-saved-customers-box" style="margin:12px 0;padding:12px;border:1px solid #00e676;border-radius:8px;background:#07140a;">
+                    <h5 style="color:#00e676;margin-bottom:8px;">👥 SAVED CUSTOMERS (THIS PHONE)</h5>
+                    <p style="font-size:0.8rem;color:#d1d5db;margin-bottom:8px;">Save repeat-customer name, phone, email and pickup location. Drop-off destination, amount and booking date/time are kept fresh for each invoice.</p>
+                    <select id="dc-saved-customer-select" style="width:100%;padding:9px;margin-bottom:8px;background:#000;color:#fff;border:1px solid #333;border-radius:6px;"><option value="">Choose saved customer</option></select>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                        <button type="button" onclick="dcSaveInvoiceCustomer()" style="padding:8px;background:#166534;color:#fff;border:0;border-radius:6px;">💾 Save Customer</button>
+                        <button type="button" onclick="dcLoadInvoiceCustomer()" style="padding:8px;background:#0284c7;color:#fff;border:0;border-radius:6px;">📥 Load Customer</button>
+                        <button type="button" onclick="dcDeleteInvoiceCustomer()" style="padding:8px;background:#991b1b;color:#fff;border:0;border-radius:6px;">🗑️ Delete</button>
+                    </div>
+                </div>
+
                 <button class="btn-gen" style="width: 100%; padding: 12px; font-size: 1rem;" onclick="generateInvoice()">📄 Generate Printable Invoice</button>
             </div>
             
@@ -2763,20 +2774,100 @@
         }
 
         function invoiceLiveAutoPrice() {
-            var typedVal = document.getElementById('manual-inv-dest').value.trim().toLowerCase();
+            var destField = document.getElementById('manual-inv-dest');
+            var typedVal = destField.value.trim().toLowerCase();
             if (typedVal.length < 3) return;
 
-            var matches = Object.keys(privateCustomerRates).filter(function(place) {
+            // Match the invoice destination against the currently selected operating mode.
+            var activeInvoiceRateTable = currentOperatingMode === 'westco' ? wisynco7TonRates : privateCustomerRates;
+            var matches = Object.keys(activeInvoiceRateTable).filter(function(place) {
                 return typedVal === place || typedVal.includes(place) || place.indexOf(typedVal) === 0;
             });
 
             if (matches.length) {
-                // Prefer the longest matching town name to avoid a shorter name
-                // overriding a more specific destination such as Old Harbour Bay.
+                // Prefer the longest matching town name to avoid a shorter name overriding a specific destination.
                 matches.sort(function(a, b) { return b.length - a.length; });
-                document.getElementById('manual-inv-amount').value = privateCustomerRates[matches[0]];
+                document.getElementById('manual-inv-amount').value = activeInvoiceRateTable[matches[0]];
             }
         }
+
+        var dcSavedInvoiceCustomers = (function() {
+            try {
+                var stored = localStorage.getItem('dc_saved_invoice_customers');
+                return stored ? JSON.parse(stored) : [];
+            } catch (e) { return []; }
+        })();
+
+        function dcPersistInvoiceCustomers() {
+            try {
+                localStorage.setItem('dc_saved_invoice_customers', JSON.stringify(dcSavedInvoiceCustomers));
+                return true;
+            } catch (e) {
+                alert('Could not save customers on this phone. Please check browser storage settings.');
+                return false;
+            }
+        }
+
+        function dcRenderInvoiceCustomers() {
+            var select = document.getElementById('dc-saved-customer-select');
+            if (!select) return;
+            select.innerHTML = '<option value="">Choose saved customer</option>';
+            dcSavedInvoiceCustomers.forEach(function(customer, index) {
+                var option = document.createElement('option');
+                option.value = String(index);
+                option.textContent = customer.name + (customer.phone ? ' — ' + customer.phone : '');
+                select.appendChild(option);
+            });
+        }
+
+        function dcSaveInvoiceCustomer() {
+            var customer = {
+                name: document.getElementById('manual-inv-client').value.trim(),
+                phone: document.getElementById('manual-inv-phone').value.trim(),
+                email: document.getElementById('manual-inv-email').value.trim(),
+                pickup: document.getElementById('manual-inv-pickup').value.trim()
+            };
+            if (!customer.name) { alert('Enter the customer name before saving.'); return; }
+            var matchIndex = dcSavedInvoiceCustomers.findIndex(function(existing) {
+                return existing.name.toLowerCase() === customer.name.toLowerCase() && existing.phone === customer.phone;
+            });
+            if (matchIndex >= 0) {
+                if (!confirm('This customer name and phone are already saved. Update the saved details?')) return;
+                dcSavedInvoiceCustomers[matchIndex] = customer;
+            } else {
+                dcSavedInvoiceCustomers.push(customer);
+            }
+            if (dcPersistInvoiceCustomers()) {
+                dcRenderInvoiceCustomers();
+                document.getElementById('dc-saved-customer-select').value = String(matchIndex >= 0 ? matchIndex : dcSavedInvoiceCustomers.length - 1);
+                alert('Customer details saved on this phone.');
+            }
+        }
+
+        function dcLoadInvoiceCustomer() {
+            var select = document.getElementById('dc-saved-customer-select');
+            var index = select ? parseInt(select.value, 10) : NaN;
+            if (!Number.isInteger(index) || index < 0 || !dcSavedInvoiceCustomers[index]) { alert('Choose a saved customer first.'); return; }
+            var customer = dcSavedInvoiceCustomers[index];
+            document.getElementById('manual-inv-client').value = customer.name || '';
+            document.getElementById('manual-inv-phone').value = customer.phone || '';
+            document.getElementById('manual-inv-email').value = customer.email || '';
+            document.getElementById('manual-inv-pickup').value = customer.pickup || '';
+            document.getElementById('manual-inv-dest').value = '';
+            document.getElementById('manual-inv-amount').value = '';
+            alert('Customer loaded. Enter the new drop-off destination and booking date/time; the active rate sheet will calculate the amount.');
+        }
+
+        function dcDeleteInvoiceCustomer() {
+            var select = document.getElementById('dc-saved-customer-select');
+            var index = select ? parseInt(select.value, 10) : NaN;
+            if (!Number.isInteger(index) || index < 0 || !dcSavedInvoiceCustomers[index]) { alert('Choose a saved customer to delete.'); return; }
+            if (!confirm('Delete the saved details for ' + dcSavedInvoiceCustomers[index].name + '?')) return;
+            dcSavedInvoiceCustomers.splice(index, 1);
+            if (dcPersistInvoiceCustomers()) dcRenderInvoiceCustomers();
+        }
+
+        document.addEventListener('DOMContentLoaded', dcRenderInvoiceCustomers);
 
         var currentInvoiceFileConverted = null;
 
