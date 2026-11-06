@@ -5415,7 +5415,7 @@
         }
 
         function clearCorporateFinancialHistory() {
-            var approved = confirm("RESET JOB & MONEY HISTORY?\\n\\nThis will permanently remove all saved corporate job records and truck maintenance expense history on this phone. Unpaid/pending collections and all-time/monthly/yearly totals will then reset to zero. Vehicle Vault insurance/fitness photos, staff profiles, and payslip archives will be kept.\\n\\nContinue?");
+            var approved = confirm("RESET JOB & MONEY HISTORY?\n\nThis will permanently remove all saved corporate job records and truck maintenance expense history on this phone. Unpaid/pending collections and all-time/monthly/yearly totals will then reset to zero. Vehicle Vault insurance/fitness photos, staff profiles, and payslip archives will be kept.\n\nContinue?");
             if (!approved) return;
 
             try {
@@ -5835,12 +5835,12 @@
         function sharePayslipWhatsApp(id) {
             const slip = archivedPayslips.find(s => s.id === id);
             if (!slip) return;
-            const text = '*D&C DISPATCH PAYSLIP*\\nWorker: ' + slip.workerName +
-                '\\nPeriod: ' + slip.payPeriod +
-                '\\nNet Pay: ' + slip.netPay +
-                '\\nStatus: ' + slip.status +
-                '\\nDate: ' + slip.date + ' at ' + slip.time +
-                '\\n\\nTo send the full payslip, open View / Print Copy, save it as a PDF, then attach that PDF in WhatsApp.';
+            const text = '*D&C DISPATCH PAYSLIP*\nWorker: ' + slip.workerName +
+                '\nPeriod: ' + slip.payPeriod +
+                '\nNet Pay: ' + slip.netPay +
+                '\nStatus: ' + slip.status +
+                '\nDate: ' + slip.date + ' at ' + slip.time +
+                '\n\nTo send the full payslip, open View / Print Copy, save it as a PDF, then attach that PDF in WhatsApp.';
             window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
         }
 
@@ -5848,7 +5848,7 @@
             const slip = archivedPayslips.find(s => s.id === id);
             if (!slip) return;
             const subject = encodeURIComponent('Payslip - ' + slip.workerName + ' (' + slip.payPeriod + ')');
-            const body = encodeURIComponent('Hello,\\n\\nHere are the details for your payslip:\\n\\nWorker: ' + slip.workerName + '\\nPay Period: ' + slip.payPeriod + '\\nNet Pay: ' + slip.netPay + '\\nStatus: ' + slip.status + '\\nGenerated: ' + slip.date + ' at ' + slip.time + '\\n\\nBest regards,\\nD&C Dispatcher Control Panel');
+            const body = encodeURIComponent('Hello,\n\nHere are the details for your payslip:\n\nWorker: ' + slip.workerName + '\nPay Period: ' + slip.payPeriod + '\nNet Pay: ' + slip.netPay + '\nStatus: ' + slip.status + '\nGenerated: ' + slip.date + ' at ' + slip.time + '\n\nBest regards,\nD&C Dispatcher Control Panel');
             window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
         }
 
@@ -5871,8 +5871,8 @@
                 const watermarkClass = isPaid ? 'watermark-paid' : 'watermark-unpaid';
                 const statusBadgeBg = isPaid ? '#166534' : '#991b1b';
                 const viewButton = slip.documentHtml
-                    ? '<button onclick="viewArchivedPayslip(\\'' + slip.id + '\\')" style="flex:1;background:#166534;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">🖨️ View / Print Copy</button>'
-                    : '<button onclick="viewArchivedPayslip(\\'' + slip.id + '\\')" style="flex:1;background:#475569;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">ℹ️ Copy unavailable</button>';
+                    ? '<button onclick="viewArchivedPayslip(\'' + slip.id + '\')" style="flex:1;background:#166534;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">🖨️ View / Print Copy</button>'
+                    : '<button onclick="viewArchivedPayslip(\'' + slip.id + '\')" style="flex:1;background:#475569;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">ℹ️ Copy unavailable</button>';
 
                 return '<div class="archive-card">' +
                     '<div class="payslip-watermark ' + watermarkClass + '">' + slip.status + '</div>' +
@@ -5885,10 +5885,10 @@
                     '<div style="font-size:.72rem;color:#64748b;margin-top:4px;">Archived: ' + slip.date + ' at ' + slip.time + '</div></div>' +
                     '<div style="display:flex;gap:6px;flex-wrap:wrap;z-index:2;margin-top:4px;">' +
                     viewButton +
-                    '<button onclick="togglePayslipStatus(\\'' + slip.id + '\\')" style="flex:1;background:#3b82f6;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">Toggle Paid/Unpaid</button>' +
-                    '<button onclick="sharePayslipWhatsApp(\\'' + slip.id + '\\')" style="background:#22c55e;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Send WhatsApp message">💬</button>' +
-                    '<button onclick="sharePayslipEmail(\\'' + slip.id + '\\')" style="background:#a855f7;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Share Email">✉️</button>' +
-                    '<button onclick="deleteArchivedPayslip(\\'' + slip.id + '\\')" style="background:#ef4444;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Delete">🗑️</button>' +
+                    '<button onclick="togglePayslipStatus(\'' + slip.id + '\')" style="flex:1;background:#3b82f6;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">Toggle Paid/Unpaid</button>' +
+                    '<button onclick="sharePayslipWhatsApp(\'' + slip.id + '\')" style="background:#22c55e;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Send WhatsApp message">💬</button>' +
+                    '<button onclick="sharePayslipEmail(\'' + slip.id + '\')" style="background:#a855f7;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Share Email">✉️</button>' +
+                    '<button onclick="deleteArchivedPayslip(\'' + slip.id + '\')" style="background:#ef4444;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Delete">🗑️</button>' +
                     '</div></div>';
             }).join('');
         }
