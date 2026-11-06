@@ -1353,6 +1353,18 @@
                     </div>
                 </div>
 
+                <div id="dc-saved-customers-box" style="margin:12px 0 14px;padding:12px;border:1px solid #00e676;border-radius:8px;background:#07140a;">
+                    <h5 style="color:#00e676;margin-bottom:8px;">👥 SAVED CUSTOMERS — SEARCH & LOAD (THIS PHONE)</h5>
+                    <p style="font-size:0.8rem;color:#d1d5db;margin-bottom:8px;">Type a customer name or phone number to find saved details. Load them here, then complete the new destination, rate, date and pickup time below.</p>
+                    <input type="search" id="dc-saved-customer-search" list="dc-saved-customer-options" placeholder="Search saved customers by name or phone…" autocomplete="off" style="width:100%;padding:10px;margin-bottom:8px;background:#000;color:#fff;border:1px solid #00e676;border-radius:6px;">
+                    <datalist id="dc-saved-customer-options"></datalist>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                        <button type="button" onclick="dcLoadInvoiceCustomer()" style="padding:9px;background:#0284c7;color:#fff;border:0;border-radius:6px;flex:1;">📥 Load Customer</button>
+                        <button type="button" onclick="dcSaveInvoiceCustomer()" style="padding:9px;background:#166534;color:#fff;border:0;border-radius:6px;flex:1;">💾 Save / Update Customer</button>
+                        <button type="button" onclick="dcDeleteInvoiceCustomer()" style="padding:9px;background:#991b1b;color:#fff;border:0;border-radius:6px;">🗑️ Delete</button>
+                    </div>
+                </div>
+
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 14px;">
                     <div>
                         <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Customer Name:</label>
@@ -1377,7 +1389,7 @@
                     <div>
                         <label style="color: #ffffff; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Total Haulage Rate (JMD):</label>
                         <input type="number" id="manual-inv-amount" placeholder="0" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1px solid #333; border-radius: 6px; font-weight: 700;">
-                        <small style="color: #86efac; display: block; margin-top: 5px;">D&amp;C rate sheet automatically fills the destination rate. You can still edit this amount manually.</small>
+                        <small style="color: #86efac; display: block; margin-top: 5px;">The active WISYNCO or D&amp;C rate sheet automatically fills the destination rate. You can still edit this amount manually.</small>
                     </div>
                     <div>
                         <label style="color: #38bdf8; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Scheduled Pickup Date:</label>
@@ -1385,7 +1397,35 @@
                     </div>
                     <div>
                         <label style="color: #38bdf8; font-weight: 800; font-size: 0.85rem; display: block; margin-bottom: 4px;">Scheduled Pickup Time:</label>
-                        <input type="text" id="manual-inv-time" value="09:00 AM" placeholder="e.g. 09:00 AM" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1.5px solid #38bdf8; border-radius: 6px; font-weight: 700;">
+                        <select id="manual-inv-time" style="width: 100%; padding: 9px; background: #000; color: #fff; border: 1.5px solid #38bdf8; border-radius: 6px; font-weight: 700;">
+                            <option value="7:00 AM">7:00 AM</option>
+                            <option value="7:30 AM">7:30 AM</option>
+                            <option value="8:00 AM">8:00 AM</option>
+                            <option value="8:30 AM">8:30 AM</option>
+                            <option value="9:00 AM">9:00 AM</option>
+                            <option value="9:30 AM">9:30 AM</option>
+                            <option value="10:00 AM">10:00 AM</option>
+                            <option value="10:30 AM">10:30 AM</option>
+                            <option value="11:00 AM">11:00 AM</option>
+                            <option value="11:30 AM">11:30 AM</option>
+                            <option value="12:00 PM">12:00 PM</option>
+                            <option value="12:30 PM">12:30 PM</option>
+                            <option value="1:00 PM">1:00 PM</option>
+                            <option value="1:30 PM">1:30 PM</option>
+                            <option value="2:00 PM">2:00 PM</option>
+                            <option value="2:30 PM">2:30 PM</option>
+                            <option value="3:00 PM">3:00 PM</option>
+                            <option value="3:30 PM">3:30 PM</option>
+                            <option value="4:00 PM">4:00 PM</option>
+                            <option value="4:30 PM">4:30 PM</option>
+                            <option value="5:00 PM">5:00 PM</option>
+                            <option value="5:30 PM">5:30 PM</option>
+                            <option value="6:00 PM">6:00 PM</option>
+                            <option value="6:30 PM">6:30 PM</option>
+                            <option value="7:00 PM">7:00 PM</option>
+                            <option value="7:30 PM">7:30 PM</option>
+                            <option value="8:00 PM">8:00 PM</option>
+                        </select>
                     </div>
                 </div>
 
@@ -2763,20 +2803,123 @@
         }
 
         function invoiceLiveAutoPrice() {
-            var typedVal = document.getElementById('manual-inv-dest').value.trim().toLowerCase();
+            var destField = document.getElementById('manual-inv-dest');
+            var typedVal = destField.value.trim().toLowerCase();
             if (typedVal.length < 3) return;
 
-            var matches = Object.keys(privateCustomerRates).filter(function(place) {
+            // Match the invoice destination against the currently selected operating mode.
+            var activeInvoiceRateTable = currentOperatingMode === 'westco' ? wisynco7TonRates : privateCustomerRates;
+            var matches = Object.keys(activeInvoiceRateTable).filter(function(place) {
                 return typedVal === place || typedVal.includes(place) || place.indexOf(typedVal) === 0;
             });
 
             if (matches.length) {
-                // Prefer the longest matching town name to avoid a shorter name
-                // overriding a more specific destination such as Old Harbour Bay.
+                // Prefer the longest matching town name to avoid a shorter name overriding a specific destination.
                 matches.sort(function(a, b) { return b.length - a.length; });
-                document.getElementById('manual-inv-amount').value = privateCustomerRates[matches[0]];
+                document.getElementById('manual-inv-amount').value = activeInvoiceRateTable[matches[0]];
             }
         }
+
+        var dcSavedInvoiceCustomers = (function() {
+            try {
+                var stored = localStorage.getItem('dc_saved_invoice_customers');
+                return stored ? JSON.parse(stored) : [];
+            } catch (e) { return []; }
+        })();
+
+        function dcPersistInvoiceCustomers() {
+            try {
+                localStorage.setItem('dc_saved_invoice_customers', JSON.stringify(dcSavedInvoiceCustomers));
+                return true;
+            } catch (e) {
+                alert('Could not save customers on this phone. Please check browser storage settings.');
+                return false;
+            }
+        }
+
+        function dcRenderInvoiceCustomers() {
+            var list = document.getElementById('dc-saved-customer-options');
+            if (!list) return;
+            list.innerHTML = '';
+            dcSavedInvoiceCustomers.forEach(function(customer) {
+                var option = document.createElement('option');
+                option.value = customer.name + (customer.phone ? ' — ' + customer.phone : '');
+                list.appendChild(option);
+            });
+        }
+
+        function dcFindInvoiceCustomerIndex() {
+            var search = document.getElementById('dc-saved-customer-search');
+            var query = search ? search.value.trim().toLowerCase() : '';
+            if (!query) return -1;
+            var exact = dcSavedInvoiceCustomers.findIndex(function(customer) {
+                return (customer.name + (customer.phone ? ' — ' + customer.phone : '')).toLowerCase() === query;
+            });
+            if (exact >= 0) return exact;
+            var matches = dcSavedInvoiceCustomers.map(function(customer, index) {
+                return { customer: customer, index: index };
+            }).filter(function(entry) {
+                return entry.customer.name.toLowerCase().includes(query) || (entry.customer.phone || '').toLowerCase().includes(query);
+            });
+            if (matches.length === 1) return matches[0].index;
+            if (matches.length > 1) {
+                alert('More than one customer matches. Type a little more of the name or phone number to narrow the search.');
+                return -1;
+            }
+            alert('No saved customer matches that search.');
+            return -1;
+        }
+
+        function dcSaveInvoiceCustomer() {
+            var customer = {
+                name: document.getElementById('manual-inv-client').value.trim(),
+                phone: document.getElementById('manual-inv-phone').value.trim(),
+                email: document.getElementById('manual-inv-email').value.trim(),
+                pickup: document.getElementById('manual-inv-pickup').value.trim()
+            };
+            if (!customer.name) { alert('Enter the customer name before saving.'); return; }
+            var matchIndex = dcSavedInvoiceCustomers.findIndex(function(existing) {
+                return existing.name.toLowerCase() === customer.name.toLowerCase() && existing.phone === customer.phone;
+            });
+            if (matchIndex >= 0) {
+                if (!confirm('This customer name and phone are already saved. Update the saved details?')) return;
+                dcSavedInvoiceCustomers[matchIndex] = customer;
+            } else {
+                dcSavedInvoiceCustomers.push(customer);
+            }
+            if (dcPersistInvoiceCustomers()) {
+                dcRenderInvoiceCustomers();
+                document.getElementById('dc-saved-customer-select').value = String(matchIndex >= 0 ? matchIndex : dcSavedInvoiceCustomers.length - 1);
+                alert('Customer details saved on this phone.');
+            }
+        }
+
+        function dcLoadInvoiceCustomer() {
+            var index = dcFindInvoiceCustomerIndex();
+            if (index < 0 || !dcSavedInvoiceCustomers[index]) return;
+            var customer = dcSavedInvoiceCustomers[index];
+            document.getElementById('manual-inv-client').value = customer.name || '';
+            document.getElementById('manual-inv-phone').value = customer.phone || '';
+            document.getElementById('manual-inv-email').value = customer.email || '';
+            document.getElementById('manual-inv-pickup').value = customer.pickup || '';
+            document.getElementById('manual-inv-dest').value = '';
+            document.getElementById('manual-inv-amount').value = '';
+            alert('Customer loaded into the invoice fields. Enter the new destination and booking date/time; the active rate sheet will calculate the amount.');
+        }
+
+        function dcDeleteInvoiceCustomer() {
+            var index = dcFindInvoiceCustomerIndex();
+            if (index < 0 || !dcSavedInvoiceCustomers[index]) return;
+            if (!confirm('Delete the saved details for ' + dcSavedInvoiceCustomers[index].name + '?')) return;
+            dcSavedInvoiceCustomers.splice(index, 1);
+            if (dcPersistInvoiceCustomers()) {
+                var search = document.getElementById('dc-saved-customer-search');
+                if (search) search.value = '';
+                dcRenderInvoiceCustomers();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', dcRenderInvoiceCustomers);
 
         var currentInvoiceFileConverted = null;
 
