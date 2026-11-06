@@ -4073,6 +4073,7 @@
 
         // BENCH TEST: invoice history is stored locally on this device only.
         var dcInvoiceHistoryLoadedId = null;
+        var dcInvoiceHistoryPendingRecord = null;
         const DC_INVOICE_HISTORY_KEY = 'dc_invoice_history_test_v1';
 
         function getDcInvoiceHistory() {
@@ -4090,7 +4091,22 @@
 
         function archiveDcInvoiceHistoryRecord(record) {
             var records = getDcInvoiceHistory();
-            records.unshift(record);
+            var originalId = record.sourceInvoiceId || record.id;
+            var existingIndex = records.findIndex(function(item) {
+                return item.id === originalId;
+            });
+
+            if (existingIndex >= 0) {
+                // Update the retrieved invoice in place; keep its original archive ID.
+                var existingRecord = records[existingIndex];
+                records[existingIndex] = Object.assign({}, existingRecord, record, {
+                    id: existingRecord.id,
+                    sourceInvoiceId: existingRecord.id
+                });
+            } else {
+                records.unshift(record);
+            }
+
             saveDcInvoiceHistory(records);
             renderDcInvoiceHistory();
         }
@@ -4160,6 +4176,7 @@
                 archiveDcInvoiceHistoryRecord(dcInvoiceHistoryPendingRecord);
                 dcInvoiceHistoryPendingRecord = null;
                 dcInvoiceHistoryLoadedId = null;
+                renderDcInvoiceHistory();
             }
             window.print();
         }
@@ -4214,9 +4231,23 @@
         function generateInvoice() {
             var depositPaid = document.getElementById('inv-deposit-paid').checked;
             var fullPaid = document.getElementById('inv-full-paid').checked;
-            var paymentDue = fullPaid || depositPaid
-        ? false
-        : (currentOperatingMode === 'dnc' || document.getElementById('inv-payment-due').checked);
+            var dueBoxChecked = document.getElementById('inv-payment-due').checked;
+            var isRetrievedInvoice = !!dcInvoiceHistoryLoadedId;
+            var loadedInvoiceRecord = isRetrievedInvoice
+                ? getDcInvoiceHistory().find(function(item) { return item.id === dcInvoiceHistoryLoadedId; })
+                : null;
+
+            if (isRetrievedInvoice && !loadedInvoiceRecord) {
+                alert('The retrieved invoice is no longer in this phone’s archive. Please retrieve it again before generating a receipt.');
+                dcInvoiceHistoryLoadedId = null;
+                return;
+            }
+
+            // A retrieved invoice follows the payment toggle selected by the user.
+            // Only a brand-new unpaid DNC invoice is automatically Payment Due.
+            var paymentDue = isRetrievedInvoice
+                ? (!fullPaid && !depositPaid && dueBoxChecked)
+                : (fullPaid || depositPaid ? false : (currentOperatingMode === 'dnc' || dueBoxChecked));
 
             if (!depositPaid && !fullPaid && !paymentDue) {
                 alert("⚠️ Please select Deposit Paid, Paid in Full, or Payment Outstanding in the Payment & Booking Status box before generating the invoice!");
@@ -4244,8 +4275,14 @@
             document.getElementById('invoice-preview').classList.toggle('dnc-payment-due', currentOperatingMode === 'dnc' && paymentDue);
 
             var currentSeq = parseInt(localStorage.getItem('dc_invoice_counter') || '1', 10);
-            var num = 'DC' + String(currentSeq).padStart(3, '0');
-            localStorage.setItem('dc_invoice_counter', currentSeq + 1);
+            var num;
+            if (isRetrievedInvoice && loadedInvoiceRecord.invoiceNo) {
+                // A conversion keeps the original invoice number.
+                num = loadedInvoiceRecord.invoiceNo;
+            } else {
+                num = 'DC' + String(currentSeq).padStart(3, '0');
+                localStorage.setItem('dc_invoice_counter', currentSeq + 1);
+            }
 
             var deposit = paymentDue ? 0 : totalAmount * 0.5;
             var balance = paymentDue ? totalAmount : totalAmount * 0.5;
@@ -4319,8 +4356,9 @@
             // BENCH TEST: hold invoice metadata until the existing Print / Save PDF action is pressed.
             var historyStatus = paymentDue ? 'due' : (fullPaid ? 'full' : 'deposit');
             var historyStatusLabel = paymentDue ? 'Payment Due' : (fullPaid ? 'Paid in Full' : '50% Deposit Paid');
+            var historySavedAt = new Date();
             dcInvoiceHistoryPendingRecord = {
-                id: 'invhist_' + Date.now() + '_' + Math.random().toString(36).slice(2,8),
+                id: isRetrievedInvoice ? loadedInvoiceRecord.id : ('invhist_' + Date.now() + '_' + Math.random().toString(36).slice(2,8)),
                 invoiceNo: num,
                 client: client,
                 phone: phone,
@@ -4333,9 +4371,9 @@
                 mode: currentOperatingMode,
                 status: historyStatus,
                 statusLabel: historyStatusLabel,
-                savedAt: new Date().toLocaleString(),
-                savedAtISO: new Date().toISOString(),
-                sourceInvoiceId: dcInvoiceHistoryLoadedId,
+                savedAt: historySavedAt.toLocaleString(),
+                savedAtISO: historySavedAt.toISOString(),
+                sourceInvoiceId: isRetrievedInvoice ? loadedInvoiceRecord.id : null,
                 printableHTML: ''
             };
 
