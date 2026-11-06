@@ -4214,7 +4214,9 @@
         function generateInvoice() {
             var depositPaid = document.getElementById('inv-deposit-paid').checked;
             var fullPaid = document.getElementById('inv-full-paid').checked;
-            var paymentDue = currentOperatingMode === 'dnc' || document.getElementById('inv-payment-due').checked;
+            var paymentDue = fullPaid || depositPaid
+        ? false
+        : (currentOperatingMode === 'dnc' || document.getElementById('inv-payment-due').checked);
 
             if (!depositPaid && !fullPaid && !paymentDue) {
                 alert("⚠️ Please select Deposit Paid, Paid in Full, or Payment Outstanding in the Payment & Booking Status box before generating the invoice!");
