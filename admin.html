@@ -1413,7 +1413,8 @@
             <div id="dc-invoice-history-panel" style="background:#03140b;border:2px solid #1a531f;padding:16px;border-radius:10px;margin:18px 0 25px;">
                 <h5 style="color:#86efac;font-size:1.1rem;font-weight:900;text-transform:uppercase;margin-bottom:8px;">🗂️ Invoice Archive</h5>
                 <p style="color:#cbd5e1;font-size:0.88rem;margin-bottom:10px;">Saved printable invoices are kept on this phone. Open and print an original copy, or retrieve its details to use the existing payment toggles for an official receipt.</p>
-                <select id="dc-invoice-history-filter" onchange="renderDcInvoiceHistory()" style="width:100%;padding:9px;background:#000;color:#fff;border:1px solid #1a531f;border-radius:6px;margin-bottom:8px;"><option value="all">All invoices</option><option value="deposit">50% Deposits Paid</option><option value="full">Paid in Full</option><option value="due">Payment Outstanding</option></select>\n                <input id="dc-invoice-history-search" type="search" placeholder="Search invoice number or customer name..." oninput="renderDcInvoiceHistory()" style="width:100%;padding:9px;background:#000;color:#fff;border:1px solid #1a531f;border-radius:6px;margin-bottom:10px;">
+                <select id="dc-invoice-history-filter" onchange="renderDcInvoiceHistory()" style="width:100%;padding:9px;background:#000;color:#fff;border:1px solid #1a531f;border-radius:6px;margin-bottom:8px;"><option value="all">All invoices</option><option value="deposit">50% Deposits Paid</option><option value="full">Paid in Full</option><option value="due">Payment Outstanding</option></select>
+                <input id="dc-invoice-history-search" type="search" placeholder="Search invoice number or customer name..." oninput="renderDcInvoiceHistory()" style="width:100%;padding:9px;background:#000;color:#fff;border:1px solid #1a531f;border-radius:6px;margin-bottom:10px;">
                 <div id="dc-invoice-history-list" style="display:grid;gap:8px;">
                     <p style="color:#cbd5e1;">No archived invoices yet. Generate an invoice, then press Print / Save PDF to archive it.</p>
                 </div>
@@ -2183,7 +2184,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
                     <div>
                         <h5 style="color: #c084fc; font-size: 1.15rem; font-weight: 900; text-transform: uppercase;">🗂️ Payslip Archive & Vault</h5>
-                        <p style="color: #cbd5e1; font-size: 0.88rem;">Archive generated payslips, view stamps, dates, times, toggle Paid/Unpaid watermarks, and share via WhatsApp or Email.</p>
+                        <p style="color: #cbd5e1; font-size: 0.88rem;">Save full printable payslip copies, reopen and print them with COPY and PAID/UNPAID watermarks, and share the WhatsApp summary.</p>
                     </div>
                 </div>
                 <div class="archive-grid" id="payslip-archive-grid">
@@ -2674,10 +2675,10 @@
             "green island": 60588, "orange bay": 60588,
             "montego bay": 50701, "wakefield": 50701,
             "cambridge": 53890, "lambs river": 53890, "anchovy": 53890,
-            "falmouth": 58213, "clarks town": 58213, "jackson town": 58213, "ulster spring": 58213, "cave valley": 58213, "alexandria": 58213,
-            "claremont": 52682, "bamboo": 52682, "browns town": 52682, "runaway bay": 52682, "james hill": 52682, "priory": 52682, "boscobel": 52682,
-            "st. ann's bay": 52682, "ocho rios": 52682, "retreat": 52682, "gayle": 52682, "oracabessa": 52682, "tower isle": 52682, "jacks river": 52682,
-            "discovery bay": 55583, "braco": 55583, "duncans": 55583,
+            "falmouth": 42614, "clarks town": 42614, "jackson town": 42614, "ulster spring": 42614, "cave valley": 42614, "alexandria": 42614,
+            "claremont": 38683, "bamboo": 38683, "browns town": 38683, "runaway bay": 38683, "james hill": 38683, "priory": 38683, "boscobel": 38683,
+            "st. ann's bay": 38683, "ocho rios": 38683, "retreat": 38683, "gayle": 38683, "oracabessa": 38683, "tower isle": 38683, "jacks river": 38683,
+            "discovery bay": 40815, "braco": 40815, "duncans": 40815,
             "guys hill": 24390, "glengoffe": 24390, "polly ground": 24390,
             "clonmel": 30099, "richmond": 30099, "highgate": 30099, "islington": 30099, "port maria": 30099, "carron hall": 30099,
             "annotto bay": 28164, "windsor castle": 28164, "buff bay": 28164, "skibo": 28164, "hope bay": 44652, "st. margaret's bay": 44652, "port antonio": 44652, "fellowship": 44652, "dragon bay": 44652,
@@ -4213,7 +4214,9 @@
         function generateInvoice() {
             var depositPaid = document.getElementById('inv-deposit-paid').checked;
             var fullPaid = document.getElementById('inv-full-paid').checked;
-            var paymentDue = currentOperatingMode === 'dnc' || document.getElementById('inv-payment-due').checked;
+            var paymentDue = fullPaid || depositPaid
+        ? false
+        : (currentOperatingMode === 'dnc' || document.getElementById('inv-payment-due').checked);
 
             if (!depositPaid && !fullPaid && !paymentDue) {
                 alert("⚠️ Please select Deposit Paid, Paid in Full, or Payment Outstanding in the Payment & Booking Status box before generating the invoice!");
@@ -5412,7 +5415,7 @@
         }
 
         function clearCorporateFinancialHistory() {
-            var approved = confirm("RESET JOB & MONEY HISTORY?\\n\\nThis will permanently remove all saved corporate job records and truck maintenance expense history on this phone. Unpaid/pending collections and all-time/monthly/yearly totals will then reset to zero. Vehicle Vault insurance/fitness photos, staff profiles, and payslip archives will be kept.\\n\\nContinue?");
+            var approved = confirm("RESET JOB & MONEY HISTORY?\n\nThis will permanently remove all saved corporate job records and truck maintenance expense history on this phone. Unpaid/pending collections and all-time/monthly/yearly totals will then reset to zero. Vehicle Vault insurance/fitness photos, staff profiles, and payslip archives will be kept.\n\nContinue?");
             if (!approved) return;
 
             try {
@@ -5732,17 +5735,32 @@
         });
 
         // ----------------------------------------- //
+        // ----------------------------------------- //
         // PAYSLIP ARCHIVE & VAULT FUNCTIONS         //
         // ----------------------------------------- //
         let archivedPayslips = JSON.parse(localStorage.getItem('dnc_archived_payslips')) || [];
 
         function archiveCurrentPayslip() {
-            // Pulls current values from your active payslip generator fields
-            // Read the values from the actual generated payslip preview.
+            const preview = document.getElementById('payslip-preview');
+            if (!preview) {
+                alert('The payslip preview could not be found, so it was not archived.');
+                return false;
+            }
+
+            // Save a complete snapshot of the displayed payslip, not just its summary.
+            const snapshot = preview.cloneNode(true);
+            snapshot.querySelectorAll('.btn-print, button').forEach(function(button) { button.remove(); });
+            snapshot.querySelectorAll('[contenteditable]').forEach(function(field) {
+                field.removeAttribute('contenteditable');
+            });
+            snapshot.querySelectorAll('img').forEach(function(img) {
+                if (img.src) img.setAttribute('src', img.src);
+            });
+            const documentHtml = snapshot.innerHTML;
+
             const workerName = document.getElementById('slip-name') ? document.getElementById('slip-name').innerText.trim() : 'Dispatch Worker';
             const netPay = document.getElementById('slip-total-amount') ? document.getElementById('slip-total-amount').innerText.trim() : '$0.00';
             const payPeriod = document.getElementById('slip-period') ? document.getElementById('slip-period').innerText.trim() : 'Standard Pay Period';
-            
             const now = new Date();
             const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
             const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
@@ -5754,11 +5772,25 @@
                 payPeriod: payPeriod,
                 date: dateStr,
                 time: timeStr,
-                status: 'UNPAID' // Default status
+                status: 'UNPAID',
+                documentHtml: documentHtml
             };
 
             archivedPayslips.unshift(payslipObj);
-            saveAndRenderPayslips();
+            try {
+                const saved = JSON.stringify(archivedPayslips);
+                localStorage.setItem('dnc_archived_payslips', saved);
+                if (localStorage.getItem('dnc_archived_payslips') !== saved) {
+                    throw new Error('The archive could not be verified after saving.');
+                }
+                renderPayslipArchive();
+                return true;
+            } catch (error) {
+                archivedPayslips.shift();
+                alert('This payslip could not be archived because the phone browser storage is full. The payslip itself is still available to print now. Please save a PDF copy before closing this page.');
+                console.error('Payslip archive save failed:', error);
+                return false;
+            }
         }
 
         function togglePayslipStatus(id) {
@@ -5776,19 +5808,48 @@
             }
         }
 
+        function viewArchivedPayslip(id) {
+            const slip = archivedPayslips.find(s => s.id === id);
+            if (!slip) return;
+            if (!slip.documentHtml) {
+                alert('This older archive entry contains summary details only. It was saved before full payslip copies were enabled, so its original itemized document is not available. New payslips archived from now on will include the full printable copy.');
+                return;
+            }
+
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                alert('Your browser blocked the payslip copy window. Please allow pop-ups for this website and try again.');
+                return;
+            }
+
+            const status = slip.status === 'PAID' ? 'PAID' : 'UNPAID';
+            const printHtml = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D&C Payslip Copy</title>' +
+                '<style>body{margin:0;padding:18px;background:#eef2f7;font-family:Arial,sans-serif;color:#111}#saved-payslip-wrap{position:relative;max-width:900px;margin:0 auto;background:#fff}#saved-payslip{display:block!important;border:3px solid #1a531f;padding:20px;background:#fff;color:#111;position:relative;overflow:hidden}.inv-header{display:grid;grid-template-columns:230px 1fr;align-items:center;border-bottom:2px solid #1a531f;padding-bottom:6px;margin-bottom:8px}.inv-logo-box{width:230px}.inv-logo-box img{width:100%;max-height:135px;object-fit:contain;display:block}.inv-title-box{min-width:0;text-align:left;margin-left:-20px}.inv-title-main{color:#1a531f;font-size:1.35rem;font-weight:900;text-transform:uppercase;line-height:1.1;margin-bottom:2px}.inv-title-sub{font-size:.98rem;font-weight:900;color:#111;text-transform:uppercase;line-height:1.15;margin-bottom:2px}.inv-title-loc{font-size:.85rem;font-weight:800;color:#334155}.inv-footer{margin-top:10px;padding-top:8px;border-top:1.5px solid #ddd;text-align:center;font-style:italic;color:#111827;font-size:.85rem}.editable-preview-field{border:0!important;background:transparent!important}.copy-watermark,.status-watermark{position:absolute;left:50%;transform:translate(-50%,-50%) rotate(-25deg);font-size:clamp(42px,9vw,88px);font-weight:900;letter-spacing:5px;pointer-events:none;white-space:nowrap;z-index:20;opacity:.16;border:7px solid currentColor;padding:4px 18px;border-radius:10px}.copy-watermark{top:43%;color:#475569}.status-watermark{top:61%;font-size:clamp(30px,6vw,60px);opacity:.18;color:' + (status === 'PAID' ? '#166534' : '#dc2626') + '}.print-actions{max-width:900px;margin:12px auto;display:flex;gap:10px;flex-wrap:wrap}.print-actions button{padding:12px 16px;border:0;border-radius:7px;background:#166534;color:#fff;font-weight:800;font-size:15px}.print-actions button:last-child{background:#475569}@media print{body{padding:0;background:#fff}#saved-payslip{border:0;padding:10px}.print-actions{display:none!important}@page{margin:10mm}}</style></head><body>' +
+                '<div id="saved-payslip-wrap"><div class="copy-watermark">COPY</div><div class="status-watermark">' + status + '</div><div id="saved-payslip">' + slip.documentHtml + '</div></div>' +
+                '<div class="print-actions"><button onclick="window.print()">🖨️ Print / Save PDF</button><button onclick="window.close()">Close</button></div></body></html>';
+            printWindow.document.open();
+            printWindow.document.write(printHtml);
+            printWindow.document.close();
+        }
+
         function sharePayslipWhatsApp(id) {
             const slip = archivedPayslips.find(s => s.id === id);
             if (!slip) return;
-            const text = `*D&C DISPATCH PAYSLIP*%0AWorker: ${slip.workerName}%0APeriod: ${slip.payPeriod}%0ANet Pay: ${slip.netPay}%0AStatus: ${slip.status}%0ADate: ${slip.date} at ${slip.time}`;
-            window.open(`https://wa.me/?text=${text}`, '_blank');
+            const text = '*D&C DISPATCH PAYSLIP*\nWorker: ' + slip.workerName +
+                '\nPeriod: ' + slip.payPeriod +
+                '\nNet Pay: ' + slip.netPay +
+                '\nStatus: ' + slip.status +
+                '\nDate: ' + slip.date + ' at ' + slip.time +
+                '\n\nTo send the full payslip, open View / Print Copy, save it as a PDF, then attach that PDF in WhatsApp.';
+            window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
         }
 
         function sharePayslipEmail(id) {
             const slip = archivedPayslips.find(s => s.id === id);
             if (!slip) return;
-            const subject = encodeURIComponent(`Payslip - ${slip.workerName} (${slip.payPeriod})`);
-            const body = encodeURIComponent(`Hello,\n\nHere are the details for your payslip:\n\nWorker: ${slip.workerName}\nPay Period: ${slip.payPeriod}\nNet Pay: ${slip.netPay}\nStatus: ${slip.status}\nGenerated: ${slip.date} at ${slip.time}\n\nBest regards,\nD&C Dispatcher Control Panel`);
-            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+            const subject = encodeURIComponent('Payslip - ' + slip.workerName + ' (' + slip.payPeriod + ')');
+            const body = encodeURIComponent('Hello,\n\nHere are the details for your payslip:\n\nWorker: ' + slip.workerName + '\nPay Period: ' + slip.payPeriod + '\nNet Pay: ' + slip.netPay + '\nStatus: ' + slip.status + '\nGenerated: ' + slip.date + ' at ' + slip.time + '\n\nBest regards,\nD&C Dispatcher Control Panel');
+            window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
         }
 
         function saveAndRenderPayslips() {
@@ -5801,7 +5862,7 @@
             if (!grid) return;
 
             if (archivedPayslips.length === 0) {
-                grid.innerHTML = `<p style="color: #94a3b8; font-size: 0.9rem; text-align: center; grid-column: 1 / -1;">No payslips archived yet. Generate a payslip above to archive it!</p>`;
+                grid.innerHTML = '<p style="color:#94a3b8;font-size:.9rem;text-align:center;grid-column:1/-1;">No payslips archived yet. Generate a payslip above to archive it!</p>';
                 return;
             }
 
@@ -5809,30 +5870,26 @@
                 const isPaid = slip.status === 'PAID';
                 const watermarkClass = isPaid ? 'watermark-paid' : 'watermark-unpaid';
                 const statusBadgeBg = isPaid ? '#166534' : '#991b1b';
+                const viewButton = slip.documentHtml
+                    ? '<button onclick="viewArchivedPayslip(\'' + slip.id + '\')" style="flex:1;background:#166534;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">🖨️ View / Print Copy</button>'
+                    : '<button onclick="viewArchivedPayslip(\'' + slip.id + '\')" style="flex:1;background:#475569;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">ℹ️ Copy unavailable</button>';
 
-                return `
-                    <div class="archive-card">
-                        <div class="payslip-watermark ${watermarkClass}">${slip.status}</div>
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; z-index: 2;">
-                            <div>
-                                <h6 style="color: #f8fafc; font-size: 1rem; font-weight: 800; margin-bottom: 2px;">${slip.workerName}</h6>
-                                <p style="color: #cbd5e1; font-size: 0.8rem;">Period: ${slip.payPeriod}</p>
-                            </div>
-                            <span style="background: ${statusBadgeBg}; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 4px;">${slip.status}</span>
-                        </div>
-                        <div style="background: #020810; padding: 10px; border-radius: 6px; border: 1px solid #1e293b; z-index: 2; margin: 6px 0;">
-                            <div style="font-size: 0.75rem; color: #94a3b8;">Net Payout Amount</div>
-                            <div style="font-size: 1.25rem; font-weight: 900; color: #4ade80;">${slip.netPay}</div>
-                            <div style="font-size: 0.72rem; color: #64748b; margin-top: 4px;">Archived: ${slip.date} at ${slip.time}</div>
-                        </div>
-                        <div style="display: flex; gap: 6px; flex-wrap: wrap; z-index: 2; margin-top: 4px;">
-                            <button onclick="togglePayslipStatus('${slip.id}')" style="flex: 1; background: #3b82f6; color: #fff; border: none; padding: 6px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">Toggle Paid/Unpaid</button>
-                            <button onclick="sharePayslipWhatsApp('${slip.id}')" style="background: #22c55e; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Share WhatsApp">💬</button>
-                            <button onclick="sharePayslipEmail('${slip.id}')" style="background: #a855f7; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Share Email">✉️</button>
-                            <button onclick="deleteArchivedPayslip('${slip.id}')" style="background: #ef4444; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-size: 0.78rem; font-weight: 700; cursor: pointer;" title="Delete">🗑️</button>
-                        </div>
-                    </div>
-                `;
+                return '<div class="archive-card">' +
+                    '<div class="payslip-watermark ' + watermarkClass + '">' + slip.status + '</div>' +
+                    '<div style="display:flex;justify-content:space-between;align-items:flex-start;z-index:2;"><div>' +
+                    '<h6 style="color:#f8fafc;font-size:1rem;font-weight:800;margin-bottom:2px;">' + slip.workerName + '</h6>' +
+                    '<p style="color:#cbd5e1;font-size:.8rem;">Period: ' + slip.payPeriod + '</p></div>' +
+                    '<span style="background:' + statusBadgeBg + ';color:#fff;font-size:.7rem;font-weight:800;padding:3px 8px;border-radius:4px;">' + slip.status + '</span></div>' +
+                    '<div style="background:#020810;padding:10px;border-radius:6px;border:1px solid #1e293b;z-index:2;margin:6px 0;"><div style="font-size:.75rem;color:#94a3b8;">Net Payout Amount</div>' +
+                    '<div style="font-size:1.25rem;font-weight:900;color:#4ade80;">' + slip.netPay + '</div>' +
+                    '<div style="font-size:.72rem;color:#64748b;margin-top:4px;">Archived: ' + slip.date + ' at ' + slip.time + '</div></div>' +
+                    '<div style="display:flex;gap:6px;flex-wrap:wrap;z-index:2;margin-top:4px;">' +
+                    viewButton +
+                    '<button onclick="togglePayslipStatus(\'' + slip.id + '\')" style="flex:1;background:#3b82f6;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">Toggle Paid/Unpaid</button>' +
+                    '<button onclick="sharePayslipWhatsApp(\'' + slip.id + '\')" style="background:#22c55e;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Send WhatsApp message">💬</button>' +
+                    '<button onclick="sharePayslipEmail(\'' + slip.id + '\')" style="background:#a855f7;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Share Email">✉️</button>' +
+                    '<button onclick="deleteArchivedPayslip(\'' + slip.id + '\')" style="background:#ef4444;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Delete">🗑️</button>' +
+                    '</div></div>';
             }).join('');
         }
 
@@ -5840,7 +5897,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             renderPayslipArchive();
         });
-    
+
         // D&C private records are stored separately. No writes are made to Westinco job data.
         function dcNewPayrollSelected(role){var boxes=document.querySelectorAll('#dcn-payroll-'+role+'-list input[type="checkbox"]:checked');return Array.prototype.map.call(boxes,function(b){return b.value})}
 
