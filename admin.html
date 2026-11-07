@@ -944,17 +944,15 @@
             overflow-wrap: break-word;
         }
 
-        /* Keep the driver name centered and contained inside its table cell. */
+        /* TEST BENCH: center and inset the driver name to keep it clear of column borders. */
         #tracker-table-body .joblog-driver-name {
             display: block;
-            width: 100%;
+            width: fit-content;
             max-width: 100%;
-            box-sizing: border-box;
             margin: 0 auto;
-            padding: 0 2px;
+            padding: 0 3px;
             text-align: center;
-            white-space: normal;
-            overflow-wrap: anywhere;
+            white-space: nowrap;
             font-size: 0.84rem;
             font-weight: 800;
         }
