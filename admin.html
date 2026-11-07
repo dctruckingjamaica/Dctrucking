@@ -687,7 +687,7 @@
             align-items: center;
             background: #123b20;
             border: 2px solid #4ade80;
-            padding: 11px 14px;
+            padding: 8px 14px;
             border-radius: 8px;
             margin-top: 34px;
             margin-left: auto;
@@ -5980,7 +5980,234 @@
                     tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.88rem;">' + j.date + '</span></td>' +
                                    '<td>' + invHTML + '</td>' +
                                    '<td>' + (j.source === 'D&C' ? '<strong style="color:#4ade80;">D&amp;C — </strong>' : '') + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
-                                   '<td><span class="joblog-driver-name">' + j.driver + '</span><br><span style="color:#4ade80; font-weight: 800;">$' + j.driverPay.toLocaleString() + ' JMD</span></td>' +
+                                   '<td><span class="joblog-driver-name">' + j.driver + '</span><span style="color:#4ade80; font-weight: 800;">
+                                   '<td>' + j.assistant + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.asstPay.toLocaleString() + ' JMD</span></td>' +
+                                   '<td style="color:#f87171; font-weight: 800;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
+                                   '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
+                                   '<td style="font-weight:900; color:#38bdf8;">$' + jobNetProfit.toLocaleString() + ' JMD</td>' +
+                                   '<td>' + statusHTML + '</td>' +
+                                   '<td>' +
+                                      '<div class="action-btn-group">' +
+                                          '<button class="btn-table-edit" style="' + editBtnStyle + '" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
+                                          '<button class="btn-table-delete" style="' + deleteBtnStyle + '" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
+                                          payoutControlsHTML +
+                                      '</div>' +
+                                   '</td>';
+                    tbody.appendChild(tr);
+                }
+            }
+
+            loadMaintenanceLogs();
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            populateTownDatalists();
+            populateMechanicProfilePicker();
+            loadFleetServiceDueDates();
+            
+            if (sessionStorage.getItem('dnc_unlocked') === 'true') {
+                document.getElementById('managerLoginModal').style.display = 'none';
+                unlockSystemUI();
+                if (sessionStorage.getItem('dnc_keep_online') === 'true') {
+                    toggleOnlineStatus();
+                }
+            } else {
+                document.getElementById('manager-panel').style.display = 'none';
+                document.getElementById('managerLoginModal').style.display = 'flex';
+                document.getElementById('managerPinInput').focus();
+            }
+        });
+
+        // ----------------------------------------- //
+        // ----------------------------------------- //
+        // PAYSLIP ARCHIVE & VAULT FUNCTIONS         //
+        // ----------------------------------------- //
+        let archivedPayslips = JSON.parse(localStorage.getItem('dnc_archived_payslips')) || [];
+
+        function archiveCurrentPayslip() {
+            const preview = document.getElementById('payslip-preview');
+            if (!preview) {
+                alert('The payslip preview could not be found, so it was not archived.');
+                return false;
+            }
+
+            // Save a complete snapshot of the displayed payslip, not just its summary.
+            const snapshot = preview.cloneNode(true);
+            snapshot.querySelectorAll('.btn-print, button').forEach(function(button) { button.remove(); });
+            snapshot.querySelectorAll('[contenteditable]').forEach(function(field) {
+                field.removeAttribute('contenteditable');
+            });
+            snapshot.querySelectorAll('img').forEach(function(img) {
+                if (img.src) img.setAttribute('src', img.src);
+            });
+            const documentHtml = snapshot.innerHTML;
+
+            const workerName = document.getElementById('slip-name') ? document.getElementById('slip-name').innerText.trim() : 'Dispatch Worker';
+            const netPay = document.getElementById('slip-total-amount') ? document.getElementById('slip-total-amount').innerText.trim() : '$0.00';
+            const payPeriod = document.getElementById('slip-period') ? document.getElementById('slip-period').innerText.trim() : 'Standard Pay Period';
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+            const payslipObj = {
+                id: 'payslip_' + Date.now(),
+                workerName: workerName,
+                netPay: netPay,
+                payPeriod: payPeriod,
+                date: dateStr,
+                time: timeStr,
+                status: 'UNPAID',
+                documentHtml: documentHtml
+            };
+
+            archivedPayslips.unshift(payslipObj);
+            try {
+                const saved = JSON.stringify(archivedPayslips);
+                localStorage.setItem('dnc_archived_payslips', saved);
+                if (localStorage.getItem('dnc_archived_payslips') !== saved) {
+                    throw new Error('The archive could not be verified after saving.');
+                }
+                renderPayslipArchive();
+                return true;
+            } catch (error) {
+                archivedPayslips.shift();
+                alert('This payslip could not be archived because the phone browser storage is full. The payslip itself is still available to print now. Please save a PDF copy before closing this page.');
+                console.error('Payslip archive save failed:', error);
+                return false;
+            }
+        }
+
+        function togglePayslipStatus(id) {
+            const slip = archivedPayslips.find(s => s.id === id);
+            if (slip) {
+                slip.status = slip.status === 'PAID' ? 'UNPAID' : 'PAID';
+                saveAndRenderPayslips();
+            }
+        }
+
+        function deleteArchivedPayslip(id) {
+            if (confirm('Are you sure you want to remove this payslip from the archive?')) {
+                archivedPayslips = archivedPayslips.filter(s => s.id !== id);
+                saveAndRenderPayslips();
+            }
+        }
+
+        function viewArchivedPayslip(id) {
+            const slip = archivedPayslips.find(s => s.id === id);
+            if (!slip) return;
+            if (!slip.documentHtml) {
+                alert('This older archive entry contains summary details only. It was saved before full payslip copies were enabled, so its original itemized document is not available. New payslips archived from now on will include the full printable copy.');
+                return;
+            }
+
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                alert('Your browser blocked the payslip copy window. Please allow pop-ups for this website and try again.');
+                return;
+            }
+
+            const status = slip.status === 'PAID' ? 'PAID' : 'UNPAID';
+            const printHtml = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D&C Payslip Copy</title>' +
+                '<style>body{margin:0;padding:18px;background:#eef2f7;font-family:Arial,sans-serif;color:#111}#saved-payslip-wrap{position:relative;max-width:900px;margin:0 auto;background:#fff}#saved-payslip{display:block!important;border:3px solid #1a531f;padding:20px;background:#fff;color:#111;position:relative;overflow:hidden}.inv-header{display:grid;grid-template-columns:230px 1fr;align-items:center;border-bottom:2px solid #1a531f;padding-bottom:6px;margin-bottom:8px}.inv-logo-box{width:230px}.inv-logo-box img{width:100%;max-height:135px;object-fit:contain;display:block}.inv-title-box{min-width:0;text-align:left;margin-left:-20px}.inv-title-main{color:#1a531f;font-size:1.35rem;font-weight:900;text-transform:uppercase;line-height:1.1;margin-bottom:2px}.inv-title-sub{font-size:.98rem;font-weight:900;color:#111;text-transform:uppercase;line-height:1.15;margin-bottom:2px}.inv-title-loc{font-size:.85rem;font-weight:800;color:#334155}.inv-footer{margin-top:10px;padding-top:8px;border-top:1.5px solid #ddd;text-align:center;font-style:italic;color:#111827;font-size:.85rem}.editable-preview-field{border:0!important;background:transparent!important}.copy-watermark,.status-watermark{position:absolute;left:50%;transform:translate(-50%,-50%) rotate(-25deg);font-size:clamp(42px,9vw,88px);font-weight:900;letter-spacing:5px;pointer-events:none;white-space:nowrap;z-index:20;opacity:.16;border:7px solid currentColor;padding:4px 18px;border-radius:10px}.copy-watermark{top:43%;color:#475569}.status-watermark{top:61%;font-size:clamp(30px,6vw,60px);opacity:.18;color:' + (status === 'PAID' ? '#166534' : '#dc2626') + '}.print-actions{max-width:900px;margin:12px auto;display:flex;gap:10px;flex-wrap:wrap}.print-actions button{padding:12px 16px;border:0;border-radius:7px;background:#166534;color:#fff;font-weight:800;font-size:15px}.print-actions button:last-child{background:#475569}@media print{body{padding:0;background:#fff}#saved-payslip{border:0;padding:10px}.print-actions{display:none!important}@page{margin:10mm}}</style></head><body>' +
+                '<div id="saved-payslip-wrap"><div class="copy-watermark">COPY</div><div class="status-watermark">' + status + '</div><div id="saved-payslip">' + slip.documentHtml + '</div></div>' +
+                '<div class="print-actions"><button onclick="window.print()">🖨️ Print / Save PDF</button><button onclick="window.close()">Close</button></div></body></html>';
+            printWindow.document.open();
+            printWindow.document.write(printHtml);
+            printWindow.document.close();
+        }
+
+        function sharePayslipWhatsApp(id) {
+            const slip = archivedPayslips.find(s => s.id === id);
+            if (!slip) return;
+            const text = '*D&C DISPATCH PAYSLIP*\nWorker: ' + slip.workerName +
+                '\nPeriod: ' + slip.payPeriod +
+                '\nNet Pay: ' + slip.netPay +
+                '\nStatus: ' + slip.status +
+                '\nDate: ' + slip.date + ' at ' + slip.time +
+                '\n\nTo send the full payslip, open View / Print Copy, save it as a PDF, then attach that PDF in WhatsApp.';
+            window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+        }
+
+        function sharePayslipEmail(id) {
+            const slip = archivedPayslips.find(s => s.id === id);
+            if (!slip) return;
+            const subject = encodeURIComponent('Payslip - ' + slip.workerName + ' (' + slip.payPeriod + ')');
+            const body = encodeURIComponent('Hello,\n\nHere are the details for your payslip:\n\nWorker: ' + slip.workerName + '\nPay Period: ' + slip.payPeriod + '\nNet Pay: ' + slip.netPay + '\nStatus: ' + slip.status + '\nGenerated: ' + slip.date + ' at ' + slip.time + '\n\nBest regards,\nD&C Dispatcher Control Panel');
+            window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
+        }
+
+        function saveAndRenderPayslips() {
+            localStorage.setItem('dnc_archived_payslips', JSON.stringify(archivedPayslips));
+            renderPayslipArchive();
+        }
+
+        function renderPayslipArchive() {
+            const grid = document.getElementById('payslip-archive-grid');
+            if (!grid) return;
+
+            if (archivedPayslips.length === 0) {
+                grid.innerHTML = '<p style="color:#94a3b8;font-size:.9rem;text-align:center;grid-column:1/-1;">No payslips archived yet. Generate a payslip above to archive it!</p>';
+                return;
+            }
+
+            grid.innerHTML = archivedPayslips.map(slip => {
+                const isPaid = slip.status === 'PAID';
+                const watermarkClass = isPaid ? 'watermark-paid' : 'watermark-unpaid';
+                const statusBadgeBg = isPaid ? '#166534' : '#991b1b';
+                const viewButton = slip.documentHtml
+                    ? '<button onclick="viewArchivedPayslip(\'' + slip.id + '\')" style="flex:1;background:#166534;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">🖨️ View / Print Copy</button>'
+                    : '<button onclick="viewArchivedPayslip(\'' + slip.id + '\')" style="flex:1;background:#475569;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">ℹ️ Copy unavailable</button>';
+
+                return '<div class="archive-card">' +
+                    '<div class="payslip-watermark ' + watermarkClass + '">' + slip.status + '</div>' +
+                    '<div style="display:flex;justify-content:space-between;align-items:flex-start;z-index:2;"><div>' +
+                    '<h6 style="color:#f8fafc;font-size:1rem;font-weight:800;margin-bottom:2px;">' + slip.workerName + '</h6>' +
+                    '<p style="color:#cbd5e1;font-size:.8rem;">Period: ' + slip.payPeriod + '</p></div>' +
+                    '<span style="background:' + statusBadgeBg + ';color:#fff;font-size:.7rem;font-weight:800;padding:3px 8px;border-radius:4px;">' + slip.status + '</span></div>' +
+                    '<div style="background:#020810;padding:10px;border-radius:6px;border:1px solid #1e293b;z-index:2;margin:6px 0;"><div style="font-size:.75rem;color:#94a3b8;">Net Payout Amount</div>' +
+                    '<div style="font-size:1.25rem;font-weight:900;color:#4ade80;">' + slip.netPay + '</div>' +
+                    '<div style="font-size:.72rem;color:#64748b;margin-top:4px;">Archived: ' + slip.date + ' at ' + slip.time + '</div></div>' +
+                    '<div style="display:flex;gap:6px;flex-wrap:wrap;z-index:2;margin-top:4px;">' +
+                    viewButton +
+                    '<button onclick="togglePayslipStatus(\'' + slip.id + '\')" style="flex:1;background:#3b82f6;color:#fff;border:0;padding:7px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;">Toggle Paid/Unpaid</button>' +
+                    '<button onclick="sharePayslipWhatsApp(\'' + slip.id + '\')" style="background:#22c55e;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Send WhatsApp message">💬</button>' +
+                    '<button onclick="sharePayslipEmail(\'' + slip.id + '\')" style="background:#a855f7;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Share Email">✉️</button>' +
+                    '<button onclick="deleteArchivedPayslip(\'' + slip.id + '\')" style="background:#ef4444;color:#fff;border:0;padding:7px 10px;border-radius:4px;font-size:.78rem;font-weight:700;cursor:pointer;" title="Delete">🗑️</button>' +
+                    '</div></div>';
+            }).join('');
+        }
+
+        // Auto-load existing archives on page startup
+        window.addEventListener('DOMContentLoaded', () => {
+            renderPayslipArchive();
+        });
+
+        // D&C private records are stored separately. No writes are made to Westinco job data.
+        function dcNewPayrollSelected(role){var boxes=document.querySelectorAll('#dcn-payroll-'+role+'-list input[type="checkbox"]:checked');return Array.prototype.map.call(boxes,function(b){return b.value})}
+
+        function dcNewPayrollLoad(role){
+          var nameEl=document.getElementById(role==='driver'?'payroll-driver-name':'payroll-asst-name');
+          var name=(nameEl&&nameEl.value||'').trim().toLowerCase();
+          if(!name){alert('Enter the staff member name first.');return}
+          var items=[];
+          getStoredJobs().forEach(function(j){
+            var staff=role==='driver'?j.driver:j.assistant;
+            if(staff&&String(staff).toLowerCase().includes(name)){
+              items.push({key:'JOB:'+j.id,source:j.source==='D&C'?'D&C':'Westinco',ref:j.inv||'Job',date:j.date,route:(j.pickup||'—')+' → '+(j.drop||'—'),pay:role==='driver'?j.driverPay:j.asstPay});
+            }
+          });
+          var list=document.getElementById('dcn-payroll-'+role+'-list');
+          if(!items.length){list.innerHTML='<p style="color:#fca5a5">No jobs found for that staff name.</p>';return}
+          list.innerHTML=items.map(function(j){
+            var safe=function(v){return String(v==null?'':v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+            return '<label style="display:block;background:#020617;padding:7px;margin:4px 0;border-radius:5px;color:#fff"><input type="checkbox" value="'+safe(j.key)+'" checked style="width:auto;margin-right:6px"> <strong>'+safe(j.source)+' | '+safe(j.ref)+'</strong> — '+safe(j.date)+'<br><span style="font-size:.82rem">'+safe(j.route)+' | JMD $'+Number(j.pay||0).toLocaleString()+'</span></label>';
+          }).join('');
+        }
+
+</script>
+</body>
+</html>
+ + j.driverPay.toLocaleString() + ' JMD</span></td>' +
                                    '<td>' + j.assistant + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.asstPay.toLocaleString() + ' JMD</span></td>' +
                                    '<td style="color:#f87171; font-weight: 800;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
