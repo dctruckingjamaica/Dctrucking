@@ -934,6 +934,23 @@
             table-layout: fixed;
         }
 
+        /* BENCH ONLY: compact Corporate Job Log cell padding without changing text size or layout. */
+        #tracker-table-body > tr > td {
+            padding: 4px 6px;
+        }
+        #tracker-table-body .status-badge-paid,
+        #tracker-table-body .status-badge-unpaid,
+        #tracker-table-body .status-badge-pending {
+            padding: 3px 8px;
+        }
+        #tracker-table-body .action-btn-group {
+            gap: 3px;
+        }
+        #tracker-table-body .btn-table-edit,
+        #tracker-table-body .btn-table-delete {
+            padding: 4px 8px;
+        }
+
         .tracker-table th, .tracker-table td {
             border: 1px solid #224d2d;
             padding: 10px 12px; /* Slightly increased padding for breathing room */
@@ -5875,15 +5892,15 @@
                     var driverIsPaid = j.driverPaid !== undefined ? j.driverPaid === true : j.staffPaid === true;
                     var assistantIsPaid = j.assistantPaid !== undefined ? j.assistantPaid === true : j.staffPaid === true;
                     var driverPaidBadge = !driverIsAssigned
-                        ? '<br><span style="display:inline-block;margin-top:5px;background:#334155;color:#cbd5e1;border:1px solid #64748b;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;">➖ DRIVER N/A — NOT ASSIGNED</span>'
+                        ? '<br><span style="display:inline-block;margin-top:2px;background:#334155;color:#cbd5e1;border:1px solid #64748b;border-radius:5px;padding:3px 6px;font-size:.75rem;font-weight:900;">➖ DRIVER N/A — NOT ASSIGNED</span>'
                         : (driverIsPaid
-                        ? '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ DRIVER PAID — TAP TO CHANGE</button>'
-                        : '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ DRIVER PAYMENT DUE — TAP TO MARK PAID</button>');
+                        ? '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:2px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:3px 6px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ DRIVER PAID — TAP TO CHANGE</button>'
+                        : '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:2px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:3px 6px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ DRIVER PAYMENT DUE — TAP TO MARK PAID</button>');
                     var assistantPaidBadge = !assistantIsAssigned
-                        ? '<br><span style="display:inline-block;margin-top:5px;background:#334155;color:#cbd5e1;border:1px solid #64748b;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;">➖ ASSISTANT N/A — NOT ASSIGNED</span>'
+                        ? '<br><span style="display:inline-block;margin-top:2px;background:#334155;color:#cbd5e1;border:1px solid #64748b;border-radius:5px;padding:3px 6px;font-size:.75rem;font-weight:900;">➖ ASSISTANT N/A — NOT ASSIGNED</span>'
                         : (assistantIsPaid
-                        ? '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ ASSISTANT PAID — TAP TO CHANGE</button>'
-                        : '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ ASSISTANT PAYMENT DUE — TAP TO MARK PAID</button>');
+                        ? '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:2px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:3px 6px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ ASSISTANT PAID — TAP TO CHANGE</button>'
+                        : '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:2px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:3px 6px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ ASSISTANT PAYMENT DUE — TAP TO MARK PAID</button>');
 
                     var editBtnStyle = tableEditUnlocked ? 'background: #0284c7; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
                     var deleteBtnStyle = tableEditUnlocked ? 'background: #dc2626; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
