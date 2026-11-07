@@ -1264,7 +1264,72 @@
     
 /* D&C standalone job log and payment-due document; isolated from Westinco workflow */
 .dc-new-invoice th{background:#166534;color:#fff}
-</style>
+
+        /* JOB LOG COMPACT VISUAL PASS — no data, calculations, or controls changed */
+        #tracker-table-body td:nth-child(1),
+        #tracker-table-body td:nth-child(4),
+        #tracker-table-body td:nth-child(5),
+        #tracker-table-body td:nth-child(6),
+        #tracker-table-body td:nth-child(7),
+        #tracker-table-body td:nth-child(8),
+        #tracker-table-body td:nth-child(9),
+        #tracker-table-body td:nth-child(10) {
+            padding: 6px 8px;
+            line-height: 1.2;
+        }
+        #tracker-table-body .job-day-date-cell strong,
+        #tracker-table-body .job-day-date-cell span { line-height: 1.15; }
+        #tracker-table-body .job-crew-name {
+            display: block;
+            white-space: nowrap;
+            line-height: 1.2;
+        }
+        #tracker-table-body .job-crew-amount {
+            display: block;
+            color: #4ade80;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-top: 2px;
+        }
+        #tracker-table-body .job-payout-toggle,
+        #tracker-table-body .job-payout-na {
+            display: inline-block;
+            margin-top: 3px;
+            padding: 3px 5px;
+            border-radius: 5px;
+            font-size: .75rem;
+            font-weight: 900;
+            line-height: 1.15;
+            white-space: normal;
+            text-align: center;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        #tracker-table-body .job-payout-toggle { cursor: pointer; }
+        #tracker-table-body .job-payout-paid {
+            background: #166534; color: #fff; border: 1px solid #4ade80;
+        }
+        #tracker-table-body .job-payout-due {
+            background: #7f1d1d; color: #fff; border: 1px solid #f87171;
+        }
+        #tracker-table-body .job-payout-na {
+            background: #334155; color: #cbd5e1; border: 1px solid #64748b;
+        }
+        #tracker-table-body .status-badge-paid,
+        #tracker-table-body .status-badge-unpaid,
+        #tracker-table-body .status-badge-pending { padding: 4px 7px; }
+        #tracker-table-body .action-btn-group { gap: 3px; }
+        #tracker-table-body .btn-table-edit,
+        #tracker-table-body .btn-table-delete { padding: 5px 7px; }
+        .week-filter-bar {
+            padding: 8px 10px;
+            margin-top: 26px;
+            margin-bottom: 18px;
+            gap: 8px;
+        }
+        .btn-week-toggle { padding: 6px 9px; }
+
+    </style>
 </head>
 <body>
 
@@ -5875,25 +5940,25 @@
                     var driverIsPaid = j.driverPaid !== undefined ? j.driverPaid === true : j.staffPaid === true;
                     var assistantIsPaid = j.assistantPaid !== undefined ? j.assistantPaid === true : j.staffPaid === true;
                     var driverPaidBadge = !driverIsAssigned
-                        ? '<br><span style="display:inline-block;margin-top:5px;background:#334155;color:#cbd5e1;border:1px solid #64748b;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;">➖ DRIVER N/A — NOT ASSIGNED</span>'
+                        ? '<span class="job-payout-na">➖ N/A</span>'
                         : (driverIsPaid
-                        ? '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ DRIVER PAID — TAP TO CHANGE</button>'
-                        : '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ DRIVER PAYMENT DUE — TAP TO MARK PAID</button>');
+                        ? '<button class="job-payout-toggle job-payout-paid" type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')">✅ PAID · TAP TO CHANGE</button>'
+                        : '<button class="job-payout-toggle job-payout-due" type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')">⏳ PAYMENT DUE · TAP TO MARK PAID</button>');
                     var assistantPaidBadge = !assistantIsAssigned
-                        ? '<br><span style="display:inline-block;margin-top:5px;background:#334155;color:#cbd5e1;border:1px solid #64748b;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;">➖ ASSISTANT N/A — NOT ASSIGNED</span>'
+                        ? '<span class="job-payout-na">➖ N/A</span>'
                         : (assistantIsPaid
-                        ? '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ ASSISTANT PAID — TAP TO CHANGE</button>'
-                        : '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ ASSISTANT PAYMENT DUE — TAP TO MARK PAID</button>');
+                        ? '<button class="job-payout-toggle job-payout-paid" type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')">✅ PAID · TAP TO CHANGE</button>'
+                        : '<button class="job-payout-toggle job-payout-due" type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')">⏳ PAYMENT DUE · TAP TO MARK PAID</button>');
 
                     var editBtnStyle = tableEditUnlocked ? 'background: #0284c7; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
                     var deleteBtnStyle = tableEditUnlocked ? 'background: #dc2626; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
 
                     var tr = document.createElement('tr');
-                    tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.88rem;">' + j.date + '</span></td>' +
+                    tr.innerHTML = '<td class="job-day-date-cell"><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.88rem;">' + j.date + '</span></td>' +
                                    '<td>' + invHTML + '</td>' +
                                    '<td>' + (j.source === 'D&C' ? '<strong style="color:#4ade80;">D&amp;C — </strong>' : '') + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
-                                   '<td>' + j.driver + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.driverPay.toLocaleString() + ' JMD</span>' + driverPaidBadge + '</td>' +
-                                   '<td>' + j.assistant + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.asstPay.toLocaleString() + ' JMD</span>' + assistantPaidBadge + '</td>' +
+                                   '<td class="job-crew-cell"><span class="job-crew-name">' + j.driver + '</span><span class="job-crew-amount">$' + j.driverPay.toLocaleString() + ' JMD</span>' + driverPaidBadge + '</td>' +
+                                   '<td class="job-crew-cell"><span class="job-crew-name">' + j.assistant + '</span><span class="job-crew-amount">$' + j.asstPay.toLocaleString() + ' JMD</span>' + assistantPaidBadge + '</td>' +
                                    '<td style="color:#f87171; font-weight: 800;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#38bdf8;">$' + jobNetProfit.toLocaleString() + ' JMD</td>' +
