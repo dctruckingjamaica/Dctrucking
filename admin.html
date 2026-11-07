@@ -1264,7 +1264,30 @@
     
 /* D&C standalone job log and payment-due document; isolated from Westinco workflow */
 .dc-new-invoice th{background:#166534;color:#fff}
-</style>
+
+        /* MOBILE SAFARI: keep manager PIN dialog stable and reachable when the keyboard opens */
+        #managerLoginModal {
+            height: 100vh !important;
+            height: 100dvh !important;
+            min-height: 100vh;
+            min-height: 100dvh;
+            box-sizing: border-box;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            justify-content: flex-start !important;
+            padding: max(16px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom));
+        }
+        #managerLoginModal > div {
+            flex: 0 0 auto;
+            margin: auto 0;
+            max-height: calc(100vh - 32px);
+            max-height: calc(100dvh - 32px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+
+    </style>
 </head>
 <body>
 
