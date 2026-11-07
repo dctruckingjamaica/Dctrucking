@@ -678,6 +678,8 @@
         .watermark-paid { color: #166534; }
         .watermark-unpaid { color: #dc2626; }
 
+        /* TEST ONLY: slightly reduce the current-week / all-history selector box.
+           Visual sizing only; no controls, data, login, or PIN behavior changed. */
         .week-filter-bar {
             position: relative;
             clear: both;
@@ -687,14 +689,14 @@
             align-items: center;
             background: #123b20;
             border: 2px solid #4ade80;
-            padding: 11px 14px;
+            padding: 6px 10px;
             border-radius: 8px;
-            margin-top: 34px;
+            margin-top: 18px;
             margin-left: auto;
             margin-right: auto;
-            margin-bottom: 24px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 6px;
             z-index: 1;
         }
 
@@ -754,7 +756,7 @@
             background: #075985;
             color: #ffffff;
             border: 1.5px solid #7dd3fc;
-            padding: 8px 13px;
+            padding: 5px 9px;
             border-radius: 6px;
             font-weight: 900;
             cursor: pointer;
