@@ -944,13 +944,65 @@
             overflow-wrap: break-word;
         }
 
-        /* TEST BENCH ONLY: keep driver name on one line without changing payout controls. */
+        /* TEST BENCH: center and inset the driver name to keep it clear of column borders. */
         #tracker-table-body .joblog-driver-name {
-            display: inline-block;
+            display: block;
+            width: fit-content;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 3px;
+            text-align: center;
             white-space: nowrap;
-            font-size: 0.88rem;
+            font-size: 0.84rem;
             font-weight: 800;
         }
+
+        /* Slightly compact the company collection status toggle. */
+        #tracker-table-body .status-badge-paid,
+        #tracker-table-body .status-badge-unpaid,
+        #tracker-table-body .status-badge-pending {
+            padding: 5px 9px;
+            font-size: 0.88rem;
+        }
+
+        /* Crew payout controls move into the row Actions area and appear only in Edit Mode. */
+        .joblog-payout-mini-group {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 4px;
+            width: 100%;
+        }
+
+        .joblog-payout-mini {
+            min-width: 0;
+            padding: 4px 2px;
+            border-radius: 4px;
+            font-size: 0.66rem;
+            line-height: 1.15;
+            font-weight: 900;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            cursor: pointer;
+        }
+
+        .joblog-payout-mini.paid {
+            background: #166534;
+            color: #fff;
+            border: 1px solid #4ade80;
+        }
+
+        .joblog-payout-mini.due {
+            background: #7f1d1d;
+            color: #fff;
+            border: 1px solid #f87171;
+        }
+
+        .joblog-payout-mini.na {
+            background: #334155;
+            color: #cbd5e1;
+            border: 1px solid #64748b;
+            cursor: default;
+       }
 
         .tracker-table th {
             background: #14381e;
@@ -5912,15 +5964,14 @@
                     var driverIsPaid = j.driverPaid !== undefined ? j.driverPaid === true : j.staffPaid === true;
                     var assistantIsPaid = j.assistantPaid !== undefined ? j.assistantPaid === true : j.staffPaid === true;
                     var driverPaidBadge = !driverIsAssigned
-                        ? '<br><span style="display:inline-block;margin-top:5px;background:#334155;color:#cbd5e1;border:1px solid #64748b;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;">➖ DRIVER N/A — NOT ASSIGNED</span>'
-                        : (driverIsPaid
-                        ? '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ DRIVER PAID — TAP TO CHANGE</button>'
-                        : '<br><button type="button" onclick="toggleDriverPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ DRIVER PAYMENT DUE — TAP TO MARK PAID</button>');
+                        ? '<button type="button" class="joblog-payout-mini na" disabled title="Driver not assigned">D: N/A</button>'
+                        : '<button type="button" class="joblog-payout-mini ' + (driverIsPaid ? 'paid' : 'due') + '" onclick="toggleDriverPayoutStatus(' + j.id + ')" title="Toggle driver payout between paid and due">D: ' + (driverIsPaid ? '✓ PAID' : '⌛ DUE') + '</button>';
                     var assistantPaidBadge = !assistantIsAssigned
-                        ? '<br><span style="display:inline-block;margin-top:5px;background:#334155;color:#cbd5e1;border:1px solid #64748b;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;">➖ ASSISTANT N/A — NOT ASSIGNED</span>'
-                        : (assistantIsPaid
-                        ? '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#166534;color:#fff;border:1px solid #4ade80;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">✅ ASSISTANT PAID — TAP TO CHANGE</button>'
-                        : '<br><button type="button" onclick="toggleAssistantPayoutStatus(' + j.id + ')" style="margin-top:5px;background:#7f1d1d;color:#fff;border:1px solid #f87171;border-radius:5px;padding:5px 7px;font-size:.75rem;font-weight:900;cursor:pointer;">⏳ ASSISTANT PAYMENT DUE — TAP TO MARK PAID</button>');
+                        ? '<button type="button" class="joblog-payout-mini na" disabled title="Assistant not assigned">A: N/A</button>'
+                        : '<button type="button" class="joblog-payout-mini ' + (assistantIsPaid ? 'paid' : 'due') + '" onclick="toggleAssistantPayoutStatus(' + j.id + ')" title="Toggle assistant payout between paid and due">A: ' + (assistantIsPaid ? '✓ PAID' : '⌛ DUE') + '</button>';
+                    var payoutControlsHTML = tableEditUnlocked
+                        ? '<div class="joblog-payout-mini-group">' + driverPaidBadge + assistantPaidBadge + '</div>'
+                        : '';
 
                     var editBtnStyle = tableEditUnlocked ? 'background: #0284c7; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
                     var deleteBtnStyle = tableEditUnlocked ? 'background: #dc2626; cursor: pointer;' : 'background: #334155; color: #94a3b8; cursor: not-allowed;';
@@ -5929,8 +5980,8 @@
                     tr.innerHTML = '<td><strong>' + j.day + '</strong><br><span style="color:#38bdf8; font-size:0.88rem;">' + j.date + '</span></td>' +
                                    '<td>' + invHTML + '</td>' +
                                    '<td>' + (j.source === 'D&C' ? '<strong style="color:#4ade80;">D&amp;C — </strong>' : '') + (j.pickup || '-') + ' ➔ ' + (j.drop || '-') + '</td>' +
-                                   '<td><span class="joblog-driver-name">' + j.driver + '</span><br><span style="color:#4ade80; font-weight: 800;">$' + j.driverPay.toLocaleString() + ' JMD</span>' + driverPaidBadge + '</td>' +
-                                   '<td>' + j.assistant + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.asstPay.toLocaleString() + ' JMD</span>' + assistantPaidBadge + '</td>' +
+                                   '<td><span class="joblog-driver-name">' + j.driver + '</span><br><span style="color:#4ade80; font-weight: 800;">$' + j.driverPay.toLocaleString() + ' JMD</span></td>' +
+                                   '<td>' + j.assistant + '<br><span style="color:#4ade80; font-weight: 800;">$' + j.asstPay.toLocaleString() + ' JMD</span></td>' +
                                    '<td style="color:#f87171; font-weight: 800;">$' + j.petrol.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#ffffff;">$' + j.rate.toLocaleString() + ' JMD</td>' +
                                    '<td style="font-weight:900; color:#38bdf8;">$' + jobNetProfit.toLocaleString() + ' JMD</td>' +
@@ -5939,6 +5990,7 @@
                                       '<div class="action-btn-group">' +
                                           '<button class="btn-table-edit" style="' + editBtnStyle + '" onclick="editJob(' + j.id + ')">✏️ Edit</button>' +
                                           '<button class="btn-table-delete" style="' + deleteBtnStyle + '" onclick="deleteJob(' + j.id + ')">🗑️</button>' +
+                                          payoutControlsHTML +
                                       '</div>' +
                                    '</td>';
                     tbody.appendChild(tr);
