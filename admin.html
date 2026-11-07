@@ -5807,6 +5807,20 @@
             });
             if (filterMonthVal !== 'ALL') tableJobs = filteredJobs;
 
+            // Display-only compact mode: keep the latest current-week job visible.
+            // The underlying allJobs/currentWeekJobs and payroll calculations remain unchanged.
+            var displayJobs = tableJobs;
+            if (!showAllHistory && filterMonthVal === 'ALL') {
+                var latestCurrentWeekJob = null;
+                for (var latestIndex = 0; latestIndex < tableJobs.length; latestIndex++) {
+                    var candidateJob = tableJobs[latestIndex];
+                    if (!latestCurrentWeekJob || Number(candidateJob.id) > Number(latestCurrentWeekJob.id)) {
+                        latestCurrentWeekJob = candidateJob;
+                    }
+                }
+                displayJobs = latestCurrentWeekJob ? [latestCurrentWeekJob] : [];
+            }
+
             var weekRev = 0;
             var weekPetrol = 0;
             var weekWages = 0;
@@ -5827,12 +5841,12 @@
             document.getElementById('sum-profit').innerText = '$' + (weekRev - weekTotalExp).toLocaleString() + ' JMD';
             document.getElementById('sum-count').innerText = currentWeekJobs.length + (currentWeekJobs.length === 1 ? ' Job' : ' Jobs');
 
-            if (tableJobs.length === 0) {
+            if (displayJobs.length === 0) {
                 var emptyMsg = showAllHistory ? "No corporate jobs logged yet." : "No operating week jobs logged yet. Ready to roll!";
                 tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:#94a3b8;">' + emptyMsg + '</td></tr>';
             } else {
-                for (var i = 0; i < tableJobs.length; i++) {
-                    var j = tableJobs[i];
+                for (var i = 0; i < displayJobs.length; i++) {
+                    var j = displayJobs[i];
                     var expenses = j.driverPay + j.asstPay + j.petrol;
                     var jobNetProfit = j.rate - expenses;
 
