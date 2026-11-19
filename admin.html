@@ -1453,6 +1453,8 @@
                         <button type="button" onclick="dcDeleteInvoiceCustomer()" style="padding:9px;background:#991b1b;color:#fff;border:0;border-radius:6px;">🗑️ Delete</button>
                     </div>
                 </div>
+                <button type="button" onclick="dcAddJob()" style="padding:9px 12px;margin:8px 0;background:#166534;color:white;border:1px solid #4ade80;border-radius:6px;">+ Add Another Job</button>
+                <div id="dc-extra-jobs"></div>
 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-bottom: 14px;">
                     <div>
@@ -2372,6 +2374,7 @@
                             <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; font-weight: 700; color: #111111;" id="out-desc">Haulage Transport: Kingston to Zone</td>
                             <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; text-align: right; font-weight: bold; color: #111111;" id="out-amount">$0 JMD</td>
                         </tr>
+                        <tr id="dc-extra-preview-anchor" style="display:none"><td colspan="2"></td></tr>
                         <tr style="background-color: #f0fdf4;">
                             <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; color: #166534; font-weight: 800;" id="out-deposit-label">🔒 Required 50% Deposit (To Confirm Booking)</td>
                             <td style="padding: 8px 12px; border-bottom: 1px solid #ddd; text-align: right; font-weight: 900; color: #166534;" id="out-deposit">$0 JMD</td>
@@ -4448,7 +4451,9 @@
             document.getElementById('manual-inv-email').value = record.email || '';
             document.getElementById('manual-inv-pickup').value = record.pickup || '';
             document.getElementById('manual-inv-dest').value = record.destination || '';
-            document.getElementById('manual-inv-amount').value = record.amount || '';
+            document.getElementById('manual-inv-amount').value = record.firstJobAmount != null ? record.firstJobAmount : (record.amount || '');
+            document.getElementById('dc-extra-jobs').innerHTML='';
+            (record.extraJobs||[]).forEach(function(j){dcAddJob(j);});
             document.getElementById('manual-inv-date').value = record.pickupDate || '';
             document.getElementById('manual-inv-time').value = record.pickupTime || '';
             document.getElementById('inv-deposit-paid').checked = record.status === 'deposit';
@@ -4460,6 +4465,18 @@
             alert('Saved invoice details have been loaded. Choose your existing payment status toggle, then press Generate Printable Invoice.');
         }
 
+        function dcAddJob(job) {
+            var row=document.createElement('div');row.className='dc-extra-job';row.style.cssText='padding:10px;border:1px solid #166534;border-radius:6px;margin:8px 0';
+            row.innerHTML='<strong>Additional Job</strong> <button type="button" onclick="this.parentNode.remove()">Remove</button><label>Job Date</label><input class="j-date" type="date" style="width:100%"><label>Pickup</label><input class="j-pickup" style="width:100%"><label>Drop-off</label><input class="j-dest" style="width:100%"><label>Amount (JMD)</label><input class="j-amount" type="number" min="0.01" step="0.01" style="width:100%">';
+            document.getElementById('dc-extra-jobs').appendChild(row);
+            [['.j-date','date','manual-inv-date'],['.j-pickup','pickup','manual-inv-pickup'],['.j-dest','dest','manual-inv-dest']].forEach(function(p){row.querySelector(p[0]).value=job&&job[p[1]]||document.getElementById(p[2]).value;});
+            row.querySelector('.j-amount').value=job&&job.amount||'';
+        }
+        function dcExtraJobs() {
+            return Array.from(document.querySelectorAll('#dc-extra-jobs .dc-extra-job')).map(function(row){
+                return {date:row.querySelector('.j-date').value,pickup:row.querySelector('.j-pickup').value.trim(),dest:row.querySelector('.j-dest').value.trim(),amount:Number(row.querySelector('.j-amount').value)};
+            });
+        }
         function generateInvoice() {
             var depositPaid = document.getElementById('inv-deposit-paid').checked;
             var fullPaid = document.getElementById('inv-full-paid').checked;
@@ -4497,6 +4514,12 @@
             var pTime = document.getElementById('manual-inv-time').value || '09:00 AM';
 
             var totalAmount = parseFloat(document.getElementById('manual-inv-amount').value) || 0;
+            var extraJobs=dcExtraJobs();
+            if(extraJobs.length && !paymentDue && !fullPaid){alert('Multiple jobs are for Payment Due invoices and Paid in Full conversions.');return;}
+            for(var j of extraJobs){
+                if(!j.date||!j.pickup||!j.dest||!Number.isFinite(j.amount)||j.amount<=0){alert('Complete every additional job date, pickup, drop-off and amount.');return;}
+                totalAmount+=j.amount;
+            }
             if (totalAmount <= 0) {
                 alert("Please enter the total haulage amount before generating the invoice.");
                 document.getElementById('manual-inv-amount').focus();
@@ -4528,9 +4551,17 @@
             document.getElementById('out-pickup-date-text').innerText = pDate;
             document.getElementById('out-dest-text').innerText = destInput;
             document.getElementById('out-pickup-time-text').innerText = pTime;
-            document.getElementById('out-desc').innerText = 'Haulage Transport: ' + pickup + ' to ' + destInput;
+            document.getElementById('out-desc').innerText = (extraJobs.length?pDate+' — ':'')+'Haulage Transport: '+pickup+' to '+destInput;
+            document.querySelectorAll('.dc-extra-preview').forEach(function(row){row.remove();});
+            var anchor=document.getElementById('dc-extra-preview-anchor');
+            extraJobs.forEach(function(j){
+                var row=document.createElement('tr');row.className='dc-extra-preview';
+                var d=document.createElement('td');d.style.cssText='padding:8px 12px;border-bottom:1px solid #ddd;color:#111;font-weight:700';d.textContent=j.date+' — Haulage Transport: '+j.pickup+' to '+j.dest;
+                var a=document.createElement('td');a.style.cssText='padding:8px 12px;border-bottom:1px solid #ddd;text-align:right;color:#111;font-weight:bold';a.textContent='$'+j.amount.toLocaleString()+' JMD';
+                row.appendChild(d);row.appendChild(a);anchor.parentNode.insertBefore(row,anchor);
+            });
             
-            document.getElementById('out-amount').innerText = '$' + totalAmount.toLocaleString() + ' JMD';
+            document.getElementById('out-amount').innerText = '$' + (totalAmount-extraJobs.reduce(function(sum,j){return sum+j.amount;},0)).toLocaleString() + ' JMD';
             document.getElementById('out-deposit').innerText = '$' + deposit.toLocaleString() + ' JMD';
             document.getElementById('out-balance').innerText = '$' + balance.toLocaleString() + ' JMD';
 
@@ -4598,6 +4629,8 @@
                 pickup: pickup,
                 destination: destInput,
                 amount: totalAmount,
+                firstJobAmount: totalAmount-extraJobs.reduce(function(sum,j){return sum+j.amount;},0),
+                extraJobs: extraJobs,
                 pickupDate: pDate,
                 pickupTime: pTime,
                 mode: currentOperatingMode,
