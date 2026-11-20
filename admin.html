@@ -1643,7 +1643,7 @@
                         </div>
 
                         <label style="margin-top:6px; color:#facc15;">📎 Attach Charge Proof (Auto-Converts PDF to Photo):</label>
-                        <input type="file" id="payroll-driver-proof-file" accept="image/*,application/pdf" style="padding: 6px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; font-size:0.9rem; width:100%; margin-bottom: 6px;">
+                        <input type="file" id="payroll-driver-proof-file" accept="image/*,application/pdf" multiple style="padding: 6px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; font-size:0.9rem; width:100%; margin-bottom: 6px;">
                         <textarea id="payroll-driver-proof-text" rows="2" placeholder="Or paste WhatsApp / email charge details text here..." style="font-size:0.88rem; width:100%;"></textarea>
 
                         <label style="margin-top:8px;">Payment Method & Date:</label>
@@ -1717,7 +1717,7 @@
                         </div>
 
                         <label style="margin-top:6px; color:#facc15;">📎 Attach Charge Proof (Auto-Converts PDF to Photo):</label>
-                        <input type="file" id="payroll-asst-proof-file" accept="image/*,application/pdf" style="padding: 6px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; font-size:0.9rem; width:100%; margin-bottom: 6px;">
+                        <input type="file" id="payroll-asst-proof-file" accept="image/*,application/pdf" multiple style="padding: 6px; background:#000; color:#fff; border:1px solid #333; border-radius:6px; font-size:0.9rem; width:100%; margin-bottom: 6px;">
                         <textarea id="payroll-asst-proof-text" rows="2" placeholder="Or paste WhatsApp / email charge details text here..." style="font-size:0.88rem; width:100%;"></textarea>
 
                         <label style="margin-top:8px;">Payment Method & Date:</label>
@@ -4927,39 +4927,57 @@
                 proofContainer.style.display = 'block';
 
                 if (hasProofFile) {
-                    var file = proofFileInput.files[0];
                     var imgBox = document.getElementById('slip-proof-image-box');
-
-                    if (file.type === 'application/pdf') {
-                        try {
-                            imgBox.innerHTML = '<p style="color: #1a531f; font-weight: 800;">⏳ Converting PDF proof to full-size image...</p>';
-                            var fileReader = new FileReader();
-                            fileReader.onload = async function() {
-                                var typedarray = new Uint8Array(this.result);
-                                var pdf = await pdfjsLib.getDocument(typedarray).promise;
-                                var page = await pdf.getPage(1);
-                                var viewport = page.getViewport({ scale: 2.0 });
-                                var canvas = document.createElement('canvas');
-                                var context = canvas.getContext('2d');
-                                canvas.height = viewport.height;
-                                canvas.width = viewport.width;
-
-                                await page.render({ canvasContext: context, viewport: viewport }).promise;
-                                var imageUrl = canvas.toDataURL('image/jpeg', 0.95);
-
-                                imgBox.innerHTML = '<img src="' + imageUrl + '" alt="AR Charges Proof" style="max-width: 100%; height: auto; border-radius: 8px; border: 2px solid #1a531f; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: block; margin: 0 auto;">';
-                            };
-                            fileReader.readAsArrayBuffer(file);
-                        } catch (err) {
-                            console.error(err);
-                            imgBox.innerHTML = '<p style="color: #dc2626; font-weight: 800;">❌ Could not render PDF preview.</p>';
+                    var selectedProofs = Array.from(proofFileInput.files);
+                    imgBox.innerHTML = '<p style="color:#1a531f;font-weight:800;">⏳ Preparing ' + selectedProofs.length + ' evidence file(s)...</p>';
+                    var proofPages = [];
+                    try {
+                        for (var proofIndex = 0; proofIndex < selectedProofs.length; proofIndex++) {
+                            var proofFile = selectedProofs[proofIndex];
+                            if (proofFile.type === 'application/pdf') {
+                                var pdfBytes = new Uint8Array(await proofFile.arrayBuffer());
+                                var pdfDoc = await pdfjsLib.getDocument({ data: pdfBytes }).promise;
+                                for (var pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+                                    var pdfPage = await pdfDoc.getPage(pageNum);
+                                    var viewport = pdfPage.getViewport({ scale: 1.5 });
+                                    var canvas = document.createElement('canvas');
+                                    canvas.width = viewport.width;
+                                    canvas.height = viewport.height;
+                                    await pdfPage.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise;
+                                    proofPages.push({ name: proofFile.name, page: pageNum, src: canvas.toDataURL('image/jpeg', 0.85) });
+                                    canvas.width = canvas.height = 0;
+                                }
+                            } else if (proofFile.type.startsWith('image/')) {
+                                var imageData = await new Promise(function(resolve, reject) {
+                                    var reader = new FileReader();
+                                    reader.onload = function() { resolve(reader.result); };
+                                    reader.onerror = reject;
+                                    reader.readAsDataURL(proofFile);
+                                });
+                                proofPages.push({ name: proofFile.name, page: 1, src: imageData });
+                            } else {
+                                throw new Error('Unsupported evidence type: ' + proofFile.name);
+                            }
                         }
-                    } else {
-                        var reader = new FileReader();
-                        reader.onload = function(e) {
-                            imgBox.innerHTML = '<img src="' + e.target.result + '" alt="AR Charges Proof" style="max-width: 100%; height: auto; border-radius: 8px; border: 2px solid #1a531f; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: block; margin: 0 auto;">';
-                        };
-                        reader.readAsDataURL(file);
+                        imgBox.innerHTML = '';
+                        proofPages.forEach(function(proof, pageIndex) {
+                            var proofPage = document.createElement('div');
+                            proofPage.style.cssText = (pageIndex ? 'break-before:page;page-break-before:always;' : '') + 'text-align:center;padding:8px 0;break-inside:avoid;page-break-inside:avoid;';
+                            var proofTitle = document.createElement('div');
+                            proofTitle.style.cssText = 'font-size:12px;font-weight:700;margin-bottom:8px;color:#1a531f;';
+                            proofTitle.textContent = 'AR Charge Evidence ' + (pageIndex + 1) + ' of ' + proofPages.length + ' — ' + proof.name + (proof.page > 1 ? ' (PDF page ' + proof.page + ')' : '');
+                            var proofImg = document.createElement('img');
+                            proofImg.src = proof.src;
+                            proofImg.alt = 'AR Charge Evidence';
+                            proofImg.style.cssText = 'max-width:100%;max-height:245mm;width:auto;height:auto;object-fit:contain;display:block;margin:0 auto;';
+                            proofPage.appendChild(proofTitle);
+                            proofPage.appendChild(proofImg);
+                            imgBox.appendChild(proofPage);
+                        });
+                    } catch (err) {
+                        console.error('Evidence conversion failed', err);
+                        imgBox.textContent = '❌ Evidence could not be prepared. Please check the selected files and generate the payslip again.';
+                        alert('One or more evidence files could not be converted. Please check them before printing.');
                     }
                 }
             } else {
